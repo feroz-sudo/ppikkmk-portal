@@ -108,6 +108,34 @@ html {
 }
 
 /* ============================================================
+   CLINICAL ALIGNMENT (CORE) - Ensures Label: Value Harmony
+   ============================================================ */
+/* This targets the 3-column grid used for personal data in all forms */
+.grid-cols-\[180px_auto_1fr\],
+.grid-cols-\[240px_auto_1fr\] {
+  display: grid !important;
+  grid-template-columns: 200px 30px 1fr !important;
+  /* Fixed width for labels and colons */
+  gap: 4px 12px !important;
+  align-items: center !important;
+}
+
+/* Ensure labels are bold and readable */
+.grid-cols-\[180px_auto_1fr\]>div:nth-child(3n+1),
+.grid-cols-\[240px_auto_1fr\]>div:nth-child(3n+1) {
+  font-weight: 700 !important;
+  color: #1e293b !important;
+}
+
+/* Perfect alignment for the colon separator */
+.grid-cols-\[180px_auto_1fr\]>div:nth-child(3n+2),
+.grid-cols-\[240px_auto_1fr\]>div:nth-child(3n+2) {
+  font-weight: 700 !important;
+  color: #1e293b !important;
+  text-align: center !important;
+}
+
+/* ============================================================
    PRINT STYLES - Surgical Overrides to Fix Multi-page Flow & Layout
    ============================================================ */
 @media print {
@@ -125,78 +153,47 @@ html {
     display: none !important;
   }
 
-  /* 2. Layout Resets (Multi-page Fix) */
+  /* 2. REFINED Layout Resets (Multi-page Fix) */
   html,
   body,
-  #__next,
-  div[class*="h-screen"],
-  div[class*="flex-col"],
-  div[class*="flex-1"],
-  div[class*="overflow-hidden"],
-  div[class*="overflow-y-auto"],
-  main,
-  section {
+  #__next {
+    display: block !important;
+    overflow: visible !important;
+    height: auto !important;
+    background: white !important;
+  }
+
+  /* Target the main scroll areas specifically */
+  div.h-screen.flex-col,
+  div.flex-1.flex.flex-col,
+  main.overflow-y-auto {
     display: block !important;
     overflow: visible !important;
     height: auto !important;
     min-height: auto !important;
-    max-height: none !important;
     position: static !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    width: 100% !important;
-    background: white !important;
   }
 
-  /* 3. Surgical Layout Preservation (Fixing "All over the place") */
+  /* 3. Surgical Layout Preservation */
   .grid {
     display: grid !important;
-    /* Restore grid for internal alignment */
   }
 
-  .flex {
-    display: flex !important;
-    /* Restore flex for component internal alignment */
-  }
-
-  /* Specific fix for label-colon-value alignment */
+  /* ROCK SOLID alignment for print specifically */
   .grid-cols-\[180px_auto_1fr\],
   .grid-cols-\[240px_auto_1fr\] {
     grid-template-columns: 200px 20px 1fr !important;
-    gap: 8px !important;
-    align-items: start !important;
-  }
-
-  /* 4. Form Header Restoration */
-  .form-header {
-    display: flex !important;
-    flex-direction: column !important;
-    border-bottom: 2px solid #666 !important;
-    padding-bottom: 15px !important;
-    margin-bottom: 25px !important;
-    background: white !important;
-  }
-
-  .form-header>div.flex {
-    display: flex !important;
-    flex-direction: row !important;
+    gap: 2px 10px !important;
     align-items: center !important;
-    justify-content: space-between !important;
-    width: 100% !important;
   }
 
-  .form-header-logo {
-    height: 70px !important;
-    width: auto !important;
-    display: block !important;
-  }
-
-  /* 5. Typography & Polish */
+  /* 4. Visual Polish & Clinical Fidelity */
   * {
     color: black !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
     font-family: 'Arial', sans-serif !important;
+    box-shadow: none !important;
   }
 
   h2,
@@ -206,58 +203,65 @@ html {
   }
 
   .underline {
-    border-bottom: 1px solid #1211ca !important;
+    border-bottom: 2px solid #1211ca !important;
     text-decoration: none !important;
+    display: inline-block;
   }
 
-  /* Input/Textarea Styling for Print */
+  /* Professional Input look for Print */
   input,
   select,
   textarea {
     border: 1px solid #ddd !important;
-    background: #fdfdfd !important;
-    padding: 5px !important;
-    border-radius: 4px !important;
+    background: transparent !important;
+    padding: 3px 6px !important;
+    border-radius: 0px !important;
+    /* Clinical data feel */
     font-size: 10pt !important;
+    width: 100% !important;
   }
 
   textarea {
     field-sizing: content;
-    min-height: 60px !important;
+    min-height: 40px !important;
+    border-bottom: 1px solid #eee !important;
   }
 
-  /* Remove excessive grey backgrounds */
+  /* Remove excessive grey boxes - Make them clean flat areas */
   div[class*="bg-gray-50"],
   .bg-gray-50 {
-    background: #fafafa !important;
-    border: 1px solid #eee !important;
-    padding: 15px !important;
-    border-radius: 8px !important;
+    background: transparent !important;
+    border-bottom: 1px solid #eee !important;
+    padding: 10px 0 !important;
+    margin-bottom: 10px !important;
+    border-radius: 0 !important;
   }
 
-  /* Page Break Logic */
+  /* 5. Header & Logo Balance */
+  .form-header {
+    display: flex !important;
+    flex-direction: column !important;
+    border-bottom: 3px solid #1211ca !important;
+    padding-bottom: 12px !important;
+    margin-bottom: 15px !important;
+  }
+
+  .form-header-logo {
+    height: 60px !important;
+    width: auto !important;
+  }
+
+  /* 6. Page Break Logic */
   .page-break-before {
     page-break-before: always;
   }
 
-  .page-break-after {
-    page-break-after: always;
-  }
-
   h2,
-  h3,
-  label {
+  h3 {
     page-break-after: avoid;
-    break-after: avoid;
   }
 
   .grid>div {
     page-break-inside: avoid;
-    break-inside: avoid;
-  }
-
-  /* Logo adjustment in form footer/header */
-  img {
-    max-width: 100% !important;
   }
 }
