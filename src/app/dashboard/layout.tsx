@@ -366,7 +366,7 @@ export default function DashboardLayout({
     return (
         <div className="flex h-screen bg-gray-50 flex-col md:flex-row overflow-hidden">
             {/* Sidebar Navigation */}
-            <aside className={`w-full md:w-64 bg-upsi-navy text-white flex-col h-full ${isSidebarOpen ? 'flex' : 'hidden'} shrink-0`}>
+            <aside className={`w-full md:w-64 bg-upsi-navy text-white flex-col h-full ${isSidebarOpen ? 'flex' : 'hidden'} shrink-0 no-print print:hidden`}>
                 <div className="p-8 shrink-0">
                     <div className="flex items-center space-x-3 mb-2">
                         <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg shadow-black/20">
@@ -420,7 +420,7 @@ export default function DashboardLayout({
             {/* Main Content Area */}
             <div className="flex-1 flex flex-col overflow-hidden bg-[#F8FAFC]">
                 {/* Header */}
-                <header className="glass border-b border-slate-200 h-20 flex items-center justify-between px-8 shrink-0 z-30 no-print">
+                <header className="glass border-b border-slate-200 h-20 flex items-center justify-between px-8 shrink-0 z-30 no-print print:hidden">
                     {/* Toggle and Brand */}
                     <div className="flex items-center space-x-4">
                         <button
@@ -471,7 +471,7 @@ export default function DashboardLayout({
                 </main>
 
                 {/* Footer */}
-                <footer className="glass border-t border-slate-200 py-6 px-8 flex flex-col items-center shrink-0 no-print">
+                <footer className="glass border-t border-slate-200 py-6 px-8 flex flex-col items-center shrink-0 no-print print:hidden">
                     <Disclaimer variant="compact" className="text-center opacity-70 mb-4" />
                     <div className="flex items-center space-x-2 text-slate-400 font-medium text-xs">
                         <span>Portal PPIKKMK</span>
