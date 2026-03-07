@@ -2,26 +2,24 @@
 @import "tailwindcss";
 
 @theme {
-  /* Dynamic Clinical Theme - Default to Black for strict professional fidelity */
-  --color-upsi-navy: #000000;
-  --color-upsi-red: #000000;
-  --color-upsi-gold: #333333;
+  --color-upsi-navy: #1211ca;
+  --color-upsi-red: #ff3131;
+  --color-upsi-gold: #f9b314;
   --font-sans: 'Outfit', sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 :root {
   --background: #ffffff;
-  --foreground: #000000;
+  --foreground: #0f172a;
   --card-bg: rgba(255, 255, 255, 0.8);
   --glass-border: rgba(255, 255, 255, 0.2);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #ffffff;
-    /* Keep clinical background white even in dark mode for accuracy */
-    --foreground: #000000;
+    --background: #f8fafc;
+    --foreground: #0f172a;
   }
 }
 
@@ -33,22 +31,27 @@ body {
 }
 
 /* ============================================================
-   CLINICAL BLACK THEME (GLOBAL ENFORCEMENT)
+   CLINICAL BLACK THEME (FORM CONTENT ONLY)
    ============================================================ */
-/* Force ALL form-related text to pure black */
-.form-header *,
-form *,
-[class*="Clinical"] *,
-.no-print * {
+/* Target ONLY the content inside the form and its clinical header */
+.form-header h2,
+.form-header h3,
+.form-header div,
+form h1,
+form h2,
+form h3,
+form label,
+form p,
+form span:not(.no-black) {
   color: #000000 !important;
 }
 
-/* Special Case: White text for dashboard headers (over dark background) */
-.bg-neutral-900 *,
-.bg-black *,
-.text-white,
-.text-blue-100 {
-  color: #ffffff !important;
+/* Standard Clinical Inputs - Content is Black */
+form input,
+form select,
+form textarea {
+  color: #000000 !important;
+  border-color: #cccccc !important;
 }
 
 /* Ironclad Alignment for Personal Data Grids */
@@ -59,27 +62,32 @@ form *,
   grid-template-columns: 200px 30px 1fr !important;
   gap: 4px 12px !important;
   align-items: center !important;
-  color: #000 !important;
+  color: #000000 !important;
 }
 
-/* Ensure underlines are black */
-.underline,
-[class*="underline"] {
+/* Ensure clinical underlines are black */
+form .underline,
+form [class*="underline"] {
   text-decoration-color: #000000 !important;
   border-bottom-color: #000000 !important;
 }
 
-/* Standard Clinical Inputs */
-form input,
-form select,
-form textarea {
-  color: #000 !important;
-  border-color: #ccc !important;
-}
-
-/* Logo protection - ensure it doesn't get filters that might change colors if not print */
+/* Logo protection */
 .form-header-logo {
   filter: none !important;
+}
+
+/* --- Premium Utilities --- */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.shadow-premium {
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.05),
+    0 2px 20px -5px rgba(0, 0, 0, 0.02);
 }
 
 /* ============================================================
@@ -91,7 +99,8 @@ form textarea {
   nav,
   .no-print,
   button,
-  .sidebar-trigger {
+  .sidebar-trigger,
+  .form-action-bar {
     display: none !important;
   }
 
@@ -102,6 +111,14 @@ form textarea {
     overflow: visible !important;
     height: auto !important;
     background: white !important;
+  }
+
+  main.overflow-y-auto,
+  div.h-screen {
+    display: block !important;
+    overflow: visible !important;
+    height: auto !important;
+    position: static !important;
   }
 
   /* Specific Print Alignment */
