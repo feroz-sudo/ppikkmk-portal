@@ -108,40 +108,101 @@ html {
 }
 
 /* ============================================================
-   PRINT STYLES
+   PRINT STYLES - Aggressive Overrides to Prevent Truncation
    ============================================================ */
 @media print {
 
   aside,
-  header,
-  footer,
+  header:not(.form-header),
+  footer:not(.form-footer),
   nav,
   .no-print,
-  .form-action-bar {
+  .form-action-bar,
+  button:not(.print-visible) {
     display: none !important;
   }
 
+  /* Force multi-page flow by breaking flex layouts and overflow-hidden */
   body,
-  html,
-  main {
+  html {
     height: auto !important;
+    min-height: 100% !important;
     overflow: visible !important;
-    display: block !important;
     background: white !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
-  /* Force standard clinical fonts for printing */
+  main,
+  #__next,
+  div[class*="flex-1"],
+  div[class*="overflow-y-auto"],
+  div[class*="overflow-hidden"],
+  div[class*="h-screen"],
+  div[class*="h-full"] {
+    display: block !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    position: static !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    float: none !important;
+  }
+
+  /* Form Container Resets */
+  .max-w-4xl,
+  .bg-white,
+  .rounded-xl,
+  .shadow-sm,
+  .border,
+  form {
+    max-width: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: transparent !important;
+    overflow: visible !important;
+  }
+
   * {
-    font-family: Arial, sans-serif !important;
+    font-family: 'Arial', sans-serif !important;
+    color: black !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
   textarea {
     field-sizing: content;
+    overflow: visible !important;
+    height: auto !important;
+    border: 1px solid #ddd !important;
+    min-height: 120px !important;
+    white-space: pre-wrap !important;
+    font-size: 11pt !important;
   }
 
   .bg-upsi-navy {
     background-color: #1211ca !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    color: white !important;
+  }
+
+  .border-upsi-gold {
+    border-color: #f9b314 !important;
+  }
+
+  /* Force page breaks for readability */
+  h2 {
+    page-break-before: auto;
+    page-break-after: avoid;
+    margin-top: 25px !important;
+  }
+
+  .p-8 {
+    padding: 20px !important;
   }
 }
