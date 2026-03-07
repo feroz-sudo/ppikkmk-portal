@@ -214,10 +214,10 @@ export function Form8PFAMHPSSReportPage({ searchParams }: PageProps) {
         }
     };
 
-    const inputClasses = "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white placeholder-gray-400";
-    const textareaClasses = "w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white";
-    const sectionClasses = "space-y-3 bg-gray-50 p-6 rounded-xl border border-gray-100";
-    const labelClasses = "text-lg font-bold text-gray-800 border-b-2 border-upsi-red pb-1 inline-block mb-2";
+    const inputClasses = "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none text-black bg-white placeholder-gray-400";
+    const textareaClasses = "w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none text-black bg-white";
+    const sectionClasses = "space-y-3 bg-white py-4";
+    const labelClasses = "text-lg font-bold text-black border-b-2 border-black pb-1 inline-block mb-2";
 
     const renderTextarea = (label: string, stateValue: string, setter: (val: string) => void, rows: number = 6) => (
         <div className={sectionClasses}>
@@ -235,40 +235,40 @@ export function Form8PFAMHPSSReportPage({ searchParams }: PageProps) {
     return (
         <div className="max-w-4xl mx-auto pb-12">
             <div className="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-200 overflow-hidden">
-                <div className="bg-upsi-navy px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
+                <div className="bg-white px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
                     <div>
-                        <h1 className="text-2xl font-bold text-white flex items-center space-x-3">
-                            <HeartPulse className="text-white" size={28} />
-                            <span>Form 8: PFA / MHPSS Report</span>
+                        <h1 className="text-2xl font-bold text-upsi-navy flex items-center space-x-3">
+                            <HeartPulse className="text-upsi-gold" size={28} />
+                            <span>Form 8: PFA MHPSS REPORT</span>
                         </h1>
-                        <p className="text-blue-100 mt-1">Mental Health & Psychosocial Support documentation.</p>
+                        <p className="text-slate-500 mt-1">Mental Health & Psychosocial Support documentation.</p>
                     </div>
                 </div>
 
                 <form onSubmit={handleSubmit} className="p-8 space-y-8 bg-white overflow-x-auto">
                     <FormHeader
-                        title="Psychological First Aid/ Mental Health & Psychosocial Support Report"
+                        title="PFA MHPSS REPORT"
                         refCode="PFA/MHPSS_Report/KKMK_UPSI/08-2025"
                     />
 
                     {/* Counselor Info */}
                     <div className="grid grid-cols-2 gap-8 mb-8 max-w-2xl">
                         <div className="flex items-center space-x-3">
-                            <label className="font-bold text-gray-800 min-w-[80px] uppercase text-sm">Name</label>
-                            <span className="font-bold text-gray-800">:</span>
-                            <input required type="text" value={counselorName} onChange={e => setCounselorName(e.target.value)} className="flex-1 p-2 border-b border-gray-300 focus:border-upsi-navy outline-none bg-transparent" placeholder="Enter name" />
+                            <label className="font-bold text-black min-w-[80px] uppercase text-sm">Name</label>
+                            <span className="font-bold text-black">:</span>
+                            <input required type="text" value={counselorName} onChange={e => setCounselorName(e.target.value)} className="flex-1 p-2 border-b border-gray-300 focus:border-black outline-none bg-transparent text-black" placeholder="Enter name" />
                         </div>
                         <div className="flex items-center space-x-3">
-                            <label className="font-bold text-gray-800 min-w-[100px] uppercase text-sm">Institution</label>
-                            <span className="font-bold text-gray-800">:</span>
-                            <input required type="text" value={institution} onChange={e => setInstitution(e.target.value)} className="flex-1 p-2 border-b border-gray-300 focus:border-upsi-navy outline-none bg-transparent" placeholder="e.g. UPSI" />
+                            <label className="font-bold text-black min-w-[100px] uppercase text-sm">Institution</label>
+                            <span className="font-bold text-black">:</span>
+                            <input required type="text" value={institution} onChange={e => setInstitution(e.target.value)} className="flex-1 p-2 border-b border-gray-300 focus:border-black outline-none bg-transparent text-black" placeholder="e.g. UPSI" />
                         </div>
                     </div>
 
                     {/* Logistics Data Section Group */}
-                    <div className="border border-gray-300 rounded-lg overflow-hidden mb-8">
-                        <div className="bg-[#FFF8F0] px-4 py-2 border-b border-gray-300">
-                            <h2 className="text-lg font-bold text-gray-900 uppercase tracking-wide">Program / Session Information</h2>
+                    <div className="bg-white mb-8">
+                        <div className="bg-white px-4 py-2 border-b-2 border-black">
+                            <h2 className="text-lg font-bold text-black uppercase tracking-wide">Program / Session Information</h2>
                         </div>
 
                         <div className="p-6 space-y-6">
@@ -284,42 +284,42 @@ export function Form8PFAMHPSSReportPage({ searchParams }: PageProps) {
                                                 checked={programSessionType === type}
                                                 onChange={e => setProgramSessionType(e.target.value)}
                                                 name="programType"
-                                                className="w-5 h-5 text-upsi-navy border-gray-300 focus:ring-upsi-navy cursor-pointer"
+                                                className="w-5 h-5 text-black border-gray-300 focus:ring-black cursor-pointer"
                                             />
-                                            <span className="ml-3 text-gray-700 font-bold group-hover:text-upsi-navy transition-colors">{type}</span>
+                                            <span className="ml-3 text-black font-bold group-hover:text-black transition-colors">{type}</span>
                                         </label>
                                     ))}
                                 </div>
                             </div>
 
                             <div className="grid grid-cols-[220px_auto_1fr] gap-y-6 gap-x-2 items-center">
-                                <div className="font-bold text-gray-800 text-sm md:text-base uppercase leading-tight">Name of the Program/Session</div>
-                                <div className="font-bold text-gray-800">:</div>
-                                <div><input required type="text" value={programName} onChange={e => setProgramName(e.target.value)} className={inputClasses} placeholder="Enter program name" /></div>
+                                <div className="font-bold text-black text-sm md:text-base uppercase leading-tight">Name of the Program/Session</div>
+                                <div className="font-bold text-black">:</div>
+                                <div><input required type="text" value={programName} onChange={e => setProgramName(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="Enter program name" /></div>
 
-                                <div className="font-bold text-gray-800 text-sm md:text-base uppercase">Date & Time</div>
-                                <div className="font-bold text-gray-800">:</div>
-                                <div><input required type="datetime-local" value={dateTime} onChange={e => setDateTime(e.target.value)} className={inputClasses} /></div>
+                                <div className="font-bold text-black text-sm md:text-base uppercase">Date & Time</div>
+                                <div className="font-bold text-black">:</div>
+                                <div><input required type="datetime-local" value={dateTime} onChange={e => setDateTime(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" /></div>
 
-                                <div className="font-bold text-gray-800 text-sm md:text-base uppercase">Duration (Hours)</div>
-                                <div className="font-bold text-gray-800">:</div>
-                                <div><input required type="number" step="0.5" min="0.5" value={duration} onChange={e => setDuration(e.target.value)} className={inputClasses} placeholder="e.g. 2.0" /></div>
+                                <div className="font-bold text-black text-sm md:text-base uppercase">Duration (Hours)</div>
+                                <div className="font-bold text-black">:</div>
+                                <div><input required type="number" step="0.5" min="0.5" value={duration} onChange={e => setDuration(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="e.g. 1.0" /></div>
 
-                                <div className="font-bold text-gray-800 text-sm md:text-base uppercase">Venue</div>
-                                <div className="font-bold text-gray-800">:</div>
-                                <div><input required type="text" value={venue} onChange={e => setVenue(e.target.value)} className={inputClasses} placeholder="Activity location" /></div>
+                                <div className="font-bold text-black text-sm md:text-base uppercase">Venue</div>
+                                <div className="font-bold text-black">:</div>
+                                <div><input required type="text" value={venue} onChange={e => setVenue(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="Activity location" /></div>
 
-                                <div className="font-bold text-gray-800 text-sm md:text-base uppercase leading-tight">Number of Participants Involved</div>
-                                <div className="font-bold text-gray-800">:</div>
-                                <div><input required type="number" min="0" value={participantsCount} onChange={e => setParticipantsCount(e.target.value)} className={inputClasses} placeholder="Participants count" /></div>
+                                <div className="font-bold text-black text-sm md:text-base uppercase leading-tight">Number of Participants Involved</div>
+                                <div className="font-bold text-black">:</div>
+                                <div><input required type="number" min="0" value={participantsCount} onChange={e => setParticipantsCount(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="Participants count" /></div>
 
-                                <div className="font-bold text-gray-800 text-sm md:text-base uppercase">Speaker / Provider</div>
-                                <div className="font-bold text-gray-800">:</div>
-                                <div><input required type="text" value={speakerProvider} onChange={e => setSpeakerProvider(e.target.value)} className={inputClasses} placeholder="Who delivered the program?" /></div>
+                                <div className="font-bold text-black text-sm md:text-base uppercase">Speaker / Provider</div>
+                                <div className="font-bold text-black">:</div>
+                                <div><input required type="text" value={speakerProvider} onChange={e => setSpeakerProvider(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="Who delivered the program?" /></div>
 
-                                <div className="font-bold text-gray-800 text-sm md:text-base uppercase">Collaborator(s) (If any)</div>
-                                <div className="font-bold text-gray-800">:</div>
-                                <div><input type="text" value={collaborators} onChange={e => setCollaborators(e.target.value)} className={inputClasses} placeholder="Optional collaborators" /></div>
+                                <div className="font-bold text-black text-sm md:text-base uppercase">Collaborator(s) (If any)</div>
+                                <div className="font-bold text-black">:</div>
+                                <div><input type="text" value={collaborators} onChange={e => setCollaborators(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="Optional collaborators" /></div>
                             </div>
                         </div>
                     </div>
@@ -331,9 +331,9 @@ export function Form8PFAMHPSSReportPage({ searchParams }: PageProps) {
                             { label: "Identified Issue (s)", value: identifiedIssues, setter: setIdentifiedIssues, rows: 5 },
                             { label: "Activities / Interventions Delivered", value: activitiesInterventions, setter: setActivitiesInterventions, rows: 6 }
                         ].map((field, idx) => (
-                            <div key={idx} className="border border-gray-300 rounded-lg overflow-hidden shadow-sm">
-                                <div className="bg-[#FFF8F0] px-4 py-2 border-b border-gray-300">
-                                    <label className="text-lg font-bold text-gray-900 uppercase">
+                            <div key={idx} className="border border-gray-300 shadow-sm">
+                                <div className="bg-white px-4 py-2 border-b-2 border-black">
+                                    <label className="text-lg font-bold text-black uppercase">
                                         {field.label}
                                     </label>
                                 </div>
@@ -352,42 +352,42 @@ export function Form8PFAMHPSSReportPage({ searchParams }: PageProps) {
                     </div>
 
                     {/* Action Plan Section */}
-                    <div className="border border-gray-300 rounded-lg overflow-hidden mt-8">
-                        <div className="bg-[#FFF8F0] px-4 py-2 border-b border-gray-300">
-                            <h2 className="text-lg font-bold text-gray-900 uppercase tracking-wide">Action Plan</h2>
+                    <div className="border border-gray-300 mt-8">
+                        <div className="bg-white px-4 py-2 border-b-2 border-black">
+                            <h2 className="text-lg font-bold text-black uppercase tracking-wide">Action Plan</h2>
                         </div>
                         <div className="p-6 space-y-6">
                             <div className="space-y-2">
-                                <label className="font-bold text-gray-800 uppercase block underline underline-offset-4">Follow-Up (If needed):</label>
+                                <label className="font-bold text-black uppercase block underline underline-offset-4">Follow-Up (If needed):</label>
                                 <textarea
                                     rows={4}
                                     value={followUp}
                                     onChange={e => setFollowUp(e.target.value)}
-                                    className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white"
+                                    className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none text-black bg-white"
                                     placeholder="Enter follow-up details..."
                                 />
                             </div>
 
                             <div className="flex items-center space-x-12 border-t border-gray-100 pt-6">
-                                <span className="font-bold text-gray-800 uppercase w-48">Referral Needed</span>
+                                <span className="font-bold text-black uppercase w-48">Referral Needed</span>
                                 <div className="flex items-center space-x-8">
                                     {["Yes", "No"].map((opt) => (
                                         <label key={opt} className="flex items-center cursor-pointer group">
-                                            <input required type="radio" value={opt} checked={referralNeeded === opt} onChange={e => setReferralNeeded(e.target.value)} name="referral" className="w-5 h-5 text-upsi-navy border-gray-300 focus:ring-upsi-navy cursor-pointer" />
-                                            <span className="ml-3 text-gray-700 font-bold group-hover:text-upsi-navy transition-colors">{opt}</span>
+                                            <input required type="radio" value={opt} checked={referralNeeded === opt} onChange={e => setReferralNeeded(e.target.value)} name="referral" className="w-5 h-5 text-black border-gray-300 focus:ring-black cursor-pointer" />
+                                            <span className="ml-3 text-black font-bold group-hover:text-black transition-colors">{opt}</span>
                                         </label>
                                     ))}
                                 </div>
                             </div>
 
                             <div className="space-y-2">
-                                <label className="font-bold text-gray-800 uppercase block underline underline-offset-4">Referral (If necessary, please specify):</label>
+                                <label className="font-bold text-black uppercase block underline underline-offset-4">Referral (If necessary, please specify):</label>
                                 <input
                                     required={referralNeeded === "Yes"}
                                     type="text"
                                     value={referralSpecifics}
                                     onChange={e => setReferralSpecifics(e.target.value)}
-                                    className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white"
+                                    className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none text-black bg-white"
                                     placeholder="Enter referral details..."
                                 />
                             </div>
@@ -396,13 +396,13 @@ export function Form8PFAMHPSSReportPage({ searchParams }: PageProps) {
 
                     {/* Signatures Table Section */}
                     <div className="pt-10 pb-4 mt-12 w-full">
-                        <div className="overflow-x-auto rounded-lg border border-gray-300 shadow-sm">
+                        <div className="overflow-x-auto border border-black shadow-none">
                             <table className="w-full text-left bg-white min-w-[700px] border-collapse">
-                                <thead className="bg-[#FFF8F0] text-gray-900 border-b border-gray-300">
+                                <thead className="bg-[#FFFFFF] text-black border-b border-black">
                                     <tr>
-                                        <th className="px-6 py-4 font-bold uppercase tracking-wider border-r border-gray-300 text-center w-1/4">Action</th>
-                                        <th className="px-6 py-4 font-bold uppercase tracking-wider border-r border-gray-300 text-center w-1/2">Signature & Name</th>
-                                        <th className="px-6 py-4 font-bold uppercase tracking-wider text-center w-1/4">Date</th>
+                                        <th className="px-6 py-4 font-bold uppercase tracking-wider border-r border-black text-center w-1/4">Action</th>
+                                        <th className="px-6 py-4 font-bold uppercase tracking-wider border-r border-black text-center w-1/2">Signature & Name</th>
+                                        <th className="px-6 py-4 font-bold uppercase tracking-wider text-center w-1/4 text-black">Date</th>
                                     </tr>
                                 </thead>
                                 <tbody className="text-gray-800">
@@ -411,30 +411,30 @@ export function Form8PFAMHPSSReportPage({ searchParams }: PageProps) {
                                         { label: "Site Supervisor", value: siteSupervisorSignature, setter: setSiteSupervisorSignature },
                                         { label: "Academic Supervisor", value: academicSupervisorSignature, setter: setAcademicSupervisorSignature }
                                     ].map((row, idx) => (
-                                        <tr key={idx} className="border-b border-gray-300 last:border-0">
-                                            <td className="px-6 py-8 border-r border-gray-300 font-bold text-center align-middle uppercase text-sm">
+                                        <tr key={idx} className="border-b border-black last:border-0">
+                                            <td className="px-6 py-8 border-r border-black font-bold text-center align-middle uppercase text-sm text-black">
                                                 {row.label} Signature
                                             </td>
-                                            <td className="px-6 py-8 border-r border-gray-300">
+                                            <td className="px-6 py-8 border-r border-black">
                                                 <div className="flex flex-col items-center">
-                                                    <div className="border-b border-gray-400 w-full mb-3 h-8"></div>
+                                                    <div className="border-b-2 border-dotted border-black w-full mb-3 h-8"></div>
                                                     <div className="flex justify-center items-center w-full px-4">
-                                                        <span className="text-gray-400 font-bold text-lg">(</span>
+                                                        <span className="text-black font-bold text-lg">(</span>
                                                         <input
                                                             required={row.required}
                                                             type="text"
                                                             value={row.value}
                                                             onChange={e => row.setter(e.target.value)}
-                                                            className="bg-transparent outline-none flex-1 text-center font-bold text-gray-800 placeholder-gray-300 py-1 uppercase"
+                                                            className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase"
                                                             placeholder={`Name of ${row.label}`}
                                                         />
-                                                        <span className="text-gray-400 font-bold text-lg">)</span>
+                                                        <span className="text-black font-bold text-lg">)</span>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td className="px-6 py-8 text-center align-middle">
-                                                <div className="border-b border-gray-300 w-32 mx-auto h-8 mb-2"></div>
-                                                <span className="text-gray-400 text-xs">DD/MM/YYYY</span>
+                                                <div className="border-b border-black w-32 mx-auto h-8 mb-2"></div>
+                                                <span className="text-black text-xs font-bold uppercase">DD/MM/YYYY</span>
                                             </td>
                                         </tr>
                                     ))}
@@ -449,6 +449,7 @@ export function Form8PFAMHPSSReportPage({ searchParams }: PageProps) {
                         />
 
                         <div className="mt-16 text-center w-full pt-4 border-t border-dashed border-gray-200">
+                            <p className="text-[10px] font-black text-upsi-navy uppercase tracking-[0.2em] mb-1">WWW.PPIKKMK.COM</p>
                             <p className="text-xs font-bold text-slate-500 uppercase tracking-widest pl-[0.1em]">
                                 Confidential Document (For Professional Use Only)
                             </p>

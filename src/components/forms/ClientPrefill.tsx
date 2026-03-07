@@ -46,15 +46,15 @@ export const ClientPrefill: React.FC<ClientPrefillProps> = ({ onSelectClient }) 
             <button
                 type="button"
                 onClick={handleOpen}
-                className="flex items-center space-x-2 bg-blue-50 border border-blue-300 text-blue-700 font-semibold px-4 py-2 rounded-lg hover:bg-blue-100 transition-colors shadow-sm"
+                className="flex items-center space-x-2 bg-white border border-black text-black font-bold px-4 py-2 rounded-lg hover:bg-white transition-colors shadow-sm"
             >
                 <DownloadCloud size={16} />
                 <span>Assign to Client</span>
             </button>
 
             {isOpen && (
-                <div className="absolute top-12 left-0 w-80 bg-white border border-gray-200 shadow-xl rounded-xl z-50 overflow-hidden">
-                    <div className="bg-gray-50 px-4 py-3 border-b flex justify-between items-center text-sm font-semibold text-gray-700">
+                <div className="absolute top-12 left-0 w-80 bg-white border border-black shadow-xl rounded-xl z-50 overflow-hidden">
+                    <div className="bg-white px-4 py-3 border-b border-black flex justify-between items-center text-sm font-bold text-black uppercase">
                         <span>Select a Client</span>
                         <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-red-500">&times;</button>
                     </div>

@@ -206,7 +206,7 @@ export function Form3CaseConceptualizationPage({ searchParams }: PageProps) {
 
     const inputClasses = "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 outline-none text-gray-700 bg-white placeholder-gray-400";
     const textareaClasses = "w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 outline-none text-gray-700 bg-white";
-    const sectionClasses = "space-y-3 bg-gray-50 p-6 rounded-xl border border-gray-100";
+    const sectionClasses = "space-y-3 bg-white py-4";
     const labelClasses = "text-lg font-bold text-black border-b-2 border-black pb-1 inline-block mb-2";
 
     const renderTextarea = (label: string, stateValue: string, setter: (val: string) => void, rows: number = 6) => (
@@ -225,13 +225,13 @@ export function Form3CaseConceptualizationPage({ searchParams }: PageProps) {
     return (
         <div className="max-w-4xl mx-auto pb-12">
             <div className="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-200 overflow-hidden">
-                <div className="bg-upsi-navy px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
+                <div className="bg-white px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
                     <div>
-                        <h1 className="text-2xl font-bold text-white flex items-center space-x-3">
+                        <h1 className="text-2xl font-bold text-upsi-navy flex items-center space-x-3">
                             <Lightbulb className="text-upsi-gold" size={28} />
-                            <span>Form 3: Case Conceptualization</span>
+                            <span>Form 3: CASE CONCEPTUALIZATION</span>
                         </h1>
-                        <p className="text-blue-100 mt-1">Structured framework for clinical case formulation.</p>
+                        <p className="text-slate-500 mt-1">Structured framework for clinical case formulation.</p>
                     </div>
                     {!prefillClientId && (
                         <div className="bg-white p-2 rounded-lg shadow-inner border border-blue-800">
@@ -242,22 +242,22 @@ export function Form3CaseConceptualizationPage({ searchParams }: PageProps) {
 
                 <form onSubmit={handleSubmit} className="p-8 space-y-8 bg-white">
                     <FormHeader
-                        title="Case Conceptualisation"
+                        title="CASE CONCEPTUALIZATION"
                         refCode="Case_Conceptualisation/KKMK_UPSI/03-2025"
                     />
 
                     {/* Demographic Information Section Group */}
-                    <div className="bg-gray-50 p-6 xl:p-8 rounded-xl border border-gray-100 space-y-6">
-                        <h2 className="text-xl font-bold text-black uppercase tracking-wide underline underline-offset-4">DEMOGRAPHIC INFORMATION</h2>
+                    <div className="bg-white p-6 xl:p-8 border-2 border-black space-y-6">
+                        <h2 className="text-xl font-bold text-black uppercase tracking-wide">DEMOGRAPHIC INFORMATION</h2>
 
                         <div className="grid grid-cols-[180px_auto_1fr] md:grid-cols-[240px_auto_1fr] gap-y-4 gap-x-2 items-center">
 
-                            <div className="font-bold text-gray-800 text-sm md:text-base">Client Full Name</div>
-                            <div className="font-bold text-gray-800">:</div>
+                            <div className="font-bold text-black text-sm md:text-base uppercase">Client Full Name</div>
+                            <div className="font-bold text-black">:</div>
                             <div><input required type="text" value={clientFullName} onChange={e => setClientFullName(e.target.value)} className={inputClasses} placeholder="Enter Client's Actual Name" /></div>
 
-                            <div className="font-bold text-gray-800 text-sm md:text-base">Ethnic/Sex</div>
-                            <div className="font-bold text-gray-800">:</div>
+                            <div className="font-bold text-black text-sm md:text-base uppercase">Ethnic/Sex</div>
+                            <div className="font-bold text-black">:</div>
                             <div className="flex space-x-2 items-center w-full">
                                 <select required value={ethnic} onChange={e => setEthnic(e.target.value)} className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white w-2/3">
                                     <option value="" disabled>Select Ethnic</option>
@@ -277,12 +277,12 @@ export function Form3CaseConceptualizationPage({ searchParams }: PageProps) {
                                 </select>
                             </div>
 
-                            <div className="font-bold text-gray-800 text-sm md:text-base">Age</div>
-                            <div className="font-bold text-gray-800">:</div>
+                            <div className="font-bold text-black text-sm md:text-base uppercase">Age</div>
+                            <div className="font-bold text-black">:</div>
                             <div><input required type="text" value={age} onChange={e => setAge(e.target.value)} className={inputClasses} placeholder="e.g. 24" /></div>
 
-                            <div className="font-bold text-gray-800 text-sm md:text-base">Diagnosis</div>
-                            <div className="font-bold text-gray-800">:</div>
+                            <div className="font-bold text-black text-sm md:text-base uppercase">Diagnosis</div>
+                            <div className="font-bold text-black">:</div>
                             <div><input required type="text" value={diagnosis} onChange={e => setDiagnosis(e.target.value)} className={inputClasses} placeholder="e.g. Major Depressive Disorder" /></div>
 
                         </div>
@@ -323,8 +323,8 @@ export function Form3CaseConceptualizationPage({ searchParams }: PageProps) {
                                 <textarea required rows={5} value={protectiveFactors} onChange={e => setProtectiveFactors(e.target.value)} className={textareaClasses} />
                             </div>
 
-                            <div className="space-y-3 bg-white p-2 rounded-xl border border-transparent">
-                                <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">Overall Summary</label>
+                            <div className="space-y-3 bg-white p-2 border-none">
+                                <label className="text-lg font-bold text-black uppercase border-b-2 border-black pb-1 inline-block mb-2">Overall Summary</label>
                                 <textarea required rows={10} value={overallSummary} onChange={e => setOverallSummary(e.target.value)} className={textareaClasses} />
                             </div>
                         </div>
@@ -333,20 +333,20 @@ export function Form3CaseConceptualizationPage({ searchParams }: PageProps) {
                     {/* Footer Section */}
                     <div className="pt-10 pb-4 mt-12 w-full">
                         <div className="mb-6 flex flex-col items-start max-w-sm">
-                            <h3 className="text-gray-900 font-bold mb-4 uppercase underline underline-offset-4">Report by:</h3>
+                            <h3 className="text-black font-bold mb-4 uppercase">Report by:</h3>
                             <div className="w-80">
-                                <div className="border-b-2 border-dotted border-gray-400 w-full mb-3 h-8"></div>
+                                <div className="border-b-2 border-dotted border-black w-full mb-3 h-8"></div>
                                 <div className="flex justify-between items-center w-full px-1">
-                                    <span className="text-gray-800 font-bold text-lg">(</span>
+                                    <span className="text-black font-bold text-lg">(</span>
                                     <input
                                         required
                                         type="text"
                                         value={counsellorName}
                                         onChange={e => setCounsellorName(e.target.value)}
-                                        className="bg-transparent outline-none flex-1 text-center font-bold text-gray-800 placeholder-gray-400 py-1"
+                                        className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase"
                                         placeholder="Enter Full Name"
                                     />
-                                    <span className="text-gray-800 font-bold text-lg">)</span>
+                                    <span className="text-black font-bold text-lg">)</span>
                                 </div>
                             </div>
                         </div>
@@ -355,6 +355,7 @@ export function Form3CaseConceptualizationPage({ searchParams }: PageProps) {
                             <p>CMCH Counselor Trainee</p>
                             <p className="font-normal">Universiti Pendidikan Sultan Idris</p>
                             <p className="font-normal">35900 Tanjong Malim, Perak</p>
+                            <p className="text-upsi-navy font-black mt-1 uppercase">WWW.PPIKKMK.COM</p>
                         </div>
 
                         <div className="mt-16 text-center w-full pt-4 border-t border-dashed border-gray-200">

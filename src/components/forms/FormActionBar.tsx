@@ -20,7 +20,7 @@ export const FormActionBar: React.FC<FormActionBarProps> = ({ formName, isSubmit
             <button
                 type="button"
                 onClick={handlePrint}
-                className="pointer-events-auto no-print flex items-center space-x-2 bg-white border border-gray-300 text-gray-700 font-semibold py-3 px-5 rounded-xl shadow-lg hover:bg-gray-50 hover:border-gray-400 transition-all focus:ring-4 focus:ring-gray-100"
+                className="pointer-events-auto no-print flex items-center space-x-2 bg-white border border-black text-black font-bold py-3 px-5 rounded-xl shadow-lg hover:bg-white hover:border-black transition-all focus:ring-4 focus:ring-black"
             >
                 <Printer size={18} />
                 <span>Print</span>

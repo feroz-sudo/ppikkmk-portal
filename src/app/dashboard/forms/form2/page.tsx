@@ -217,7 +217,7 @@ export default function Form2ProgressiveNotesPage({ searchParams }: PageProps) {
 
     const inputClasses = "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white placeholder-gray-400";
     const textareaClasses = "w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white";
-    const sectionClasses = "space-y-3 bg-gray-50 p-6 rounded-xl border border-gray-100";
+    const sectionClasses = "space-y-3 bg-white py-4";
     const labelClasses = "text-lg font-bold text-black border-b-2 border-black pb-1 inline-block mb-2";
 
     const renderTextarea = (label: string, stateValue: string, setter: (val: string) => void, rows: number = 8) => (
@@ -236,13 +236,13 @@ export default function Form2ProgressiveNotesPage({ searchParams }: PageProps) {
     return (
         <div className="max-w-4xl mx-auto pb-12">
             <div className="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-200 overflow-hidden">
-                <div className="bg-upsi-navy px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
+                <div className="bg-white px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
                     <div>
-                        <h1 className="text-2xl font-bold text-white flex items-center space-x-3">
+                        <h1 className="text-2xl font-bold text-upsi-navy flex items-center space-x-3">
                             <FileText className="text-upsi-gold" size={28} />
-                            <span>Form 2: Progressive Notes</span>
+                            <span>Form 2: PROGRESSIVE NOTES</span>
                         </h1>
-                        <p className="text-blue-100 mt-1">S.O.A.P Format (Subjective, Objective, Assessment, Plan)</p>
+                        <p className="text-slate-500 mt-1">S.O.A.P Format (Subjective, Objective, Assessment, Plan)</p>
                     </div>
                     {!prefillClientId && (
                         <div className="bg-white p-2 rounded-lg shadow-inner border border-blue-800">
@@ -253,49 +253,49 @@ export default function Form2ProgressiveNotesPage({ searchParams }: PageProps) {
 
                 <form onSubmit={handleSubmit} className="p-8 space-y-8 bg-white">
                     <FormHeader
-                        title="Progressive Notes"
+                        title="PROGRESSIVE NOTES"
                         refCode="Progressive_Notes/KKMK_UPSI/02-2025"
                     />
 
                     {/* Personal Data Section Group */}
-                    <div className="bg-gray-50 p-6 xl:p-8 rounded-xl border border-gray-100 space-y-6">
-                        <h2 className="text-xl font-bold text-gray-900 uppercase tracking-wide underline underline-offset-4">PERSONAL DATA</h2>
+                    <div className="bg-white p-6 xl:p-8 border-2 border-black space-y-6">
+                        <h2 className="text-xl font-bold text-black uppercase tracking-wide">PERSONAL DATA</h2>
 
                         <div className="grid grid-cols-[180px_auto_1fr] md:grid-cols-[240px_auto_1fr] gap-y-4 gap-x-2 items-center">
 
-                            <div className="font-bold text-gray-800 text-sm md:text-base">Session Number</div>
-                            <div className="font-bold text-gray-800">:</div>
+                            <div className="font-bold text-black text-sm md:text-base uppercase">Session Number</div>
+                            <div className="font-bold text-black">:</div>
                             <div><input required type="text" value={sessionNumber} onChange={e => setSessionNumber(e.target.value)} className={inputClasses} placeholder="e.g. 02" /></div>
 
-                            <div className="font-bold text-gray-800 text-sm md:text-base">Session Date & Time</div>
-                            <div className="font-bold text-gray-800">:</div>
+                            <div className="font-bold text-black text-sm md:text-base uppercase">Session Date & Time</div>
+                            <div className="font-bold text-black">:</div>
                             <div className="flex space-x-2">
                                 <input required type="date" value={sessionDate} onChange={e => setSessionDate(e.target.value)} className={`${inputClasses} flex-1`} />
                                 <input required type="time" value={sessionTime} onChange={e => setSessionTime(e.target.value)} className={`${inputClasses} flex-1`} />
                             </div>
 
-                            <div className="font-bold text-gray-800 text-sm md:text-base">Duration (Hours)</div>
-                            <div className="font-bold text-gray-800">:</div>
+                            <div className="font-bold text-black text-sm md:text-base uppercase">Duration (Hours)</div>
+                            <div className="font-bold text-black">:</div>
                             <div><input required type="number" step="0.5" min="0.5" value={duration} onChange={e => setDuration(e.target.value)} className={inputClasses} placeholder="e.g. 1.0" /></div>
 
-                            <div className="font-bold text-gray-800 text-sm md:text-base">Client Full Name</div>
-                            <div className="font-bold text-gray-800">:</div>
+                            <div className="font-bold text-black text-sm md:text-base uppercase">Client Full Name</div>
+                            <div className="font-bold text-black">:</div>
                             <div><input required type="text" value={clientFullName} onChange={e => setClientFullName(e.target.value)} className={inputClasses} placeholder="Enter Client's Actual Name" /></div>
 
-                            <div className="font-bold text-gray-800 text-sm md:text-base">Date of Report</div>
-                            <div className="font-bold text-gray-800">:</div>
+                            <div className="font-bold text-black text-sm md:text-base uppercase">Date of Report</div>
+                            <div className="font-bold text-black">:</div>
                             <div><input required type="date" value={dateOfReport} onChange={e => setDateOfReport(e.target.value)} className={inputClasses} /></div>
 
-                            <div className="font-bold text-gray-800 text-sm md:text-base">Diagnosis</div>
-                            <div className="font-bold text-gray-800">:</div>
+                            <div className="font-bold text-black text-sm md:text-base uppercase">Diagnosis</div>
+                            <div className="font-bold text-black">:</div>
                             <div><input required type="text" value={diagnosis} onChange={e => setDiagnosis(e.target.value)} className={inputClasses} placeholder="e.g. Major Depressive Disorder" /></div>
 
                         </div>
                     </div>
 
                     {/* SOAP Narrative Sections */}
-                    <div className="space-y-3 bg-white p-2 rounded-xl border border-transparent">
-                        <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">SUBJECTIVE (S)</label>
+                    <div className="space-y-3 bg-white p-2 border-none">
+                        <label className="text-lg font-bold text-black uppercase border-b-2 border-black pb-1 inline-block mb-2">SUBJECTIVE (S)</label>
                         <textarea required rows={8} value={subjective} onChange={e => setSubjective(e.target.value)} className={textareaClasses} />
                     </div>
 
@@ -317,20 +317,20 @@ export default function Form2ProgressiveNotesPage({ searchParams }: PageProps) {
                     {/* Footer Section */}
                     <div className="pt-10 pb-4 mt-12 w-full">
                         <div className="mb-6 flex flex-col items-start max-w-sm">
-                            <h3 className="text-gray-900 font-bold mb-4 uppercase underline underline-offset-4">Report by:</h3>
+                            <h3 className="text-black font-bold mb-4 uppercase">Report by:</h3>
                             <div className="w-80">
-                                <div className="border-b-2 border-dotted border-gray-400 w-full mb-3 h-8"></div>
+                                <div className="border-b-2 border-dotted border-black w-full mb-3 h-8"></div>
                                 <div className="flex justify-between items-center w-full px-1">
-                                    <span className="text-gray-800 font-bold text-lg">(</span>
+                                    <span className="text-black font-bold text-lg">(</span>
                                     <input
                                         required
                                         type="text"
                                         value={counsellorName}
                                         onChange={e => setCounsellorName(e.target.value)}
-                                        className="bg-transparent outline-none flex-1 text-center font-bold text-gray-800 placeholder-gray-400 py-1"
+                                        className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase"
                                         placeholder="Enter Full Name"
                                     />
-                                    <span className="text-gray-800 font-bold text-lg">)</span>
+                                    <span className="text-black font-bold text-lg">)</span>
                                 </div>
                             </div>
                         </div>
@@ -339,25 +339,26 @@ export default function Form2ProgressiveNotesPage({ searchParams }: PageProps) {
                             <p>CMCH Counselor Trainee</p>
                             <p className="font-normal">Universiti Pendidikan Sultan Idris</p>
                             <p className="font-normal">35900 Tanjong Malim, Perak</p>
+                            <p className="text-upsi-navy font-black mt-1 uppercase">WWW.PPIKKMK.COM</p>
                         </div>
 
-                        <div className="mt-12 bg-gray-50 p-6 rounded-xl border border-gray-200 text-sm text-gray-600 space-y-4">
-                            <h4 className="font-bold text-gray-800 uppercase border-b border-gray-300 pb-2 underline underline-offset-4">Guiding Notes for Writing SOAP Note</h4>
+                        <div className="mt-12 bg-white p-6 border-2 border-black text-sm text-black space-y-4">
+                            <h4 className="font-bold text-black uppercase border-b-2 border-black pb-2">Guiding Notes for Writing SOAP Note</h4>
                             <p className="italic text-gray-500 mb-2">The Four Parts of a SOAP Note</p>
                             <div>
-                                <p className="font-bold text-gray-700 uppercase underline underline-offset-2">1. Subjective</p>
+                                <p className="font-bold text-black uppercase">1. Subjective</p>
                                 <p className="mt-1">The subjective component of a SOAP note focuses on the patient&apos;s personal experiences, feelings, and concerns. This section should include details about the patient&apos;s chief complaint, history of present illness, medical and family history, and any relevant social or environmental factors. When writing the subjective portion, it&apos;s essential to use the patient&apos;s words as much as possible to accurately convey their perspective.</p>
                             </div>
                             <div>
-                                <p className="font-bold text-gray-700 uppercase underline underline-offset-2">2. Objective</p>
+                                <p className="font-bold text-black uppercase">2. Objective</p>
                                 <p className="mt-1">The objective section of a SOAP note records observable data and factual information about the patient. This can include vital signs, physical examination findings, laboratory results, and any additional diagnostic data. In the context of mental health treatment, the objective section may also include details about the patient&apos;s appearance, behavior, and speech patterns.</p>
                             </div>
                             <div>
-                                <p className="font-bold text-gray-700 uppercase underline underline-offset-2">3. Assessment</p>
+                                <p className="font-bold text-black uppercase">3. Assessment</p>
                                 <p className="mt-1">The assessment portion of a SOAP note is where the healthcare provider evaluates the information gathered during the subjective and objective sections. This section may include a diagnosis, a summary of the patient&apos;s progress, and any potential risk factors or complications. In the case of anxiety and depression, the assessment might focus on the severity of symptoms, the effectiveness of current interventions, and any co-occurring conditions.</p>
                             </div>
                             <div>
-                                <p className="font-bold text-gray-700 uppercase underline underline-offset-2">4. Plan</p>
+                                <p className="font-bold text-black uppercase">4. Plan</p>
                                 <p className="mt-1">The plan section outlines the next steps in the patient&apos;s treatment, including any changes to their current interventions or the addition of new therapies. For anxiety and depression, this might involve adjustments to medications, the introduction of new coping strategies, or referrals to additional support services.</p>
                             </div>
                         </div>

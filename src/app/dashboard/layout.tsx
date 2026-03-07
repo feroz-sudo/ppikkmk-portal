@@ -207,43 +207,43 @@ function SidebarNavContent({
                             <div className="mt-1 ml-4 pl-4 border-l border-white/20 space-y-1 py-1">
                                 <Link href="/dashboard/forms/form1" className={getSubLinkClass("/dashboard/forms/form1")}>
                                     <ClipboardList size={14} className={pathname === "/dashboard/forms/form1" ? "text-upsi-gold" : "text-blue-300"} />
-                                    <span className="text-[10px] uppercase font-bold tracking-tight">Form 1: Intake</span>
+                                    <span className="text-[10px] uppercase font-bold tracking-tight">FORM 1: PSYCHOLOGICAL INTAKE REPORT</span>
                                 </Link>
                                 <Link href="/dashboard/forms/form2" className={getSubLinkClass("/dashboard/forms/form2")}>
                                     <FileText size={14} className={pathname === "/dashboard/forms/form2" ? "text-upsi-gold" : "text-green-300"} />
-                                    <span className="text-[10px] uppercase font-bold tracking-tight">Form 2: Progressive</span>
+                                    <span className="text-[10px] uppercase font-bold tracking-tight">FORM 2: PROGRESSIVE NOTES</span>
                                 </Link>
                                 <Link href="/dashboard/forms/form3" className={getSubLinkClass("/dashboard/forms/form3")}>
                                     <Lightbulb size={14} className={pathname === "/dashboard/forms/form3" ? "text-upsi-gold" : "text-yellow-300"} />
-                                    <span className="text-[10px] uppercase font-bold tracking-tight">Form 3: Case Concept</span>
+                                    <span className="text-[10px] uppercase font-bold tracking-tight">FORM 3: CASE CONCEPTUALIZATION</span>
                                 </Link>
                                 <Link href="/dashboard/forms/form4" className={getSubLinkClass("/dashboard/forms/form4")}>
                                     <Target size={14} className={pathname === "/dashboard/forms/form4" ? "text-upsi-gold" : "text-red-300"} />
-                                    <span className="text-[10px] uppercase font-bold tracking-tight">Form 4: Treatment Plan</span>
+                                    <span className="text-[10px] uppercase font-bold tracking-tight">FORM 4: TREATMENT PLANNING</span>
                                 </Link>
                                 <Link href="/dashboard/forms/form5" className={getSubLinkClass("/dashboard/forms/form5")}>
                                     <Flag size={14} className={pathname === "/dashboard/forms/form5" ? "text-upsi-gold" : "text-orange-300"} />
-                                    <span className="text-[10px] uppercase font-bold tracking-tight">Form 5: Referral</span>
+                                    <span className="text-[10px] uppercase font-bold tracking-tight">FORM 5: TERMINATION SESSION</span>
                                 </Link>
                                 <Link href="/dashboard/forms/form6" className={getSubLinkClass("/dashboard/forms/form6")}>
                                     <AlertTriangle size={14} className={pathname === "/dashboard/forms/form6" ? "text-upsi-gold" : "text-rose-400"} />
-                                    <span className="text-[10px] uppercase font-bold tracking-tight">Form 6: Termination</span>
+                                    <span className="text-[10px] uppercase font-bold tracking-tight">FORM 6: CRISIS INTERVENTION REPORT</span>
                                 </Link>
                                 <Link href="/dashboard/forms/form7" className={getSubLinkClass("/dashboard/forms/form7")}>
                                     <UserCheck size={14} className={pathname === "/dashboard/forms/form7" ? "text-upsi-gold" : "text-emerald-300"} />
-                                    <span className="text-[10px] uppercase font-bold tracking-tight">Form 7: Informed Consent</span>
+                                    <span className="text-[10px] uppercase font-bold tracking-tight">FORM 7: CONSULTATION REPORT</span>
                                 </Link>
                                 <Link href="/dashboard/forms/form8" className={getSubLinkClass("/dashboard/forms/form8")}>
                                     <Shield size={14} className={pathname === "/dashboard/forms/form8" ? "text-upsi-gold" : "text-purple-300"} />
-                                    <span className="text-[10px] uppercase font-bold tracking-tight">Form 8: Supervisor Report</span>
+                                    <span className="text-[10px] uppercase font-bold tracking-tight">FORM 8: PFA MHPSS REPORT</span>
                                 </Link>
                                 <Link href="/dashboard/forms/form11" className={getSubLinkClass("/dashboard/forms/form11")}>
                                     <UsersRound size={14} className={pathname === "/dashboard/forms/form11" ? "text-upsi-gold" : "text-indigo-300"} />
-                                    <span className="text-[10px] uppercase font-bold tracking-tight">Form 11: Group</span>
+                                    <span className="text-[10px] uppercase font-bold tracking-tight">FORM 11: GROUP COUNSELING REPORT</span>
                                 </Link>
                                 <Link href="/dashboard/forms/form13" className={getSubLinkClass("/dashboard/forms/form13")}>
                                     <CheckCircle2 size={14} className={pathname === "/dashboard/forms/form13" ? "text-upsi-gold" : "text-teal-300"} />
-                                    <span className="text-[10px] uppercase font-bold tracking-tight">Form 13: Evaluation</span>
+                                    <span className="text-[10px] uppercase font-bold tracking-tight">FORM 13: PSYCHOLOGICAL ASSESSMENT REPORT</span>
                                 </Link>
                             </div>
                         )}
@@ -364,7 +364,7 @@ export default function DashboardLayout({
             : 'text-blue-100/60 hover:bg-white/10 hover:text-white'}`;
 
     return (
-        <div className="flex h-screen bg-gray-50 flex-col md:flex-row overflow-hidden">
+        <div className="flex h-screen bg-white flex-col md:flex-row overflow-hidden">
             {/* Sidebar Navigation */}
             <aside className={`w-full md:w-64 bg-upsi-navy text-white flex-col h-full ${isSidebarOpen ? 'flex' : 'hidden'} shrink-0 no-print print:hidden`}>
                 <div className="p-8 shrink-0">
@@ -418,7 +418,7 @@ export default function DashboardLayout({
             </aside>
 
             {/* Main Content Area */}
-            <div className="flex-1 flex flex-col overflow-hidden bg-[#F8FAFC]">
+            <div className="flex-1 flex flex-col overflow-hidden bg-white">
                 {/* Header */}
                 <header className="glass border-b border-slate-200 h-20 flex items-center justify-between px-8 shrink-0 z-30 no-print print:hidden">
                     {/* Toggle and Brand */}
@@ -459,7 +459,7 @@ export default function DashboardLayout({
                 </header>
 
                 {/* Main Content */}
-                <main className="flex-1 overflow-y-auto p-6 bg-gray-50">
+                <main className="flex-1 overflow-y-auto p-6 bg-white">
                     <Suspense fallback={
                         <div className="flex flex-col items-center justify-center min-h-[400px]">
                             <div className="animate-spin w-10 h-10 border-4 border-upsi-gold border-t-transparent rounded-full mb-4"></div>
@@ -475,6 +475,8 @@ export default function DashboardLayout({
                     <Disclaimer variant="compact" className="text-center opacity-70 mb-4" />
                     <div className="flex items-center space-x-2 text-slate-400 font-medium text-xs">
                         <span>Portal PPIKKMK</span>
+                        <span className="w-1 h-1 bg-slate-200 rounded-full" />
+                        <span className="text-upsi-navy font-black tracking-tighter">WWW.PPIKKMK.COM</span>
                         <span className="w-1 h-1 bg-slate-200 rounded-full" />
                         <span>UPSI Official Clinical Platform</span>
                         <span className="w-1 h-1 bg-slate-200 rounded-full" />

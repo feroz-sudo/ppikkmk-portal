@@ -218,10 +218,10 @@ export function Form7ConsultationReportPage({ searchParams }: PageProps) {
         }
     };
 
-    const inputClasses = "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white placeholder-gray-400";
-    const textareaClasses = "w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white";
-    const sectionClasses = "space-y-3 bg-gray-50 p-6 rounded-xl border border-gray-100";
-    const labelClasses = "text-lg font-bold text-gray-800 border-b-2 border-upsi-red pb-1 inline-block mb-2";
+    const inputClasses = "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none text-black bg-white placeholder-gray-400";
+    const textareaClasses = "w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none text-black bg-white";
+    const sectionClasses = "space-y-3 bg-white py-4";
+    const labelClasses = "text-lg font-bold text-black border-b-2 border-black pb-1 inline-block mb-2";
 
     const renderTextarea = (label: string, stateValue: string, setter: (val: string) => void, rows: number = 6) => (
         <div className={sectionClasses}>
@@ -231,7 +231,7 @@ export function Form7ConsultationReportPage({ searchParams }: PageProps) {
                 rows={rows}
                 value={stateValue}
                 onChange={e => setter(e.target.value)}
-                className={textareaClasses}
+                className="w-full p-4 border border-black outline-none text-black bg-white"
             />
         </div>
     );
@@ -239,13 +239,13 @@ export function Form7ConsultationReportPage({ searchParams }: PageProps) {
     return (
         <div className="max-w-4xl mx-auto pb-12">
             <div className="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-200 overflow-hidden">
-                <div className="bg-upsi-navy px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
+                <div className="bg-white px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
                     <div>
-                        <h1 className="text-2xl font-bold text-white flex items-center space-x-3">
+                        <h1 className="text-2xl font-bold text-upsi-navy flex items-center space-x-3">
                             <MessageSquare className="text-upsi-gold" size={28} />
-                            <span>Form 7: Consultation Report</span>
+                            <span>FORM 7: CONSULTATION REPORT</span>
                         </h1>
-                        <p className="text-blue-100 mt-1">Formal record of client/guardian case consultation.</p>
+                        <p className="text-slate-500 mt-1">Formal record of client/guardian case consultation.</p>
                     </div>
                     {!prefillClientId && (
                         <div className="bg-white p-2 rounded-lg shadow-inner border border-blue-800">
@@ -256,58 +256,58 @@ export function Form7ConsultationReportPage({ searchParams }: PageProps) {
 
                 <form onSubmit={handleSubmit} className="p-8 space-y-8 bg-white overflow-x-auto">
                     <FormHeader
-                        title="Consultation Report"
+                        title="CONSULTATION REPORT"
                         refCode="Consultation_Report/KKMK_UPSI/07-2025"
                     />
 
                     {/* Counselor Info */}
                     <div className="grid grid-cols-2 gap-8 mb-8 max-w-2xl">
                         <div className="flex items-center space-x-3">
-                            <label className="font-bold text-gray-800 min-w-[80px] uppercase">Name</label>
-                            <span className="font-bold text-gray-800">:</span>
-                            <input required type="text" value={consultantName} onChange={e => setConsultantName(e.target.value)} className="flex-1 p-2 border-b border-gray-300 focus:border-upsi-navy outline-none bg-transparent" placeholder="Enter name" />
+                            <label className="font-bold text-black min-w-[80px] uppercase">Name</label>
+                            <span className="font-bold text-black">:</span>
+                            <input required type="text" value={consultantName} onChange={e => setConsultantName(e.target.value)} className="flex-1 p-2 border-b border-gray-300 focus:border-black outline-none bg-transparent text-black" placeholder="Enter name" />
                         </div>
                         <div className="flex items-center space-x-3">
-                            <label className="font-bold text-gray-800 min-w-[100px] uppercase">Institution</label>
-                            <span className="font-bold text-gray-800">:</span>
-                            <input required type="text" value={institution} onChange={e => setInstitution(e.target.value)} className="flex-1 p-2 border-b border-gray-300 focus:border-upsi-navy outline-none bg-transparent" placeholder="e.g. UPSI" />
+                            <label className="font-bold text-black min-w-[100px] uppercase">Institution</label>
+                            <span className="font-bold text-black">:</span>
+                            <input required type="text" value={institution} onChange={e => setInstitution(e.target.value)} className="flex-1 p-2 border-b border-gray-300 focus:border-black outline-none bg-transparent text-black" placeholder="e.g. UPSI" />
                         </div>
                     </div>
 
                     {/* Demographic Information Section Group */}
-                    <div className="border border-gray-300 rounded-lg overflow-hidden mb-8">
-                        <div className="bg-[#FFF8F0] px-4 py-2 border-b border-gray-300">
-                            <h2 className="text-lg font-bold text-gray-900 uppercase tracking-wide">Client Information</h2>
+                    <div className="border border-black overflow-hidden mb-8">
+                        <div className="bg-white px-4 py-2 border-b-2 border-black">
+                            <h2 className="text-lg font-bold text-black uppercase tracking-wide">Client Information</h2>
                         </div>
 
                         <div className="p-6 space-y-6">
                             <div className="grid grid-cols-[180px_auto_1fr] md:grid-cols-[240px_auto_1fr] gap-y-4 gap-x-2 items-center">
-                                <div className="font-bold text-gray-800 text-sm md:text-base uppercase">Client’s Name</div>
-                                <div className="font-bold text-gray-800">:</div>
-                                <div><input required type="text" value={clientName} onChange={e => setClientName(e.target.value)} className={inputClasses} placeholder="Enter Client's Name" /></div>
+                                <div className="font-bold text-black text-sm md:text-base uppercase">Client’s Name</div>
+                                <div className="font-bold text-black">:</div>
+                                <div><input required type="text" value={clientName} onChange={e => setClientName(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="Enter Client's Name" /></div>
 
-                                <div className="font-bold text-gray-800 text-sm md:text-base uppercase">Guardian’s Name</div>
-                                <div className="font-bold text-gray-800">:</div>
-                                <div><input type="text" value={guardiansName} onChange={e => setGuardiansName(e.target.value)} className={inputClasses} placeholder="Enter Guardian's Name" /></div>
+                                <div className="font-bold text-black text-sm md:text-base uppercase">Guardian’s Name</div>
+                                <div className="font-bold text-black">:</div>
+                                <div><input type="text" value={guardiansName} onChange={e => setGuardiansName(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="Enter Guardian's Name" /></div>
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 border-t border-gray-200 pt-6">
                                 <div className="space-y-2">
-                                    <label className="font-bold text-gray-800 uppercase block">Date & Time</label>
-                                    <input required type="datetime-local" value={dateTime} onChange={e => setDateTime(e.target.value)} className={inputClasses} />
+                                    <label className="font-bold text-black uppercase block">Date & Time</label>
+                                    <input required type="datetime-local" value={dateTime} onChange={e => setDateTime(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="font-bold text-gray-800 uppercase block">Duration (Hours)</label>
-                                    <input required type="number" step="0.5" min="0.5" value={duration} onChange={e => setDuration(e.target.value)} className={inputClasses} placeholder="e.g. 1.0" />
+                                    <label className="font-bold text-black uppercase block">Duration (Hours)</label>
+                                    <input required type="number" step="0.5" min="0.5" value={duration} onChange={e => setDuration(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="e.g. 1.0" />
                                 </div>
                                 <div className="md:col-span-1 space-y-2">
-                                    <label className="font-bold text-gray-800 uppercase block">Venue</label>
-                                    <input required type="text" value={venue} onChange={e => setVenue(e.target.value)} className={inputClasses} placeholder="Meeting location" />
+                                    <label className="font-bold text-black uppercase block">Venue</label>
+                                    <input required type="text" value={venue} onChange={e => setVenue(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="Meeting location" />
                                 </div>
                             </div>
 
                             <div className="border-t border-gray-200 pt-6">
-                                <label className="font-bold text-gray-800 uppercase block mb-3">Attendance Type</label>
+                                <label className="font-bold text-black uppercase block mb-3">Attendance Type</label>
                                 <div className="flex flex-wrap gap-8">
                                     {["Voluntary", "Referred", "Invited"].map((type) => (
                                         <label key={type} className="flex items-center cursor-pointer group">
@@ -318,9 +318,9 @@ export function Form7ConsultationReportPage({ searchParams }: PageProps) {
                                                 checked={attendanceType === type}
                                                 onChange={e => setAttendanceType(e.target.value)}
                                                 name="attendance"
-                                                className="w-5 h-5 text-upsi-navy border-gray-300 focus:ring-upsi-navy cursor-pointer"
+                                                className="w-5 h-5 text-black border-gray-300 focus:ring-black cursor-pointer"
                                             />
-                                            <span className="ml-3 text-gray-700 font-bold group-hover:text-upsi-navy transition-colors">{type}</span>
+                                            <span className="ml-3 text-black font-bold group-hover:text-black transition-colors">{type}</span>
                                         </label>
                                     ))}
                                 </div>
@@ -335,9 +335,9 @@ export function Form7ConsultationReportPage({ searchParams }: PageProps) {
                             { label: "Intervention / Resolution Actions", value: interventionActions, setter: setInterventionActions, rows: 6 },
                             { label: "Follow-Up", value: followUp, setter: setFollowUp, rows: 5 }
                         ].map((field, idx) => (
-                            <div key={idx} className="border border-gray-300 rounded-lg overflow-hidden shadow-sm">
-                                <div className="bg-[#FFF8F0] px-4 py-2 border-b border-gray-300">
-                                    <label className="text-lg font-bold text-gray-900 uppercase">
+                            <div key={idx} className="bg-white">
+                                <div className="bg-white px-4 py-2 border-b-2 border-black">
+                                    <label className="text-lg font-bold text-black uppercase">
                                         {field.label}
                                     </label>
                                 </div>
@@ -356,32 +356,32 @@ export function Form7ConsultationReportPage({ searchParams }: PageProps) {
                     </div>
 
                     {/* Referral Section */}
-                    <div className="border border-gray-300 rounded-lg overflow-hidden mt-8">
-                        <div className="bg-[#FFF8F0] px-4 py-2 border-b border-gray-300">
-                            <h2 className="text-lg font-bold text-gray-900 uppercase tracking-wide">Referral</h2>
+                    <div className="mt-8">
+                        <div className="bg-white px-4 py-2 border-b-2 border-black">
+                            <h2 className="text-lg font-bold text-black uppercase tracking-wide">Referral</h2>
                         </div>
                         <div className="p-6 space-y-6">
                             <div className="flex items-center space-x-12">
-                                <span className="font-bold text-gray-800 uppercase w-48">Referral Needed</span>
+                                <span className="font-bold text-black uppercase w-48">Referral Needed</span>
                                 <div className="flex items-center space-x-8">
                                     <label className="flex items-center cursor-pointer group">
-                                        <input required type="radio" value="Yes" checked={referralNeeded === "Yes"} onChange={e => setReferralNeeded(e.target.value)} name="referral" className="w-5 h-5 text-upsi-navy border-gray-300 focus:ring-upsi-navy cursor-pointer" />
-                                        <span className="ml-3 text-gray-700 font-bold group-hover:text-upsi-navy transition-colors">Yes</span>
+                                        <input required type="radio" value="Yes" checked={referralNeeded === "Yes"} onChange={e => setReferralNeeded(e.target.value)} name="referral" className="w-5 h-5 text-black border-gray-300 focus:ring-black cursor-pointer" />
+                                        <span className="ml-3 text-black font-bold group-hover:text-black transition-colors">Yes</span>
                                     </label>
                                     <label className="flex items-center cursor-pointer group">
-                                        <input required type="radio" value="No" checked={referralNeeded === "No"} onChange={e => setReferralNeeded(e.target.value)} name="referral" className="w-5 h-5 text-upsi-navy border-gray-300 focus:ring-upsi-navy cursor-pointer" />
-                                        <span className="ml-3 text-gray-700 font-bold group-hover:text-upsi-navy transition-colors">No</span>
+                                        <input required type="radio" value="No" checked={referralNeeded === "No"} onChange={e => setReferralNeeded(e.target.value)} name="referral" className="w-5 h-5 text-black border-gray-300 focus:ring-black cursor-pointer" />
+                                        <span className="ml-3 text-black font-bold group-hover:text-black transition-colors">No</span>
                                     </label>
                                 </div>
                             </div>
                             <div className="space-y-2">
-                                <label className="font-bold text-gray-800 uppercase block underline underline-offset-4">Referral (If necessary, please specify):</label>
+                                <label className="font-bold text-black uppercase block underline underline-offset-4">Referral (If necessary, please specify):</label>
                                 <input
                                     required={referralNeeded === "Yes"}
                                     type="text"
                                     value={referralSpecifics}
                                     onChange={e => setReferralSpecifics(e.target.value)}
-                                    className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white"
+                                    className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none text-black bg-white"
                                     placeholder="Enter referral details..."
                                 />
                             </div>
@@ -390,13 +390,13 @@ export function Form7ConsultationReportPage({ searchParams }: PageProps) {
 
                     {/* Signatures Table Section */}
                     <div className="pt-10 pb-4 mt-12 w-full">
-                        <div className="overflow-x-auto rounded-lg border border-gray-300 shadow-sm">
+                        <div className="overflow-x-auto border border-black shadow-none">
                             <table className="w-full text-left bg-white min-w-[700px] border-collapse">
-                                <thead className="bg-[#FFF8F0] text-gray-900 border-b border-gray-300">
+                                <thead className="bg-[#FFFFFF] text-black border-b border-black">
                                     <tr>
-                                        <th className="px-6 py-4 font-bold uppercase tracking-wider border-r border-gray-300 text-center w-1/4">Action</th>
-                                        <th className="px-6 py-4 font-bold uppercase tracking-wider border-r border-gray-300 text-center w-1/2">Signature & Name</th>
-                                        <th className="px-6 py-4 font-bold uppercase tracking-wider text-center w-1/4">Date</th>
+                                        <th className="px-6 py-4 font-bold uppercase tracking-wider border-r border-black text-center w-1/4">Action</th>
+                                        <th className="px-6 py-4 font-bold uppercase tracking-wider border-r border-black text-center w-1/2">Signature & Name</th>
+                                        <th className="px-6 py-4 font-bold uppercase tracking-wider text-center w-1/4 text-black">Date</th>
                                     </tr>
                                 </thead>
                                 <tbody className="text-gray-800">
@@ -405,30 +405,30 @@ export function Form7ConsultationReportPage({ searchParams }: PageProps) {
                                         { label: "Site Supervisor", value: siteSupervisorSignature, setter: setSiteSupervisorSignature },
                                         { label: "Academic Supervisor", value: academicSupervisorSignature, setter: setAcademicSupervisorSignature }
                                     ].map((row, idx) => (
-                                        <tr key={idx} className="border-b border-gray-300 last:border-0">
-                                            <td className="px-6 py-8 border-r border-gray-300 font-bold text-center align-middle uppercase text-sm">
+                                        <tr key={idx} className="border-b border-black last:border-0">
+                                            <td className="px-6 py-8 border-r border-black font-bold text-center align-middle uppercase text-sm text-black">
                                                 {row.label} Signature
                                             </td>
-                                            <td className="px-6 py-8 border-r border-gray-300">
+                                            <td className="px-6 py-8 border-r border-black">
                                                 <div className="flex flex-col items-center">
-                                                    <div className="border-b border-gray-400 w-full mb-3 h-8"></div>
+                                                    <div className="border-b-2 border-dotted border-black w-full mb-3 h-8"></div>
                                                     <div className="flex justify-center items-center w-full px-4">
-                                                        <span className="text-gray-400 font-bold text-lg">(</span>
+                                                        <span className="text-black font-bold text-lg">(</span>
                                                         <input
                                                             required={row.required}
                                                             type="text"
                                                             value={row.value}
                                                             onChange={e => row.setter(e.target.value)}
-                                                            className="bg-transparent outline-none flex-1 text-center font-bold text-gray-800 placeholder-gray-300 py-1 uppercase"
+                                                            className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase"
                                                             placeholder={`Name of ${row.label}`}
                                                         />
-                                                        <span className="text-gray-400 font-bold text-lg">)</span>
+                                                        <span className="text-black font-bold text-lg">)</span>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td className="px-6 py-8 text-center align-middle">
-                                                <div className="border-b border-gray-300 w-32 mx-auto h-8 mb-2"></div>
-                                                <span className="text-gray-400 text-xs">DD/MM/YYYY</span>
+                                                <div className="border-b border-black w-32 mx-auto h-8 mb-2"></div>
+                                                <span className="text-black text-xs font-bold uppercase">DD/MM/YYYY</span>
                                             </td>
                                         </tr>
                                     ))}
@@ -437,6 +437,7 @@ export function Form7ConsultationReportPage({ searchParams }: PageProps) {
                         </div>
 
                         <div className="mt-16 text-center w-full pt-4 border-t border-dashed border-gray-200">
+                            <p className="text-[10px] font-black text-upsi-navy uppercase tracking-[0.2em] mb-1">WWW.PPIKKMK.COM</p>
                             <p className="text-xs font-bold text-slate-500 uppercase tracking-widest pl-[0.1em]">
                                 Confidential Document (For Professional Use Only)
                             </p>

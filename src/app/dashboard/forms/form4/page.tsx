@@ -205,19 +205,19 @@ export function Form4TreatmentPlanPage({ searchParams }: PageProps) {
         }
     };
 
-    const inputClasses = "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 outline-none text-gray-700 bg-white placeholder-gray-400";
-    const textareaClasses = "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 outline-none text-gray-700 bg-white text-sm";
+    const inputClasses = "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none text-black bg-white placeholder-gray-400";
+    const textareaClasses = "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none text-black bg-white text-sm";
 
     return (
         <div className="max-w-6xl mx-auto pb-12">
             <div className="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-200 overflow-hidden">
-                <div className="bg-upsi-navy px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
+                <div className="bg-white px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
                     <div>
-                        <h1 className="text-2xl font-bold text-white flex items-center space-x-3">
+                        <h1 className="text-2xl font-bold text-upsi-navy flex items-center space-x-3">
                             <Target className="text-upsi-gold" size={28} />
-                            <span>Form 4: Treatment Planning</span>
+                            <span>Form 4: TREATMENT PLANNING</span>
                         </h1>
-                        <p className="text-blue-100 mt-1">Clinical Treatment Plan structure and outcome measures.</p>
+                        <p className="text-slate-500 mt-1">Clinical Treatment Plan structure and outcome measures.</p>
                     </div>
                     {!prefillClientId && (
                         <div className="bg-white p-2 rounded-lg shadow-inner border border-blue-800">
@@ -228,22 +228,22 @@ export function Form4TreatmentPlanPage({ searchParams }: PageProps) {
 
                 <form onSubmit={handleSubmit} className="p-8 space-y-8 bg-white overflow-x-auto">
                     <FormHeader
-                        title="Clinical Treatment Plan"
+                        title="TREATMENT PLANNING"
                         refCode="Clinical_Treatment_Plan/KKMK_UPSI/04-2025"
                     />
 
                     {/* Demographic Information Section Group */}
-                    <div className="bg-gray-50 p-6 xl:p-8 rounded-xl border border-gray-100 space-y-6">
-                        <h2 className="text-xl font-bold text-black uppercase tracking-wide underline underline-offset-4">DEMOGRAPHIC INFORMATION</h2>
+                    <div className="bg-white p-6 xl:p-8 border-2 border-black space-y-6">
+                        <h2 className="text-xl font-bold text-black uppercase tracking-wide">DEMOGRAPHIC INFORMATION</h2>
 
                         <div className="grid grid-cols-[180px_auto_1fr] md:grid-cols-[240px_auto_1fr] gap-y-4 gap-x-2 items-center">
 
-                            <div className="font-bold text-gray-800 text-sm md:text-base">Client Full Name</div>
-                            <div className="font-bold text-gray-800">:</div>
+                            <div className="font-bold text-black text-sm md:text-base uppercase">Client Full Name</div>
+                            <div className="font-bold text-black">:</div>
                             <div><input required type="text" value={clientFullName} onChange={e => setClientFullName(e.target.value)} className={inputClasses} placeholder="Enter Client's Actual Name" /></div>
 
-                            <div className="font-bold text-gray-800 text-sm md:text-base">Ethnic/Sex</div>
-                            <div className="font-bold text-gray-800">:</div>
+                            <div className="font-bold text-black text-sm md:text-base uppercase">Ethnic/Sex</div>
+                            <div className="font-bold text-black">:</div>
                             <div className="flex space-x-2 items-center w-full">
                                 <select required value={ethnic} onChange={e => setEthnic(e.target.value)} className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white w-2/3">
                                     <option value="" disabled>Select Ethnic</option>
@@ -263,12 +263,12 @@ export function Form4TreatmentPlanPage({ searchParams }: PageProps) {
                                 </select>
                             </div>
 
-                            <div className="font-bold text-gray-800 text-sm md:text-base">Age</div>
-                            <div className="font-bold text-gray-800">:</div>
+                            <div className="font-bold text-black text-sm md:text-base uppercase">Age</div>
+                            <div className="font-bold text-black">:</div>
                             <div><input required type="text" value={age} onChange={e => setAge(e.target.value)} className={inputClasses} placeholder="e.g. 24" /></div>
 
-                            <div className="font-bold text-gray-800 text-sm md:text-base">Diagnosis</div>
-                            <div className="font-bold text-gray-800">:</div>
+                            <div className="font-bold text-black text-sm md:text-base uppercase">Diagnosis</div>
+                            <div className="font-bold text-black">:</div>
                             <div><input required type="text" value={diagnosis} onChange={e => setDiagnosis(e.target.value)} className={inputClasses} placeholder="e.g. Generalized Anxiety Disorder" /></div>
 
                         </div>
@@ -279,43 +279,43 @@ export function Form4TreatmentPlanPage({ searchParams }: PageProps) {
                         <h2 className="text-2xl font-bold text-gray-900 uppercase tracking-wide underline underline-offset-8 decoration-2 mb-10 text-center">CLINICAL TREATMENT PLAN</h2>
 
                         <div className="rounded-xl border border-gray-300 overflow-hidden shadow-sm min-w-[700px]">
-                            <div className="grid grid-cols-12 bg-white text-gray-900 border-b border-gray-300 font-bold">
-                                <div className="col-span-3 p-4 border-r border-gray-300 uppercase underline underline-offset-4">Goal(s)</div>
-                                <div className="col-span-5 p-4 border-r border-gray-300 uppercase underline underline-offset-4">Therapeutic Intervention</div>
-                                <div className="col-span-3 p-4 border-r border-gray-300 uppercase underline underline-offset-4">Outcome Measures of Change</div>
+                            <div className="grid grid-cols-12 bg-white text-black border-b-2 border-black font-bold">
+                                <div className="col-span-3 p-4 border-r border-black uppercase underline underline-offset-4 decoration-2">Goal(s)</div>
+                                <div className="col-span-5 p-4 border-r border-black uppercase underline underline-offset-4 decoration-2">Therapeutic Intervention</div>
+                                <div className="col-span-3 p-4 border-r border-black uppercase underline underline-offset-4 decoration-2">Outcome Measures of Change</div>
                                 <div className="col-span-1 p-4 text-center no-print text-[10px] uppercase text-gray-400 italic">Actions</div>
                             </div>
 
                             <div className="bg-white flex flex-col">
                                 {treatmentPlans.map((plan, index) => (
-                                    <div key={index} className="grid grid-cols-12 bg-white border-b border-gray-200 items-stretch last:border-b-0">
-                                        <div className="col-span-3 border-r border-gray-200 p-2">
+                                    <div key={index} className="grid grid-cols-12 bg-white border-b border-black items-stretch last:border-b-0">
+                                        <div className="col-span-3 border-r border-black p-2">
                                             <textarea
                                                 required
                                                 rows={6}
                                                 value={plan.goal}
                                                 onChange={e => handleUpdateRow(index, "goal", e.target.value)}
-                                                className="w-full p-2 outline-none text-gray-700 bg-transparent text-sm resize-none"
+                                                className="w-full p-2 outline-none text-black bg-transparent text-sm resize-none"
                                                 placeholder="State clinical goal..."
                                             />
                                         </div>
-                                        <div className="col-span-5 border-r border-gray-200 p-2">
+                                        <div className="col-span-5 border-r border-black p-2">
                                             <textarea
                                                 required
                                                 rows={6}
                                                 value={plan.intervention}
                                                 onChange={e => handleUpdateRow(index, "intervention", e.target.value)}
-                                                className="w-full p-2 outline-none text-gray-700 bg-transparent text-sm resize-none"
+                                                className="w-full p-2 outline-none text-black bg-transparent text-sm resize-none"
                                                 placeholder="Describe treatment approach..."
                                             />
                                         </div>
-                                        <div className="col-span-3 border-r border-gray-200 p-2">
+                                        <div className="col-span-3 border-r border-black p-2">
                                             <textarea
                                                 required
                                                 rows={6}
                                                 value={plan.outcome}
                                                 onChange={e => handleUpdateRow(index, "outcome", e.target.value)}
-                                                className="w-full p-2 outline-none text-gray-700 bg-transparent text-sm resize-none"
+                                                className="w-full p-2 outline-none text-black bg-transparent text-sm resize-none"
                                                 placeholder="Define success metrics..."
                                             />
                                         </div>
@@ -333,11 +333,11 @@ export function Form4TreatmentPlanPage({ searchParams }: PageProps) {
                                     </div>
                                 ))}
                             </div>
-                            <div className="bg-gray-50 p-4 border-t border-gray-300 no-print">
+                            <div className="bg-white p-4 border-t border-black no-print">
                                 <button
                                     type="button"
                                     onClick={handleAddRow}
-                                    className="flex items-center space-x-2 text-upsi-navy font-bold px-4 py-2 hover:bg-blue-100 rounded-lg transition-colors border border-gray-200"
+                                    className="flex items-center space-x-2 text-black font-bold px-4 py-2 hover:bg-white rounded-lg transition-colors border-2 border-black"
                                 >
                                     <Plus size={18} />
                                     <span>Add New Goal Row</span>
@@ -349,20 +349,20 @@ export function Form4TreatmentPlanPage({ searchParams }: PageProps) {
                     {/* Footer Section */}
                     <div className="pt-10 pb-4 mt-12 w-full">
                         <div className="mb-6 flex flex-col items-start max-w-sm">
-                            <h3 className="text-gray-900 font-bold mb-4 uppercase underline underline-offset-4">Report by:</h3>
+                            <h3 className="text-black font-bold mb-4 uppercase">Report by:</h3>
                             <div className="w-80">
-                                <div className="border-b-2 border-dotted border-gray-400 w-full mb-3 h-8"></div>
+                                <div className="border-b-2 border-dotted border-black w-full mb-3 h-8"></div>
                                 <div className="flex justify-between items-center w-full px-1">
-                                    <span className="text-gray-800 font-bold text-lg">(</span>
+                                    <span className="text-black font-bold text-lg">(</span>
                                     <input
                                         required
                                         type="text"
                                         value={counsellorName}
                                         onChange={e => setCounsellorName(e.target.value)}
-                                        className="bg-transparent outline-none flex-1 text-center font-bold text-gray-800 placeholder-gray-400 py-1"
+                                        className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase"
                                         placeholder="Enter Full Name"
                                     />
-                                    <span className="text-gray-800 font-bold text-lg">)</span>
+                                    <span className="text-black font-bold text-lg">)</span>
                                 </div>
                             </div>
                         </div>
@@ -371,6 +371,7 @@ export function Form4TreatmentPlanPage({ searchParams }: PageProps) {
                             <p>CMCH Counselor Trainee</p>
                             <p className="font-normal">Universiti Pendidikan Sultan Idris</p>
                             <p className="font-normal">35900 Tanjong Malim, Perak</p>
+                            <p className="text-upsi-navy font-black mt-1 uppercase">WWW.PPIKKMK.COM</p>
                         </div>
 
                         <div className="mt-16 text-center w-full pt-4 border-t border-dashed border-gray-200">

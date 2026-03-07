@@ -49,15 +49,15 @@ export function AppendicesSection({ images, onChange }: AppendicesSectionProps) 
     };
 
     return (
-        <div className="mt-8 border border-gray-300 rounded-lg overflow-hidden shadow-sm bg-white">
-            <div className="bg-[#FFF8F0] px-4 py-3 border-b border-gray-300 flex justify-between items-center">
-                <h2 className="text-lg font-bold text-gray-900 uppercase tracking-wide flex items-center">
-                    <ImageIcon className="mr-2 text-upsi-navy" size={20} />
+        <div className="mt-8 border border-gray-300 shadow-none bg-white">
+            <div className="bg-white px-4 py-3 border-b-2 border-black flex justify-between items-center">
+                <h2 className="text-lg font-bold text-black uppercase tracking-wide flex items-center">
+                    <ImageIcon className="mr-2 text-black" size={20} />
                     APPENDICES
                 </h2>
-                <label className="bg-upsi-navy hover:bg-blue-900 text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center cursor-pointer transition-colors shadow-sm">
-                    <Plus size={16} className="mr-1" />
-                    ADD IMAGE
+                <label className="bg-black hover:bg-gray-700 text-white px-5 py-2.5 rounded-lg text-sm font-black flex items-center cursor-pointer transition-all shadow-md active:scale-95 no-print">
+                    <Plus size={18} className="mr-2" />
+                    ADD IMAGES / EVIDENCE
                     <input
                         type="file"
                         accept="image/*"
@@ -70,7 +70,7 @@ export function AppendicesSection({ images, onChange }: AppendicesSectionProps) 
 
             <div className="p-6 space-y-8">
                 {images.length === 0 ? (
-                    <div className="text-center py-10 border-2 border-dashed border-gray-200 rounded-xl bg-gray-50">
+                    <div className="text-center py-10 border-2 border-dashed border-black rounded-xl bg-white no-print">
                         <ImageIcon className="mx-auto text-gray-300 mb-2" size={48} />
                         <p className="text-gray-500 font-medium">No images added yet.</p>
                         <p className="text-gray-400 text-sm mt-1">Upload photos or certificates as evidence.</p>
@@ -78,29 +78,29 @@ export function AppendicesSection({ images, onChange }: AppendicesSectionProps) 
                 ) : (
                     <div className="grid grid-cols-1 gap-8">
                         {images.map((img, idx) => (
-                            <div key={img.id} className="group relative border border-gray-200 rounded-xl overflow-hidden bg-gray-50 pb-4 shadow-sm transition-shadow hover:shadow-md">
+                            <div key={img.id} className="group relative border border-gray-200 rounded-xl overflow-hidden bg-white pb-6 shadow-sm print:border-none print:shadow-none print:pb-0">
                                 <button
                                     type="button"
                                     onClick={() => handleRemoveImage(img.id)}
-                                    className="absolute top-2 right-2 p-1.5 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity z-10 shadow-lg hover:bg-red-600"
+                                    className="absolute top-2 right-2 p-1.5 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity z-10 shadow-lg hover:bg-red-600 no-print"
                                 >
                                     <X size={16} />
                                 </button>
 
-                                <div className="flex flex-col items-center bg-white p-4">
+                                <div className="flex flex-col items-center p-4 print:p-0">
                                     <div
-                                        className="relative transition-all duration-300 ease-in-out border border-gray-100 rounded-lg shadow-inner overflow-hidden"
+                                        className="relative transition-all duration-300 ease-in-out border border-gray-100 rounded-lg shadow-inner overflow-hidden print:border-none print:shadow-none"
                                         style={{ width: `${img.widthPercent}%`, maxWidth: '100%' }}
                                     >
                                         <img
                                             src={img.url}
                                             alt={`Appendix ${idx + 1}`}
-                                            className="w-full h-auto object-contain"
+                                            className="w-full h-auto object-contain block"
                                         />
                                     </div>
 
-                                    <div className="w-full mt-6 space-y-4 px-4 max-w-2xl mx-auto">
-                                        <div className="flex items-center space-x-4">
+                                    <div className="w-full mt-6 space-y-4 px-4 max-w-2xl mx-auto print:mt-4 print:px-0">
+                                        <div className="flex items-center space-x-4 no-print">
                                             <div className="flex-shrink-0 text-gray-400">
                                                 <MoveHorizontal size={20} />
                                             </div>
@@ -113,20 +113,24 @@ export function AppendicesSection({ images, onChange }: AppendicesSectionProps) 
                                                     step="5"
                                                     value={img.widthPercent}
                                                     onChange={(e) => handleUpdateImage(img.id, { widthPercent: parseInt(e.target.value) })}
-                                                    className="flex-grow h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-upsi-navy"
+                                                    className="flex-grow h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-black"
                                                 />
                                             </div>
                                         </div>
 
                                         <div className="space-y-1">
-                                            <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Caption</label>
+                                            <label className="text-[10px] font-bold text-black uppercase ml-1 print:text-[11px]">Caption</label>
                                             <input
                                                 type="text"
                                                 value={img.caption}
                                                 onChange={(e) => handleUpdateImage(img.id, { caption: e.target.value })}
                                                 placeholder="Enter image caption..."
-                                                className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white"
+                                                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none text-black bg-white no-print"
                                             />
+                                            {/* Print-only caption display */}
+                                            <p className="hidden print:block text-sm font-bold text-center italic border-b border-gray-100 pb-2">
+                                                {img.caption || "No caption provided"}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -134,7 +138,7 @@ export function AppendicesSection({ images, onChange }: AppendicesSectionProps) 
                         ))}
                     </div>
                 )}
-                <div className="mt-4 italic text-gray-500 font-medium text-xs">
+                <div className="mt-4 italic text-gray-500 font-medium text-xs no-print">
                     * Images will be automatically arranged in the generated PDF with their respective captions.
                 </div>
             </div>

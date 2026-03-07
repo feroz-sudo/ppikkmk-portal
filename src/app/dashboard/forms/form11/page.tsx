@@ -244,8 +244,8 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
 
     const inputClasses = "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white placeholder-gray-400";
     const textareaClasses = "w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white";
-    const sectionClasses = "space-y-3 bg-gray-50 p-6 rounded-xl border border-gray-100";
-    const labelClasses = "text-lg font-bold text-gray-800 border-b-2 border-upsi-red pb-1 inline-block mb-2";
+    const sectionClasses = "space-y-3 bg-white py-4";
+    const labelClasses = "text-lg font-bold text-black border-b-2 border-black pb-1 inline-block mb-2";
 
     const renderTextarea = (label: string, stateValue: string, setter: (val: string) => void, rows: number = 6) => (
         <div className={sectionClasses}>
@@ -263,28 +263,28 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
     return (
         <div className="max-w-4xl mx-auto pb-12">
             <div className="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-200 overflow-hidden">
-                <div className="bg-upsi-navy px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
+                <div className="bg-white px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
                     <div>
-                        <h1 className="text-2xl font-bold text-white flex items-center space-x-3">
+                        <h1 className="text-2xl font-bold text-upsi-navy flex items-center space-x-3">
                             <Users className="text-upsi-gold" size={28} />
-                            <span>Form 11: Group Counselling</span>
+                            <span>FORM 11: GROUP COUNSELING REPORT</span>
                         </h1>
-                        <p className="text-blue-100 mt-1">Comprehensive group session dynamics and individual progress matrix.</p>
+                        <p className="text-slate-500 mt-1">Comprehensive group session dynamics and individual progress matrix.</p>
                     </div>
                 </div>
 
                 <form onSubmit={handleSubmit} className="p-8 space-y-10 bg-white overflow-x-auto">
                     <FormHeader
-                        title="Group Counselling Report"
+                        title="GROUP COUNSELING REPORT"
                         refCode="Group_Counselling_Report/KKMK_UPSI/11-2025"
                     />
 
                     {/* Logistics Data Section Group */}
-                    <div className="border border-gray-300 rounded-lg overflow-hidden mb-8">
-                        <div className="bg-[#FFF8F0] px-4 py-2 border-b border-gray-300 flex items-center space-x-3">
-                            <label className="font-bold text-gray-900 uppercase min-w-[180px]">Group Leader/Counsellor</label>
-                            <span className="font-bold text-gray-900">:</span>
-                            <input required type="text" value={counsellorName} onChange={e => setCounsellorName(e.target.value)} className="flex-1 p-1 bg-transparent border-none focus:ring-0 font-medium" placeholder="Enter name" />
+                    <div className="bg-white mb-8">
+                        <div className="bg-white px-4 py-2 border-b-2 border-black flex items-center space-x-3">
+                            <label className="font-bold text-black uppercase min-w-[180px]">Group Leader/Counsellor</label>
+                            <span className="font-bold text-black">:</span>
+                            <input required type="text" value={counsellorName} onChange={e => setCounsellorName(e.target.value)} className="flex-1 p-1 bg-transparent border-none focus:ring-0 font-medium text-black" placeholder="Enter name" />
                         </div>
 
                         <div className="p-6">
@@ -292,37 +292,37 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
                                 <div className="flex items-center space-x-3">
                                     <label className="font-bold text-gray-800 uppercase text-sm min-w-[120px]">Date</label>
                                     <span className="font-bold text-gray-800">:</span>
-                                    <input required type="date" value={dateTime.split('T')[0]} onChange={e => setDateTime(e.target.value + 'T' + (dateTime.split('T')[1] || '00:00'))} className="flex-1 p-2 border-b border-gray-200 outline-none focus:border-upsi-navy" />
+                                    <input required type="date" value={dateTime.split('T')[0]} onChange={e => setDateTime(e.target.value + 'T' + (dateTime.split('T')[1] || '00:00'))} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold" />
                                 </div>
                                 <div className="flex items-center space-x-3">
                                     <label className="font-bold text-gray-800 uppercase text-sm min-w-[120px]">Time</label>
                                     <span className="font-bold text-gray-800">:</span>
-                                    <input required type="time" value={dateTime.split('T')[1] || ''} onChange={e => setDateTime((dateTime.split('T')[0] || '') + 'T' + e.target.value)} className="flex-1 p-2 border-b border-gray-200 outline-none focus:border-upsi-navy" />
+                                    <input required type="time" value={dateTime.split('T')[1] || ''} onChange={e => setDateTime((dateTime.split('T')[0] || '') + 'T' + e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold" />
                                 </div>
                                 <div className="flex items-center space-x-3">
                                     <label className="font-bold text-gray-800 uppercase text-sm min-w-[120px]">Duration</label>
                                     <span className="font-bold text-gray-800">:</span>
-                                    <input required type="text" value={duration} onChange={e => setDuration(e.target.value)} className="flex-1 p-2 border-b border-gray-200 outline-none focus:border-upsi-navy" placeholder="e.g. 1.5 hours" />
+                                    <input required type="text" value={duration} onChange={e => setDuration(e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold" placeholder="e.g. 1.5 hours" />
                                 </div>
                                 <div className="flex items-center space-x-3">
                                     <label className="font-bold text-gray-800 uppercase text-sm min-w-[120px]">Type of Group</label>
                                     <span className="font-bold text-gray-800">:</span>
-                                    <input required type="text" value={typeOfGroup} onChange={e => setTypeOfGroup(e.target.value)} className="flex-1 p-2 border-b border-gray-200 outline-none focus:border-upsi-navy" placeholder="e.g. Support" />
+                                    <input required type="text" value={typeOfGroup} onChange={e => setTypeOfGroup(e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold" placeholder="e.g. Support" />
                                 </div>
                                 <div className="flex items-center space-x-3">
                                     <label className="font-bold text-gray-800 uppercase text-sm min-w-[120px]">Number of Session</label>
                                     <span className="font-bold text-gray-800">:</span>
-                                    <input required type="number" value={numberOfSession} onChange={e => setNumberOfSession(e.target.value)} className="flex-1 p-2 border-b border-gray-200 outline-none focus:border-upsi-navy" />
+                                    <input required type="number" value={numberOfSession} onChange={e => setNumberOfSession(e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold" />
                                 </div>
                                 <div className="flex items-center space-x-3">
                                     <label className="font-bold text-gray-800 uppercase text-sm min-w-[180px]">Clients Attending</label>
                                     <span className="font-bold text-gray-800">:</span>
-                                    <input required type="number" min="1" max="8" value={numberOfClientsAttending} onChange={e => setNumberOfClientsAttending(e.target.value)} className="flex-1 p-2 border-b border-gray-200 outline-none focus:border-upsi-navy" />
+                                    <input required type="number" min="1" max="8" value={numberOfClientsAttending} onChange={e => setNumberOfClientsAttending(e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold" />
                                 </div>
                             </div>
 
                             <div className="mt-8">
-                                <h3 className="text-sm font-bold text-gray-800 uppercase mb-4 border-l-4 border-upsi-gold pl-3">Name of Clients Attending The Group (1-8):</h3>
+                                <h3 className="text-sm font-bold text-black uppercase mb-4 border-l-4 border-black pl-3">Name of Clients Attending The Group (1-8):</h3>
                                 <div className="grid grid-cols-2 gap-4">
                                     {Array.from({ length: 8 }).map((_, idx) => (
                                         <div key={idx} className="flex items-center space-x-3">
@@ -331,7 +331,7 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
                                                 type="text"
                                                 value={groupMembers[idx]?.name || ""}
                                                 onChange={e => handleUpdateMemberName(idx, e.target.value)}
-                                                className="flex-1 p-2 border-b border-dotted border-gray-200 outline-none focus:border-upsi-navy text-sm"
+                                                className="flex-1 p-2 border-b border-black outline-none bg-white text-sm font-bold uppercase"
                                                 placeholder={`Member ${idx + 1}`}
                                                 required={idx < (parseInt(numberOfClientsAttending) || 0)}
                                             />
@@ -357,9 +357,9 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
                             { label: "Termination/Closing Stage and Follow Up Actions", value: terminationClosing, setter: setTerminationClosing, rows: 5 },
                             { label: "Counsellor’s Comments/Reflections", value: counsellorsComments, setter: setCounsellorsComments, rows: 5 }
                         ].map((field, idx) => (
-                            <div key={idx} className="border border-gray-300 rounded-lg overflow-hidden shadow-sm">
-                                <div className="bg-[#FFF8F0] px-4 py-2 border-b border-gray-300">
-                                    <label className="text-lg font-bold text-gray-900 uppercase">
+                            <div key={idx} className="bg-white shadow-none">
+                                <div className="bg-white px-4 py-2 border-b-2 border-black">
+                                    <label className="text-lg font-bold text-black uppercase">
                                         {field.label}
                                     </label>
                                 </div>
@@ -379,13 +379,13 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
 
                     {/* Individual Progress Matrix */}
                     <div className="mt-12">
-                        <div className="bg-[#FFF8F0] px-4 py-2 border border-gray-300 rounded-t-lg">
-                            <h2 className="text-xl font-bold text-gray-900 uppercase tracking-wide">Brief Individual Progress Report For Each Group Member</h2>
+                        <div className="bg-white px-4 py-2 border-2 border-black">
+                            <h2 className="text-xl font-bold text-black uppercase tracking-wide">Brief Individual Progress Report For Each Group Member</h2>
                         </div>
-                        <div className="border-x border-b border-gray-300 rounded-b-lg p-6 space-y-8">
+                        <div className="p-0 space-y-8">
                             {Array.from({ length: 8 }).map((_, idx) => (
                                 <div key={idx} className="space-y-2">
-                                    <h3 className="font-bold text-gray-800 uppercase text-sm bg-gray-50 p-2 border-l-4 border-upsi-navy flex items-center justify-between">
+                                    <h3 className="font-bold text-black uppercase text-sm bg-white p-2 border-l-4 border-black flex items-center justify-between">
                                         <span>Group Member {idx + 1} {groupMembers[idx]?.name ? `(${groupMembers[idx].name})` : ""}</span>
                                     </h3>
                                     <textarea
@@ -404,20 +404,20 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
                     {/* Footer Section */}
                     <div className="pt-10 pb-4 border-t border-gray-300 mt-12 w-full">
                         <div className="mb-12 flex flex-col items-start max-w-sm">
-                            <h3 className="text-gray-900 font-bold mb-12 uppercase">Report by:</h3>
+                            <h3 className="text-black font-bold mb-12 uppercase">Report by:</h3>
                             <div className="w-80">
-                                <div className="border-b border-gray-400 w-full mb-3 h-4"></div>
+                                <div className="border-b-2 border-dotted border-black w-full mb-3 h-4"></div>
                                 <div className="flex justify-between items-center w-full px-1">
-                                    <span className="text-gray-400 font-bold text-lg">(</span>
+                                    <span className="text-black font-bold text-lg">(</span>
                                     <input
                                         required
                                         type="text"
                                         value={traineeSignature}
                                         onChange={e => setTraineeSignature(e.target.value)}
-                                        className="bg-transparent outline-none flex-1 text-center font-bold text-gray-800 placeholder-gray-300 py-1 uppercase"
+                                        className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase"
                                         placeholder="Name of Counselling Trainee"
                                     />
-                                    <span className="text-gray-400 font-bold text-lg">)</span>
+                                    <span className="text-black font-bold text-lg">)</span>
                                 </div>
                             </div>
                         </div>
@@ -429,6 +429,7 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
                         </div>
 
                         <div className="mt-20 text-center w-full pt-4 border-t border-dashed border-gray-200">
+                            <p className="text-[10px] font-black text-upsi-navy uppercase tracking-[0.2em] mb-1">WWW.PPIKKMK.COM</p>
                             <p className="text-xs font-bold text-slate-500 uppercase tracking-widest pl-[0.1em]">
                                 Confidential Document (For Professional Use Only)
                             </p>

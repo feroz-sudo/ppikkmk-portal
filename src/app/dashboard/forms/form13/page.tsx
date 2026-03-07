@@ -225,10 +225,10 @@ export function Form13PsychologicalAssessmentPage({ searchParams }: PageProps) {
         }
     };
 
-    const inputClasses = "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white placeholder-gray-400";
-    const textareaClasses = "w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white leading-relaxed";
-    const sectionClasses = "space-y-4 bg-gray-50 p-6 rounded-xl border border-gray-100";
-    const labelClasses = "text-xl font-bold text-upsi-navy border-b-2 border-upsi-gold pb-2 uppercase tracking-wide inline-block mb-2 w-full";
+    const inputClasses = "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none text-black bg-white placeholder-gray-400";
+    const textareaClasses = "w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none text-black bg-white leading-relaxed";
+    const sectionClasses = "space-y-4 bg-white py-4";
+    const labelClasses = "text-xl font-bold text-black border-b-2 border-black pb-2 uppercase tracking-wide inline-block mb-2 w-full";
 
     const renderTextarea = (label: string, stateValue: string, setter: (val: string) => void, rows: number = 8, sublabel?: string) => (
         <div className={sectionClasses}>
@@ -247,13 +247,13 @@ export function Form13PsychologicalAssessmentPage({ searchParams }: PageProps) {
     return (
         <div className="max-w-4xl mx-auto pb-12">
             <div className="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-200 overflow-hidden">
-                <div className="bg-upsi-navy px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
+                <div className="bg-white px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
                     <div>
-                        <h1 className="text-2xl font-bold text-white flex items-center space-x-3">
-                            <BrainCircuit className="text-white" size={28} />
-                            <span>Form 13: Psychological Assessment</span>
+                        <h1 className="text-2xl font-bold text-upsi-navy flex items-center space-x-3">
+                            <BrainCircuit className="text-upsi-gold" size={28} />
+                            <span>Form 13: PSYCHOLOGICAL ASSESSMENT REPORT</span>
                         </h1>
-                        <p className="text-blue-100 mt-1">Definitive clinical impression and assessment analysis instrument.</p>
+                        <p className="text-slate-500 mt-1">Definitive clinical impression and assessment analysis instrument.</p>
                     </div>
                     {!prefillClientId && (
                         <div className="bg-white p-2 rounded-lg shadow-inner border border-blue-800">
@@ -264,54 +264,54 @@ export function Form13PsychologicalAssessmentPage({ searchParams }: PageProps) {
 
                 <form onSubmit={handleSubmit} className="p-8 space-y-10 bg-white">
                     <FormHeader
-                        title="Clinical Assessment Report"
-                        refCode="Clinical_Assessment_Report/KKMK_UPSI/13-2025"
+                        title="PSYCHOLOGICAL ASSESSMENT REPORT"
+                        refCode="Evaluation/KKMK_UPSI/13-2025"
                     />
 
-                    {/* 1. PERSONAL DATA Section */}
+                    {/* PERSONAL DATA Section */}
                     <div className="space-y-6">
-                        <h2 className="text-xl font-bold text-gray-900 underline uppercase tracking-wide w-full mb-6">PERSONAL DATA</h2>
+                        <h2 className="text-xl font-bold text-black underline uppercase tracking-wide w-full mb-6">PERSONAL DATA</h2>
                         <div className="grid grid-cols-[200px_30px_1fr] md:grid-cols-[250px_30px_1fr] gap-y-4 items-center pl-4">
 
-                            <div className="font-bold text-gray-800 text-sm md:text-base">Client Full Name</div>
-                            <div className="font-bold text-gray-800">:</div>
-                            <div><input required type="text" value={clientFullName} onChange={e => setClientFullName(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-upsi-navy text-gray-700" placeholder="Enter full name" /></div>
+                            <div className="font-bold text-black text-sm md:text-base uppercase">Client Full Name</div>
+                            <div className="font-bold text-black">:</div>
+                            <div><input required type="text" value={clientFullName} onChange={e => setClientFullName(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black" placeholder="Enter full name" /></div>
 
-                            <div className="font-bold text-gray-800 text-sm md:text-base">Ethnic/Sex</div>
-                            <div className="font-bold text-gray-800">:</div>
+                            <div className="font-bold text-black text-sm md:text-base uppercase">Ethnic/Sex</div>
+                            <div className="font-bold text-black">:</div>
                             <div className="flex space-x-2 items-center w-full">
-                                <input required type="text" value={ethnic} onChange={e => setEthnic(e.target.value)} className="w-1/2 p-2 border-b border-gray-200 outline-none focus:border-upsi-navy text-gray-700" placeholder="Ethnic" />
-                                <span className="text-gray-400">/</span>
-                                <input required type="text" value={sex} onChange={e => setSex(e.target.value)} className="w-1/2 p-2 border-b border-gray-200 outline-none focus:border-upsi-navy text-gray-700" placeholder="Sex" />
+                                <input required type="text" value={ethnic} onChange={e => setEthnic(e.target.value)} className="w-1/2 p-2 border-b border-gray-200 outline-none focus:border-black text-black" placeholder="Ethnic" />
+                                <span className="text-black font-bold">/</span>
+                                <input required type="text" value={sex} onChange={e => setSex(e.target.value)} className="w-1/2 p-2 border-b border-gray-200 outline-none focus:border-black text-black" placeholder="Sex" />
                             </div>
 
-                            <div className="font-bold text-gray-800 text-sm md:text-base">Date of Birth</div>
-                            <div className="font-bold text-gray-800">:</div>
-                            <div><input required type="date" value={dateOfBirth} onChange={e => setDateOfBirth(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-upsi-navy text-gray-700" /></div>
+                            <div className="font-bold text-black text-sm md:text-base uppercase">Date of Birth</div>
+                            <div className="font-bold text-black">:</div>
+                            <div><input required type="date" value={dateOfBirth} onChange={e => setDateOfBirth(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black" /></div>
 
-                            <div className="font-bold text-gray-800 text-sm md:text-base">Identification Card No</div>
-                            <div className="font-bold text-gray-800">:</div>
-                            <div><input required type="text" value={identificationCardNo} onChange={e => setIdentificationCardNo(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-upsi-navy text-gray-700" placeholder="IC Number" /></div>
+                            <div className="font-bold text-black text-sm md:text-base uppercase">Identification Card No</div>
+                            <div className="font-bold text-black">:</div>
+                            <div><input required type="text" value={identificationCardNo} onChange={e => setIdentificationCardNo(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black" placeholder="IC Number" /></div>
 
-                            <div className="font-bold text-gray-800 text-sm md:text-base">Age</div>
-                            <div className="font-bold text-gray-800">:</div>
-                            <div><input required type="text" value={age} onChange={e => setAge(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-upsi-navy text-gray-700" placeholder="Age" /></div>
+                            <div className="font-bold text-black text-sm md:text-base uppercase">Age</div>
+                            <div className="font-bold text-black">:</div>
+                            <div><input required type="text" value={age} onChange={e => setAge(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black" placeholder="Age" /></div>
 
-                            <div className="font-bold text-gray-800 text-sm md:text-base">Designation</div>
-                            <div className="font-bold text-gray-800">:</div>
-                            <div><input required type="text" value={designation} onChange={e => setDesignation(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-upsi-navy text-gray-700" placeholder="Role/Year/Program" /></div>
+                            <div className="font-bold text-black text-sm md:text-base uppercase">Designation</div>
+                            <div className="font-bold text-black">:</div>
+                            <div><input required type="text" value={designation} onChange={e => setDesignation(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black" placeholder="Role/Year/Program" /></div>
 
-                            <div className="font-bold text-gray-800 text-sm md:text-base">Date of Assessment</div>
-                            <div className="font-bold text-gray-800">:</div>
-                            <div><input required type="date" value={dateOfAssessment} onChange={e => setDateOfAssessment(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-upsi-navy text-gray-700" /></div>
+                            <div className="font-bold text-black text-sm md:text-base uppercase">Date of Assessment</div>
+                            <div className="font-bold text-black">:</div>
+                            <div><input required type="date" value={dateOfAssessment} onChange={e => setDateOfAssessment(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black" /></div>
 
-                            <div className="font-bold text-gray-800 text-sm md:text-base">Duration (Hours)</div>
-                            <div className="font-bold text-gray-800">:</div>
-                            <div><input required type="number" step="0.5" min="0.5" value={duration} onChange={e => setDuration(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-upsi-navy text-gray-700" placeholder="e.g. 1.0" /></div>
+                            <div className="font-bold text-black text-sm md:text-base uppercase">Duration (Hours)</div>
+                            <div className="font-bold text-black">:</div>
+                            <div><input required type="number" step="0.5" min="0.5" value={duration} onChange={e => setDuration(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black" placeholder="e.g. 1.0" /></div>
 
-                            <div className="font-bold text-gray-800 text-sm md:text-base">Assessment Conducted By</div>
-                            <div className="font-bold text-gray-800">:</div>
-                            <div><input required type="text" value={assessmentConductedBy} onChange={e => setAssessmentConductedBy(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-upsi-navy text-gray-700" placeholder="Assessor Name" /></div>
+                            <div className="font-bold text-black text-sm md:text-base uppercase">Assessment Conducted By</div>
+                            <div className="font-bold text-black">:</div>
+                            <div><input required type="text" value={assessmentConductedBy} onChange={e => setAssessmentConductedBy(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black" placeholder="Assessor Name" /></div>
                         </div>
                     </div>
 
@@ -355,20 +355,20 @@ export function Form13PsychologicalAssessmentPage({ searchParams }: PageProps) {
                     {/* Footer Section */}
                     <div className="pt-10 pb-4 border-t border-gray-300 mt-12 w-full">
                         <div className="mb-12 flex flex-col items-start max-w-sm">
-                            <h3 className="text-gray-900 font-bold mb-12 uppercase">Report by:</h3>
+                            <h3 className="text-black font-bold mb-12 uppercase">Report by:</h3>
                             <div className="w-80">
-                                <div className="border-b border-gray-400 w-full mb-3 h-4"></div>
+                                <div className="border-b-2 border-dotted border-black w-full mb-3 h-4"></div>
                                 <div className="flex justify-between items-center w-full px-1">
-                                    <span className="text-gray-400 font-bold text-lg">(</span>
+                                    <span className="text-black font-bold text-lg">(</span>
                                     <input
                                         required
                                         type="text"
                                         value={traineeSignature}
                                         onChange={e => setTraineeSignature(e.target.value)}
-                                        className="bg-transparent outline-none flex-1 text-center font-bold text-gray-800 placeholder-gray-300 py-1 uppercase"
+                                        className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase"
                                         placeholder="Name of CMCH Counselor Trainee"
                                     />
-                                    <span className="text-gray-400 font-bold text-lg">)</span>
+                                    <span className="text-black font-bold text-lg">)</span>
                                 </div>
                             </div>
                         </div>
@@ -377,6 +377,7 @@ export function Form13PsychologicalAssessmentPage({ searchParams }: PageProps) {
                             <p>CMCH Counselor Trainee</p>
                             <p className="font-normal text-gray-500">Universiti Pendidikan Sultan Idris</p>
                             <p className="font-normal text-gray-500">35900 Tanjong Malim, Perak</p>
+                            <p className="text-upsi-navy font-black mt-1 text-xs">WWW.PPIKKMK.COM</p>
                         </div>
 
                         <div className="mt-20 text-center w-full pt-4 border-t border-dashed border-gray-200">

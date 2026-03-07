@@ -29,27 +29,27 @@ export const generateSessionPDF = async (session: Session, client: Client, clini
     const TITLES: Record<string, string> = {
         Form1: 'PSYCHOLOGICAL INTAKE REPORT',
         Form2: 'PROGRESSIVE NOTES',
-        Form3: 'CASE CONCEPTUALISATION',
-        Form4: 'CLINICAL TREATMENT PLAN',
-        Form5: 'TERMINATION OF COUNSELLING SESSION',
+        Form3: 'CASE CONCEPTUALIZATION',
+        Form4: 'TREATMENT PLANNING',
+        Form5: 'TERMINATION SESSION',
         Form6: 'CRISIS INTERVENTION REPORT',
         Form7: 'CONSULTATION REPORT',
-        Form8: 'PSYCHOLOGICAL FIRST AID/ MENTAL HEALTH & PSYCHOSOCIAL SUPPORT REPORT',
-        Form11: 'GROUP COUNSELLING REPORT',
-        Form13: 'CLINICAL ASSESSMENT REPORT'
+        Form8: 'PFA MHPSS REPORT',
+        Form11: 'GROUP COUNSELING REPORT',
+        Form13: 'PSYCHOLOGICAL ASSESSMENT REPORT'
     };
 
     const REF_CODES: Record<string, string> = {
         Form1: 'Psychological_Intake_Report/KKMK_UPSI/01-2025',
         Form2: 'Progressive_Notes/KKMK_UPSI/02-2025',
         Form3: 'Case_Conceptualisation/KKMK_UPSI/03-2025',
-        Form4: 'Clinical_Treatment_Plan/KKMK_UPSI/04-2025',
+        Form4: 'Treatment_Planning/KKMK_UPSI/04-2025',
         Form5: 'Termination_Session/KKMK_UPSI/05-2025',
         Form6: 'Crisis_Intervention_Report/KKMK_UPSI/06-2025',
         Form7: 'Consultation_Report/KKMK_UPSI/07-2025',
-        Form8: 'PFA/MHPSS_Report/KKMK_UPSI/08-2025',
-        Form11: 'Group_Counselling_Report/KKMK_UPSI/11-2025',
-        Form13: 'Clinical_Assessment_Report/KKMK_UPSI/13-2025'
+        Form8: 'PFA_MHPSS_Report/KKMK_UPSI/08-2025',
+        Form11: 'Group_Counseling_Report/KKMK_UPSI/11-2025',
+        Form13: 'Psychological_Assessment_Report/KKMK_UPSI/13-2025'
     };
 
     const LABEL_MAPPING: Record<string, string> = {
@@ -233,27 +233,32 @@ export const generateSessionPDF = async (session: Session, client: Client, clini
         autoTable(doc, {
             startY: yPos,
             theme: 'grid',
-            head: [['Action', 'Signature & Name']],
-            headStyles: { fillColor: [0, 0, 128], textColor: [255, 255, 255], fontStyle: 'bold', halign: 'center' },
+            head: [['Action', 'Signature & Name', 'Date']],
+            headStyles: { fillColor: [255, 255, 255], textColor: [0, 0, 0], fontStyle: 'bold', halign: 'center', lineWidth: 0.2, lineColor: [0, 0, 0] },
             body: [
                 [
-                    'DD/MM/YYYY',
-                    '..................................................\n(' + (data.traineeSignature || '').toUpperCase() + ')'
+                    'Trainee Counselor Signature',
+                    '..................................................\n(' + (data.traineeSignature || '').toUpperCase() + ')',
+                    'DD/MM/YYYY'
                 ],
                 [
-                    'DD/MM/YYYY',
-                    '..................................................\n(' + (data.siteSupervisorSignature || '').toUpperCase() + ')'
+                    'Site Supervisor Signature',
+                    '..................................................\n(' + (data.siteSupervisorSignature || '').toUpperCase() + ')',
+                    'DD/MM/YYYY'
                 ],
                 [
-                    'DD/MM/YYYY',
-                    '..................................................\n(' + (data.academicSupervisorSignature || '').toUpperCase() + ')'
+                    'Academic Supervisor Signature',
+                    '..................................................\n(' + (data.academicSupervisorSignature || '').toUpperCase() + ')',
+                    'DD/MM/YYYY'
                 ]
             ],
-            styles: { font: 'helvetica', fontSize: 9, minCellHeight: 25, valign: 'bottom', halign: 'center' },
+            styles: { font: 'helvetica', fontSize: 9, minCellHeight: 25, valign: 'middle', halign: 'center', textColor: [0, 0, 0], lineWidth: 0.2, lineColor: [0, 0, 0] },
             columnStyles: {
-                0: { cellWidth: 40, fontStyle: 'normal', halign: 'center', valign: 'middle', textColor: [150, 150, 150] },
-                1: { cellWidth: 140 }
-            }
+                0: { cellWidth: 45, fontStyle: 'bold' },
+                1: { cellWidth: 100 },
+                2: { cellWidth: 35, textColor: [150, 150, 150] }
+            },
+            margin: { left: 15, right: 15 }
         });
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         yPos = (doc as any).lastAutoTable.finalY + 10;

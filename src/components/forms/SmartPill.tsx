@@ -34,7 +34,7 @@ export const SmartPill: React.FC<SmartPillProps> = ({
 };
 
 export const SmartShrubGroup: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
-    <div className="mb-4 bg-gray-50 p-3 rounded-lg border border-gray-200">
+    <div className="mb-4 bg-white p-3 rounded-lg border border-black">
         <div className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">{title} Macros</div>
         <div className="flex flex-wrap">
             {children}

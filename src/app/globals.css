@@ -157,25 +157,70 @@ form [class*="underline"] {
   section,
   form,
   header,
-  footer {
+  footer,
+  table,
+  thead,
+  tbody,
+  tfoot,
+  tr,
+  th,
+  td,
+  [class*="bg-"],
+  [class*="bg-[#"] {
     background-color: #ffffff !important;
     background-image: none !important;
+    background-attachment: scroll !important;
+  }
+
+  /* Surgical Fix for Table Clipping */
+  .overflow-x-auto,
+  .overflow-hidden,
+  .overflow-auto {
+    overflow: visible !important;
+    display: block !important;
+    width: 100% !important;
+  }
+
+  table {
+    table-layout: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Signature table specific width ensure */
+  table.min-w-\[700px\] {
+    min-width: 0 !important;
+    width: 100% !important;
   }
 
   /* Remove all interactive/UI ornaments in print */
-  .rounded-xl,
-  .rounded-lg,
-  .rounded-2xl,
-  .shadow-sm,
-  .shadow-md,
-  .shadow-lg,
+  [class*="rounded-"],
+  [class*="shadow-"],
   .shadow-premium,
-  .border,
   .border-gray-100,
   .border-gray-200 {
     border-radius: 0 !important;
     box-shadow: none !important;
-    border-color: transparent !important;
+  }
+
+  /* EXCEPT clinical tables and headers which need borders */
+  .form-header,
+  .border,
+  .border-black,
+  .border-b,
+  .border-b-2,
+  .border-b-4,
+  .border-t,
+  .border-t-2 {
+    border-color: #000000 !important;
+  }
+
+  /* Ensure specific table cells and headers are white */
+  th,
+  td {
+    background-color: white !important;
+    border-color: black !important;
   }
 
   /* EXCEPT clinical tables and headers which need borders */
