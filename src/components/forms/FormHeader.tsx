@@ -9,7 +9,7 @@ export const FormHeader: React.FC<FormHeaderProps> = ({ title, refCode }) => {
     return (
         <div className="form-header relative pb-6 border-b-2 border-gray-300 mb-8 w-full print:border-gray-400">
             {/* Top-Right Identifier (Absolute) */}
-            <div className="absolute top-0 right-0 text-[10px] md:text-[11px] font-medium text-gray-500 italic text-right leading-tight max-w-[200px] z-10 print:text-gray-600">
+            <div className="absolute top-0 right-0 text-[10px] md:text-[11px] font-medium text-gray-500 italic text-right leading-tight whitespace-nowrap z-10 print:text-black">
                 {refCode}
             </div>
 
