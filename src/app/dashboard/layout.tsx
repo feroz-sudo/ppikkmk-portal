@@ -217,9 +217,33 @@ function SidebarNavContent({
                                     <Lightbulb size={14} className={pathname === "/dashboard/forms/form3" ? "text-upsi-gold" : "text-yellow-300"} />
                                     <span className="text-[10px] uppercase font-bold tracking-tight">Form 3: Case Concept</span>
                                 </Link>
+                                <Link href="/dashboard/forms/form4" className={getSubLinkClass("/dashboard/forms/form4")}>
+                                    <Target size={14} className={pathname === "/dashboard/forms/form4" ? "text-upsi-gold" : "text-red-300"} />
+                                    <span className="text-[10px] uppercase font-bold tracking-tight">Form 4: Treatment Plan</span>
+                                </Link>
+                                <Link href="/dashboard/forms/form5" className={getSubLinkClass("/dashboard/forms/form5")}>
+                                    <Flag size={14} className={pathname === "/dashboard/forms/form5" ? "text-upsi-gold" : "text-orange-300"} />
+                                    <span className="text-[10px] uppercase font-bold tracking-tight">Form 5: Referral</span>
+                                </Link>
+                                <Link href="/dashboard/forms/form6" className={getSubLinkClass("/dashboard/forms/form6")}>
+                                    <AlertTriangle size={14} className={pathname === "/dashboard/forms/form6" ? "text-upsi-gold" : "text-rose-400"} />
+                                    <span className="text-[10px] uppercase font-bold tracking-tight">Form 6: Termination</span>
+                                </Link>
+                                <Link href="/dashboard/forms/form7" className={getSubLinkClass("/dashboard/forms/form7")}>
+                                    <UserCheck size={14} className={pathname === "/dashboard/forms/form7" ? "text-upsi-gold" : "text-emerald-300"} />
+                                    <span className="text-[10px] uppercase font-bold tracking-tight">Form 7: Informed Consent</span>
+                                </Link>
+                                <Link href="/dashboard/forms/form8" className={getSubLinkClass("/dashboard/forms/form8")}>
+                                    <Shield size={14} className={pathname === "/dashboard/forms/form8" ? "text-upsi-gold" : "text-purple-300"} />
+                                    <span className="text-[10px] uppercase font-bold tracking-tight">Form 8: Supervisor Report</span>
+                                </Link>
                                 <Link href="/dashboard/forms/form11" className={getSubLinkClass("/dashboard/forms/form11")}>
                                     <UsersRound size={14} className={pathname === "/dashboard/forms/form11" ? "text-upsi-gold" : "text-indigo-300"} />
                                     <span className="text-[10px] uppercase font-bold tracking-tight">Form 11: Group</span>
+                                </Link>
+                                <Link href="/dashboard/forms/form13" className={getSubLinkClass("/dashboard/forms/form13")}>
+                                    <CheckCircle2 size={14} className={pathname === "/dashboard/forms/form13" ? "text-upsi-gold" : "text-teal-300"} />
+                                    <span className="text-[10px] uppercase font-bold tracking-tight">Form 13: Evaluation</span>
                                 </Link>
                             </div>
                         )}

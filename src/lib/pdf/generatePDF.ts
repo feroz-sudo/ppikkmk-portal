@@ -83,23 +83,22 @@ export const generateSessionPDF = async (session: Session, client: Client, clini
     // Split title if it's too long
     const splitTitle = doc.splitTextToSize(formTitle, 90);
     // Position title centered in the available space (leaving room for logo on left)
-    // Logo is at X=15, Width=45 (ends at 60). Page width is 210. 
-    // Remaining space 60 to 210 is 150. Center of that space is 60 + 75 = 135.
-    doc.text(splitTitle, 130, 20, { align: 'center' });
-    const titleHeight = (splitTitle.length - 1) * 6;
+    doc.text(splitTitle, 130, 22, { align: 'center' }); // Lowered slightly from 20
+    const titleLines = splitTitle.length;
+    const titleHeight = (titleLines - 1) * 7;
 
     doc.setFontSize(9);
     doc.setFont('helvetica', 'bold');
-    doc.text('PRAKTIKUM & INTERNSHIP', 130, 28 + titleHeight, { align: 'center' });
-    doc.text('KAUNSELING (KESIHATAN MENTAL KLINIKAL)', 130, 34 + titleHeight, { align: 'center' });
-    doc.text('UNIVERSITI PENDIDIKAN SULTAN IDRIS', 130, 40 + titleHeight, { align: 'center' });
+    doc.text('PRAKTIKUM & INTERNSHIP', 130, 32 + titleHeight, { align: 'center' });
+    doc.text('KAUNSELING (KESIHATAN MENTAL KLINIKAL)', 130, 38 + titleHeight, { align: 'center' });
+    doc.text('UNIVERSITI PENDIDIKAN SULTAN IDRIS', 130, 44 + titleHeight, { align: 'center' });
 
     // Clinical File ID
     if (clinicalId) {
         doc.setFontSize(10);
         doc.setFont('helvetica', 'bold');
         doc.setTextColor(0, 0, 128);
-        doc.text(`CLINICAL FILE ID: ${clinicalId}`, 130, 12, { align: 'center' });
+        doc.text(`CLINICAL FILE ID: ${clinicalId}`, 130, 14, { align: 'center' });
         doc.setTextColor(0, 0, 0);
     }
 
@@ -127,7 +126,7 @@ export const generateSessionPDF = async (session: Session, client: Client, clini
     }
 
     autoTable(doc, {
-        startY: 40,
+        startY: 52 + titleHeight, // Moved down to 52 + titleHeight (Prev: 40)
         theme: 'plain',
         styles: { font: 'helvetica', fontSize: 10, cellPadding: 2 },
         body: headerBody,

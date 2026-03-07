@@ -97,10 +97,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             const userDoc = await getDoc(userDocRef);
 
             if (userDoc.exists()) {
-                // Update programType on every sign-in so switching buttons works
                 await updateDoc(userDocRef, { role, programType });
             } else {
-                // First sign-in — create user document
                 await setDoc(userDocRef, {
                     uid: currentUser.uid,
                     name: currentUser.displayName,
@@ -111,8 +109,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                     assignedSupervisorId: ""
                 });
             }
-        } catch (error) {
-            console.error("Error signing in with Google", error);
+        } catch (error: any) {
+            console.error("DEBUG: Firebase Auth Error:", error);
+            if (error.code === "auth/unauthorized-domain") {
+                alert("DOMAIN ERROR: Please add this exact URL to Firebase Authorized Domains.");
+            } else if (error.code === "auth/popup-blocked" || error.message?.includes("Cross-Origin-Opener-Policy")) {
+                alert("POPUP BLOCKED: Your browser blocked the login window. Please enable popups or try a different browser.");
+            } else {
+                alert("Login Error: " + error.message);
+            }
         }
     };
 
