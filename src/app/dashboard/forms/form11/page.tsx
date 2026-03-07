@@ -263,13 +263,13 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
     return (
         <div className="max-w-4xl mx-auto pb-12">
             <div className="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-200 overflow-hidden">
-                <div className="bg-upsi-navy px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
+                <div className="bg-neutral-900 px-8 py-6 border-b-4 border-neutral-800 flex justify-between items-center flex-wrap gap-4 no-print">
                     <div>
                         <h1 className="text-2xl font-bold text-white flex items-center space-x-3">
-                            <Users className="text-upsi-gold" size={28} />
+                            <Users className="text-white" size={28} />
                             <span>Form 11: Group Counselling</span>
                         </h1>
-                        <p className="text-blue-100 mt-1">Comprehensive group session dynamics and individual progress matrix.</p>
+                        <p className="text-neutral-400 mt-1">Comprehensive group session dynamics and individual progress matrix.</p>
                     </div>
                 </div>
 
@@ -322,7 +322,7 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
                             </div>
 
                             <div className="mt-8">
-                                <h3 className="text-sm font-bold text-gray-800 uppercase mb-4 border-l-4 border-upsi-gold pl-3">Name of Clients Attending The Group (1-8):</h3>
+                                <h3 className="text-sm font-bold text-gray-800 uppercase mb-4 border-l-4 border-neutral-800 pl-3">Name of Clients Attending The Group (1-8):</h3>
                                 <div className="grid grid-cols-2 gap-4">
                                     {Array.from({ length: 8 }).map((_, idx) => (
                                         <div key={idx} className="flex items-center space-x-3">

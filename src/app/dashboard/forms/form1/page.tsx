@@ -295,16 +295,16 @@ function Form1IntakeContent() {
     return (
         <div className="max-w-4xl mx-auto pb-12">
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                <div className="bg-upsi-navy px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
+                <div className="bg-neutral-900 px-8 py-6 border-b-4 border-neutral-800 flex justify-between items-center flex-wrap gap-4 no-print">
                     <div>
                         <h1 className="text-2xl font-bold text-white flex items-center space-x-3">
                             <ClipboardList className="text-white" size={28} />
                             <span>Form 1: Psychological Intake Report</span>
                         </h1>
-                        <p className="text-blue-100 mt-1">First session report mapping directly to official clinical counselling requirements.</p>
+                        <p className="text-neutral-400 mt-1">First session report mapping directly to official clinical counselling requirements.</p>
                     </div>
                     {!prefillClientId && (
-                        <div className="bg-white p-2 rounded-lg shadow-inner border border-blue-800">
+                        <div className="bg-white p-2 rounded-lg shadow-inner border border-neutral-700">
                             <ClientPrefill onSelectClient={setSelectedClient} />
                         </div>
                     )}

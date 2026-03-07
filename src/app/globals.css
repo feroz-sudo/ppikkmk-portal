@@ -2,9 +2,10 @@
 @import "tailwindcss";
 
 @theme {
-  --color-upsi-navy: #1211ca;
-  --color-upsi-red: #ff3131;
-  --color-upsi-gold: #f9b314;
+  /* Dynamic Clinical Theme - Default to Black for strict professional fidelity */
+  --color-upsi-navy: #000000;
+  --color-upsi-red: #000000;
+  --color-upsi-gold: #333333;
   --font-sans: 'Outfit', sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
@@ -12,14 +13,14 @@
 :root {
   --background: #ffffff;
   --foreground: #000000;
-  /* Force Black Foreground */
   --card-bg: rgba(255, 255, 255, 0.8);
   --glass-border: rgba(255, 255, 255, 0.2);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #f8fafc;
+    --background: #ffffff;
+    /* Keep clinical background white even in dark mode for accuracy */
     --foreground: #000000;
   }
 }
@@ -32,28 +33,28 @@ body {
 }
 
 /* ============================================================
-   CLINICAL BLACK THEME (GLOBAL)
+   CLINICAL BLACK THEME (GLOBAL ENFORCEMENT)
    ============================================================ */
-/* Enforce strict black for all headings and text within forms to match user request */
-form h1,
-form h2,
-form h3,
-form h4,
-form label,
-form p,
-form span:not(.no-black) {
+/* Force ALL form-related text to pure black */
+.form-header *,
+form *,
+[class*="Clinical"] *,
+.no-print * {
   color: #000000 !important;
 }
 
-/* Global underline style for forms - Pure Black */
-form .underline {
-  text-decoration-color: #000000 !important;
-  border-bottom-color: #000000 !important;
+/* Special Case: White text for dashboard headers (over dark background) */
+.bg-neutral-900 *,
+.bg-black *,
+.text-white,
+.text-blue-100 {
+  color: #ffffff !important;
 }
 
 /* Ironclad Alignment for Personal Data Grids */
 .grid-cols-\[180px_auto_1fr\],
-.grid-cols-\[240px_auto_1fr\] {
+.grid-cols-\[240px_auto_1fr\],
+.grid-cols-\[200px_30px_1fr\] {
   display: grid !important;
   grid-template-columns: 200px 30px 1fr !important;
   gap: 4px 12px !important;
@@ -61,50 +62,39 @@ form .underline {
   color: #000 !important;
 }
 
+/* Ensure underlines are black */
+.underline,
+[class*="underline"] {
+  text-decoration-color: #000000 !important;
+  border-bottom-color: #000000 !important;
+}
+
 /* Standard Clinical Inputs */
-form input:not([type="checkbox"]):not([type="radio"]),
+form input,
 form select,
 form textarea {
   color: #000 !important;
   border-color: #ccc !important;
 }
 
-form .grid>div {
-  color: #000 !important;
-}
-
-/* --- Premium Utilities (Screen Only) --- */
-.glass {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.shadow-premium {
-  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.05),
-    0 2px 20px -5px rgba(0, 0, 0, 0.02);
+/* Logo protection - ensure it doesn't get filters that might change colors if not print */
+.form-header-logo {
+  filter: none !important;
 }
 
 /* ============================================================
-   PRINT STYLES - Surgical Clinical Fidelity
+   PRINT STYLES - Surgical Fidelity
    ============================================================ */
 @media print {
 
-  /* Complete UI Hiding */
   aside,
-  header:not(.form-header),
-  footer:not(.form-footer),
   nav,
   .no-print,
-  .form-action-bar,
   button,
-  .sidebar-trigger,
-  .bg-upsi-navy:not(.form-header):not(.bg-upsi-navy-print) {
+  .sidebar-trigger {
     display: none !important;
   }
 
-  /* Layout Resets */
   html,
   body,
   #__next {
@@ -114,15 +104,6 @@ form .grid>div {
     background: white !important;
   }
 
-  div.h-screen.flex-col,
-  div.flex-1.flex.flex-col,
-  main.overflow-y-auto {
-    display: block !important;
-    overflow: visible !important;
-    height: auto !important;
-    position: static !important;
-  }
-
   /* Specific Print Alignment */
   .grid-cols-\[180px_auto_1fr\],
   .grid-cols-\[240px_auto_1fr\] {
@@ -130,42 +111,19 @@ form .grid>div {
     gap: 2px 10px !important;
   }
 
-  /* Visual Polish */
   * {
     color: black !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
     font-family: 'Arial', sans-serif !important;
-    box-shadow: none !important;
   }
 
-  /* Form Header Balance */
   .form-header {
-    display: flex !important;
-    flex-direction: column !important;
     border-bottom: 3px solid black !important;
-    padding-bottom: 12px !important;
-    margin-bottom: 15px !important;
-  }
-
-  .form-header-logo {
-    height: 60px !important;
-    width: auto !important;
-    filter: none !important;
-    /* Preserve Logo Color */
   }
 
   textarea {
     field-sizing: content;
     min-height: 40px !important;
-  }
-
-  div[class*="bg-gray-50"],
-  .bg-gray-50 {
-    background: transparent !important;
-    border-bottom: 1px solid #eee !important;
-    padding: 10px 0 !important;
-    margin-bottom: 10px !important;
-    border-radius: 0 !important;
   }
 }

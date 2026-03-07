@@ -211,16 +211,16 @@ export function Form4TreatmentPlanPage({ searchParams }: PageProps) {
     return (
         <div className="max-w-6xl mx-auto pb-12">
             <div className="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-200 overflow-hidden">
-                <div className="bg-upsi-navy px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
+                <div className="bg-neutral-900 px-8 py-6 border-b-4 border-neutral-800 flex justify-between items-center flex-wrap gap-4 no-print">
                     <div>
                         <h1 className="text-2xl font-bold text-white flex items-center space-x-3">
                             <Target className="text-white" size={28} />
                             <span>Form 4: Treatment Planning</span>
                         </h1>
-                        <p className="text-blue-100 mt-1">Clinical Treatment Plan structure and outcome measures.</p>
+                        <p className="text-neutral-400 mt-1">Clinical Treatment Plan structure and outcome measures.</p>
                     </div>
                     {!prefillClientId && (
-                        <div className="bg-white p-2 rounded-lg shadow-inner border border-blue-800">
+                        <div className="bg-white p-2 rounded-lg shadow-inner border border-neutral-700">
                             <ClientPrefill onSelectClient={setSelectedClient} />
                         </div>
                     )}

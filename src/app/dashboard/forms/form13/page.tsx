@@ -228,7 +228,7 @@ export function Form13PsychologicalAssessmentPage({ searchParams }: PageProps) {
     const inputClasses = "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white placeholder-gray-400";
     const textareaClasses = "w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white leading-relaxed";
     const sectionClasses = "space-y-4 bg-gray-50 p-6 rounded-xl border border-gray-100";
-    const labelClasses = "text-xl font-bold text-upsi-navy border-b-2 border-upsi-gold pb-2 uppercase tracking-wide inline-block mb-2 w-full";
+    const labelClasses = "text-xl font-bold text-upsi-navy border-b-2 border-neutral-800 pb-2 uppercase tracking-wide inline-block mb-2 w-full";
 
     const renderTextarea = (label: string, stateValue: string, setter: (val: string) => void, rows: number = 8, sublabel?: string) => (
         <div className={sectionClasses}>
@@ -247,16 +247,16 @@ export function Form13PsychologicalAssessmentPage({ searchParams }: PageProps) {
     return (
         <div className="max-w-4xl mx-auto pb-12">
             <div className="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-200 overflow-hidden">
-                <div className="bg-upsi-navy px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
+                <div className="bg-neutral-900 px-8 py-6 border-b-4 border-neutral-800 flex justify-between items-center flex-wrap gap-4 no-print">
                     <div>
                         <h1 className="text-2xl font-bold text-white flex items-center space-x-3">
-                            <BrainCircuit className="text-upsi-gold" size={28} />
+                            <BrainCircuit className="text-white" size={28} />
                             <span>Form 13: Psychological Assessment</span>
                         </h1>
-                        <p className="text-blue-100 mt-1">Definitive clinical impression and assessment analysis instrument.</p>
+                        <p className="text-neutral-400 mt-1">Definitive clinical impression and assessment analysis instrument.</p>
                     </div>
                     {!prefillClientId && (
-                        <div className="bg-white p-2 rounded-lg shadow-inner border border-blue-800">
+                        <div className="bg-white p-2 rounded-lg shadow-inner border border-neutral-700">
                             <ClientPrefill onSelectClient={setSelectedClient} />
                         </div>
                     )}
