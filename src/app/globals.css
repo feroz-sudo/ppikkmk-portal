@@ -97,10 +97,13 @@ form [class*="underline"] {
 
   aside,
   nav,
+  header,
+  footer,
   .no-print,
   button,
   .sidebar-trigger,
-  .form-action-bar {
+  .form-action-bar,
+  .no-print * {
     display: none !important;
   }
 

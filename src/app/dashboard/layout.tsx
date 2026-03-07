@@ -420,7 +420,7 @@ export default function DashboardLayout({
             {/* Main Content Area */}
             <div className="flex-1 flex flex-col overflow-hidden bg-[#F8FAFC]">
                 {/* Header */}
-                <header className="glass border-b border-slate-200 h-20 flex items-center justify-between px-8 shrink-0 z-30">
+                <header className="glass border-b border-slate-200 h-20 flex items-center justify-between px-8 shrink-0 z-30 no-print">
                     {/* Toggle and Brand */}
                     <div className="flex items-center space-x-4">
                         <button
