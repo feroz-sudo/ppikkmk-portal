@@ -11,7 +11,8 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #0f172a;
+  --foreground: #000000;
+  /* Force Black Foreground */
   --card-bg: rgba(255, 255, 255, 0.8);
   --glass-border: rgba(255, 255, 255, 0.2);
 }
@@ -19,8 +20,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #f8fafc;
-    /* Professional light gray, overriding default dark mode for clinical utility */
-    --foreground: #0f172a;
+    --foreground: #000000;
   }
 }
 
@@ -31,16 +31,49 @@ body {
   letter-spacing: -0.01em;
 }
 
-::selection {
-  background-color: #f9b314;
-  color: #1211ca;
+/* ============================================================
+   CLINICAL BLACK THEME (GLOBAL)
+   ============================================================ */
+/* Enforce strict black for all headings and text within forms to match user request */
+form h1,
+form h2,
+form h3,
+form h4,
+form label,
+form p,
+form span:not(.no-black) {
+  color: #000000 !important;
 }
 
-html {
-  scroll-behavior: smooth;
+/* Global underline style for forms - Pure Black */
+form .underline {
+  text-decoration-color: #000000 !important;
+  border-bottom-color: #000000 !important;
 }
 
-/* --- Premium Utilities --- */
+/* Ironclad Alignment for Personal Data Grids */
+.grid-cols-\[180px_auto_1fr\],
+.grid-cols-\[240px_auto_1fr\] {
+  display: grid !important;
+  grid-template-columns: 200px 30px 1fr !important;
+  gap: 4px 12px !important;
+  align-items: center !important;
+  color: #000 !important;
+}
+
+/* Standard Clinical Inputs */
+form input:not([type="checkbox"]):not([type="radio"]),
+form select,
+form textarea {
+  color: #000 !important;
+  border-color: #ccc !important;
+}
+
+form .grid>div {
+  color: #000 !important;
+}
+
+/* --- Premium Utilities (Screen Only) --- */
 .glass {
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(12px);
@@ -48,107 +81,17 @@ html {
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.glass-dark {
-  background: rgba(15, 23, 42, 0.9);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
 .shadow-premium {
   box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.05),
     0 2px 20px -5px rgba(0, 0, 0, 0.02);
 }
 
-.hover-lift {
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
-}
-
-.hover-lift:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-}
-
-/* Custom Selection Scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f5f9;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #cbd5e1;
-  border-radius: 20px;
-  border: 2px solid #f1f5f9;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: #94a3b8;
-}
-
-/* Sidebar Scrollbar */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 5px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.15);
-  border-radius: 10px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(255, 255, 255, 0.3);
-}
-
 /* ============================================================
-   CLINICAL ALIGNMENT (CORE) - Ensures Label: Value Harmony
-   ============================================================ */
-/* This targets the 3-column grid used for personal data in all forms */
-.grid-cols-\[180px_auto_1fr\],
-.grid-cols-\[240px_auto_1fr\] {
-  display: grid !important;
-  grid-template-columns: 200px 30px 1fr !important;
-  /* Fixed width for labels and colons */
-  gap: 4px 12px !important;
-  align-items: center !important;
-}
-
-/* Ensure labels are bold and pure black */
-.grid-cols-\[180px_auto_1fr\]>div:nth-child(3n+1),
-.grid-cols-\[240px_auto_1fr\]>div:nth-child(3n+1) {
-  font-weight: 700 !important;
-  color: black !important;
-  /* Force Black */
-}
-
-/* Perfect alignment for the colon separator - Pure Black */
-.grid-cols-\[180px_auto_1fr\]>div:nth-child(3n+2),
-.grid-cols-\[240px_auto_1fr\]>div:nth-child(3n+2) {
-  font-weight: 700 !important;
-  color: black !important;
-  text-align: center !important;
-}
-
-/* Force all form headings and labels to Black globally */
-form h2,
-form h3,
-form label {
-  color: black !important;
-}
-
-/* ============================================================
-   PRINT STYLES - Surgical Overrides to Fix Multi-page Flow & Layout
+   PRINT STYLES - Surgical Clinical Fidelity
    ============================================================ */
 @media print {
 
-  /* 1. Complete UI Hiding */
+  /* Complete UI Hiding */
   aside,
   header:not(.form-header),
   footer:not(.form-footer),
@@ -161,7 +104,7 @@ form label {
     display: none !important;
   }
 
-  /* 2. REFINED Layout Resets (Multi-page Fix) */
+  /* Layout Resets */
   html,
   body,
   #__next {
@@ -171,31 +114,23 @@ form label {
     background: white !important;
   }
 
-  /* Target the main scroll areas specifically */
   div.h-screen.flex-col,
   div.flex-1.flex.flex-col,
   main.overflow-y-auto {
     display: block !important;
     overflow: visible !important;
     height: auto !important;
-    min-height: auto !important;
     position: static !important;
   }
 
-  /* 3. Surgical Layout Preservation */
-  .grid {
-    display: grid !important;
-  }
-
-  /* ROCK SOLID alignment for print specifically */
+  /* Specific Print Alignment */
   .grid-cols-\[180px_auto_1fr\],
   .grid-cols-\[240px_auto_1fr\] {
     grid-template-columns: 200px 20px 1fr !important;
     gap: 2px 10px !important;
-    align-items: center !important;
   }
 
-  /* 4. Visual Polish & Clinical Fidelity */
+  /* Visual Polish */
   * {
     color: black !important;
     -webkit-print-color-adjust: exact !important;
@@ -204,57 +139,11 @@ form label {
     box-shadow: none !important;
   }
 
-  /* Force all headers to black for print, overriding blue theme */
-  h2,
-  h3,
-  .font-bold,
-  .text-upsi-navy {
-    color: black !important;
-  }
-
-  .underline {
-    border-bottom: 2px solid black !important;
-    /* Standard black underline */
-    text-decoration: none !important;
-    display: inline-block;
-  }
-
-  /* Professional Input look for Print */
-  input,
-  select,
-  textarea {
-    border: 1px solid #999 !important;
-    /* Slightly darker for print clarity */
-    background: transparent !important;
-    padding: 3px 6px !important;
-    border-radius: 0px !important;
-    font-size: 10pt !important;
-    width: 100% !important;
-    color: black !important;
-  }
-
-  textarea {
-    field-sizing: content;
-    min-height: 40px !important;
-    border-bottom: 1px solid #999 !important;
-  }
-
-  /* Clean sections - No complex backgrounds */
-  div[class*="bg-gray-50"],
-  .bg-gray-50 {
-    background: transparent !important;
-    border-bottom: 1px solid #ccc !important;
-    padding: 10px 0 !important;
-    margin-bottom: 10px !important;
-    border-radius: 0 !important;
-  }
-
-  /* 5. Header & Logo Balance */
+  /* Form Header Balance */
   .form-header {
     display: flex !important;
     flex-direction: column !important;
     border-bottom: 3px solid black !important;
-    /* Pure black line */
     padding-bottom: 12px !important;
     margin-bottom: 15px !important;
   }
@@ -262,21 +151,21 @@ form label {
   .form-header-logo {
     height: 60px !important;
     width: auto !important;
-    filter: grayscale(0%) !important;
-    /* Keep Logo Color */
+    filter: none !important;
+    /* Preserve Logo Color */
   }
 
-  /* 6. Page Break Logic */
-  .page-break-before {
-    page-break-before: always;
+  textarea {
+    field-sizing: content;
+    min-height: 40px !important;
   }
 
-  h2,
-  h3 {
-    page-break-after: avoid;
-  }
-
-  .grid>div {
-    page-break-inside: avoid;
+  div[class*="bg-gray-50"],
+  .bg-gray-50 {
+    background: transparent !important;
+    border-bottom: 1px solid #eee !important;
+    padding: 10px 0 !important;
+    margin-bottom: 10px !important;
+    border-radius: 0 !important;
   }
 }

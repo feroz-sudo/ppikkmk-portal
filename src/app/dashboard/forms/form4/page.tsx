@@ -205,8 +205,8 @@ export function Form4TreatmentPlanPage({ searchParams }: PageProps) {
         }
     };
 
-    const inputClasses = "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white placeholder-gray-400";
-    const textareaClasses = "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white text-sm";
+    const inputClasses = "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 outline-none text-gray-700 bg-white placeholder-gray-400";
+    const textareaClasses = "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 outline-none text-gray-700 bg-white text-sm";
 
     return (
         <div className="max-w-6xl mx-auto pb-12">
@@ -214,7 +214,7 @@ export function Form4TreatmentPlanPage({ searchParams }: PageProps) {
                 <div className="bg-upsi-navy px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
                     <div>
                         <h1 className="text-2xl font-bold text-white flex items-center space-x-3">
-                            <Target className="text-upsi-gold" size={28} />
+                            <Target className="text-white" size={28} />
                             <span>Form 4: Treatment Planning</span>
                         </h1>
                         <p className="text-blue-100 mt-1">Clinical Treatment Plan structure and outcome measures.</p>
@@ -234,7 +234,7 @@ export function Form4TreatmentPlanPage({ searchParams }: PageProps) {
 
                     {/* Demographic Information Section Group */}
                     <div className="bg-gray-50 p-6 xl:p-8 rounded-xl border border-gray-100 space-y-6">
-                        <h2 className="text-xl font-bold text-gray-900 uppercase tracking-wide underline underline-offset-4">DEMOGRAPHIC INFORMATION</h2>
+                        <h2 className="text-xl font-bold text-black uppercase tracking-wide underline underline-offset-4">DEMOGRAPHIC INFORMATION</h2>
 
                         <div className="grid grid-cols-[180px_auto_1fr] md:grid-cols-[240px_auto_1fr] gap-y-4 gap-x-2 items-center">
 

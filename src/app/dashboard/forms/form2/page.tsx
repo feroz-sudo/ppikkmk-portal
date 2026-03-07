@@ -218,7 +218,7 @@ export default function Form2ProgressiveNotesPage({ searchParams }: PageProps) {
     const inputClasses = "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white placeholder-gray-400";
     const textareaClasses = "w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white";
     const sectionClasses = "space-y-3 bg-gray-50 p-6 rounded-xl border border-gray-100";
-    const labelClasses = "text-lg font-bold text-gray-800 border-b-2 border-upsi-red pb-1 inline-block mb-2";
+    const labelClasses = "text-lg font-bold text-black border-b-2 border-black pb-1 inline-block mb-2";
 
     const renderTextarea = (label: string, stateValue: string, setter: (val: string) => void, rows: number = 8) => (
         <div className={sectionClasses}>
@@ -239,7 +239,7 @@ export default function Form2ProgressiveNotesPage({ searchParams }: PageProps) {
                 <div className="bg-upsi-navy px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
                     <div>
                         <h1 className="text-2xl font-bold text-white flex items-center space-x-3">
-                            <FileText className="text-upsi-gold" size={28} />
+                            <FileText className="text-white" size={28} />
                             <span>Form 2: Progressive Notes</span>
                         </h1>
                         <p className="text-blue-100 mt-1">S.O.A.P Format (Subjective, Objective, Assessment, Plan)</p>

@@ -204,10 +204,10 @@ export function Form3CaseConceptualizationPage({ searchParams }: PageProps) {
         }
     };
 
-    const inputClasses = "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white placeholder-gray-400";
-    const textareaClasses = "w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white";
+    const inputClasses = "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 outline-none text-gray-700 bg-white placeholder-gray-400";
+    const textareaClasses = "w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 outline-none text-gray-700 bg-white";
     const sectionClasses = "space-y-3 bg-gray-50 p-6 rounded-xl border border-gray-100";
-    const labelClasses = "text-lg font-bold text-gray-800 border-b-2 border-upsi-red pb-1 inline-block mb-2";
+    const labelClasses = "text-lg font-bold text-black border-b-2 border-black pb-1 inline-block mb-2";
 
     const renderTextarea = (label: string, stateValue: string, setter: (val: string) => void, rows: number = 6) => (
         <div className={sectionClasses}>
@@ -228,7 +228,7 @@ export function Form3CaseConceptualizationPage({ searchParams }: PageProps) {
                 <div className="bg-upsi-navy px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
                     <div>
                         <h1 className="text-2xl font-bold text-white flex items-center space-x-3">
-                            <Lightbulb className="text-upsi-gold" size={28} />
+                            <Lightbulb className="text-white" size={28} />
                             <span>Form 3: Case Conceptualization</span>
                         </h1>
                         <p className="text-blue-100 mt-1">Structured framework for clinical case formulation.</p>
@@ -248,7 +248,7 @@ export function Form3CaseConceptualizationPage({ searchParams }: PageProps) {
 
                     {/* Demographic Information Section Group */}
                     <div className="bg-gray-50 p-6 xl:p-8 rounded-xl border border-gray-100 space-y-6">
-                        <h2 className="text-xl font-bold text-gray-900 uppercase tracking-wide underline underline-offset-4">DEMOGRAPHIC INFORMATION</h2>
+                        <h2 className="text-xl font-bold text-black uppercase tracking-wide underline underline-offset-4">DEMOGRAPHIC INFORMATION</h2>
 
                         <div className="grid grid-cols-[180px_auto_1fr] md:grid-cols-[240px_auto_1fr] gap-y-4 gap-x-2 items-center">
 
@@ -290,7 +290,7 @@ export function Form3CaseConceptualizationPage({ searchParams }: PageProps) {
 
                     {/* Narrative Sections */}
                     <div className="pt-4">
-                        <h2 className="text-2xl font-bold text-gray-900 uppercase tracking-wide underline underline-offset-8 decoration-2 mb-10 text-center">CASE CONCEPTUALIZATION</h2>
+                        <h2 className="text-2xl font-bold text-black uppercase tracking-wide underline underline-offset-8 decoration-2 mb-10 text-center">CASE CONCEPTUALIZATION</h2>
 
                         <div className="space-y-8">
                             <div className="space-y-3 bg-white p-2 rounded-xl border border-transparent">
