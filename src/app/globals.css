@@ -112,47 +112,53 @@ html {
    ============================================================ */
 @media print {
 
+  /* Hide UI junk */
   aside,
   header:not(.form-header),
   footer:not(.form-footer),
   nav,
   .no-print,
   .form-action-bar,
-  button:not(.print-visible) {
+  button:not(.print-visible),
+  .sidebar-trigger,
+  .logo-container {
     display: none !important;
   }
 
-  /* Force multi-page flow by breaking flex layouts and overflow-hidden */
+  /* RADICAL RESET: Disable all height/overflow constraints on EVERY parent */
+  html,
   body,
-  html {
-    height: auto !important;
-    min-height: 100% !important;
-    overflow: visible !important;
-    background: white !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  main,
   #__next,
-  div[class*="flex-1"],
-  div[class*="overflow-y-auto"],
-  div[class*="overflow-hidden"],
   div[class*="h-screen"],
-  div[class*="h-full"] {
+  div[class*="flex-col"],
+  div[class*="flex-1"],
+  div[class*="overflow-hidden"],
+  div[class*="overflow-y-auto"],
+  main,
+  section,
+  article {
     display: block !important;
+    overflow: visible !important;
     height: auto !important;
     min-height: auto !important;
     max-height: none !important;
-    overflow: visible !important;
     position: static !important;
-    width: 100% !important;
-    padding: 0 !important;
     margin: 0 !important;
-    float: none !important;
+    padding: 0 !important;
+    width: 100% !important;
+    contain: none !important;
+    mask: none !important;
+    clip: auto !important;
   }
 
-  /* Form Container Resets */
+  /* Ensure content flows across pages */
+  #main-content-scroll-container,
+  .main-container {
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  /* Adjust Form Container */
   .max-w-4xl,
   .bg-white,
   .rounded-xl,
@@ -167,23 +173,28 @@ html {
     border: none !important;
     background: transparent !important;
     overflow: visible !important;
+    display: block !important;
   }
 
+  /* Formatting Resets */
   * {
     font-family: 'Arial', sans-serif !important;
     color: black !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
   }
 
-  textarea {
-    field-sizing: content;
-    overflow: visible !important;
-    height: auto !important;
-    border: 1px solid #ddd !important;
-    min-height: 120px !important;
-    white-space: pre-wrap !important;
-    font-size: 11pt !important;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    page-break-after: avoid;
+    break-after: avoid;
+    color: #1211ca !important;
   }
 
   .bg-upsi-navy {
@@ -191,18 +202,47 @@ html {
     color: white !important;
   }
 
-  .border-upsi-gold {
-    border-color: #f9b314 !important;
+  p,
+  div,
+  li,
+  td,
+  th {
+    page-break-inside: avoid;
+    break-inside: avoid;
   }
 
-  /* Force page breaks for readability */
-  h2 {
-    page-break-before: auto;
-    page-break-after: avoid;
-    margin-top: 25px !important;
+  textarea {
+    field-sizing: content;
+    overflow: visible !important;
+    height: auto !important;
+    min-height: 100px !important;
+    border: 1px solid #ddd !important;
+    background: #fcfcfc !important;
+    padding: 10px !important;
+    white-space: pre-wrap !important;
+  }
+
+  /* Specific Form Element Polish */
+  .grid {
+    display: block !important;
+  }
+
+  .grid>div {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: flex-start;
   }
 
   .p-8 {
-    padding: 20px !important;
+    padding: 15px !important;
+  }
+
+  .flex.items-center.justify-between {
+    display: flex !important;
+  }
+
+  img {
+    max-width: 100% !important;
+    height: auto !important;
   }
 }
