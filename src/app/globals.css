@@ -149,6 +149,7 @@ html {
     contain: none !important;
     mask: none !important;
     clip: auto !important;
+    background: white !important;
   }
 
   /* Ensure content flows across pages */
@@ -164,6 +165,7 @@ html {
   .rounded-xl,
   .shadow-sm,
   .border,
+  div[class*="bg-gray-"],
   form {
     max-width: none !important;
     width: 100% !important;
@@ -180,8 +182,8 @@ html {
   * {
     font-family: 'Arial', sans-serif !important;
     color: black !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: economy !important;
+    print-color-adjust: economy !important;
     box-shadow: none !important;
     text-shadow: none !important;
   }
@@ -200,6 +202,12 @@ html {
   .bg-upsi-navy {
     background-color: #1211ca !important;
     color: white !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .bg-upsi-navy * {
+    color: white !important;
   }
 
   p,
@@ -207,8 +215,8 @@ html {
   li,
   td,
   th {
-    page-break-inside: avoid;
-    break-inside: avoid;
+    page-break-inside: auto;
+    break-inside: auto;
   }
 
   textarea {
@@ -217,9 +225,10 @@ html {
     height: auto !important;
     min-height: 100px !important;
     border: 1px solid #ddd !important;
-    background: #fcfcfc !important;
+    background: white !important;
     padding: 10px !important;
     white-space: pre-wrap !important;
+    font-size: 11pt !important;
   }
 
   /* Specific Form Element Polish */
