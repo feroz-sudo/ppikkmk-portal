@@ -108,7 +108,7 @@ html {
 }
 
 /* ============================================================
-   PRINT STYLES - Surgical Overrides to Fix Multi-page Flow
+   PRINT STYLES - Surgical Overrides to Fix Multi-page Flow & Layout
    ============================================================ */
 @media print {
 
@@ -125,7 +125,7 @@ html {
     display: none !important;
   }
 
-  /* 2. Layout Height Collapse (Multi-page Fix) */
+  /* 2. Layout Resets (Multi-page Fix) */
   html,
   body,
   #__next,
@@ -148,13 +148,32 @@ html {
     background: white !important;
   }
 
-  /* 3. Form Header Restoration (Flexbox) */
+  /* 3. Surgical Layout Preservation (Fixing "All over the place") */
+  .grid {
+    display: grid !important;
+    /* Restore grid for internal alignment */
+  }
+
+  .flex {
+    display: flex !important;
+    /* Restore flex for component internal alignment */
+  }
+
+  /* Specific fix for label-colon-value alignment */
+  .grid-cols-\[180px_auto_1fr\],
+  .grid-cols-\[240px_auto_1fr\] {
+    grid-template-columns: 200px 20px 1fr !important;
+    gap: 8px !important;
+    align-items: start !important;
+  }
+
+  /* 4. Form Header Restoration */
   .form-header {
     display: flex !important;
     flex-direction: column !important;
-    border-bottom: 2px solid #ddd !important;
-    padding-bottom: 20px !important;
-    margin-bottom: 30px !important;
+    border-bottom: 2px solid #666 !important;
+    padding-bottom: 15px !important;
+    margin-bottom: 25px !important;
     background: white !important;
   }
 
@@ -167,67 +186,53 @@ html {
   }
 
   .form-header-logo {
-    height: 80px !important;
-    /* Fixed height for consistent scaling */
+    height: 70px !important;
     width: auto !important;
     display: block !important;
-    object-contain: true;
   }
 
-  /* 4. Form Content Layout */
-  .max-w-4xl,
-  form {
-    max-width: none !important;
-    width: 100% !important;
-    background: white !important;
-  }
-
-  div[class*="bg-gray-50"],
-  .bg-gray-50 {
-    background: white !important;
-    border: 1px solid #eee !important;
-  }
-
-  /* 5. Typography & Elements */
+  /* 5. Typography & Polish */
   * {
     color: black !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
+    font-family: 'Arial', sans-serif !important;
   }
 
-  h1,
   h2,
   h3,
-  h4 {
+  .font-bold {
     color: #1211ca !important;
+  }
+
+  .underline {
+    border-bottom: 1px solid #1211ca !important;
+    text-decoration: none !important;
+  }
+
+  /* Input/Textarea Styling for Print */
+  input,
+  select,
+  textarea {
+    border: 1px solid #ddd !important;
+    background: #fdfdfd !important;
+    padding: 5px !important;
+    border-radius: 4px !important;
+    font-size: 10pt !important;
   }
 
   textarea {
     field-sizing: content;
-    overflow: visible !important;
-    height: auto !important;
-    min-height: 80px !important;
-    border: 1px solid #ddd !important;
+    min-height: 60px !important;
+  }
+
+  /* Remove excessive grey backgrounds */
+  div[class*="bg-gray-50"],
+  .bg-gray-50 {
     background: #fafafa !important;
-    padding: 8px !important;
-    font-size: 11pt !important;
-    width: 100% !important;
-  }
-
-  /* Grid Reset to Table-like feel */
-  .grid {
-    display: table !important;
-    width: 100% !important;
-  }
-
-  .grid>div {
-    display: table-row !important;
-  }
-
-  .grid>div>div {
-    display: table-cell !important;
-    padding: 4px 0 !important;
-    vertical-align: top !important;
+    border: 1px solid #eee !important;
+    padding: 15px !important;
+    border-radius: 8px !important;
   }
 
   /* Page Break Logic */
@@ -240,7 +245,19 @@ html {
   }
 
   h2,
-  h3 {
+  h3,
+  label {
     page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  .grid>div {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Logo adjustment in form footer/header */
+  img {
+    max-width: 100% !important;
   }
 }
