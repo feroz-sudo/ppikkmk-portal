@@ -471,7 +471,7 @@ export default function DashboardLayout({
                 </main>
 
                 {/* Footer */}
-                <footer className="glass border-t border-slate-200 py-6 px-8 flex flex-col items-center shrink-0">
+                <footer className="glass border-t border-slate-200 py-6 px-8 flex flex-col items-center shrink-0 no-print">
                     <Disclaimer variant="compact" className="text-center opacity-70 mb-4" />
                     <div className="flex items-center space-x-2 text-slate-400 font-medium text-xs">
                         <span>Portal PPIKKMK</span>
