@@ -270,7 +270,7 @@ export function Form13PsychologicalAssessmentPage({ searchParams }: PageProps) {
 
                     {/* 1. PERSONAL DATA Section */}
                     <div className="space-y-6">
-                        <h2 className="text-xl font-bold text-gray-900 underline uppercase tracking-wide w-full mb-6">1. PERSONAL DATA</h2>
+                        <h2 className="text-xl font-bold text-gray-900 underline uppercase tracking-wide w-full mb-6">PERSONAL DATA</h2>
                         <div className="grid grid-cols-[200px_30px_1fr] md:grid-cols-[250px_30px_1fr] gap-y-4 items-center pl-4">
 
                             <div className="font-bold text-gray-800 text-sm md:text-base">Client Full Name</div>
@@ -317,25 +317,24 @@ export function Form13PsychologicalAssessmentPage({ searchParams }: PageProps) {
 
                     {/* Narrative Assessment Matrix */}
                     {[
-                        { num: "2.", label: "REASON FOR REFFERAL", value: reasonForReferral, setter: setReasonForReferral, rows: 4 },
-                        { num: "3.", label: "BEHAVIOUR OBSERVATION", value: behaviourObservation, setter: setBehaviourObservation, rows: 5 },
-                        { num: "4.", label: "PSYCHOLOGICAL TESTS ADMINISTERED", value: psychologicalTestsAdministered, setter: setPsychologicalTestsAdministered, rows: 5 },
-                        { num: "5.", label: "TEST RESULTS AND INTERPRETATION", value: testResultsAndInterpretation, setter: setTestResultsAndInterpretation, rows: 8 },
-                        { num: "6.", label: "DIAGNOSTIC IMPRESSION", value: diagnosticImpression, setter: setDiagnosticImpression, rows: 5 },
+                        { label: "REASON FOR REFFERAL", value: reasonForReferral, setter: setReasonForReferral, rows: 4 },
+                        { label: "BEHAVIOUR OBSERVATION", value: behaviourObservation, setter: setBehaviourObservation, rows: 5 },
+                        { label: "PSYCHOLOGICAL TESTS ADMINISTERED", value: psychologicalTestsAdministered, setter: setPsychologicalTestsAdministered, rows: 5 },
+                        { label: "TEST RESULTS AND INTERPRETATION", value: testResultsAndInterpretation, setter: setTestResultsAndInterpretation, rows: 8 },
+                        { label: "DIAGNOSTIC IMPRESSION", value: diagnosticImpression, setter: setDiagnosticImpression, rows: 5 },
                         {
-                            num: "7.",
                             label: "SUMMARY OF FINDINGS",
                             value: summaryOfFindings,
                             setter: setSummaryOfFindings,
                             rows: 8,
                             sublabel: "(Psychological Functioning Based On Assessment Results, Relationship Between Symptoms, Test Findings, and Real-Life Concerns, Strengths, Protective Factors, and Areas Needing Support)"
                         },
-                        { num: "8.", label: "RECOMMENDATIONS/TREATMENT PLAN", value: recommendationsTreatmentPlan, setter: setRecommendationsTreatmentPlan, rows: 6 },
-                        { num: "9.", label: "PROGNOSIS", value: prognosis, setter: setPrognosis, rows: 4 }
+                        { label: "RECOMMENDATIONS/TREATMENT PLAN", value: recommendationsTreatmentPlan, setter: setRecommendationsTreatmentPlan, rows: 6 },
+                        { label: "PROGNOSIS", value: prognosis, setter: setPrognosis, rows: 4 }
                     ].map((field, idx) => (
                         <div key={idx} className="space-y-4 pt-4">
                             <h2 className="text-xl font-bold text-gray-900 underline uppercase tracking-wide">
-                                {field.num} {field.label}
+                                {field.label}
                             </h2>
                             {field.sublabel && (
                                 <p className="text-[11px] font-bold text-gray-600 italic -mt-2 leading-tight">
