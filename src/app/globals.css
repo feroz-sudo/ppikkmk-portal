@@ -120,19 +120,27 @@ html {
   align-items: center !important;
 }
 
-/* Ensure labels are bold and readable */
+/* Ensure labels are bold and pure black */
 .grid-cols-\[180px_auto_1fr\]>div:nth-child(3n+1),
 .grid-cols-\[240px_auto_1fr\]>div:nth-child(3n+1) {
   font-weight: 700 !important;
-  color: #1e293b !important;
+  color: black !important;
+  /* Force Black */
 }
 
-/* Perfect alignment for the colon separator */
+/* Perfect alignment for the colon separator - Pure Black */
 .grid-cols-\[180px_auto_1fr\]>div:nth-child(3n+2),
 .grid-cols-\[240px_auto_1fr\]>div:nth-child(3n+2) {
   font-weight: 700 !important;
-  color: #1e293b !important;
+  color: black !important;
   text-align: center !important;
+}
+
+/* Force all form headings and labels to Black globally */
+form h2,
+form h3,
+form label {
+  color: black !important;
 }
 
 /* ============================================================
@@ -196,14 +204,17 @@ html {
     box-shadow: none !important;
   }
 
+  /* Force all headers to black for print, overriding blue theme */
   h2,
   h3,
-  .font-bold {
-    color: #1211ca !important;
+  .font-bold,
+  .text-upsi-navy {
+    color: black !important;
   }
 
   .underline {
-    border-bottom: 2px solid #1211ca !important;
+    border-bottom: 2px solid black !important;
+    /* Standard black underline */
     text-decoration: none !important;
     display: inline-block;
   }
@@ -212,26 +223,27 @@ html {
   input,
   select,
   textarea {
-    border: 1px solid #ddd !important;
+    border: 1px solid #999 !important;
+    /* Slightly darker for print clarity */
     background: transparent !important;
     padding: 3px 6px !important;
     border-radius: 0px !important;
-    /* Clinical data feel */
     font-size: 10pt !important;
     width: 100% !important;
+    color: black !important;
   }
 
   textarea {
     field-sizing: content;
     min-height: 40px !important;
-    border-bottom: 1px solid #eee !important;
+    border-bottom: 1px solid #999 !important;
   }
 
-  /* Remove excessive grey boxes - Make them clean flat areas */
+  /* Clean sections - No complex backgrounds */
   div[class*="bg-gray-50"],
   .bg-gray-50 {
     background: transparent !important;
-    border-bottom: 1px solid #eee !important;
+    border-bottom: 1px solid #ccc !important;
     padding: 10px 0 !important;
     margin-bottom: 10px !important;
     border-radius: 0 !important;
@@ -241,7 +253,8 @@ html {
   .form-header {
     display: flex !important;
     flex-direction: column !important;
-    border-bottom: 3px solid #1211ca !important;
+    border-bottom: 3px solid black !important;
+    /* Pure black line */
     padding-bottom: 12px !important;
     margin-bottom: 15px !important;
   }
@@ -249,6 +262,8 @@ html {
   .form-header-logo {
     height: 60px !important;
     width: auto !important;
+    filter: grayscale(0%) !important;
+    /* Keep Logo Color */
   }
 
   /* 6. Page Break Logic */

@@ -26,17 +26,17 @@ export const FormHeader: React.FC<FormHeaderProps> = ({ title, refCode }) => {
 
                 {/* Center: Title Group - Centered flexibly */}
                 <div className="flex-grow text-center">
-                    <h2 className="text-lg md:text-2xl font-black text-gray-900 tracking-wide uppercase leading-tight mb-2 print:text-black">
+                    <h2 className="text-lg md:text-2xl font-black text-black tracking-wide uppercase leading-tight mb-2">
                         {title}
                     </h2>
                     <div className="flex flex-col items-center">
-                        <h3 className="text-[10px] md:text-xs font-bold text-gray-600 uppercase tracking-[0.2em] mb-1 print:text-gray-700">
+                        <h3 className="text-[10px] md:text-xs font-bold text-gray-800 uppercase tracking-[0.2em] mb-1">
                             Praktikum & Internship
                         </h3>
-                        <h3 className="text-xs md:text-base font-bold text-upsi-navy uppercase tracking-tight print:text-blue-900">
+                        <h3 className="text-xs md:text-base font-bold text-black uppercase tracking-tight">
                             Kaunseling (Kesihatan Mental Klinikal)
                         </h3>
-                        <h3 className="text-xs md:text-sm font-bold text-gray-800 uppercase tracking-tight opacity-70 print:opacity-100 print:text-gray-700">
+                        <h3 className="text-xs md:text-sm font-bold text-gray-900 uppercase tracking-tight">
                             Universiti Pendidikan Sultan Idris
                         </h3>
                     </div>
