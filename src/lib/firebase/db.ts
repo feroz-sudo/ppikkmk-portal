@@ -9,9 +9,30 @@ import {
     addDoc,
     updateDoc,
     deleteDoc,
-    Timestamp
+    Timestamp,
+    orderBy,
+    serverTimestamp,
+    setDoc,
+    onSnapshot
 } from "firebase/firestore";
-export { db };
+
+export {
+    db,
+    collection,
+    doc,
+    getDoc,
+    getDocs,
+    query,
+    where,
+    addDoc,
+    updateDoc,
+    deleteDoc,
+    Timestamp,
+    orderBy,
+    serverTimestamp,
+    setDoc,
+    onSnapshot
+};
 
 // --- Types ---
 export interface User {
@@ -22,6 +43,25 @@ export interface User {
     programType: 'practicum' | 'internship' | null;
     matricNumber?: string;
     assignedSupervisorId?: string;
+    clinicalStatus?: 'active' | 'completed' | 'archived';
+    academicSession?: string;
+}
+
+export interface TraineeMarks {
+    id?: string;
+    traineeId: string;
+    supervisorId: string;
+    faceToFace: {
+        individual: number; // Max 25 (Target 60h)
+        group: number;      // Max 15 (Target 36h)
+    };
+    professionalActivities: number; // Max 25 (Target 90h Psychoeducation/Consultation)
+    managementAdmin: number;        // Max 20 (Target 52h Logbook/Reflections)
+    professionalDevelopment: number; // Max 5 (Target 14h)
+    professionalIdentity: number;   // Max 10 (Sahsiah/Personality)
+    total: number; // Max 100
+    comments?: string;
+    updatedAt: Timestamp | Date;
 }
 
 export interface Client {
@@ -52,11 +92,35 @@ export interface Session {
     formType: 'Form1' | 'Form2' | 'Form3' | 'Form4' | 'Form5' | 'Form6' | 'Form7' | 'Form8' | 'Form11' | 'Form13';
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     formData: any;
-    status?: 'pending' | 'verified' | 'rejected';
-    supervisorComments?: string;
+    status?: 'pending' | 'verified' | 'rejected' | 'revision_requested';
+    supervisorFeedback?: string;
     verifiedBy?: string;
     verificationDate?: Timestamp | Date;
     createdAt?: Timestamp | Date;
+}
+
+export interface AttendanceSignOff {
+    id?: string;
+    traineeId: string;
+    supervisorId: string;
+    weekStartDate: string; // YYYY-MM-DD
+    totalHours: number;
+    status: 'pending' | 'signed';
+    supervisorSignature?: string; // Base64 or URL
+    signedDate?: Timestamp | Date;
+    createdAt: Timestamp | Date;
+}
+
+export interface ClinicalRecording {
+    id?: string;
+    traineeId: string;
+    clientId: string;
+    sessionId: string;
+    type: 'KI' | 'KK';
+    storagePath: string;
+    feedback?: string;
+    status: 'pending' | 'reviewed';
+    createdAt: Timestamp | Date;
 }
 
 export type LogCategory =
@@ -74,7 +138,7 @@ export interface Log {
     hours: number;
     description: string;
     sessionId?: string; // Reference to clinical session
-    status?: 'pending' | 'verified' | 'rejected';
+    status?: 'pending' | 'verified' | 'rejected' | 'revision_requested';
     verifiedBy?: string;
     verificationDate?: Timestamp | Date;
     createdAt?: Timestamp | Date;
@@ -100,6 +164,9 @@ export const clientsRef = collection(db, "clients");
 export const sessionsRef = collection(db, "sessions");
 export const logsRef = collection(db, "logs");
 export const supervisionsRef = collection(db, "supervisions");
+export const attendanceRef = collection(db, "attendance_signoffs");
+export const recordingsRef = collection(db, "clinical_recordings");
+export const marksRef = collection(db, "marks");
 
 // --- Services ---
 
@@ -193,6 +260,12 @@ export const getTraineeSessions = async (traineeId: string): Promise<Session[]> 
     return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Session));
 };
 
+export const getTraineeSupervisionRequests = async (traineeId: string): Promise<Supervision[]> => {
+    const q = query(collection(db, "supervisions"), where("traineeId", "==", traineeId), orderBy("createdAt", "desc"));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Supervision));
+};
+
 export const updateSession = async (sessionId: string, data: Partial<Session>) => {
     const docRef = doc(db, "sessions", sessionId);
     await updateDoc(docRef, data);
@@ -245,5 +318,69 @@ export const syncSessionWithLog = async (session: Session & { id: string }) => {
             ...logData,
             createdAt: new Date()
         });
+    }
+};
+
+// Recordings Hub
+export const addRecording = async (recording: Omit<ClinicalRecording, "id" | "createdAt">) => {
+    return await addDoc(recordingsRef, {
+        ...recording,
+        createdAt: new Date()
+    });
+};
+
+export const getTraineeRecordings = async (traineeId: string): Promise<ClinicalRecording[]> => {
+    const q = query(recordingsRef, where("traineeId", "==", traineeId));
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as ClinicalRecording));
+};
+
+export const updateRecordingFeedback = async (id: string, feedback: string) => {
+    const docRef = doc(db, "clinical_recordings", id);
+    await updateDoc(docRef, {
+        feedback,
+        status: 'reviewed',
+        updatedAt: new Date()
+    });
+};
+
+// Attendance Hub
+export const getTraineeAttendance = async (traineeId: string): Promise<AttendanceSignOff[]> => {
+    const q = query(attendanceRef, where("traineeId", "==", traineeId));
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AttendanceSignOff));
+};
+
+export const signOffAttendance = async (id: string, supervisorId: string, signature: string) => {
+    const docRef = doc(db, "attendance_signoffs", id);
+    await updateDoc(docRef, {
+        status: 'signed',
+        supervisorSignature: signature,
+        signedDate: new Date(),
+        verifiedBy: supervisorId
+    });
+};
+
+// Marks System
+export const getTraineeMarks = async (traineeId: string): Promise<TraineeMarks | null> => {
+    const q = query(marksRef, where("traineeId", "==", traineeId));
+    const snapshot = await getDocs(q);
+    if (snapshot.empty) return null;
+    return { id: snapshot.docs[0].id, ...snapshot.docs[0].data() } as TraineeMarks;
+};
+
+export const saveTraineeMarks = async (marks: Omit<TraineeMarks, "id" | "updatedAt">) => {
+    const q = query(marksRef, where("traineeId", "==", marks.traineeId));
+    const snapshot = await getDocs(q);
+
+    const data = {
+        ...marks,
+        updatedAt: new Date()
+    };
+
+    if (snapshot.empty) {
+        await addDoc(marksRef, data);
+    } else {
+        await updateDoc(doc(db, "marks", snapshot.docs[0].id), data);
     }
 };

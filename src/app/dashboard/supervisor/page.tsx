@@ -3,8 +3,24 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { collection, query, where, getDocs } from "firebase/firestore";
-import { db, User, Supervision, getSupervisorPendingRequests, updateSupervisionStatus } from "@/lib/firebase/db";
-import { Users, FileText, ChevronRight, Calendar, Clock, MapPin, Building2, Video, Check, X, AlertCircle } from "lucide-react";
+import { db, User, Supervision, updateSupervisionStatus, onSnapshot } from "@/lib/firebase/db";
+import {
+    Users,
+    FileText,
+    ChevronRight,
+    Calendar,
+    Clock,
+    MapPin,
+    Building2,
+    Video,
+    Check,
+    X,
+    AlertCircle,
+    Inbox,
+    Award,
+    CheckCircle2
+} from "lucide-react";
+import Link from "next/link";
 
 export default function SupervisorDashboard() {
     const { user, userRole } = useAuth();
@@ -13,37 +29,50 @@ export default function SupervisorDashboard() {
     const [loading, setLoading] = useState(true);
     const [actionLoading, setActionLoading] = useState<string | null>(null);
 
-    const fetchData = async () => {
-        if (user && userRole === "supervisor") {
-            setLoading(true);
-            try {
-                // Find users who have this supervisor assigned
-                const q = query(collection(db, "users"), where("assignedSupervisorId", "==", user.uid));
-                const [traineeSnapshot, supervisionRequests] = await Promise.all([
-                    getDocs(q),
-                    getSupervisorPendingRequests(user.uid)
-                ]);
-
-                const traineeList = traineeSnapshot.docs.map(doc => ({ ...doc.data() } as User));
-                setTrainees(traineeList);
-                setRequests(supervisionRequests);
-            } catch (error) {
-                console.error("Failed to fetch supervisor data", error);
-            } finally {
-                setLoading(false);
-            }
-        }
-    };
-
     useEffect(() => {
-        fetchData();
+        if (!user || userRole !== "supervisor") return;
+
+        setLoading(true);
+
+        // 1. Real-time Assigned Trainees
+        const traineesQuery = query(
+            collection(db, "users"),
+            where("assignedSupervisorId", "==", user.uid)
+        );
+
+        const unsubscribeTrainees = onSnapshot(traineesQuery, (snapshot) => {
+            const traineeList = snapshot.docs.map(doc => ({ uid: doc.id, ...doc.data() } as User));
+            setTrainees(traineeList);
+            setLoading(false);
+        }, (error) => {
+            console.error("Trainees listener error:", error);
+            setLoading(false);
+        });
+
+        // 2. Real-time Supervision Requests
+        const requestsQuery = query(
+            collection(db, "supervisions"),
+            where("supervisorId", "==", user.uid)
+        );
+
+        const unsubscribeRequests = onSnapshot(requestsQuery, (snapshot) => {
+            const requestsList = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Supervision));
+            setRequests(requestsList);
+        }, (error) => {
+            console.error("Requests listener error:", error);
+        });
+
+        return () => {
+            unsubscribeTrainees();
+            unsubscribeRequests();
+        };
     }, [user, userRole]);
 
     const handleStatusUpdate = async (requestId: string, status: Supervision['status']) => {
         setActionLoading(requestId);
         try {
             await updateSupervisionStatus(requestId, status);
-            await fetchData();
+            // No need to manually fetchData(), the onSnapshot listener handles it!
         } catch (error) {
             console.error("Failed to update status", error);
         } finally {
@@ -54,151 +83,155 @@ export default function SupervisorDashboard() {
     if (userRole !== "supervisor") {
         return (
             <div className="p-8 text-center text-red-500 font-bold bg-white rounded-xl shadow-sm border border-red-100">
-                Access Denied. You do not have supervisor privileges.
+                Access Denied. Supervisor privileges required.
             </div>
         );
     }
 
     const pendingRequests = requests.filter((r: Supervision) => r.status === 'pending');
-    const confirmedRequests = requests.filter((r: Supervision) => r.status === 'confirmed');
 
     return (
-        <div className="max-w-6xl mx-auto space-y-8 pb-12">
-            <div className="bg-upsi-navy text-white p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden glass-dark">
-                <div className="absolute top-0 right-0 p-10 opacity-10">
-                    <Users size={150} />
+        <div className="max-w-6xl mx-auto space-y-10 pb-12 font-[Arial,sans-serif]">
+            {/* Professional Header */}
+            <div className="bg-upsi-navy text-white p-12 rounded-[3.5rem] shadow-2xl relative overflow-hidden glass-dark">
+                <div className="absolute top-0 right-0 p-12 opacity-10">
+                    <Inbox size={200} />
                 </div>
                 <div className="relative z-10">
-                    <h1 className="text-4xl font-black tracking-tighter flex items-center space-x-3 mb-2">
-                        <Users className="text-upsi-gold" size={40} />
-                        <span>Supervisor Portal</span>
+                    <h1 className="text-5xl font-black tracking-tighter flex items-center space-x-4 mb-4">
+                        <Inbox className="text-upsi-gold" size={48} />
+                        <span>Supervision Hub</span>
                     </h1>
-                    <p className="text-blue-100 text-lg font-medium">Manage clinical milestones and review trainee progress.</p>
+                    <p className="text-blue-100/80 text-xl font-medium max-w-2xl leading-relaxed">
+                        Clinical management center for supervising academic practicum and internship placements.
+                        Review pending requests and manage assigned trainee portfolios.
+                    </p>
                 </div>
+                <Award className="absolute -bottom-10 -left-10 text-white/5 rotate-12" size={250} />
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {/* Pending Requests Column */}
-                <div className="lg:col-span-1 space-y-6">
-                    <div className="flex items-center justify-between px-2">
-                        <h2 className="text-sm font-black text-slate-400 uppercase tracking-[0.2em]">Pending Requests</h2>
-                        <span className="bg-upsi-gold text-upsi-navy px-2 py-0.5 rounded-md text-[10px] font-black">{pendingRequests.length}</span>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                {/* Pending Actions Column */}
+                <div className="lg:col-span-1 space-y-8">
+                    <div className="flex items-center justify-between px-4">
+                        <h2 className="text-xs font-black text-slate-400 uppercase tracking-[0.3em]">Supervision Requests</h2>
+                        <span className="bg-upsi-gold text-upsi-navy px-3 py-1 rounded-full text-[10px] font-black shadow-lg shadow-upsi-gold/20">
+                            {pendingRequests.length} PENDING
+                        </span>
                     </div>
 
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                         {pendingRequests.length === 0 ? (
-                            <div className="p-8 bg-white rounded-3xl border border-dashed border-slate-200 text-center">
-                                <AlertCircle className="mx-auto text-slate-300 mb-2" size={24} />
-                                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">No pending requests</p>
+                            <div className="p-12 bg-white rounded-[2.5rem] border border-dashed border-slate-200 text-center flex flex-col items-center">
+                                <CheckCircle2 className="text-slate-200 mb-4" size={40} />
+                                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest leading-loose">
+                                    Queue Clean.<br />All sessions confirmed.
+                                </p>
                             </div>
                         ) : (
                             pendingRequests.map((req: Supervision) => (
-                                <div key={req.id} className="bg-white p-6 rounded-[2rem] shadow-premium border border-slate-100 hover:border-upsi-gold/30 transition-all">
-                                    <div className="flex items-center justify-between mb-4">
-                                        <div className="p-2 bg-blue-50 text-blue-600 rounded-lg">
-                                            {req.type === 'Campus' ? <Building2 size={18} /> : req.type === 'Site' ? <MapPin size={18} /> : <Video size={18} />}
+                                <div key={req.id} className="bg-white p-8 rounded-[2.5rem] shadow-premium border border-slate-100 hover:border-upsi-gold/30 transition-all group">
+                                    <div className="flex items-center justify-between mb-6">
+                                        <div className="p-3 bg-blue-50 text-upsi-navy rounded-2xl group-hover:scale-110 transition-transform">
+                                            {req.type === 'Campus' ? <Building2 size={24} /> : req.type === 'Site' ? <MapPin size={24} /> : <Video size={24} />}
                                         </div>
-                                        <span className="text-[10px] font-black uppercase text-upsi-gold tracking-widest">{req.type}</span>
+                                        <span className="text-[10px] font-black uppercase text-upsi-gold tracking-widest">{req.type} Visit</span>
                                     </div>
-                                    <div className="mb-4">
-                                        <h4 className="font-bold text-slate-800">{trainees.find((t: User) => t.uid === req.traineeId)?.name || "Trainee"}</h4>
-                                        <div className="flex items-center text-xs text-slate-500 mt-1 space-x-3">
-                                            <span className="flex items-center"><Calendar size={12} className="mr-1" /> {req.date instanceof Date ? req.date.toDateString() : (req.date as any).toDate().toDateString()}</span>
-                                            <span className="flex items-center"><Clock size={12} className="mr-1" /> {req.proposedTime}</span>
+                                    <div className="mb-8">
+                                        <h4 className="font-black text-slate-800 text-lg tracking-tight mb-2">
+                                            {trainees.find((t: User) => t.uid === req.traineeId)?.name || "Trainee"}
+                                        </h4>
+                                        <div className="space-y-2">
+                                            <div className="flex items-center text-xs text-slate-500 font-bold bg-slate-50 p-2 rounded-xl border border-slate-100">
+                                                <Calendar size={14} className="mr-2 text-upsi-gold" />
+                                                {req.date instanceof Date ? req.date.toDateString() : (req.date as any).toDate().toDateString()}
+                                            </div>
+                                            <div className="flex items-center text-xs text-slate-500 font-bold bg-slate-50 p-2 rounded-xl border border-slate-100">
+                                                <Clock size={14} className="mr-2 text-upsi-gold" />
+                                                {req.proposedTime}
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="flex space-x-2">
+                                    <div className="flex space-x-3">
                                         <button
                                             onClick={() => handleStatusUpdate(req.id!, 'confirmed')}
                                             disabled={!!actionLoading}
-                                            className="flex-1 py-2.5 bg-upsi-navy text-white rounded-xl text-xs font-black uppercase tracking-widest hover:scale-[1.02] transition-all flex items-center justify-center"
+                                            className="flex-1 py-4 bg-upsi-navy text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] hover:shadow-xl hover:shadow-upsi-navy/30 transition-all flex items-center justify-center active:scale-95"
                                         >
-                                            <Check size={14} className="mr-1" /> Confirm
+                                            {actionLoading === req.id ? (
+                                                <div className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full mr-2"></div>
+                                            ) : (
+                                                <Check size={14} className="mr-2" />
+                                            )}
+                                            CONFIRM
                                         </button>
                                         <button
                                             onClick={() => handleStatusUpdate(req.id!, 'cancelled')}
                                             disabled={!!actionLoading}
-                                            className="p-2.5 bg-slate-100 text-slate-400 rounded-xl hover:bg-red-50 hover:text-red-500 transition-all"
+                                            className="p-4 bg-slate-100 text-slate-400 rounded-2xl hover:bg-red-50 hover:text-red-500 transition-all active:scale-90"
                                         >
-                                            <X size={18} />
+                                            <X size={20} />
                                         </button>
                                     </div>
                                 </div>
                             ))
                         )}
                     </div>
-
-                    <h2 className="text-sm font-black text-slate-400 uppercase tracking-[0.2em] px-2 pt-4">Confirmed Schedule</h2>
-                    <div className="space-y-4">
-                        {confirmedRequests.map((req: Supervision) => (
-                            <div key={req.id} className="bg-slate-50 p-5 rounded-2xl border border-slate-100 flex items-center justify-between">
-                                <div className="flex items-center space-x-3">
-                                    <div className="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center">
-                                        <Check size={20} />
-                                    </div>
-                                    <div>
-                                        <p className="text-xs font-black text-slate-800">{trainees.find((t: User) => t.uid === req.traineeId)?.name}</p>
-                                        <p className="text-[10px] text-slate-500 font-bold uppercase tracking-tighter mt-0.5">
-                                            {req.type} • {req.proposedTime}
-                                        </p>
-                                    </div>
-                                </div>
-                                <button
-                                    onClick={() => handleStatusUpdate(req.id!, 'completed')}
-                                    className="px-3 py-1.5 bg-white border border-slate-200 text-[10px] font-black text-upsi-navy rounded-lg hover:bg-upsi-navy hover:text-white transition-all shadow-sm"
-                                >
-                                    COMPLETE
-                                </button>
-                            </div>
-                        ))}
-                    </div>
                 </div>
 
-                {/* Trainees List Column */}
-                <div className="lg:col-span-2 space-y-6">
-                    <h2 className="text-sm font-black text-slate-400 uppercase tracking-[0.2em] px-2">Assigned Trainees</h2>
-                    <div className="bg-white rounded-[2.5rem] shadow-premium border border-gray-100 overflow-hidden">
+                {/* Portfolio Status Summary Column */}
+                <div className="lg:col-span-2 space-y-8">
+                    <div className="flex items-center justify-between px-4">
+                        <h2 className="text-xs font-black text-slate-400 uppercase tracking-[0.3em]">Assigned Portfolio Status</h2>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {loading ? (
-                            <div className="p-20 text-center">
+                            <div className="col-span-2 p-20 text-center">
                                 <div className="animate-spin w-8 h-8 border-4 border-upsi-gold border-t-transparent rounded-full mx-auto mb-4"></div>
-                                <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">Hydrating Trainee Data...</p>
+                                <p className="text-sm font-bold text-slate-400 uppercase tracking-widest text-center">Auditing Portfolios...</p>
                             </div>
                         ) : trainees.length === 0 ? (
-                            <div className="p-20 text-center text-slate-400">No trainees assigned.</div>
+                            <div className="col-span-2 p-12 bg-white rounded-[2.5rem] border border-slate-100 text-center text-slate-400 font-bold uppercase text-[10px] tracking-widest">
+                                No assigned portfolios linked to your ID
+                            </div>
                         ) : (
-                            <div className="divide-y divide-slate-50">
-                                {trainees.map((trainee: User) => (
-                                    <div key={trainee.uid} className="p-8 hover:bg-slate-50/50 transition-colors flex items-center justify-between group">
-                                        <div className="flex items-center space-x-6">
-                                            <div className="relative">
-                                                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white flex items-center justify-center font-black text-2xl shadow-lg group-hover:rotate-3 transition-transform">
-                                                    {trainee.name.charAt(0)}
-                                                </div>
-                                                <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-emerald-500 border-2 border-white rounded-full flex items-center justify-center">
-                                                    <Check size={12} className="text-white" />
-                                                </div>
+                            trainees.map((trainee: User) => (
+                                <Link
+                                    key={trainee.uid}
+                                    href={`/dashboard/supervisor/portfolio/${trainee.uid}`}
+                                    className="bg-white p-8 rounded-[2.5rem] shadow-premium border border-slate-100 hover:border-upsi-navy/20 transition-all group flex flex-col justify-between"
+                                >
+                                    <div className="flex items-start justify-between mb-10">
+                                        <div className="flex items-center space-x-5">
+                                            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-upsi-navy to-blue-800 text-white flex items-center justify-center font-black text-xl shadow-lg group-hover:rotate-6 transition-transform">
+                                                {trainee.name.charAt(0)}
                                             </div>
                                             <div>
-                                                <h3 className="font-black text-slate-800 text-xl tracking-tight">{trainee.name}</h3>
-                                                <div className="flex items-center mt-1 space-x-3">
-                                                    <span className="bg-blue-50 text-blue-600 px-3 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest">{trainee.matricNumber}</span>
-                                                    <span className="text-xs text-slate-400 font-medium">{trainee.email}</span>
-                                                </div>
+                                                <h3 className="font-black text-slate-800 text-lg tracking-tight group-hover:text-upsi-navy transition-colors truncate max-w-[150px]">
+                                                    {trainee.name}
+                                                </h3>
+                                                <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest">{trainee.matricNumber}</p>
                                             </div>
                                         </div>
+                                        <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${trainee.clinicalStatus === 'completed' ? "bg-emerald-100 text-emerald-700" : "bg-blue-100 text-blue-700"
+                                            }`}>
+                                            {trainee.clinicalStatus || 'Active'}
+                                        </span>
+                                    </div>
 
-                                        <div className="flex items-center space-x-3">
-                                            <button className="flex items-center space-x-2 bg-white border-2 border-slate-100 text-slate-600 px-6 py-3 rounded-2xl hover:border-upsi-navy hover:text-upsi-navy transition-all text-sm font-black uppercase tracking-widest shadow-sm">
-                                                <FileText size={18} />
-                                                <span>Review Docs</span>
-                                            </button>
-                                            <button className="flex items-center justify-center w-14 h-14 bg-slate-900 text-white rounded-2xl hover:bg-upsi-navy transition-all shadow-xl shadow-slate-200 active:scale-90">
-                                                <ChevronRight size={24} />
-                                            </button>
+                                    <div className="pt-6 border-t border-slate-50 flex items-center justify-between">
+                                        <div className="flex items-center space-x-2 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                                            <FileText size={14} className="text-upsi-gold" />
+                                            <span>Portfolio Audit</span>
+                                        </div>
+                                        <div className="flex items-center text-upsi-navy group-hover:translate-x-2 transition-transform">
+                                            <span className="text-[10px] font-black uppercase tracking-widest mr-2">Open</span>
+                                            <ChevronRight size={16} />
                                         </div>
                                     </div>
-                                ))}
-                            </div>
+                                </Link>
+                            ))
                         )}
                     </div>
                 </div>
