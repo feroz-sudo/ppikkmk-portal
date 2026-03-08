@@ -209,8 +209,8 @@ export function Form4TreatmentPlanPage({ searchParams }: PageProps) {
     const textareaClasses = "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none text-black bg-white text-sm";
 
     return (
-        <div className="max-w-6xl mx-auto pb-12">
-            <div className="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-200 overflow-hidden">
+        <div className="max-w-4xl mx-auto pb-12 print:pb-0">
+            <div className="bg-white overflow-hidden">
                 <div className="bg-white px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
                     <div>
                         <h1 className="text-2xl font-bold text-upsi-navy flex items-center space-x-3">
@@ -226,14 +226,14 @@ export function Form4TreatmentPlanPage({ searchParams }: PageProps) {
                     )}
                 </div>
 
-                <form onSubmit={handleSubmit} className="p-8 space-y-8 bg-white overflow-x-auto">
+                <form onSubmit={handleSubmit} className="p-0 sm:p-4 md:p-8 space-y-8 bg-white overflow-x-auto">
                     <FormHeader
                         title="TREATMENT PLANNING"
                         refCode="Clinical_Treatment_Plan/KKMK_UPSI/04-2025"
                     />
 
                     {/* Demographic Information Section Group */}
-                    <div className="bg-white p-6 xl:p-8 border-2 border-black space-y-6">
+                    <div className="bg-white space-y-6">
                         <h2 className="text-xl font-bold text-black uppercase tracking-wide">DEMOGRAPHIC INFORMATION</h2>
 
                         <div className="grid grid-cols-[180px_auto_1fr] md:grid-cols-[240px_auto_1fr] gap-y-4 gap-x-2 items-center">
@@ -367,11 +367,10 @@ export function Form4TreatmentPlanPage({ searchParams }: PageProps) {
                             </div>
                         </div>
 
-                        <div className="text-gray-700 text-sm space-y-1 font-bold">
-                            <p>CMCH Counselor Trainee</p>
-                            <p className="font-normal">Universiti Pendidikan Sultan Idris</p>
-                            <p className="font-normal">35900 Tanjong Malim, Perak</p>
-                            <p className="text-upsi-navy font-black mt-1 uppercase">WWW.PPIKKMK.COM</p>
+                        <div className="text-black text-sm space-y-1 font-bold">
+                            <p className="uppercase">CMCH Counselor Trainee</p>
+                            <p className="uppercase font-normal tracking-tight">Universiti Pendidikan Sultan Idris</p>
+                            <p className="uppercase font-normal tracking-tight">35900 Tanjong Malim, Perak</p>
                         </div>
 
                         <div className="mt-16 text-center w-full pt-4 border-t border-dashed border-gray-200">

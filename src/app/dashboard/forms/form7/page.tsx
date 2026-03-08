@@ -237,8 +237,8 @@ export function Form7ConsultationReportPage({ searchParams }: PageProps) {
     );
 
     return (
-        <div className="max-w-4xl mx-auto pb-12">
-            <div className="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-200 overflow-hidden">
+        <div className="max-w-4xl mx-auto pb-12 print:pb-0">
+            <div className="bg-white overflow-hidden">
                 <div className="bg-white px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
                     <div>
                         <h1 className="text-2xl font-bold text-upsi-navy flex items-center space-x-3">
@@ -254,7 +254,7 @@ export function Form7ConsultationReportPage({ searchParams }: PageProps) {
                     )}
                 </div>
 
-                <form onSubmit={handleSubmit} className="p-8 space-y-8 bg-white overflow-x-auto">
+                <form onSubmit={handleSubmit} className="p-0 sm:p-4 md:p-8 space-y-8 bg-white overflow-x-auto">
                     <FormHeader
                         title="CONSULTATION REPORT"
                         refCode="Consultation_Report/KKMK_UPSI/07-2025"
@@ -436,8 +436,8 @@ export function Form7ConsultationReportPage({ searchParams }: PageProps) {
                             </table>
                         </div>
 
+
                         <div className="mt-16 text-center w-full pt-4 border-t border-dashed border-gray-200">
-                            <p className="text-[10px] font-black text-upsi-navy uppercase tracking-[0.2em] mb-1">WWW.PPIKKMK.COM</p>
                             <p className="text-xs font-bold text-slate-500 uppercase tracking-widest pl-[0.1em]">
                                 Confidential Document (For Professional Use Only)
                             </p>

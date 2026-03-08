@@ -245,8 +245,8 @@ export function Form13PsychologicalAssessmentPage({ searchParams }: PageProps) {
     );
 
     return (
-        <div className="max-w-4xl mx-auto pb-12">
-            <div className="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-200 overflow-hidden">
+        <div className="max-w-4xl mx-auto pb-12 print:pb-0">
+            <div className="bg-white overflow-hidden">
                 <div className="bg-white px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
                     <div>
                         <h1 className="text-2xl font-bold text-upsi-navy flex items-center space-x-3">
@@ -262,7 +262,7 @@ export function Form13PsychologicalAssessmentPage({ searchParams }: PageProps) {
                     )}
                 </div>
 
-                <form onSubmit={handleSubmit} className="p-8 space-y-10 bg-white">
+                <form onSubmit={handleSubmit} className="p-0 sm:p-4 md:p-8 space-y-8 bg-white">
                     <FormHeader
                         title="PSYCHOLOGICAL ASSESSMENT REPORT"
                         refCode="Evaluation/KKMK_UPSI/13-2025"
@@ -317,7 +317,7 @@ export function Form13PsychologicalAssessmentPage({ searchParams }: PageProps) {
 
                     {/* Narrative Assessment Matrix */}
                     {[
-                        { label: "REASON FOR REFFERAL", value: reasonForReferral, setter: setReasonForReferral, rows: 4 },
+                        { label: "REASON FOR REFERRAL", value: reasonForReferral, setter: setReasonForReferral, rows: 4 },
                         { label: "BEHAVIOUR OBSERVATION", value: behaviourObservation, setter: setBehaviourObservation, rows: 5 },
                         { label: "PSYCHOLOGICAL TESTS ADMINISTERED", value: psychologicalTestsAdministered, setter: setPsychologicalTestsAdministered, rows: 5 },
                         { label: "TEST RESULTS AND INTERPRETATION", value: testResultsAndInterpretation, setter: setTestResultsAndInterpretation, rows: 8 },
@@ -354,30 +354,28 @@ export function Form13PsychologicalAssessmentPage({ searchParams }: PageProps) {
 
                     {/* Footer Section */}
                     <div className="pt-10 pb-4 border-t border-gray-300 mt-12 w-full">
-                        <div className="mb-12 flex flex-col items-start max-w-sm">
-                            <h3 className="text-black font-bold mb-12 uppercase">Report by:</h3>
-                            <div className="w-80">
-                                <div className="border-b-2 border-dotted border-black w-full mb-3 h-4"></div>
-                                <div className="flex justify-between items-center w-full px-1">
+                        <div className="mt-4 w-full">
+                            <h3 className="text-black font-bold mb-8 uppercase underline underline-offset-4">REPORT BY:</h3>
+                            <div className="w-full max-w-xs">
+                                <div className="border-b-2 border-dotted border-black w-full mb-3 h-8"></div>
+                                <div className="flex justify-between items-center w-full mb-8">
                                     <span className="text-black font-bold text-lg">(</span>
                                     <input
                                         required
                                         type="text"
                                         value={traineeSignature}
                                         onChange={e => setTraineeSignature(e.target.value)}
-                                        className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase"
-                                        placeholder="Name of CMCH Counselor Trainee"
+                                        className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1"
+                                        placeholder="Enter Full Name"
                                     />
                                     <span className="text-black font-bold text-lg">)</span>
                                 </div>
+                                <div className="text-black text-sm space-y-1 font-bold">
+                                    <p className="uppercase font-bold">CMCH Counselor Trainee</p>
+                                    <p className="uppercase font-normal tracking-tight">Universiti Pendidikan Sultan Idris</p>
+                                    <p className="uppercase font-normal tracking-tight">35900 Tanjong Malim, Perak</p>
+                                </div>
                             </div>
-                        </div>
-
-                        <div className="text-gray-700 text-sm space-y-1 font-bold uppercase tracking-tight">
-                            <p>CMCH Counselor Trainee</p>
-                            <p className="font-normal text-gray-500">Universiti Pendidikan Sultan Idris</p>
-                            <p className="font-normal text-gray-500">35900 Tanjong Malim, Perak</p>
-                            <p className="text-upsi-navy font-black mt-1 text-xs">WWW.PPIKKMK.COM</p>
                         </div>
 
                         <div className="mt-20 text-center w-full pt-4 border-t border-dashed border-gray-200">

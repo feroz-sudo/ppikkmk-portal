@@ -234,8 +234,8 @@ export default function Form2ProgressiveNotesPage({ searchParams }: PageProps) {
     );
 
     return (
-        <div className="max-w-4xl mx-auto pb-12">
-            <div className="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-200 overflow-hidden">
+        <div className="max-w-4xl mx-auto pb-12 print:pb-0">
+            <div className="bg-white overflow-hidden">
                 <div className="bg-white px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
                     <div>
                         <h1 className="text-2xl font-bold text-upsi-navy flex items-center space-x-3">
@@ -251,7 +251,7 @@ export default function Form2ProgressiveNotesPage({ searchParams }: PageProps) {
                     )}
                 </div>
 
-                <form onSubmit={handleSubmit} className="p-8 space-y-8 bg-white">
+                <form onSubmit={handleSubmit} className="p-0 sm:p-4 md:p-8 space-y-8 bg-white">
                     <FormHeader
                         title="PROGRESSIVE NOTES"
                         refCode="Progressive_Notes/KKMK_UPSI/02-2025"
@@ -299,18 +299,18 @@ export default function Form2ProgressiveNotesPage({ searchParams }: PageProps) {
                         <textarea required rows={8} value={subjective} onChange={e => setSubjective(e.target.value)} className={textareaClasses} />
                     </div>
 
-                    <div className="space-y-3 bg-white p-2 rounded-xl border border-transparent">
-                        <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">OBJECTIVE (O)</label>
+                    <div className="space-y-3 bg-white p-2 border-none">
+                        <label className="text-xl font-bold text-black uppercase underline underline-offset-4 block mb-2">OBJECTIVE (O)</label>
                         <textarea required rows={8} value={objective} onChange={e => setObjective(e.target.value)} className={textareaClasses} />
                     </div>
 
-                    <div className="space-y-3 bg-white p-2 rounded-xl border border-transparent">
-                        <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">ASSESSMENT (A)</label>
+                    <div className="space-y-3 bg-white p-2 border-none">
+                        <label className="text-xl font-bold text-black uppercase underline underline-offset-4 block mb-2">ASSESSMENT (A)</label>
                         <textarea required rows={8} value={assessment} onChange={e => setAssessment(e.target.value)} className={textareaClasses} />
                     </div>
 
-                    <div className="space-y-3 bg-white p-2 rounded-xl border border-transparent">
-                        <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">PLAN (P)</label>
+                    <div className="space-y-3 bg-white p-2 border-none">
+                        <label className="text-xl font-bold text-black uppercase underline underline-offset-4 block mb-2">PLAN (P)</label>
                         <textarea required rows={8} value={plan} onChange={e => setPlan(e.target.value)} className={textareaClasses} />
                     </div>
 
@@ -335,11 +335,10 @@ export default function Form2ProgressiveNotesPage({ searchParams }: PageProps) {
                             </div>
                         </div>
 
-                        <div className="text-gray-700 text-sm space-y-1 font-bold">
-                            <p>CMCH Counselor Trainee</p>
-                            <p className="font-normal">Universiti Pendidikan Sultan Idris</p>
-                            <p className="font-normal">35900 Tanjong Malim, Perak</p>
-                            <p className="text-upsi-navy font-black mt-1 uppercase">WWW.PPIKKMK.COM</p>
+                        <div className="text-black text-sm space-y-1 font-bold">
+                            <p className="uppercase">CMCH Counselor Trainee</p>
+                            <p className="uppercase font-normal tracking-tight">Universiti Pendidikan Sultan Idris</p>
+                            <p className="uppercase font-normal tracking-tight">35900 Tanjong Malim, Perak</p>
                         </div>
 
                         <div className="mt-12 bg-white p-6 border-2 border-black text-sm text-black space-y-4">

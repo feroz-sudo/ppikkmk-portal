@@ -476,8 +476,6 @@ export default function DashboardLayout({
                     <div className="flex items-center space-x-2 text-slate-400 font-medium text-xs">
                         <span>Portal PPIKKMK</span>
                         <span className="w-1 h-1 bg-slate-200 rounded-full" />
-                        <span className="text-upsi-navy font-black tracking-tighter">WWW.PPIKKMK.COM</span>
-                        <span className="w-1 h-1 bg-slate-200 rounded-full" />
                         <span>UPSI Official Clinical Platform</span>
                         <span className="w-1 h-1 bg-slate-200 rounded-full" />
                         <span>Created by Ahmad Feroz</span>

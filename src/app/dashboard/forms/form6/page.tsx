@@ -172,8 +172,8 @@ export function Form6CrisisInterventionPage({ searchParams }: PageProps) {
     const textareaClasses = "w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none text-black bg-white";
 
     return (
-        <div className="max-w-4xl mx-auto pb-12">
-            <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+        <div className="max-w-4xl mx-auto pb-12 print:pb-0">
+            <div className="bg-white overflow-hidden">
                 <div className="bg-white px-8 py-6 border-b-4 border-upsi-gold no-print">
                     <h1 className="text-2xl font-bold text-black flex items-center space-x-3">
                         <ShieldAlert className="text-upsi-gold" size={28} />
@@ -181,22 +181,29 @@ export function Form6CrisisInterventionPage({ searchParams }: PageProps) {
                     </h1>
                 </div>
 
-                <form onSubmit={handleSubmit} className="p-8 space-y-8 bg-white overflow-x-auto">
+                <form onSubmit={handleSubmit} className="p-0 sm:p-4 md:p-8 space-y-8 bg-white">
                     <FormHeader
                         title="CRISIS INTERVENTION REPORT"
                         refCode="Crisis_Intervention_Report/KKMK_UPSI/06-2025"
                     />
 
-                    <div className="bg-white p-6 border-2 border-black space-y-6">
+                    <div className="bg-white space-y-6">
+                        <h2 className="text-xl font-bold text-black uppercase underline underline-offset-4 mb-4">DEMOGRAPHIC INFORMATION</h2>
                         <div className="grid grid-cols-[180px_auto_1fr] md:grid-cols-[240px_auto_1fr] gap-4 items-center">
-                            <div className="font-bold text-black uppercase">Client Name</div><div className="font-bold">:</div>
+                            <div className="font-bold text-black uppercase text-sm md:text-base">Client Name</div><div className="font-bold">:</div>
                             <input required type="text" value={clientName} onChange={e => setClientName(e.target.value)} className={inputClasses} />
 
-                            <div className="font-bold text-black uppercase">Age</div><div className="font-bold">:</div>
+                            <div className="font-bold text-black uppercase text-sm md:text-base">Age</div><div className="font-bold">:</div>
                             <input required type="text" value={age} onChange={e => setAge(e.target.value)} className={inputClasses} />
 
-                            <div className="font-bold text-black uppercase">Date</div><div className="font-bold">:</div>
+                            <div className="font-bold text-black uppercase text-sm md:text-base">Date</div><div className="font-bold">:</div>
                             <input required type="date" value={date} onChange={e => setDate(e.target.value)} className={inputClasses} />
+
+                            <div className="font-bold text-black uppercase text-sm md:text-base">Designation</div><div className="font-bold">:</div>
+                            <input required type="text" className={inputClasses} placeholder="Counsellor Trainee" />
+
+                            <div className="font-bold text-black uppercase text-sm md:text-base">Date of Report</div><div className="font-bold">:</div>
+                            <input required type="date" className={inputClasses} />
                         </div>
                     </div>
 
@@ -207,16 +214,33 @@ export function Form6CrisisInterventionPage({ searchParams }: PageProps) {
                         { label: "Follow-up Required", value: followUpRequired, setter: setFollowUpRequired, rows: 4 }
                     ].map((f, i) => (
                         <div key={i} className="space-y-2">
-                            <label className="text-lg font-bold text-black uppercase border-b-2 border-black pb-1 inline-block">{f.label}</label>
+                            <label className="text-xl font-bold text-black uppercase underline underline-offset-4 block mb-2">{f.label}</label>
                             <textarea required rows={f.rows} value={f.value} onChange={e => f.setter(e.target.value)} className={textareaClasses} />
                         </div>
                     ))}
 
-                    <div className="pt-10">
-                        <div className="mb-6 flex flex-col items-start max-w-sm">
-                            <h3 className="text-black font-bold mb-4 uppercase text-sm">Report by:</h3>
-                            <div className="w-80 border-b-2 border-dotted border-black">
-                                <input required type="text" value={counsellorName} onChange={e => setCounsellorName(e.target.value)} className="w-full bg-transparent outline-none text-center font-bold text-black py-1 uppercase" placeholder="Enter Full Name" />
+                    {/* Report By Section */}
+                    <div className="pt-10 pb-4 mt-12 w-full">
+                        <div className="mt-4 w-full">
+                            <h3 className="text-xl font-bold text-black mb-8 uppercase underline underline-offset-4 block mb-2">REPORT BY:</h3>
+                            <div className="w-full max-w-xs">
+                                <div className="border-b-2 border-dotted border-black w-full mb-3 h-8"></div>
+                                <div className="flex justify-between items-center w-full mb-8">
+                                    <span className="text-black font-bold text-lg">(</span>
+                                    <input
+                                        required
+                                        type="text"
+                                        defaultValue={counsellorName}
+                                        className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1"
+                                        placeholder="Enter Full Name"
+                                    />
+                                    <span className="text-black font-bold text-lg">)</span>
+                                </div>
+                                <div className="text-black text-sm space-y-1 font-bold">
+                                    <p className="uppercase font-bold">CMCH Counselor Trainee</p>
+                                    <p className="uppercase font-normal tracking-tight">Universiti Pendidikan Sultan Idris</p>
+                                    <p className="uppercase font-normal tracking-tight">35900 Tanjong Malim, Perak</p>
+                                </div>
                             </div>
                         </div>
                     </div>

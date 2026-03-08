@@ -49,28 +49,25 @@ export function AppendicesSection({ images, onChange }: AppendicesSectionProps) 
     };
 
     return (
-        <div className="mt-8 border border-gray-300 shadow-none bg-white">
-            <div className="bg-white px-4 py-3 border-b-2 border-black flex justify-between items-center">
-                <h2 className="text-lg font-bold text-black uppercase tracking-wide flex items-center">
-                    <ImageIcon className="mr-2 text-black" size={20} />
-                    APPENDICES
-                </h2>
-                <label className="bg-black hover:bg-gray-700 text-white px-5 py-2.5 rounded-lg text-sm font-black flex items-center cursor-pointer transition-all shadow-md active:scale-95 no-print">
-                    <Plus size={18} className="mr-2" />
-                    ADD IMAGES / EVIDENCE
-                    <input
-                        type="file"
-                        accept="image/*"
-                        multiple
-                        className="hidden"
-                        onChange={handleAddImage}
-                    />
-                </label>
-            </div>
-
-            <div className="p-6 space-y-8">
+        <div className="mt-12 bg-white">
+            <h2 className="text-xl font-bold text-black uppercase underline underline-offset-4 flex items-center">
+                <ImageIcon className="mr-3 text-black" size={24} />
+                APPENDICES
+            </h2>
+            <label className="bg-[#0000FF] hover:bg-blue-700 !text-white px-6 py-3 rounded-lg text-sm font-black flex items-center cursor-pointer transition-all shadow-md active:scale-95 no-print gap-2">
+                <Plus size={20} color="white" />
+                <span className="!text-white">ADD IMAGES / EVIDENCE</span>
+                <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    className="hidden"
+                    onChange={handleAddImage}
+                />
+            </label>
+            <div className="py-6 space-y-8">
                 {images.length === 0 ? (
-                    <div className="text-center py-10 border-2 border-dashed border-black rounded-xl bg-white no-print">
+                    <div className="text-center py-12 border-2 border-dashed border-gray-300 rounded-xl bg-gray-50 no-print">
                         <ImageIcon className="mx-auto text-gray-300 mb-2" size={48} />
                         <p className="text-gray-500 font-medium">No images added yet.</p>
                         <p className="text-gray-400 text-sm mt-1">Upload photos or certificates as evidence.</p>

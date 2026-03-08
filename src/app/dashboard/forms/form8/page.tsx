@@ -217,7 +217,7 @@ export function Form8PFAMHPSSReportPage({ searchParams }: PageProps) {
     const inputClasses = "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none text-black bg-white placeholder-gray-400";
     const textareaClasses = "w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none text-black bg-white";
     const sectionClasses = "space-y-3 bg-white py-4";
-    const labelClasses = "text-lg font-bold text-black border-b-2 border-black pb-1 inline-block mb-2";
+    const labelClasses = "text-xl font-bold text-black uppercase underline underline-offset-4 block mb-2";
 
     const renderTextarea = (label: string, stateValue: string, setter: (val: string) => void, rows: number = 6) => (
         <div className={sectionClasses}>
@@ -233,8 +233,8 @@ export function Form8PFAMHPSSReportPage({ searchParams }: PageProps) {
     );
 
     return (
-        <div className="max-w-4xl mx-auto pb-12">
-            <div className="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-200 overflow-hidden">
+        <div className="max-w-4xl mx-auto pb-12 print:pb-0">
+            <div className="bg-white overflow-hidden">
                 <div className="bg-white px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
                     <div>
                         <h1 className="text-2xl font-bold text-upsi-navy flex items-center space-x-3">
@@ -245,7 +245,7 @@ export function Form8PFAMHPSSReportPage({ searchParams }: PageProps) {
                     </div>
                 </div>
 
-                <form onSubmit={handleSubmit} className="p-8 space-y-8 bg-white overflow-x-auto">
+                <form onSubmit={handleSubmit} className="p-0 sm:p-4 md:p-8 space-y-8 bg-white">
                     <FormHeader
                         title="PFA MHPSS REPORT"
                         refCode="PFA/MHPSS_Report/KKMK_UPSI/08-2025"
@@ -331,9 +331,9 @@ export function Form8PFAMHPSSReportPage({ searchParams }: PageProps) {
                             { label: "Identified Issue (s)", value: identifiedIssues, setter: setIdentifiedIssues, rows: 5 },
                             { label: "Activities / Interventions Delivered", value: activitiesInterventions, setter: setActivitiesInterventions, rows: 6 }
                         ].map((field, idx) => (
-                            <div key={idx} className="border border-gray-300 shadow-sm">
+                            <div key={idx} className="bg-white border-none py-4">
                                 <div className="bg-white px-4 py-2 border-b-2 border-black">
-                                    <label className="text-lg font-bold text-black uppercase">
+                                    <label className={labelClasses}>
                                         {field.label}
                                     </label>
                                 </div>
@@ -352,9 +352,9 @@ export function Form8PFAMHPSSReportPage({ searchParams }: PageProps) {
                     </div>
 
                     {/* Action Plan Section */}
-                    <div className="border border-gray-300 mt-8">
-                        <div className="bg-white px-4 py-2 border-b-2 border-black">
-                            <h2 className="text-lg font-bold text-black uppercase tracking-wide">Action Plan</h2>
+                    <div className="bg-white border-none mt-8">
+                        <div className="bg-white py-2 border-none">
+                            <h2 className={labelClasses}>Action Plan</h2>
                         </div>
                         <div className="p-6 space-y-6">
                             <div className="space-y-2">
@@ -396,7 +396,7 @@ export function Form8PFAMHPSSReportPage({ searchParams }: PageProps) {
 
                     {/* Signatures Table Section */}
                     <div className="pt-10 pb-4 mt-12 w-full">
-                        <div className="overflow-x-auto border border-black shadow-none">
+                        <div className="overflow-x-auto border-none shadow-none">
                             <table className="w-full text-left bg-white min-w-[700px] border-collapse">
                                 <thead className="bg-[#FFFFFF] text-black border-b border-black">
                                     <tr>
@@ -448,8 +448,8 @@ export function Form8PFAMHPSSReportPage({ searchParams }: PageProps) {
                             onChange={setAppendices}
                         />
 
+
                         <div className="mt-16 text-center w-full pt-4 border-t border-dashed border-gray-200">
-                            <p className="text-[10px] font-black text-upsi-navy uppercase tracking-[0.2em] mb-1">WWW.PPIKKMK.COM</p>
                             <p className="text-xs font-bold text-slate-500 uppercase tracking-widest pl-[0.1em]">
                                 Confidential Document (For Professional Use Only)
                             </p>

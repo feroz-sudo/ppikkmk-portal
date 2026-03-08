@@ -293,8 +293,8 @@ function Form1IntakeContent() {
     );
 
     return (
-        <div className="max-w-4xl mx-auto pb-12">
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div className="max-w-4xl mx-auto pb-12 print:pb-0">
+            <div className="bg-white overflow-hidden">
                 <div className="bg-white px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
                     <div>
                         <h1 className="text-2xl font-bold text-upsi-navy flex items-center space-x-3">
@@ -310,7 +310,7 @@ function Form1IntakeContent() {
                     )}
                 </div>
 
-                <form onSubmit={handleSubmit} className="p-8 space-y-8">
+                <form onSubmit={handleSubmit} className="p-0 sm:p-4 md:p-8 space-y-8">
                     <FormHeader
                         title="PSYCHOLOGICAL INTAKE REPORT"
                         refCode="Psychological_Intake_Report/KKMK_UPSI/01-2025"
@@ -391,8 +391,8 @@ function Form1IntakeContent() {
                     </div>
 
                     {/* Standard Narrative Iterations */}
-                    <div className="space-y-3 bg-white p-2 border-none">
-                        <label className="text-lg font-bold text-black uppercase border-b-2 border-black pb-1 inline-block mb-2">REASON FOR REFFERAL</label>
+                    <div className="space-y-3 bg-white py-4 border-none">
+                        <label className="text-lg font-bold text-black uppercase underline underline-offset-4 mb-2 block">REASON FOR REFERRAL</label>
                         <textarea required rows={4} value={reasonForReferral} onChange={e => setReasonForReferral(e.target.value)} className={textareaClasses} />
                     </div>
 
@@ -401,52 +401,52 @@ function Form1IntakeContent() {
                         <textarea required rows={4} value={behaviourObservation} onChange={e => setBehaviourObservation(e.target.value)} className={textareaClasses} />
                     </div>
 
-                    <div className="space-y-3 bg-white p-2 rounded-xl border border-transparent">
+                    <div className="space-y-3 bg-white py-4 border-none">
                         <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">HISTORY OF PRESENTING ISSUES</label>
                         <textarea required rows={4} value={historyOfPresentingIssues} onChange={e => setHistoryOfPresentingIssues(e.target.value)} className={textareaClasses} />
                     </div>
 
-                    <div className="space-y-3 bg-white p-2 rounded-xl border border-transparent">
+                    <div className="space-y-3 bg-white py-4 border-none">
                         <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">PSYCHIATRIC HISTORY</label>
                         <textarea required rows={4} value={psychiatricHistory} onChange={e => setPsychiatricHistory(e.target.value)} className={textareaClasses} />
                     </div>
 
-                    <div className="space-y-3 bg-white p-2 rounded-xl border border-transparent">
+                    <div className="space-y-3 bg-white py-4 border-none">
                         <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">MEDICAL HISTORY</label>
                         <textarea required rows={4} value={medicalHistory} onChange={e => setMedicalHistory(e.target.value)} className={textareaClasses} />
                     </div>
 
-                    <div className="space-y-3 bg-white p-2 rounded-xl border border-transparent">
+                    <div className="space-y-3 bg-white py-4 border-none">
                         <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">FAMILY HISTORY</label>
                         <textarea required rows={4} value={familyHistory} onChange={e => setFamilyHistory(e.target.value)} className={textareaClasses} />
                     </div>
 
-                    <div className="space-y-3 bg-white p-2 rounded-xl border border-transparent">
+                    <div className="space-y-3 bg-white py-4 border-none">
                         <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">DEVELOPMENTAL HISTORY</label>
                         <textarea required rows={4} value={developmentalHistory} onChange={e => setDevelopmentalHistory(e.target.value)} className={textareaClasses} />
                     </div>
 
-                    <div className="space-y-3 bg-white p-2 rounded-xl border border-transparent">
+                    <div className="space-y-3 bg-white py-4 border-none">
                         <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">SOCIAL HISTORY</label>
                         <textarea required rows={4} value={socialHistory} onChange={e => setSocialHistory(e.target.value)} className={textareaClasses} />
                     </div>
 
-                    <div className="space-y-3 bg-white p-2 rounded-xl border border-transparent">
+                    <div className="space-y-3 bg-white py-4 border-none">
                         <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">SUBSTANCE USE HISTORY</label>
                         <textarea required rows={4} value={substanceUseHistory} onChange={e => setSubstanceUseHistory(e.target.value)} className={textareaClasses} />
                     </div>
 
-                    <div className="space-y-3 bg-white p-2 rounded-xl border border-transparent">
+                    <div className="space-y-3 bg-white py-4 border-none">
                         <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">CURRENT SITUATION FUNCTIONING</label>
                         <textarea required rows={4} value={currentSituationFunctioning} onChange={e => setCurrentSituationFunctioning(e.target.value)} className={textareaClasses} />
                     </div>
 
-                    <div className="space-y-3 bg-white p-2 rounded-xl border border-transparent">
+                    <div className="space-y-3 bg-white py-4 border-none">
                         <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">ASSESSMENT RESULT</label>
                         <textarea required rows={4} value={assessmentResult} onChange={e => setAssessmentResult(e.target.value)} className={textareaClasses} />
                     </div>
 
-                    <div className="space-y-3 bg-white p-2 rounded-xl border border-transparent">
+                    <div className="space-y-3 bg-white py-4 border-none">
                         <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">CLINICAL JUDGEMENT</label>
                         <textarea required rows={4} value={clinicalJudgement} onChange={e => setClinicalJudgement(e.target.value)} className={textareaClasses} />
                     </div>
@@ -491,7 +491,6 @@ function Form1IntakeContent() {
                             <p>CMCH Counselor Trainee</p>
                             <p className="font-normal">Universiti Pendidikan Sultan Idris</p>
                             <p className="font-normal">35900 Tanjong Malim, Perak</p>
-                            <p className="text-upsi-navy font-black mt-1">WWW.PPIKKMK.COM</p>
                         </div>
 
                         <div className="mt-16 text-center w-full pt-4 border-t border-dashed border-gray-200">

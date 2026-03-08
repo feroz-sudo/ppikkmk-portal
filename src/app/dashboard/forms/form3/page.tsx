@@ -223,8 +223,8 @@ export function Form3CaseConceptualizationPage({ searchParams }: PageProps) {
     );
 
     return (
-        <div className="max-w-4xl mx-auto pb-12">
-            <div className="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-200 overflow-hidden">
+        <div className="max-w-4xl mx-auto pb-12 print:pb-0">
+            <div className="bg-white overflow-hidden">
                 <div className="bg-white px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
                     <div>
                         <h1 className="text-2xl font-bold text-upsi-navy flex items-center space-x-3">
@@ -240,7 +240,7 @@ export function Form3CaseConceptualizationPage({ searchParams }: PageProps) {
                     )}
                 </div>
 
-                <form onSubmit={handleSubmit} className="p-8 space-y-8 bg-white">
+                <form onSubmit={handleSubmit} className="p-0 sm:p-4 md:p-8 space-y-8 bg-white">
                     <FormHeader
                         title="CASE CONCEPTUALIZATION"
                         refCode="Case_Conceptualisation/KKMK_UPSI/03-2025"
@@ -298,33 +298,33 @@ export function Form3CaseConceptualizationPage({ searchParams }: PageProps) {
                                 <textarea required rows={5} value={clientsProfile} onChange={e => setClientsProfile(e.target.value)} className={textareaClasses} />
                             </div>
 
-                            <div className="space-y-3 bg-white p-2 rounded-xl border border-transparent">
-                                <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">Presenting Problem</label>
+                            <div className="space-y-3 bg-white p-2 border-none">
+                                <label className="text-xl font-bold text-black uppercase underline underline-offset-4 block mb-2">Presenting Problem</label>
                                 <textarea required rows={5} value={presentingProblem} onChange={e => setPresentingProblem(e.target.value)} className={textareaClasses} />
                             </div>
 
-                            <div className="space-y-3 bg-white p-2 rounded-xl border border-transparent">
-                                <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">Predisposing Factors</label>
+                            <div className="space-y-3 bg-white p-2 border-none">
+                                <label className="text-xl font-bold text-black uppercase underline underline-offset-4 block mb-2">Predisposing Factors</label>
                                 <textarea required rows={5} value={predisposingFactors} onChange={e => setPredisposingFactors(e.target.value)} className={textareaClasses} />
                             </div>
 
-                            <div className="space-y-3 bg-white p-2 rounded-xl border border-transparent">
-                                <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">Precipitating Factors</label>
+                            <div className="space-y-3 bg-white p-2 border-none">
+                                <label className="text-xl font-bold text-black uppercase underline underline-offset-4 block mb-2">Precipitating Factors</label>
                                 <textarea required rows={5} value={precipitatingFactors} onChange={e => setPrecipitatingFactors(e.target.value)} className={textareaClasses} />
                             </div>
 
-                            <div className="space-y-3 bg-white p-2 rounded-xl border border-transparent">
-                                <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">Perpetuating Factors</label>
+                            <div className="space-y-3 bg-white p-2 border-none">
+                                <label className="text-xl font-bold text-black uppercase underline underline-offset-4 block mb-2">Perpetuating Factors</label>
                                 <textarea required rows={5} value={perpetuatingFactors} onChange={e => setPerpetuatingFactors(e.target.value)} className={textareaClasses} />
                             </div>
 
-                            <div className="space-y-3 bg-white p-2 rounded-xl border border-transparent">
-                                <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">Protective Factors</label>
+                            <div className="space-y-3 bg-white p-2 border-none">
+                                <label className="text-xl font-bold text-black uppercase underline underline-offset-4 block mb-2">Protective Factors</label>
                                 <textarea required rows={5} value={protectiveFactors} onChange={e => setProtectiveFactors(e.target.value)} className={textareaClasses} />
                             </div>
 
                             <div className="space-y-3 bg-white p-2 border-none">
-                                <label className="text-lg font-bold text-black uppercase border-b-2 border-black pb-1 inline-block mb-2">Overall Summary</label>
+                                <label className="text-xl font-bold text-black uppercase underline underline-offset-4 block mb-2">Overall Summary</label>
                                 <textarea required rows={10} value={overallSummary} onChange={e => setOverallSummary(e.target.value)} className={textareaClasses} />
                             </div>
                         </div>
@@ -351,11 +351,10 @@ export function Form3CaseConceptualizationPage({ searchParams }: PageProps) {
                             </div>
                         </div>
 
-                        <div className="text-gray-700 text-sm space-y-1 font-bold">
-                            <p>CMCH Counselor Trainee</p>
-                            <p className="font-normal">Universiti Pendidikan Sultan Idris</p>
-                            <p className="font-normal">35900 Tanjong Malim, Perak</p>
-                            <p className="text-upsi-navy font-black mt-1 uppercase">WWW.PPIKKMK.COM</p>
+                        <div className="text-black text-sm space-y-1 font-bold">
+                            <p className="uppercase">CMCH Counselor Trainee</p>
+                            <p className="uppercase font-normal tracking-tight">Universiti Pendidikan Sultan Idris</p>
+                            <p className="uppercase font-normal tracking-tight">35900 Tanjong Malim, Perak</p>
                         </div>
 
                         <div className="mt-16 text-center w-full pt-4 border-t border-dashed border-gray-200">
