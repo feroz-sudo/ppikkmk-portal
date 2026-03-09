@@ -207,23 +207,28 @@ export function Form5TerminationSessionPage({ searchParams }: PageProps) {
 
                     <div className="bg-white space-y-6">
                         <h2 className="text-xl font-bold text-black uppercase underline underline-offset-4 mb-4">DEMOGRAPHIC INFORMATION</h2>
-                        <div className="grid grid-cols-[180px_auto_1fr] md:grid-cols-[240px_auto_1fr] gap-4 items-center">
-                            <div className="font-bold text-black uppercase text-sm md:text-base">Client Name</div><div className="font-bold">:</div>
+                        <div className="grid grid-cols-1 md:grid-cols-[220px_auto_1fr] gap-x-2 gap-y-4 md:gap-y-6 items-start md:items-center">
+                            <div className="font-bold text-black uppercase text-sm md:py-2">Client Name</div>
+                            <div className="hidden md:block font-bold text-black text-center">:</div>
                             <input required type="text" value={clientName} onChange={e => setClientName(e.target.value)} className={inputClasses} />
 
-                            <div className="font-bold text-black uppercase text-sm md:text-base">Gender</div><div className="font-bold">:</div>
-                            <select value={gender} onChange={e => setGender(e.target.value)} className={inputClasses}>
+                            <div className="font-bold text-black uppercase text-sm md:py-2">Gender</div>
+                            <div className="hidden md:block font-bold text-black text-center">:</div>
+                            <select value={gender} onChange={e => setGender(e.target.value)} className={`${inputClasses} text-sm`}>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                             </select>
 
-                            <div className="font-bold text-black uppercase text-sm md:text-base">Age</div><div className="font-bold">:</div>
+                            <div className="font-bold text-black uppercase text-sm md:py-2">Age</div>
+                            <div className="hidden md:block font-bold text-black text-center">:</div>
                             <input required type="text" value={age} onChange={e => setAge(e.target.value)} className={inputClasses} />
 
-                            <div className="font-bold text-black uppercase text-sm md:text-base">Designation</div><div className="font-bold">:</div>
-                            <input required type="text" className={inputClasses} placeholder="Counsellor Trainee" />
+                            <div className="font-bold text-black uppercase text-sm md:py-2">Designation</div>
+                            <div className="hidden md:block font-bold text-black text-center">:</div>
+                            <input required type="text" value={position} onChange={e => setPosition(e.target.value)} className={inputClasses} placeholder="Counsellor Trainee" />
 
-                            <div className="font-bold text-black uppercase text-sm md:text-base">Date of Report</div><div className="font-bold">:</div>
+                            <div className="font-bold text-black uppercase text-sm md:py-2">Date of Report</div>
+                            <div className="hidden md:block font-bold text-black text-center">:</div>
                             <input required type="date" className={inputClasses} />
                         </div>
                     </div>
@@ -247,21 +252,21 @@ export function Form5TerminationSessionPage({ searchParams }: PageProps) {
                     {/* Report By Section */}
                     <div className="pt-10 pb-4 mt-12 w-full">
                         <div className="mt-4 w-full">
-                            <h3 className="text-xl font-bold text-black mb-8 uppercase underline underline-offset-4 block mb-2">REPORT BY:</h3>
-                            <div className="w-full max-w-xs">
+                            <h3 className="text-black font-bold mb-8 uppercase text-sm">REPORT BY:</h3>
+                            <div className="w-full max-w-md">
                                 <div className="border-b-2 border-dotted border-black w-full mb-3 h-8"></div>
-                                <div className="flex justify-between items-center w-full mb-8">
+                                <div className="flex justify-between items-center w-full px-1 mb-8">
                                     <span className="text-black font-bold text-lg">(</span>
                                     <input
                                         required
                                         type="text"
                                         defaultValue={counsellorName}
-                                        className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1"
+                                        className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase text-sm"
                                         placeholder="Enter Full Name"
                                     />
                                     <span className="text-black font-bold text-lg">)</span>
                                 </div>
-                                <div className="text-black text-sm space-y-1 font-bold">
+                                <div className="text-black text-[11px] sm:text-xs space-y-1 font-bold">
                                     <p className="uppercase font-bold">CMCH Counselor Trainee</p>
                                     <p className="uppercase font-normal tracking-tight">Universiti Pendidikan Sultan Idris</p>
                                     <p className="uppercase font-normal tracking-tight">35900 Tanjong Malim, Perak</p>

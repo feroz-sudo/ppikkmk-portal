@@ -54,15 +54,117 @@ form textarea {
   border-color: #cccccc !important;
 }
 
-/* Ironclad Alignment for Personal Data Grids */
+/* Ironclad Alignment for Personal Data Grids - Now Responsive */
 .grid-cols-\[180px_auto_1fr\],
 .grid-cols-\[240px_auto_1fr\],
 .grid-cols-\[200px_30px_1fr\] {
   display: grid !important;
-  grid-template-columns: 200px 30px 1fr !important;
-  gap: 4px 12px !important;
-  align-items: center !important;
+  grid-template-columns: 1fr !important;
+  /* Mobile default: single column */
+  gap: 4px !important;
+  align-items: start !important;
   color: #000000 !important;
+}
+
+/* Hide the colon cell on mobile */
+.grid-cols-\[180px_auto_1fr\]>div:nth-child(3n-1),
+.grid-cols-\[240px_auto_1fr\]>div:nth-child(3n-1),
+.grid-cols-\[200px_30px_1fr\]>div:nth-child(3n-1) {
+  display: none !important;
+}
+
+@media (min-width: 768px) {
+
+  .grid-cols-\[180px_auto_1fr\],
+  .grid-cols-\[240px_auto_1fr\],
+  .grid-cols-\[200px_30px_1fr\] {
+    grid-template-columns: 200px 30px 1fr !important;
+    gap: 4px 12px !important;
+    align-items: center !important;
+  }
+
+  /* Show colons back on desktop */
+  .grid-cols-\[180px_auto_1fr\]>div:nth-child(3n-1),
+  .grid-cols-\[240px_auto_1fr\]>div:nth-child(3n-1),
+  .grid-cols-\[200px_30px_1fr\]>div:nth-child(3n-1) {
+    display: block !important;
+  }
+}
+
+/* Responsive UI/UX Primitives */
+.responsive-container {
+  @apply px-4 sm:px-6 md:px-8 max-w-7xl mx-auto;
+}
+
+.mobile-stack {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+@media (min-width: 768px) {
+  .mobile-stack {
+    flex-direction: row !important;
+  }
+}
+
+.responsive-grid-form {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 1rem !important;
+}
+
+@media (min-width: 640px) {
+  .responsive-grid-form {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-grid-form {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+/* Fluid Typography */
+@layer base {
+  html {
+    font-size: 14px;
+  }
+
+  @media (min-width: 640px) {
+    html {
+      font-size: 15px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    html {
+      font-size: 16px;
+    }
+  }
+}
+
+/* Form Specific UX Fixes */
+.form-section-card {
+  @apply bg-white p-4 sm:p-6 md:p-8 border-2 border-black mb-8 transition-all hover:shadow-md;
+}
+
+.input-focus-ring {
+  @apply focus:ring-2 focus:ring-upsi-navy/20 focus:border-upsi-navy outline-none transition-all;
+}
+
+/* Custom Scrollbar for Sidebar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
 }
 
 /* Ensure clinical underlines are black */

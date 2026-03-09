@@ -9,34 +9,34 @@ export const FormHeader: React.FC<FormHeaderProps> = ({ title, refCode }) => {
     return (
         <div className="form-header relative pb-6 border-b-2 border-gray-300 mb-8 w-full print:border-gray-400">
             {/* Top-Right Identifier (Absolute) */}
-            <div className="absolute top-0 right-0 text-[10px] md:text-[11px] font-medium text-gray-500 italic text-right leading-tight whitespace-nowrap z-10 print:text-black">
+            <div className="absolute -top-4 right-0 md:top-0 text-[8px] sm:text-[10px] md:text-[11px] font-medium text-gray-500 italic text-right leading-tight whitespace-nowrap z-10 print:text-black">
                 {refCode}
             </div>
 
             {/* Main Header Content - Using Flex for better Print conversion support */}
             <div className="flex items-center justify-between w-full pt-4 gap-4 px-2">
                 {/* Left: UPSI Logo */}
-                <div className="flex-shrink-0">
+                <div className="flex-shrink-0 mb-4 md:mb-0">
                     <img
                         src="/upsi-logo.png"
                         alt="UPSI Logo"
-                        className="form-header-logo h-16 md:h-24 w-auto object-contain print:h-20"
+                        className="form-header-logo h-12 sm:h-16 md:h-24 w-auto object-contain print:h-20"
                     />
                 </div>
 
                 {/* Center: Title Group - Centered flexibly */}
-                <div className="flex-grow text-center">
-                    <h2 className="text-lg md:text-2xl font-black text-black tracking-wide uppercase leading-tight mb-2">
+                <div className="flex-grow text-center px-2">
+                    <h2 className="text-base sm:text-lg md:text-2xl font-black text-black tracking-wide uppercase leading-tight mb-2">
                         {title}
                     </h2>
                     <div className="flex flex-col items-center">
-                        <h3 className="text-[10px] md:text-xs font-bold text-gray-800 uppercase tracking-[0.2em] mb-1">
+                        <h3 className="text-[9px] sm:text-[10px] md:text-xs font-bold text-gray-800 uppercase tracking-[0.2em] mb-1">
                             Praktikum & Internship
                         </h3>
-                        <h3 className="text-xs md:text-base font-bold text-black uppercase tracking-tight">
+                        <h3 className="text-[10px] sm:text-xs md:text-base font-bold text-black uppercase tracking-tight">
                             Kaunseling (Kesihatan Mental Klinikal)
                         </h3>
-                        <h3 className="text-xs md:text-sm font-bold text-gray-900 uppercase tracking-tight">
+                        <h3 className="text-[10px] sm:text-xs md:text-sm font-bold text-gray-900 uppercase tracking-tight">
                             Universiti Pendidikan Sultan Idris
                         </h3>
                     </div>

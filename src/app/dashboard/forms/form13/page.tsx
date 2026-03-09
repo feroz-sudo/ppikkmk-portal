@@ -270,48 +270,57 @@ export function Form13PsychologicalAssessmentPage({ searchParams }: PageProps) {
 
                     {/* PERSONAL DATA Section */}
                     <div className="space-y-6">
-                        <h2 className="text-xl font-bold text-black underline uppercase tracking-wide w-full mb-6">PERSONAL DATA</h2>
-                        <div className="grid grid-cols-[200px_30px_1fr] md:grid-cols-[250px_30px_1fr] gap-y-4 items-center pl-4">
+                        <h2 className="text-xl font-bold text-black border-b-2 border-black pb-2 uppercase tracking-wide w-full mb-6">PERSONAL DATA</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-[220px_auto_1fr] gap-x-2 gap-y-4 md:gap-y-6 items-start md:items-center pl-0 sm:pl-4">
 
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Client Full Name</div>
-                            <div className="font-bold text-black">:</div>
-                            <div><input required type="text" value={clientFullName} onChange={e => setClientFullName(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black" placeholder="Enter full name" /></div>
+                            {/* Row 1 */}
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Client Full Name</div>
+                            <div className="hidden md:block font-bold text-black text-center">:</div>
+                            <div><input required type="text" value={clientFullName} onChange={e => setClientFullName(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" placeholder="Enter full name" /></div>
 
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Ethnic/Sex</div>
-                            <div className="font-bold text-black">:</div>
+                            {/* Row 2 */}
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Ethnic/Sex</div>
+                            <div className="hidden md:block font-bold text-black text-center">:</div>
                             <div className="flex space-x-2 items-center w-full">
-                                <input required type="text" value={ethnic} onChange={e => setEthnic(e.target.value)} className="w-1/2 p-2 border-b border-gray-200 outline-none focus:border-black text-black" placeholder="Ethnic" />
+                                <input required type="text" value={ethnic} onChange={e => setEthnic(e.target.value)} className="w-1/2 p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" placeholder="Ethnic" />
                                 <span className="text-black font-bold">/</span>
-                                <input required type="text" value={sex} onChange={e => setSex(e.target.value)} className="w-1/2 p-2 border-b border-gray-200 outline-none focus:border-black text-black" placeholder="Sex" />
+                                <input required type="text" value={sex} onChange={e => setSex(e.target.value)} className="w-1/2 p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" placeholder="Sex" />
                             </div>
 
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Date of Birth</div>
-                            <div className="font-bold text-black">:</div>
-                            <div><input required type="date" value={dateOfBirth} onChange={e => setDateOfBirth(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black" /></div>
+                            {/* Row 3 */}
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Date of Birth</div>
+                            <div className="hidden md:block font-bold text-black text-center">:</div>
+                            <div><input required type="date" value={dateOfBirth} onChange={e => setDateOfBirth(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" /></div>
 
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Identification Card No</div>
-                            <div className="font-bold text-black">:</div>
-                            <div><input required type="text" value={identificationCardNo} onChange={e => setIdentificationCardNo(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black" placeholder="IC Number" /></div>
+                            {/* Row 4 */}
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Identification Card No</div>
+                            <div className="hidden md:block font-bold text-black text-center">:</div>
+                            <div><input required type="text" value={identificationCardNo} onChange={e => setIdentificationCardNo(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" placeholder="IC Number" /></div>
 
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Age</div>
-                            <div className="font-bold text-black">:</div>
-                            <div><input required type="text" value={age} onChange={e => setAge(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black" placeholder="Age" /></div>
+                            {/* Row 5 */}
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Age</div>
+                            <div className="hidden md:block font-bold text-black text-center">:</div>
+                            <div><input required type="text" value={age} onChange={e => setAge(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" placeholder="Age" /></div>
 
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Designation</div>
-                            <div className="font-bold text-black">:</div>
-                            <div><input required type="text" value={designation} onChange={e => setDesignation(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black" placeholder="Role/Year/Program" /></div>
+                            {/* Row 6 */}
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Designation</div>
+                            <div className="hidden md:block font-bold text-black text-center">:</div>
+                            <div><input required type="text" value={designation} onChange={e => setDesignation(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" placeholder="Role/Year/Program" /></div>
 
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Date of Assessment</div>
-                            <div className="font-bold text-black">:</div>
-                            <div><input required type="date" value={dateOfAssessment} onChange={e => setDateOfAssessment(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black" /></div>
+                            {/* Row 7 */}
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Date of Assessment</div>
+                            <div className="hidden md:block font-bold text-black text-center">:</div>
+                            <div><input required type="date" value={dateOfAssessment} onChange={e => setDateOfAssessment(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" /></div>
 
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Duration (Hours)</div>
-                            <div className="font-bold text-black">:</div>
-                            <div><input required type="number" step="0.5" min="0.5" value={duration} onChange={e => setDuration(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black" placeholder="e.g. 1.0" /></div>
+                            {/* Row 8 */}
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Duration (Hours)</div>
+                            <div className="hidden md:block font-bold text-black text-center">:</div>
+                            <div><input required type="number" step="0.5" min="0.5" value={duration} onChange={e => setDuration(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" placeholder="e.g. 1.0" /></div>
 
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Assessment Conducted By</div>
-                            <div className="font-bold text-black">:</div>
-                            <div><input required type="text" value={assessmentConductedBy} onChange={e => setAssessmentConductedBy(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black" placeholder="Assessor Name" /></div>
+                            {/* Row 9 */}
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Assessment Conducted By</div>
+                            <div className="hidden md:block font-bold text-black text-center">:</div>
+                            <div><input required type="text" value={assessmentConductedBy} onChange={e => setAssessmentConductedBy(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" placeholder="Assessor Name" /></div>
                         </div>
                     </div>
 

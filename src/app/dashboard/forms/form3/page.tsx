@@ -247,17 +247,21 @@ export function Form3CaseConceptualizationPage({ searchParams }: PageProps) {
                     />
 
                     {/* Demographic Information Section Group */}
-                    <div className="bg-white p-6 xl:p-8 border-2 border-black space-y-6">
+                    <div className="bg-white p-4 sm:p-6 lg:p-8 border-2 border-black space-y-6">
                         <h2 className="text-xl font-bold text-black uppercase tracking-wide">DEMOGRAPHIC INFORMATION</h2>
 
-                        <div className="grid grid-cols-[180px_auto_1fr] md:grid-cols-[240px_auto_1fr] gap-y-4 gap-x-2 items-center">
+                        <div className="grid grid-cols-1 md:grid-cols-[200px_auto_1fr] gap-x-2 gap-y-4 md:gap-y-6 items-start md:items-center">
 
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Client Full Name</div>
-                            <div className="font-bold text-black">:</div>
-                            <div><input required type="text" value={clientFullName} onChange={e => setClientFullName(e.target.value)} className={inputClasses} placeholder="Enter Client's Actual Name" /></div>
+                            {/* Row 1 */}
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Client Full Name</div>
+                            <div className="hidden md:block font-bold text-black">:</div>
+                            <div className="w-full">
+                                <input required type="text" value={clientFullName} onChange={e => setClientFullName(e.target.value)} className={inputClasses} placeholder="Enter Client's Actual Name" />
+                            </div>
 
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Ethnic/Sex</div>
-                            <div className="font-bold text-black">:</div>
+                            {/* Row 2 */}
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Ethnic/Sex</div>
+                            <div className="hidden md:block font-bold text-black">:</div>
                             <div className="flex space-x-2 items-center w-full">
                                 <select required value={ethnic} onChange={e => setEthnic(e.target.value)} className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white w-2/3">
                                     <option value="" disabled>Select Ethnic</option>
@@ -277,13 +281,19 @@ export function Form3CaseConceptualizationPage({ searchParams }: PageProps) {
                                 </select>
                             </div>
 
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Age</div>
-                            <div className="font-bold text-black">:</div>
-                            <div><input required type="text" value={age} onChange={e => setAge(e.target.value)} className={inputClasses} placeholder="e.g. 24" /></div>
+                            {/* Row 3 */}
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Age</div>
+                            <div className="hidden md:block font-bold text-black">:</div>
+                            <div className="w-full">
+                                <input required type="text" value={age} onChange={e => setAge(e.target.value)} className={inputClasses} placeholder="e.g. 24" />
+                            </div>
 
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Diagnosis</div>
-                            <div className="font-bold text-black">:</div>
-                            <div><input required type="text" value={diagnosis} onChange={e => setDiagnosis(e.target.value)} className={inputClasses} placeholder="e.g. Major Depressive Disorder" /></div>
+                            {/* Row 4 */}
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Diagnosis</div>
+                            <div className="hidden md:block font-bold text-black">:</div>
+                            <div className="w-full">
+                                <input required type="text" value={diagnosis} onChange={e => setDiagnosis(e.target.value)} className={inputClasses} placeholder="e.g. Major Depressive Disorder" />
+                            </div>
 
                         </div>
                     </div>
@@ -332,9 +342,9 @@ export function Form3CaseConceptualizationPage({ searchParams }: PageProps) {
 
                     {/* Footer Section */}
                     <div className="pt-10 pb-4 mt-12 w-full">
-                        <div className="mb-6 flex flex-col items-start max-w-sm">
-                            <h3 className="text-black font-bold mb-4 uppercase">Report by:</h3>
-                            <div className="w-80">
+                        <div className="mb-6 flex flex-col items-start w-full max-w-md">
+                            <h3 className="text-black font-bold mb-4 uppercase text-sm">Report by:</h3>
+                            <div className="w-full">
                                 <div className="border-b-2 border-dotted border-black w-full mb-3 h-8"></div>
                                 <div className="flex justify-between items-center w-full px-1">
                                     <span className="text-black font-bold text-lg">(</span>
@@ -343,7 +353,7 @@ export function Form3CaseConceptualizationPage({ searchParams }: PageProps) {
                                         type="text"
                                         value={counsellorName}
                                         onChange={e => setCounsellorName(e.target.value)}
-                                        className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase"
+                                        className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase text-sm"
                                         placeholder="Enter Full Name"
                                     />
                                     <span className="text-black font-bold text-lg">)</span>
@@ -351,7 +361,7 @@ export function Form3CaseConceptualizationPage({ searchParams }: PageProps) {
                             </div>
                         </div>
 
-                        <div className="text-black text-sm space-y-1 font-bold">
+                        <div className="text-black text-[11px] sm:text-xs space-y-1 font-bold">
                             <p className="uppercase">CMCH Counselor Trainee</p>
                             <p className="uppercase font-normal tracking-tight">Universiti Pendidikan Sultan Idris</p>
                             <p className="uppercase font-normal tracking-tight">35900 Tanjong Malim, Perak</p>

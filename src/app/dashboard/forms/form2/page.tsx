@@ -258,36 +258,36 @@ export default function Form2ProgressiveNotesPage({ searchParams }: PageProps) {
                     />
 
                     {/* Personal Data Section Group */}
-                    <div className="bg-white p-6 xl:p-8 border-2 border-black space-y-6">
+                    <div className="bg-white p-4 sm:p-6 sm:p-8 border-2 border-black space-y-6">
                         <h2 className="text-xl font-bold text-black uppercase tracking-wide">PERSONAL DATA</h2>
 
-                        <div className="grid grid-cols-[180px_auto_1fr] md:grid-cols-[240px_auto_1fr] gap-y-4 gap-x-2 items-center">
+                        <div className="grid grid-cols-1 md:grid-cols-[220px_auto_1fr] gap-y-4 md:gap-y-6 gap-x-2 items-start md:items-center">
 
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Session Number</div>
-                            <div className="font-bold text-black">:</div>
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Session Number</div>
+                            <div className="hidden md:block font-bold text-black">:</div>
                             <div><input required type="text" value={sessionNumber} onChange={e => setSessionNumber(e.target.value)} className={inputClasses} placeholder="e.g. 02" /></div>
 
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Session Date & Time</div>
-                            <div className="font-bold text-black">:</div>
-                            <div className="flex space-x-2">
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Session Date & Time</div>
+                            <div className="hidden md:block font-bold text-black">:</div>
+                            <div className="flex flex-col sm:flex-row gap-2">
                                 <input required type="date" value={sessionDate} onChange={e => setSessionDate(e.target.value)} className={`${inputClasses} flex-1`} />
                                 <input required type="time" value={sessionTime} onChange={e => setSessionTime(e.target.value)} className={`${inputClasses} flex-1`} />
                             </div>
 
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Duration (Hours)</div>
-                            <div className="font-bold text-black">:</div>
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Duration (Hours)</div>
+                            <div className="hidden md:block font-bold text-black">:</div>
                             <div><input required type="number" step="0.5" min="0.5" value={duration} onChange={e => setDuration(e.target.value)} className={inputClasses} placeholder="e.g. 1.0" /></div>
 
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Client Full Name</div>
-                            <div className="font-bold text-black">:</div>
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Client Full Name</div>
+                            <div className="hidden md:block font-bold text-black">:</div>
                             <div><input required type="text" value={clientFullName} onChange={e => setClientFullName(e.target.value)} className={inputClasses} placeholder="Enter Client's Actual Name" /></div>
 
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Date of Report</div>
-                            <div className="font-bold text-black">:</div>
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Date of Report</div>
+                            <div className="hidden md:block font-bold text-black">:</div>
                             <div><input required type="date" value={dateOfReport} onChange={e => setDateOfReport(e.target.value)} className={inputClasses} /></div>
 
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Diagnosis</div>
-                            <div className="font-bold text-black">:</div>
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Diagnosis</div>
+                            <div className="hidden md:block font-bold text-black">:</div>
                             <div><input required type="text" value={diagnosis} onChange={e => setDiagnosis(e.target.value)} className={inputClasses} placeholder="e.g. Major Depressive Disorder" /></div>
 
                         </div>
@@ -316,9 +316,9 @@ export default function Form2ProgressiveNotesPage({ searchParams }: PageProps) {
 
                     {/* Footer Section */}
                     <div className="pt-10 pb-4 mt-12 w-full">
-                        <div className="mb-6 flex flex-col items-start max-w-sm">
-                            <h3 className="text-black font-bold mb-4 uppercase">Report by:</h3>
-                            <div className="w-80">
+                        <div className="mb-6 flex flex-col items-start w-full max-w-md">
+                            <h3 className="text-black font-bold mb-4 uppercase text-sm">Report by:</h3>
+                            <div className="w-full">
                                 <div className="border-b-2 border-dotted border-black w-full mb-3 h-8"></div>
                                 <div className="flex justify-between items-center w-full px-1">
                                     <span className="text-black font-bold text-lg">(</span>
@@ -327,7 +327,7 @@ export default function Form2ProgressiveNotesPage({ searchParams }: PageProps) {
                                         type="text"
                                         value={counsellorName}
                                         onChange={e => setCounsellorName(e.target.value)}
-                                        className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase"
+                                        className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase text-sm"
                                         placeholder="Enter Full Name"
                                     />
                                     <span className="text-black font-bold text-lg">)</span>
@@ -335,7 +335,7 @@ export default function Form2ProgressiveNotesPage({ searchParams }: PageProps) {
                             </div>
                         </div>
 
-                        <div className="text-black text-sm space-y-1 font-bold">
+                        <div className="text-black text-[11px] sm:text-xs space-y-1 font-bold">
                             <p className="uppercase">CMCH Counselor Trainee</p>
                             <p className="uppercase font-normal tracking-tight">Universiti Pendidikan Sultan Idris</p>
                             <p className="uppercase font-normal tracking-tight">35900 Tanjong Malim, Perak</p>

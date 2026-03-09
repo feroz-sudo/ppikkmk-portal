@@ -280,58 +280,58 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
                     />
 
                     {/* Logistics Data Section Group */}
-                    <div className="bg-white mb-8">
-                        <div className="bg-white px-4 py-2 border-b-2 border-black flex items-center space-x-3">
-                            <label className="font-bold text-black uppercase min-w-[180px]">Group Leader/Counsellor</label>
-                            <span className="font-bold text-black">:</span>
-                            <input required type="text" value={counsellorName} onChange={e => setCounsellorName(e.target.value)} className="flex-1 p-1 bg-transparent border-none focus:ring-0 font-medium text-black" placeholder="Enter name" />
+                    <div className="bg-white mb-8 border-2 border-black">
+                        <div className="bg-white px-4 py-3 border-b-2 border-black flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                            <label className="font-bold text-black uppercase text-sm sm:text-base sm:min-w-[200px]">Group Leader/Counsellor</label>
+                            <span className="hidden sm:inline font-bold text-black">:</span>
+                            <input required type="text" value={counsellorName} onChange={e => setCounsellorName(e.target.value)} className="flex-1 p-1 bg-transparent border-none focus:ring-0 font-medium text-black border-b sm:border-none border-gray-200" placeholder="Enter name" />
                         </div>
 
-                        <div className="p-6">
-                            <div className="grid grid-cols-2 gap-x-12 gap-y-6">
-                                <div className="flex items-center space-x-3">
-                                    <label className="font-bold text-gray-800 uppercase text-sm min-w-[120px]">Date</label>
-                                    <span className="font-bold text-gray-800">:</span>
-                                    <input required type="date" value={dateTime.split('T')[0]} onChange={e => setDateTime(e.target.value + 'T' + (dateTime.split('T')[1] || '00:00'))} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold" />
+                        <div className="p-4 sm:p-6 lg:p-8">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-6">
+                                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                                    <label className="font-bold text-gray-800 uppercase text-xs sm:text-sm sm:min-w-[120px]">Date</label>
+                                    <span className="hidden sm:inline font-bold text-gray-800">:</span>
+                                    <input required type="date" value={dateTime.split('T')[0]} onChange={e => setDateTime(e.target.value + 'T' + (dateTime.split('T')[1] || '00:00'))} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm" />
                                 </div>
-                                <div className="flex items-center space-x-3">
-                                    <label className="font-bold text-gray-800 uppercase text-sm min-w-[120px]">Time</label>
-                                    <span className="font-bold text-gray-800">:</span>
-                                    <input required type="time" value={dateTime.split('T')[1] || ''} onChange={e => setDateTime((dateTime.split('T')[0] || '') + 'T' + e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold" />
+                                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                                    <label className="font-bold text-gray-800 uppercase text-xs sm:text-sm sm:min-w-[120px]">Time</label>
+                                    <span className="hidden sm:inline font-bold text-gray-800">:</span>
+                                    <input required type="time" value={dateTime.split('T')[1] || ''} onChange={e => setDateTime((dateTime.split('T')[0] || '') + 'T' + e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm" />
                                 </div>
-                                <div className="flex items-center space-x-3">
-                                    <label className="font-bold text-gray-800 uppercase text-sm min-w-[120px]">Duration</label>
-                                    <span className="font-bold text-gray-800">:</span>
-                                    <input required type="text" value={duration} onChange={e => setDuration(e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold" placeholder="e.g. 1.5 hours" />
+                                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                                    <label className="font-bold text-gray-800 uppercase text-xs sm:text-sm sm:min-w-[120px]">Duration</label>
+                                    <span className="hidden sm:inline font-bold text-gray-800">:</span>
+                                    <input required type="text" value={duration} onChange={e => setDuration(e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm" placeholder="e.g. 1.5 hours" />
                                 </div>
-                                <div className="flex items-center space-x-3">
-                                    <label className="font-bold text-gray-800 uppercase text-sm min-w-[120px]">Type of Group</label>
-                                    <span className="font-bold text-gray-800">:</span>
-                                    <input required type="text" value={typeOfGroup} onChange={e => setTypeOfGroup(e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold" placeholder="e.g. Support" />
+                                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                                    <label className="font-bold text-gray-800 uppercase text-xs sm:text-sm sm:min-w-[120px]">Type of Group</label>
+                                    <span className="hidden sm:inline font-bold text-gray-800">:</span>
+                                    <input required type="text" value={typeOfGroup} onChange={e => setTypeOfGroup(e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm" placeholder="e.g. Support" />
                                 </div>
-                                <div className="flex items-center space-x-3">
-                                    <label className="font-bold text-gray-800 uppercase text-sm min-w-[120px]">Number of Session</label>
-                                    <span className="font-bold text-gray-800">:</span>
-                                    <input required type="number" value={numberOfSession} onChange={e => setNumberOfSession(e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold" />
+                                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                                    <label className="font-bold text-gray-800 uppercase text-xs sm:text-sm sm:min-w-[120px]">Number of Session</label>
+                                    <span className="hidden sm:inline font-bold text-gray-800">:</span>
+                                    <input required type="number" value={numberOfSession} onChange={e => setNumberOfSession(e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm" />
                                 </div>
-                                <div className="flex items-center space-x-3">
-                                    <label className="font-bold text-gray-800 uppercase text-sm min-w-[180px]">Clients Attending</label>
-                                    <span className="font-bold text-gray-800">:</span>
-                                    <input required type="number" min="1" max="8" value={numberOfClientsAttending} onChange={e => setNumberOfClientsAttending(e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold" />
+                                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                                    <label className="font-bold text-gray-800 uppercase text-xs sm:text-sm sm:min-w-[150px]">Clients Attending</label>
+                                    <span className="hidden sm:inline font-bold text-gray-800">:</span>
+                                    <input required type="number" min="1" max="8" value={numberOfClientsAttending} onChange={e => setNumberOfClientsAttending(e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm text-center sm:text-left" />
                                 </div>
                             </div>
 
-                            <div className="mt-8">
-                                <h3 className="text-sm font-bold text-black uppercase mb-4 border-l-4 border-black pl-3">Name of Clients Attending The Group (1-8):</h3>
-                                <div className="grid grid-cols-2 gap-4">
+                            <div className="mt-10">
+                                <h3 className="text-sm font-bold text-black uppercase mb-6 border-l-4 border-black pl-3 leading-tight">Name of Clients Attending The Group (1-8):</h3>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                     {Array.from({ length: 8 }).map((_, idx) => (
-                                        <div key={idx} className="flex items-center space-x-3">
-                                            <span className="text-gray-400 font-bold w-4">{idx + 1}.</span>
+                                        <div key={idx} className="flex items-center space-x-3 group">
+                                            <span className="text-gray-400 font-bold w-4 text-xs">{idx + 1}.</span>
                                             <input
                                                 type="text"
                                                 value={groupMembers[idx]?.name || ""}
                                                 onChange={e => handleUpdateMemberName(idx, e.target.value)}
-                                                className="flex-1 p-2 border-b border-black outline-none bg-white text-sm font-bold uppercase"
+                                                className="flex-1 p-2 border-b border-gray-200 group-focus-within:border-black outline-none bg-white text-sm font-bold uppercase transition-colors"
                                                 placeholder={`Member ${idx + 1}`}
                                                 required={idx < (parseInt(numberOfClientsAttending) || 0)}
                                             />
@@ -404,22 +404,22 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
                     {/* Footer Section */}
                     <div className="pt-10 pb-4 border-t border-gray-300 mt-12 w-full">
                         <div className="mt-4 w-full">
-                            <h3 className="text-black font-bold mb-8 uppercase underline underline-offset-4">REPORT BY:</h3>
-                            <div className="w-full max-w-xs">
+                            <h3 className="text-black font-bold mb-8 uppercase text-sm">REPORT BY:</h3>
+                            <div className="w-full max-w-md">
                                 <div className="border-b-2 border-dotted border-black w-full mb-3 h-8"></div>
-                                <div className="flex justify-between items-center w-full mb-8">
+                                <div className="flex justify-between items-center w-full px-1 mb-8">
                                     <span className="text-black font-bold text-lg">(</span>
                                     <input
                                         required
                                         type="text"
                                         value={traineeSignature}
                                         onChange={e => setTraineeSignature(e.target.value)}
-                                        className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1"
+                                        className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase text-sm"
                                         placeholder="Enter Full Name"
                                     />
                                     <span className="text-black font-bold text-lg">)</span>
                                 </div>
-                                <div className="text-black text-sm space-y-1 font-bold">
+                                <div className="text-black text-[11px] sm:text-xs space-y-1 font-bold">
                                     <p className="uppercase font-bold">CMCH Counselor Trainee</p>
                                     <p className="uppercase font-normal tracking-tight">Universiti Pendidikan Sultan Idris</p>
                                     <p className="uppercase font-normal tracking-tight">35900 Tanjong Malim, Perak</p>
@@ -427,7 +427,7 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
                             </div>
                         </div>
 
-                        <div className="mt-16 text-center w-full pt-4 border-t border-dashed border-gray-200">
+                        <div className="mt-20 text-center w-full pt-4 border-t border-dashed border-gray-200">
                             <p className="text-xs font-bold text-slate-500 uppercase tracking-widest pl-[0.1em]">
                                 Confidential Document (For Professional Use Only)
                             </p>

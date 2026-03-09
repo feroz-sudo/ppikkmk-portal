@@ -252,29 +252,29 @@ export function Form8PFAMHPSSReportPage({ searchParams }: PageProps) {
                     />
 
                     {/* Counselor Info */}
-                    <div className="grid grid-cols-2 gap-8 mb-8 max-w-2xl">
-                        <div className="flex items-center space-x-3">
-                            <label className="font-bold text-black min-w-[80px] uppercase text-sm">Name</label>
-                            <span className="font-bold text-black">:</span>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8 mb-8">
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                            <label className="font-bold text-black sm:min-w-[80px] uppercase text-xs">Name</label>
+                            <span className="hidden sm:inline font-bold text-black">:</span>
                             <input required type="text" value={counselorName} onChange={e => setCounselorName(e.target.value)} className="flex-1 p-2 border-b border-gray-300 focus:border-black outline-none bg-transparent text-black" placeholder="Enter name" />
                         </div>
-                        <div className="flex items-center space-x-3">
-                            <label className="font-bold text-black min-w-[100px] uppercase text-sm">Institution</label>
-                            <span className="font-bold text-black">:</span>
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                            <label className="font-bold text-black sm:min-w-[100px] uppercase text-xs">Institution</label>
+                            <span className="hidden sm:inline font-bold text-black">:</span>
                             <input required type="text" value={institution} onChange={e => setInstitution(e.target.value)} className="flex-1 p-2 border-b border-gray-300 focus:border-black outline-none bg-transparent text-black" placeholder="e.g. UPSI" />
                         </div>
                     </div>
 
                     {/* Logistics Data Section Group */}
-                    <div className="bg-white mb-8">
-                        <div className="bg-white px-4 py-2 border-b-2 border-black">
+                    <div className="bg-white mb-8 border-2 border-black">
+                        <div className="bg-white px-4 py-3 border-b-2 border-black">
                             <h2 className="text-lg font-bold text-black uppercase tracking-wide">Program / Session Information</h2>
                         </div>
 
-                        <div className="p-6 space-y-6">
-                            <div className="flex items-center space-x-12 mb-6 border-b border-gray-100 pb-4">
-                                <span className="font-bold text-gray-800 uppercase w-48">Program / Session</span>
-                                <div className="flex items-center space-x-12">
+                        <div className="p-4 sm:p-6 lg:p-8 space-y-6">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-12 mb-6 border-b border-gray-100 pb-4">
+                                <span className="font-bold text-gray-800 uppercase sm:w-48 text-sm sm:text-base">Program / Session</span>
+                                <div className="flex items-center gap-8 sm:gap-12">
                                     {["PFA", "MHPSS"].map((type) => (
                                         <label key={type} className="flex items-center cursor-pointer group">
                                             <input
@@ -292,33 +292,33 @@ export function Form8PFAMHPSSReportPage({ searchParams }: PageProps) {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-[220px_auto_1fr] gap-y-6 gap-x-2 items-center">
-                                <div className="font-bold text-black text-sm md:text-base uppercase leading-tight">Name of the Program/Session</div>
-                                <div className="font-bold text-black">:</div>
+                            <div className="grid grid-cols-1 md:grid-cols-[220px_auto_1fr] gap-y-4 md:gap-y-6 gap-x-2 items-start md:items-center">
+                                <div className="font-bold text-black text-sm uppercase leading-tight md:py-2">Name of the Program/Session</div>
+                                <div className="hidden md:block font-bold text-black">:</div>
                                 <div><input required type="text" value={programName} onChange={e => setProgramName(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="Enter program name" /></div>
 
-                                <div className="font-bold text-black text-sm md:text-base uppercase">Date & Time</div>
-                                <div className="font-bold text-black">:</div>
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Date & Time</div>
+                                <div className="hidden md:block font-bold text-black">:</div>
                                 <div><input required type="datetime-local" value={dateTime} onChange={e => setDateTime(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" /></div>
 
-                                <div className="font-bold text-black text-sm md:text-base uppercase">Duration (Hours)</div>
-                                <div className="font-bold text-black">:</div>
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Duration (Hours)</div>
+                                <div className="hidden md:block font-bold text-black">:</div>
                                 <div><input required type="number" step="0.5" min="0.5" value={duration} onChange={e => setDuration(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="e.g. 1.0" /></div>
 
-                                <div className="font-bold text-black text-sm md:text-base uppercase">Venue</div>
-                                <div className="font-bold text-black">:</div>
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Venue</div>
+                                <div className="hidden md:block font-bold text-black">:</div>
                                 <div><input required type="text" value={venue} onChange={e => setVenue(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="Activity location" /></div>
 
-                                <div className="font-bold text-black text-sm md:text-base uppercase leading-tight">Number of Participants Involved</div>
-                                <div className="font-bold text-black">:</div>
+                                <div className="font-bold text-black text-sm uppercase leading-tight md:py-2">Number of Participants Involved</div>
+                                <div className="hidden md:block font-bold text-black">:</div>
                                 <div><input required type="number" min="0" value={participantsCount} onChange={e => setParticipantsCount(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="Participants count" /></div>
 
-                                <div className="font-bold text-black text-sm md:text-base uppercase">Speaker / Provider</div>
-                                <div className="font-bold text-black">:</div>
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Speaker / Provider</div>
+                                <div className="hidden md:block font-bold text-black">:</div>
                                 <div><input required type="text" value={speakerProvider} onChange={e => setSpeakerProvider(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="Who delivered the program?" /></div>
 
-                                <div className="font-bold text-black text-sm md:text-base uppercase">Collaborator(s) (If any)</div>
-                                <div className="font-bold text-black">:</div>
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Collaborator(s) (If any)</div>
+                                <div className="hidden md:block font-bold text-black">:</div>
                                 <div><input type="text" value={collaborators} onChange={e => setCollaborators(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="Optional collaborators" /></div>
                             </div>
                         </div>

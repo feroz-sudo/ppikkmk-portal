@@ -97,27 +97,27 @@ export default function DashboardPage() {
                 <div className="absolute top-0 right-0 p-8 opacity-10">
                     <LayoutDashboard size={120} />
                 </div>
-                <div className="relative z-10 flex flex-col md:flex-row justify-between items-center">
-                    <div className="text-center md:text-left">
-                        <h1 className="text-4xl font-black tracking-tighter mb-2">My Clinical Progress</h1>
-                        <p className="text-blue-100 font-medium flex items-center justify-center md:justify-start">
+                <div className="relative z-10 flex flex-col lg:flex-row justify-between items-center text-center lg:text-left">
+                    <div className="mb-6 lg:mb-0">
+                        <h1 className="text-3xl md:text-4xl font-black tracking-tighter mb-2">My Clinical Progress</h1>
+                        <p className="text-blue-100 font-medium flex items-center justify-center lg:justify-start text-sm md:text-base">
                             <Calendar size={16} className="mr-2" />
                             March 9, 2026 – July 10, 2026 (18 Weeks)
                         </p>
                     </div>
-                    <div className="mt-6 md:mt-0 flex flex-col items-end space-y-4">
+                    <div className="flex flex-col items-center lg:items-end space-y-4 w-full lg:w-auto">
                         <div className="flex items-center space-x-4">
                             <div className="text-right">
-                                <div className="text-upsi-gold font-black text-3xl leading-none">{totalCurrent} <span className="text-xl">HRS</span></div>
-                                <div className="text-xs uppercase tracking-[0.2em] font-bold text-white/80 mt-1">Total Validated</div>
+                                <div className="text-upsi-gold font-black text-2xl md:text-3xl leading-none">{totalCurrent} <span className="text-lg">HRS</span></div>
+                                <div className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/80 mt-1">Total Validated</div>
                             </div>
-                            <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center border border-white/20">
-                                <CheckCircle2 className="text-upsi-gold" size={32} />
+                            <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-white/10 flex items-center justify-center border border-white/20">
+                                <CheckCircle2 className="text-upsi-gold" size={28} />
                             </div>
                         </div>
                         <button
                             onClick={() => setShowBooking(true)}
-                            className="bg-upsi-gold text-upsi-navy px-6 py-2.5 rounded-xl font-bold text-sm hover:scale-105 transition-all shadow-lg shadow-upsi-gold/20"
+                            className="w-full lg:w-auto bg-upsi-gold text-upsi-navy px-6 py-2.5 rounded-xl font-bold text-sm hover:scale-105 transition-all shadow-lg shadow-upsi-gold/20"
                         >
                             Request Supervision
                         </button>
@@ -126,9 +126,9 @@ export default function DashboardPage() {
 
                 {/* Main Progress Bar (Large) */}
                 <div className="mt-8 relative">
-                    <div className="flex justify-between items-end mb-2">
-                        <span className="text-sm font-bold uppercase tracking-widest text-white/70">Master Requirement (252h)</span>
-                        <span className="text-lg font-black text-upsi-gold">{totalPercentage}%</span>
+                    <div className="flex flex-col sm:flex-row justify-between items-center sm:items-end mb-2 gap-2">
+                        <span className="text-[10px] md:text-sm font-bold uppercase tracking-widest text-white/70">Master Requirement (252h)</span>
+                        <span className="text-base md:text-lg font-black text-upsi-gold">{totalPercentage}%</span>
                     </div>
                     <div className="w-full bg-white/10 rounded-2xl h-6 p-1 overflow-hidden border border-white/10 glass">
                         <div

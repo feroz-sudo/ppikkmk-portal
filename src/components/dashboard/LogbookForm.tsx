@@ -45,13 +45,13 @@ export const LogbookForm = ({ onLogAdded }: LogbookFormProps) => {
         <div className="glass rounded-[2rem] shadow-premium overflow-hidden border border-white">
             <div className="bg-upsi-navy px-8 py-6 relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-600/20 to-transparent pointer-events-none" />
-                <h3 className="text-xl font-black text-white flex items-center space-x-3 relative z-10">
-                    <div className="p-2 bg-white/10 rounded-xl border border-white/20">
+                <h3 className="text-lg md:text-xl font-black text-white flex items-center space-x-3 relative z-10">
+                    <div className="p-2 bg-white/10 rounded-xl border border-white/20 shrink-0">
                         <BookOpen size={20} className="text-upsi-gold" />
                     </div>
-                    <div className="flex flex-col">
-                        <span>Daily Logbook Entry</span>
-                        <span className="text-[10px] text-white/50 uppercase tracking-[0.2em] font-bold mt-0.5">Clinical Attendance Log</span>
+                    <div className="flex flex-col min-w-0">
+                        <span className="truncate">Daily Logbook Entry</span>
+                        <span className="text-[9px] md:text-[10px] text-white/50 uppercase tracking-[0.2em] font-bold mt-0.5 truncate">Clinical Attendance Log</span>
                     </div>
                 </h3>
             </div>

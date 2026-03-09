@@ -261,16 +261,16 @@ export function Form7ConsultationReportPage({ searchParams }: PageProps) {
                     />
 
                     {/* Counselor Info */}
-                    <div className="grid grid-cols-2 gap-8 mb-8 max-w-2xl">
-                        <div className="flex items-center space-x-3">
-                            <label className="font-bold text-black min-w-[80px] uppercase">Name</label>
-                            <span className="font-bold text-black">:</span>
-                            <input required type="text" value={consultantName} onChange={e => setConsultantName(e.target.value)} className="flex-1 p-2 border-b border-gray-300 focus:border-black outline-none bg-transparent text-black" placeholder="Enter name" />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8 mb-8">
+                        <div className="flex flex-col sm:flex-row sm:items-center space-y-1 sm:space-y-0 sm:space-x-3">
+                            <label className="font-bold text-black min-w-[80px] uppercase text-sm">Name</label>
+                            <span className="hidden sm:block font-bold text-black">:</span>
+                            <input required type="text" value={consultantName} onChange={e => setConsultantName(e.target.value)} className="flex-1 p-2 border-b border-gray-300 focus:border-black outline-none bg-transparent text-black text-sm" placeholder="Enter name" />
                         </div>
-                        <div className="flex items-center space-x-3">
-                            <label className="font-bold text-black min-w-[100px] uppercase">Institution</label>
-                            <span className="font-bold text-black">:</span>
-                            <input required type="text" value={institution} onChange={e => setInstitution(e.target.value)} className="flex-1 p-2 border-b border-gray-300 focus:border-black outline-none bg-transparent text-black" placeholder="e.g. UPSI" />
+                        <div className="flex flex-col sm:flex-row sm:items-center space-y-1 sm:space-y-0 sm:space-x-3">
+                            <label className="font-bold text-black min-w-[100px] uppercase text-sm">Institution</label>
+                            <span className="hidden sm:block font-bold text-black">:</span>
+                            <input required type="text" value={institution} onChange={e => setInstitution(e.target.value)} className="flex-1 p-2 border-b border-gray-300 focus:border-black outline-none bg-transparent text-black text-sm" placeholder="e.g. UPSI" />
                         </div>
                     </div>
 
@@ -280,15 +280,15 @@ export function Form7ConsultationReportPage({ searchParams }: PageProps) {
                             <h2 className="text-lg font-bold text-black uppercase tracking-wide">Client Information</h2>
                         </div>
 
-                        <div className="p-6 space-y-6">
-                            <div className="grid grid-cols-[180px_auto_1fr] md:grid-cols-[240px_auto_1fr] gap-y-4 gap-x-2 items-center">
-                                <div className="font-bold text-black text-sm md:text-base uppercase">Client’s Name</div>
-                                <div className="font-bold text-black">:</div>
-                                <div><input required type="text" value={clientName} onChange={e => setClientName(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="Enter Client's Name" /></div>
+                        <div className="p-4 sm:p-6 space-y-6">
+                            <div className="grid grid-cols-1 md:grid-cols-[220px_auto_1fr] gap-x-2 gap-y-4 md:gap-y-6 items-start md:items-center">
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Client’s Name</div>
+                                <div className="hidden md:block font-bold text-black text-center">:</div>
+                                <div><input required type="text" value={clientName} onChange={e => setClientName(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white text-sm" placeholder="Enter Client's Name" /></div>
 
-                                <div className="font-bold text-black text-sm md:text-base uppercase">Guardian’s Name</div>
-                                <div className="font-bold text-black">:</div>
-                                <div><input type="text" value={guardiansName} onChange={e => setGuardiansName(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="Enter Guardian's Name" /></div>
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Guardian’s Name</div>
+                                <div className="hidden md:block font-bold text-black text-center">:</div>
+                                <div><input type="text" value={guardiansName} onChange={e => setGuardiansName(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white text-sm" placeholder="Enter Guardian's Name" /></div>
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 border-t border-gray-200 pt-6">
@@ -307,8 +307,8 @@ export function Form7ConsultationReportPage({ searchParams }: PageProps) {
                             </div>
 
                             <div className="border-t border-gray-200 pt-6">
-                                <label className="font-bold text-black uppercase block mb-3">Attendance Type</label>
-                                <div className="flex flex-wrap gap-8">
+                                <label className="font-bold text-black uppercase block mb-3 text-sm">Attendance Type</label>
+                                <div className="flex flex-col sm:flex-row flex-wrap gap-4 sm:gap-8">
                                     {["Voluntary", "Referred", "Invited"].map((type) => (
                                         <label key={type} className="flex items-center cursor-pointer group">
                                             <input
@@ -320,7 +320,7 @@ export function Form7ConsultationReportPage({ searchParams }: PageProps) {
                                                 name="attendance"
                                                 className="w-5 h-5 text-black border-gray-300 focus:ring-black cursor-pointer"
                                             />
-                                            <span className="ml-3 text-black font-bold group-hover:text-black transition-colors">{type}</span>
+                                            <span className="ml-3 text-black font-bold text-sm group-hover:text-black transition-colors">{type}</span>
                                         </label>
                                     ))}
                                 </div>
@@ -360,17 +360,17 @@ export function Form7ConsultationReportPage({ searchParams }: PageProps) {
                         <div className="bg-white px-4 py-2 border-b-2 border-black">
                             <h2 className="text-lg font-bold text-black uppercase tracking-wide">Referral</h2>
                         </div>
-                        <div className="p-6 space-y-6">
-                            <div className="flex items-center space-x-12">
-                                <span className="font-bold text-black uppercase w-48">Referral Needed</span>
+                        <div className="p-4 sm:p-6 space-y-6">
+                            <div className="flex flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0 sm:space-x-12">
+                                <span className="font-bold text-black uppercase text-sm sm:w-48">Referral Needed</span>
                                 <div className="flex items-center space-x-8">
                                     <label className="flex items-center cursor-pointer group">
                                         <input required type="radio" value="Yes" checked={referralNeeded === "Yes"} onChange={e => setReferralNeeded(e.target.value)} name="referral" className="w-5 h-5 text-black border-gray-300 focus:ring-black cursor-pointer" />
-                                        <span className="ml-3 text-black font-bold group-hover:text-black transition-colors">Yes</span>
+                                        <span className="ml-3 text-black font-bold text-sm group-hover:text-black transition-colors">Yes</span>
                                     </label>
                                     <label className="flex items-center cursor-pointer group">
                                         <input required type="radio" value="No" checked={referralNeeded === "No"} onChange={e => setReferralNeeded(e.target.value)} name="referral" className="w-5 h-5 text-black border-gray-300 focus:ring-black cursor-pointer" />
-                                        <span className="ml-3 text-black font-bold group-hover:text-black transition-colors">No</span>
+                                        <span className="ml-3 text-black font-bold text-sm group-hover:text-black transition-colors">No</span>
                                     </label>
                                 </div>
                             </div>

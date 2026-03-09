@@ -236,16 +236,16 @@ export function Form4TreatmentPlanPage({ searchParams }: PageProps) {
                     <div className="bg-white space-y-6">
                         <h2 className="text-xl font-bold text-black uppercase tracking-wide">DEMOGRAPHIC INFORMATION</h2>
 
-                        <div className="grid grid-cols-[180px_auto_1fr] md:grid-cols-[240px_auto_1fr] gap-y-4 gap-x-2 items-center">
+                        <div className="grid grid-cols-1 md:grid-cols-[220px_auto_1fr] gap-x-2 gap-y-4 md:gap-y-6 items-start md:items-center">
 
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Client Full Name</div>
-                            <div className="font-bold text-black">:</div>
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Client Full Name</div>
+                            <div className="hidden md:block font-bold text-black">:</div>
                             <div><input required type="text" value={clientFullName} onChange={e => setClientFullName(e.target.value)} className={inputClasses} placeholder="Enter Client's Actual Name" /></div>
 
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Ethnic/Sex</div>
-                            <div className="font-bold text-black">:</div>
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Ethnic/Sex</div>
+                            <div className="hidden md:block font-bold text-black">:</div>
                             <div className="flex space-x-2 items-center w-full">
-                                <select required value={ethnic} onChange={e => setEthnic(e.target.value)} className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white w-2/3">
+                                <select required value={ethnic} onChange={e => setEthnic(e.target.value)} className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white w-2/3 text-sm">
                                     <option value="" disabled>Select Ethnic</option>
                                     <option value="Malay">Malay</option>
                                     <option value="Chinese">Chinese</option>
@@ -256,19 +256,19 @@ export function Form4TreatmentPlanPage({ searchParams }: PageProps) {
                                     <option value="Others">Others</option>
                                 </select>
                                 <span className="text-gray-400">/</span>
-                                <select required value={sex} onChange={e => setSex(e.target.value)} className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white w-1/3 text-center">
+                                <select required value={sex} onChange={e => setSex(e.target.value)} className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white w-1/3 text-center text-sm">
                                     <option value="" disabled>Select Sex</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
                                 </select>
                             </div>
 
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Age</div>
-                            <div className="font-bold text-black">:</div>
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Age</div>
+                            <div className="hidden md:block font-bold text-black">:</div>
                             <div><input required type="text" value={age} onChange={e => setAge(e.target.value)} className={inputClasses} placeholder="e.g. 24" /></div>
 
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Diagnosis</div>
-                            <div className="font-bold text-black">:</div>
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Diagnosis</div>
+                            <div className="hidden md:block font-bold text-black">:</div>
                             <div><input required type="text" value={diagnosis} onChange={e => setDiagnosis(e.target.value)} className={inputClasses} placeholder="e.g. Generalized Anxiety Disorder" /></div>
 
                         </div>
@@ -348,9 +348,9 @@ export function Form4TreatmentPlanPage({ searchParams }: PageProps) {
 
                     {/* Footer Section */}
                     <div className="pt-10 pb-4 mt-12 w-full">
-                        <div className="mb-6 flex flex-col items-start max-w-sm">
-                            <h3 className="text-black font-bold mb-4 uppercase">Report by:</h3>
-                            <div className="w-80">
+                        <div className="mb-6 flex flex-col items-start w-full max-w-md">
+                            <h3 className="text-black font-bold mb-4 uppercase text-sm">Report by:</h3>
+                            <div className="w-full">
                                 <div className="border-b-2 border-dotted border-black w-full mb-3 h-8"></div>
                                 <div className="flex justify-between items-center w-full px-1">
                                     <span className="text-black font-bold text-lg">(</span>
@@ -359,7 +359,7 @@ export function Form4TreatmentPlanPage({ searchParams }: PageProps) {
                                         type="text"
                                         value={counsellorName}
                                         onChange={e => setCounsellorName(e.target.value)}
-                                        className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase"
+                                        className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase text-sm"
                                         placeholder="Enter Full Name"
                                     />
                                     <span className="text-black font-bold text-lg">)</span>
@@ -367,7 +367,7 @@ export function Form4TreatmentPlanPage({ searchParams }: PageProps) {
                             </div>
                         </div>
 
-                        <div className="text-black text-sm space-y-1 font-bold">
+                        <div className="text-black text-[11px] sm:text-xs space-y-1 font-bold">
                             <p className="uppercase">CMCH Counselor Trainee</p>
                             <p className="uppercase font-normal tracking-tight">Universiti Pendidikan Sultan Idris</p>
                             <p className="uppercase font-normal tracking-tight">35900 Tanjong Malim, Perak</p>

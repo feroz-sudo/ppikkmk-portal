@@ -52,16 +52,24 @@ function SidebarNavContent({
     getSubLinkClass,
     pathname,
     isFormsOpen,
-    toggleForms
+    toggleForms,
+    setIsSidebarOpen,
+    isMobile
 }: any) {
     const searchParams = useSearchParams();
+
+    const handleLinkClick = () => {
+        if (isMobile) {
+            setIsSidebarOpen(false);
+        }
+    };
 
     return (
         <nav className="flex-1 px-4 space-y-2 mt-4 overflow-y-auto pb-4 custom-scrollbar text-[11px]">
             {userRole === "supervisor" ? (
                 <>
                     {/* SUPERVISOR NAV */}
-                    <Link href="/dashboard/supervisor" className={getLinkClass("/dashboard/supervisor")}>
+                    <Link href="/dashboard/supervisor" onClick={handleLinkClick} className={getLinkClass("/dashboard/supervisor")}>
                         <LayoutDashboard size={18} />
                         <span className="font-bold uppercase tracking-widest text-[10px]">Supervision Hub</span>
                     </Link>
@@ -161,31 +169,31 @@ function SidebarNavContent({
             ) : (
                 <>
                     {/* TRAINEE NAV */}
-                    <Link href="/dashboard" className={getLinkClass("/dashboard")}>
+                    <Link href="/dashboard" onClick={handleLinkClick} className={getLinkClass("/dashboard")}>
                         <LayoutDashboard size={20} />
                         <span>Dashboard</span>
                     </Link>
-                    <Link href="/dashboard/logbook" className={getLinkClass("/dashboard/logbook")}>
+                    <Link href="/dashboard/logbook" onClick={handleLinkClick} className={getLinkClass("/dashboard/logbook")}>
                         <ClipboardList size={20} />
                         <span>Logbook / Lampiran A</span>
                     </Link>
-                    <Link href="/dashboard/rumusan" className={getLinkClass("/dashboard/rumusan")}>
+                    <Link href="/dashboard/rumusan" onClick={handleLinkClick} className={getLinkClass("/dashboard/rumusan")}>
                         <Calculator size={20} />
                         <span>Rumusan / Lampiran B</span>
                     </Link>
-                    <Link href="/dashboard/clients/ki" className={getLinkClass("/dashboard/clients/ki")}>
+                    <Link href="/dashboard/clients/ki" onClick={handleLinkClick} className={getLinkClass("/dashboard/clients/ki")}>
                         <UserPlus size={20} />
                         <span>Individual (KI)</span>
                     </Link>
-                    <Link href="/dashboard/clients/kk" className={getLinkClass("/dashboard/clients/kk")}>
+                    <Link href="/dashboard/clients/kk" onClick={handleLinkClick} className={getLinkClass("/dashboard/clients/kk")}>
                         <Users size={20} />
                         <span>Group (KK)</span>
                     </Link>
-                    <Link href="/dashboard/calendar" className={getLinkClass("/dashboard/calendar")}>
+                    <Link href="/dashboard/calendar" onClick={handleLinkClick} className={getLinkClass("/dashboard/calendar")}>
                         <Calendar size={20} />
                         <span>Academic Calendar</span>
                     </Link>
-                    <Link href="/dashboard/guidelines" className={getLinkClass("/dashboard/guidelines")}>
+                    <Link href="/dashboard/guidelines" onClick={handleLinkClick} className={getLinkClass("/dashboard/guidelines")}>
                         <BookOpen size={20} />
                         <span>Guidelines</span>
                     </Link>
@@ -205,43 +213,43 @@ function SidebarNavContent({
 
                         {isFormsOpen && (
                             <div className="mt-1 ml-4 pl-4 border-l border-white/20 space-y-1 py-1">
-                                <Link href="/dashboard/forms/form1" className={getSubLinkClass("/dashboard/forms/form1")}>
+                                <Link href="/dashboard/forms/form1" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form1")}>
                                     <ClipboardList size={14} className={pathname === "/dashboard/forms/form1" ? "text-upsi-gold" : "text-blue-300"} />
                                     <span className="text-[10px] uppercase font-bold tracking-tight">FORM 1: PSYCHOLOGICAL INTAKE REPORT</span>
                                 </Link>
-                                <Link href="/dashboard/forms/form2" className={getSubLinkClass("/dashboard/forms/form2")}>
+                                <Link href="/dashboard/forms/form2" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form2")}>
                                     <FileText size={14} className={pathname === "/dashboard/forms/form2" ? "text-upsi-gold" : "text-green-300"} />
                                     <span className="text-[10px] uppercase font-bold tracking-tight">FORM 2: PROGRESSIVE NOTES</span>
                                 </Link>
-                                <Link href="/dashboard/forms/form3" className={getSubLinkClass("/dashboard/forms/form3")}>
+                                <Link href="/dashboard/forms/form3" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form3")}>
                                     <Lightbulb size={14} className={pathname === "/dashboard/forms/form3" ? "text-upsi-gold" : "text-yellow-300"} />
                                     <span className="text-[10px] uppercase font-bold tracking-tight">FORM 3: CASE CONCEPTUALIZATION</span>
                                 </Link>
-                                <Link href="/dashboard/forms/form4" className={getSubLinkClass("/dashboard/forms/form4")}>
+                                <Link href="/dashboard/forms/form4" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form4")}>
                                     <Target size={14} className={pathname === "/dashboard/forms/form4" ? "text-upsi-gold" : "text-red-300"} />
                                     <span className="text-[10px] uppercase font-bold tracking-tight">FORM 4: TREATMENT PLANNING</span>
                                 </Link>
-                                <Link href="/dashboard/forms/form5" className={getSubLinkClass("/dashboard/forms/form5")}>
+                                <Link href="/dashboard/forms/form5" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form5")}>
                                     <Flag size={14} className={pathname === "/dashboard/forms/form5" ? "text-upsi-gold" : "text-orange-300"} />
                                     <span className="text-[10px] uppercase font-bold tracking-tight">FORM 5: TERMINATION SESSION</span>
                                 </Link>
-                                <Link href="/dashboard/forms/form6" className={getSubLinkClass("/dashboard/forms/form6")}>
+                                <Link href="/dashboard/forms/form6" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form6")}>
                                     <AlertTriangle size={14} className={pathname === "/dashboard/forms/form6" ? "text-upsi-gold" : "text-rose-400"} />
                                     <span className="text-[10px] uppercase font-bold tracking-tight">FORM 6: CRISIS INTERVENTION REPORT</span>
                                 </Link>
-                                <Link href="/dashboard/forms/form7" className={getSubLinkClass("/dashboard/forms/form7")}>
+                                <Link href="/dashboard/forms/form7" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form7")}>
                                     <UserCheck size={14} className={pathname === "/dashboard/forms/form7" ? "text-upsi-gold" : "text-emerald-300"} />
                                     <span className="text-[10px] uppercase font-bold tracking-tight">FORM 7: CONSULTATION REPORT</span>
                                 </Link>
-                                <Link href="/dashboard/forms/form8" className={getSubLinkClass("/dashboard/forms/form8")}>
+                                <Link href="/dashboard/forms/form8" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form8")}>
                                     <Shield size={14} className={pathname === "/dashboard/forms/form8" ? "text-upsi-gold" : "text-purple-300"} />
                                     <span className="text-[10px] uppercase font-bold tracking-tight">FORM 8: PFA MHPSS REPORT</span>
                                 </Link>
-                                <Link href="/dashboard/forms/form11" className={getSubLinkClass("/dashboard/forms/form11")}>
+                                <Link href="/dashboard/forms/form11" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form11")}>
                                     <UsersRound size={14} className={pathname === "/dashboard/forms/form11" ? "text-upsi-gold" : "text-indigo-300"} />
                                     <span className="text-[10px] uppercase font-bold tracking-tight">FORM 11: GROUP COUNSELING REPORT</span>
                                 </Link>
-                                <Link href="/dashboard/forms/form13" className={getSubLinkClass("/dashboard/forms/form13")}>
+                                <Link href="/dashboard/forms/form13" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form13")}>
                                     <CheckCircle2 size={14} className={pathname === "/dashboard/forms/form13" ? "text-upsi-gold" : "text-teal-300"} />
                                     <span className="text-[10px] uppercase font-bold tracking-tight">FORM 13: PSYCHOLOGICAL ASSESSMENT REPORT</span>
                                 </Link>
@@ -269,11 +277,33 @@ export default function DashboardLayout({
     const router = useRouter();
     const pathname = usePathname();
     const [isFormsOpen, setIsFormsOpen] = useState(false);
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Default closed on mobile
+    const [isMobile, setIsMobile] = useState(false);
     const [assignedTrainees, setAssignedTrainees] = useState<User[]>([]);
     const [openSessions, setOpenSessions] = useState<Set<string>>(new Set(["M252 (Current)"]));
     const [openTrainees, setOpenTrainees] = useState<Set<string>>(new Set());
     const [openProgress, setOpenProgress] = useState<Set<string>>(new Set());
+
+    // Handle screen resize to toggle isMobile and sidebar state
+    useEffect(() => {
+        const checkIsMobile = () => {
+            const mobile = window.innerWidth < 768;
+            setIsMobile(mobile);
+            if (!mobile) setIsSidebarOpen(true);
+            else setIsSidebarOpen(false);
+        };
+
+        checkIsMobile();
+        window.addEventListener("resize", checkIsMobile);
+        return () => window.removeEventListener("resize", checkIsMobile);
+    }, []);
+
+    // Close sidebar on navigation on mobile
+    useEffect(() => {
+        if (isMobile) {
+            setIsSidebarOpen(false);
+        }
+    }, [pathname, isMobile]);
 
     const toggleSession = (session: string) => {
         const next = new Set(openSessions);
@@ -364,9 +394,22 @@ export default function DashboardLayout({
             : 'text-blue-100/60 hover:bg-white/10 hover:text-white'}`;
 
     return (
-        <div className="flex h-screen bg-white flex-col md:flex-row overflow-hidden">
+        <div className="flex h-screen bg-white flex-col md:flex-row overflow-hidden relative">
+            {/* Mobile Overlay */}
+            {isMobile && isSidebarOpen && (
+                <div
+                    className="fixed inset-0 bg-black/60 z-[99] md:hidden backdrop-blur-sm transition-opacity"
+                    onClick={() => setIsSidebarOpen(false)}
+                />
+            )}
+
             {/* Sidebar Navigation */}
-            <aside className={`w-full md:w-64 bg-upsi-navy text-white flex-col h-full ${isSidebarOpen ? 'flex' : 'hidden'} shrink-0 no-print print:hidden`}>
+            <aside className={`
+                fixed md:relative z-[100] w-64 bg-upsi-navy text-white flex-col h-full 
+                transition-transform duration-300 ease-in-out shrink-0 no-print print:hidden
+                ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+                ${isMobile && !isSidebarOpen ? 'pointer-events-none' : 'pointer-events-auto'}
+            `}>
                 <div className="p-8 shrink-0">
                     <div className="flex items-center space-x-3 mb-2">
                         <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg shadow-black/20">
@@ -394,11 +437,13 @@ export default function DashboardLayout({
                         getSubLinkClass={getSubLinkClass}
                         pathname={pathname}
                         isFormsOpen={isFormsOpen}
-                        toggleForms={toggleForms}
+                        toggleForms={() => setIsFormsOpen(!isFormsOpen)}
+                        setIsSidebarOpen={setIsSidebarOpen}
+                        isMobile={isMobile}
                     />
                 </Suspense>
 
-                <div className="p-6 border-t border-white/10 bg-black/20 shrink-0">
+                <div className="p-6 border-t border-white/10 bg-black/20 shrink-0 pb-10 md:pb-6">
                     <Link href="/dashboard/settings" className={getLinkClass("/dashboard/settings") + " mb-3"}>
                         <Settings size={20} />
                         <span>Settings</span>
@@ -411,7 +456,7 @@ export default function DashboardLayout({
                         <span>Logout</span>
                     </button>
 
-                    <div className="mt-6 pt-4 border-t border-white/5 opacity-40 hover:opacity-100 transition-opacity text-center">
+                    <div className="mt-6 pt-4 border-t border-white/5 opacity-40 hover:opacity-100 transition-opacity text-center hidden md:block">
                         <p className="text-[8px] uppercase tracking-widest font-bold text-upsi-gold">UPSI Academic Portal</p>
                     </div>
                 </div>

@@ -295,16 +295,16 @@ function Form1IntakeContent() {
     return (
         <div className="max-w-4xl mx-auto pb-12 print:pb-0">
             <div className="bg-white overflow-hidden">
-                <div className="bg-white px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
-                    <div>
-                        <h1 className="text-2xl font-bold text-upsi-navy flex items-center space-x-3">
-                            <ClipboardList className="text-upsi-gold" size={28} />
+                <div className="bg-white px-4 sm:px-8 py-6 border-b-4 border-upsi-gold flex flex-col sm:flex-row justify-between items-center gap-4 no-print">
+                    <div className="text-center sm:text-left">
+                        <h1 className="text-xl sm:text-2xl font-bold text-upsi-navy flex flex-col sm:flex-row items-center sm:space-x-3">
+                            <ClipboardList className="text-upsi-gold mb-2 sm:mb-0" size={28} />
                             <span>Form 1: PSYCHOLOGICAL INTAKE REPORT</span>
                         </h1>
-                        <p className="text-slate-500 mt-1">First session report mapping directly to official clinical counselling requirements.</p>
+                        <p className="text-slate-500 mt-1 text-sm">First session report mapping directly to official clinical requirements.</p>
                     </div>
                     {!prefillClientId && (
-                        <div className="bg-white p-2 rounded-lg shadow-inner border border-blue-800">
+                        <div className="bg-white p-2 rounded-lg shadow-inner border border-blue-800 w-full sm:w-auto">
                             <ClientPrefill onSelectClient={setSelectedClient} />
                         </div>
                     )}
@@ -320,31 +320,31 @@ function Form1IntakeContent() {
                     <div className="bg-white space-y-6">
                         <h2 className="text-xl font-bold text-black uppercase tracking-wide">PERSONAL DATA</h2>
 
-                        <div className="grid grid-cols-[180px_auto_1fr] md:grid-cols-[240px_auto_1fr] gap-y-4 gap-x-2 items-center">
+                        <div className="grid grid-cols-1 md:grid-cols-[220px_auto_1fr] gap-x-2 gap-y-4 md:gap-y-6 items-start md:items-center">
 
                             {/* Session Number */}
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Session Number</div>
-                            <div className="font-bold text-black">:</div>
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Session Number</div>
+                            <div className="hidden md:block font-bold text-black text-center">:</div>
                             <div><input required type="text" value={sessionNumber} onChange={e => setSessionNumber(e.target.value)} className={inputClasses} placeholder="e.g. 01" /></div>
 
                             {/* Session Date & Time */}
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Session Date & Time</div>
-                            <div className="font-bold text-black">:</div>
-                            <div className="flex space-x-2">
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Session Date & Time</div>
+                            <div className="hidden md:block font-bold text-black text-center">:</div>
+                            <div className="flex flex-col sm:flex-row gap-2">
                                 <input required type="date" value={sessionDate} onChange={e => setSessionDate(e.target.value)} className={`${inputClasses} flex-1`} />
                                 <input required type="time" value={sessionTime} onChange={e => setSessionTime(e.target.value)} className={`${inputClasses} flex-1`} />
                             </div>
 
                             {/* Client Full Name */}
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Client Full Name</div>
-                            <div className="font-bold text-black">:</div>
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Client Full Name</div>
+                            <div className="hidden md:block font-bold text-black text-center">:</div>
                             <div><input required type="text" value={clientFullName} onChange={e => setClientFullName(e.target.value)} className={inputClasses} placeholder="Enter Client's Actual Name" /></div>
 
                             {/* Ethnic/Sex */}
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Ethnic/Sex</div>
-                            <div className="font-bold text-black">:</div>
-                            <div className="flex space-x-2 items-center w-full">
-                                <select required value={ethnic} onChange={e => setEthnic(e.target.value)} className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white w-2/3">
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Ethnic/Sex</div>
+                            <div className="hidden md:block font-bold text-black text-center">:</div>
+                            <div className="flex flex-col sm:flex-row gap-2 items-center w-full">
+                                <select required value={ethnic} onChange={e => setEthnic(e.target.value)} className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white w-full sm:w-2/3 text-sm">
                                     <option value="" disabled>Select Ethnic</option>
                                     <option value="Malay">Malay</option>
                                     <option value="Chinese">Chinese</option>
@@ -354,8 +354,8 @@ function Form1IntakeContent() {
                                     <option value="Orang Asli">Orang Asli</option>
                                     <option value="Others">Others</option>
                                 </select>
-                                <span className="text-gray-400">/</span>
-                                <select required value={sex} onChange={e => setSex(e.target.value)} className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white w-1/3 text-center">
+                                <span className="text-gray-400 hidden sm:inline">/</span>
+                                <select required value={sex} onChange={e => setSex(e.target.value)} className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white w-full sm:w-1/3 text-center text-sm">
                                     <option value="" disabled>Select Sex</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
@@ -363,29 +363,28 @@ function Form1IntakeContent() {
                             </div>
 
                             {/* Date of Birth */}
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Date of Birth</div>
-                            <div className="font-bold text-black">:</div>
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Date of Birth</div>
+                            <div className="hidden md:block font-bold text-black text-center">:</div>
                             <div><input required type="date" value={dateOfBirth} onChange={e => setDateOfBirth(e.target.value)} className={inputClasses} /></div>
 
                             {/* Identification Card No */}
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Identification Card No</div>
-                            <div className="font-bold text-black">:</div>
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Identification Card No</div>
+                            <div className="hidden md:block font-bold text-black text-center">:</div>
                             <div><input required type="text" value={icNumber} onChange={e => setIcNumber(e.target.value)} className={inputClasses} placeholder="XXXXXX-XX-XXXX" /></div>
 
                             {/* Age */}
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Age</div>
-                            <div className="font-bold text-black">:</div>
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Age</div>
+                            <div className="hidden md:block font-bold text-black text-center">:</div>
                             <div><input required type="text" value={age} onChange={e => setAge(e.target.value)} className={inputClasses} placeholder="e.g. 24" /></div>
 
                             {/* Designation */}
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Designation</div>
-                            <div className="font-bold text-black">:</div>
-                            <div><input required type="text" value={designation} onChange={e => setDesignation(e.target.value)} className={inputClasses} placeholder="e.g. Student, Staff" /></div>
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Designation</div>
+                            <div className="hidden md:block font-bold text-black text-center">:</div>
+                            <div><input required type="text" value={designation} onChange={e => setDesignation(e.target.value)} className={inputClasses} placeholder="Role/Year/Program" /></div>
 
-                            {/* Date of Report */}
-                            <div className="font-bold text-black text-sm md:text-base uppercase">Date of Report</div>
-                            <div className="font-bold text-black">:</div>
-                            <div><input required type="text" value={dateOfReport} onChange={e => setDateOfReport(e.target.value)} className="w-full p-2 border-b border-black outline-none bg-white font-bold" /></div>
+                            <div className="font-bold text-black text-sm uppercase md:py-2">Date of Intake</div>
+                            <div className="hidden md:block font-bold text-black text-center">:</div>
+                            <div><input required type="date" value={dateOfReport} onChange={e => setDateOfReport(e.target.value)} className={inputClasses} /></div>
 
                         </div>
                     </div>
@@ -468,29 +467,29 @@ function Form1IntakeContent() {
 
                     {/* Footer Section */}
                     <div className="pt-10 pb-4 mt-12 w-full">
-                        <div className="mb-6 flex flex-col items-start max-w-sm">
-                            <h3 className="text-gray-900 font-bold mb-4 uppercase underline underline-offset-4">Report by:</h3>
-                            <div className="w-80">
-                                <div className="border-b-2 border-dotted border-gray-400 w-full mb-3 h-8"></div>
+                        <div className="mb-6 flex flex-col items-start w-full max-w-md">
+                            <h3 className="text-black font-bold mb-4 uppercase text-sm">Report by:</h3>
+                            <div className="w-full">
+                                <div className="border-b-2 border-dotted border-black w-full mb-3 h-8"></div>
                                 <div className="flex justify-between items-center w-full px-1">
-                                    <span className="text-gray-800 font-bold text-lg">(</span>
+                                    <span className="text-black font-bold text-lg">(</span>
                                     <input
                                         required
                                         type="text"
                                         value={counselorName}
                                         onChange={e => setCounselorName(e.target.value)}
-                                        className="bg-transparent outline-none flex-1 text-center font-bold text-gray-800 placeholder-gray-400 py-1"
+                                        className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase text-sm"
                                         placeholder="Enter Full Name"
                                     />
-                                    <span className="text-gray-800 font-bold text-lg">)</span>
+                                    <span className="text-black font-bold text-lg">)</span>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="text-gray-700 text-sm space-y-1 font-bold">
-                            <p>CMCH Counselor Trainee</p>
-                            <p className="font-normal">Universiti Pendidikan Sultan Idris</p>
-                            <p className="font-normal">35900 Tanjong Malim, Perak</p>
+                        <div className="text-black text-[11px] sm:text-xs space-y-1 font-bold">
+                            <p className="uppercase">CMCH Counselor Trainee</p>
+                            <p className="uppercase font-normal tracking-tight">Universiti Pendidikan Sultan Idris</p>
+                            <p className="uppercase font-normal tracking-tight">35900 Tanjong Malim, Perak</p>
                         </div>
 
                         <div className="mt-16 text-center w-full pt-4 border-t border-dashed border-gray-200">
