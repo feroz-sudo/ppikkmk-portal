@@ -405,7 +405,7 @@ export default function DashboardLayout({
 
             {/* Sidebar Navigation */}
             <aside className={`
-                fixed md:relative z-[100] w-64 bg-upsi-navy text-white flex-col h-full 
+                fixed md:relative z-[100] w-64 bg-upsi-navy text-white flex flex-col h-full 
                 transition-transform duration-300 ease-in-out shrink-0 no-print print:hidden
                 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
                 ${isMobile && !isSidebarOpen ? 'pointer-events-none' : 'pointer-events-auto'}
