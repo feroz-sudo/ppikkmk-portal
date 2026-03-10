@@ -174,18 +174,18 @@ export const LogbookForm = ({ onLogAdded, initialData, onClose }: LogbookFormPro
                             onChange={(e) => setCategory(e.target.value as LogCategory)}
                             className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-upsi-navy/5 focus:border-upsi-navy focus:bg-white outline-none transition-all font-bold text-slate-700 appearance-none cursor-pointer"
                         >
-                            <optgroup label="Direct Service (Bersemuka)">
-                                <option value="Individual Counselling">Individual Counselling</option>
-                                <option value="Group Counselling">Group Counselling</option>
+                            <optgroup label="Perkhidmatan Langsung (Direct Service)">
+                                <option value="Individual Counselling">Kaunseling Individu</option>
+                                <option value="Group Counselling">Kaunseling Kelompok</option>
                                 <option value="Crisis Intervention">Crisis Intervention</option>
-                                <option value="PFA/MHPSS">PFA / MHPSS</option>
+                                <option value="PFA/MHPSS">PFA/MHPSS</option>
                             </optgroup>
-                            <optgroup label="Professional Activities">
-                                <option value="Psychoeducation/Community">Psychoeducation / Community</option>
+                            <optgroup label="Professional Activities (Aktiviti Profesional)">
+                                <option value="Psychoeducation/Community">Psychoeducation/Community</option>
                                 <option value="Testing & Assessment">Testing & Assessment</option>
-                                <option value="Management & Admin">Management & Admin</option>
-                                <option value="Professional Development">Professional Development</option>
-                                <option value="Supervision">Supervision (Clinical/Triadic/Group)</option>
+                                <option value="Management & Admin">Pentadbiran/Pengurusan</option>
+                                <option value="Professional Development">Perkembangan Profesional</option>
+                                <option value="Supervision">Penyeliaan (Clinical/Triadic/Group)</option>
                             </optgroup>
                         </select>
                         <ChevronDown size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
