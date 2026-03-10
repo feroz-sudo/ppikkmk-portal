@@ -12,34 +12,49 @@ export const Disclaimer: React.FC<DisclaimerProps> = ({ variant = "full", classN
     if (variant === "compact") {
         return (
             <div className={`text-[10px] text-gray-400 font-medium tracking-tight leading-tight ${className}`}>
-                <p>© Universiti Pendidikan Sultan Idris (UPSI). All logos, names, and forms are copyrighted.</p>
-                <p>Ensuring clinical practicum and internship efficiency.</p>
+                <p>Software Platform & Architecture © Ahmad Feroz. All Rights Reserved.</p>
+                <p>Forms, Branding & Clinical Content © Universiti Pendidikan Sultan Idris (UPSI).</p>
             </div>
         );
     }
 
     return (
         <div className={`bg-slate-50 border border-slate-200 rounded-xl p-6 shadow-sm ${className}`}>
-            <div className="flex items-start space-x-4">
+            <div className="flex items-start space-x-6">
                 <div className="bg-upsi-gold/10 p-2 rounded-lg shrink-0">
-                    <ShieldCheck className="text-upsi-gold" size={20} />
+                    <ShieldCheck className="text-upsi-gold" size={24} />
                 </div>
-                <div>
-                    <h4 className="text-sm font-bold text-upsi-navy uppercase tracking-wider mb-1">
-                        Institutional Copyright Notice
-                    </h4>
-                    <p className="text-xs text-gray-600 leading-relaxed mb-3">
-                        All intellectual property, including institutional trademarks, logos of Universiti Pendidikan Sultan Idris (UPSI), and the structured clinical documentation frameworks within this portal, are the exclusive property of UPSI and are protected under prevailing copyright and intellectual property statutes.
-                    </p>
-
-                    <div className="flex items-center space-x-2 text-upsi-navy/80 mb-1">
-                        <ShieldCheck size={14} className="text-upsi-gold" />
-                        <span className="text-[11px] font-bold uppercase tracking-widest">Portal Objective</span>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+                    {/* LEFT COLUMN: INSTITUTIONAL */}
+                    <div className="space-y-3">
+                        <h4 className="text-[10px] font-black text-upsi-navy uppercase tracking-[0.2em]">
+                            Institutional Intellectual Property
+                        </h4>
+                        <p className="text-[11px] text-gray-600 leading-relaxed">
+                            All institutional trademarks, official UPSI logos, and the structured clinical documentation frameworks (Lampiran A, B, and Clinical Forms) are the exclusive property of <span className="font-bold text-slate-800">Universiti Pendidikan Sultan Idris (UPSI)</span> and are protected under prevailing IP statutes.
+                        </p>
                     </div>
-                    <p className="text-xs text-slate-500 italic leading-relaxed">
-                        This specialized portal is engineered to facilitate the systematic and rigorous management of clinical practicum and internship requirements. By standardizing documentation workflows, the platform ensures that the professional integration of trainees and the evaluative oversight of supervisors are executed with maximum precision, efficiency, and methodological consistency.
-                    </p>
+
+                    {/* RIGHT COLUMN: SOFTWARE */}
+                    <div className="space-y-3 border-l border-slate-200 pl-8">
+                        <h4 className="text-[10px] font-black text-upsi-navy uppercase tracking-[0.2em]">
+                            Software Platform Development
+                        </h4>
+                        <p className="text-[11px] text-gray-600 leading-relaxed">
+                            The software platform, custom codebase, database architecture, and proprietary UI/UX workflows are developed and owned by <span className="font-bold text-slate-800">Ahmad Feroz</span>. This digital ecosystem is engineered specifically to facilitate clinical management within UPSI protocols.
+                        </p>
+                    </div>
                 </div>
+            </div>
+
+            <div className="mt-6 pt-4 border-t border-slate-200">
+                <div className="flex items-center space-x-2 text-upsi-navy/80 mb-2">
+                    <Info size={14} className="text-upsi-gold" />
+                    <span className="text-[11px] font-black uppercase tracking-widest leading-none">Portal Objective</span>
+                </div>
+                <p className="text-[11px] text-slate-500 italic leading-relaxed">
+                    This specialized portal is engineered to facilitate the systematic and rigorous management of clinical practicum and internship requirements. By standardizing documentation workflows, the platform ensures that the professional integration of trainees and the evaluative oversight of supervisors are executed with maximum precision, efficiency, and methodological consistency.
+                </p>
             </div>
         </div>
     );

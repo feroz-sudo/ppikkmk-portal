@@ -523,7 +523,7 @@ export default function DashboardLayout({
                         <span className="w-1 h-1 bg-slate-200 rounded-full" />
                         <span>UPSI Official Clinical Platform</span>
                         <span className="w-1 h-1 bg-slate-200 rounded-full" />
-                        <span>Created by Ahmad Feroz</span>
+                        <span>Developed & Owned by Ahmad Feroz</span>
                     </div>
                 </footer>
             </div>
