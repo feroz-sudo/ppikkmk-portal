@@ -468,8 +468,18 @@ function AuditInspector({ id, type, userMap }: { id: string | null, type: string
                 )}
                 <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100">
                     <div className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-1 flex items-center"><Clock size={12} className="mr-1" /> Timestamp / Event Date</div>
-                    <div className="font-bold text-slate-800">{data.date || 'Unknown Date'}</div>
-                    {data.timestamp && <div className="text-xs text-slate-500 mt-1">{new Date(data.timestamp.seconds * 1000).toLocaleString()}</div>}
+                    <div className="font-bold text-slate-800">
+                        {data.date
+                            ? (typeof data.date === 'string' ? data.date : (data.date.toDate ? data.date.toDate().toLocaleDateString() : 'Unknown Date'))
+                            : 'Unknown Date'}
+                    </div>
+                    {(data.timestamp || data.createdAt) && (
+                        <div className="text-xs text-slate-500 mt-1">
+                            {(data.timestamp || data.createdAt)?.toDate
+                                ? (data.timestamp || data.createdAt).toDate().toLocaleString()
+                                : String(data.timestamp || data.createdAt)}
+                        </div>
+                    )}
                 </div>
             </div>
 
