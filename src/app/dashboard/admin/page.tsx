@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from "next/navigation";
 import {
     getSystemStats,
     getRecentActivities,
@@ -25,7 +26,8 @@ import {
 import { format } from "date-fns";
 
 export default function AdminDashboard() {
-    const { user } = useAuth();
+    const { user, userRole } = useAuth();
+    const router = useRouter();
     const [stats, setStats] = useState<any>(null);
     const [recentActivities, setRecentActivities] = useState<any[]>([]);
     const [allUsers, setAllUsers] = useState<User[]>([]);
@@ -33,7 +35,14 @@ export default function AdminDashboard() {
     const [searchQuery, setSearchQuery] = useState("");
 
     useEffect(() => {
+        if (userRole && userRole !== 'admin') {
+            router.push("/dashboard");
+        }
+    }, [userRole, router]);
+
+    useEffect(() => {
         async function fetchData() {
+            if (userRole !== 'admin') return;
             try {
                 const [s, a, u] = await Promise.all([
                     getSystemStats(),
@@ -50,7 +59,7 @@ export default function AdminDashboard() {
             }
         }
         fetchData();
-    }, []);
+    }, [userRole]);
 
     const filteredUsers = allUsers.filter(u =>
         u.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -152,8 +161,8 @@ export default function AdminDashboard() {
                                             </td>
                                             <td className="px-8 py-5">
                                                 <span className={`px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-tighter ${u.role === 'supervisor' ? 'bg-emerald-100 text-emerald-700' :
-                                                        u.role === 'admin' ? 'bg-amber-100 text-amber-700' :
-                                                            'bg-blue-100 text-blue-700'
+                                                    u.role === 'admin' ? 'bg-amber-100 text-amber-700' :
+                                                        'bg-blue-100 text-blue-700'
                                                     }`}>
                                                     {u.role}
                                                 </span>

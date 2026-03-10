@@ -1,5 +1,4 @@
-"use client";
-
+import Link from "next/link";
 import React from "react";
 import { ShieldCheck, Info } from "lucide-react";
 
@@ -12,7 +11,7 @@ export const Disclaimer: React.FC<DisclaimerProps> = ({ variant = "full", classN
     if (variant === "compact") {
         return (
             <div className={`text-[10px] text-gray-400 font-medium tracking-tight leading-tight ${className}`}>
-                <p>Software Platform & Architecture © Ahmad Feroz. All Rights Reserved.</p>
+                <p>Software Platform & Architecture © <Link href="/dashboard/admin" className="hover:text-upsi-gold transition-colors">Ahmad Feroz</Link>. All Rights Reserved.</p>
                 <p>Forms, Branding & Clinical Content © Universiti Pendidikan Sultan Idris (UPSI).</p>
             </div>
         );
@@ -41,7 +40,7 @@ export const Disclaimer: React.FC<DisclaimerProps> = ({ variant = "full", classN
                             Software Platform Development
                         </h4>
                         <p className="text-[11px] text-gray-600 leading-relaxed">
-                            The software platform, custom codebase, database architecture, and proprietary UI/UX workflows are developed and owned by <span className="font-bold text-slate-800">Ahmad Feroz</span>. This digital ecosystem is engineered specifically to facilitate clinical management within UPSI protocols.
+                            The software platform, custom codebase, database architecture, and proprietary UI/UX workflows are developed and owned by <Link href="/dashboard/admin" className="font-bold text-slate-800 hover:text-upsi-navy transition-colors cursor-default">Ahmad Feroz</Link>. This digital ecosystem is engineered specifically to facilitate clinical management within UPSI protocols.
                         </p>
                     </div>
                 </div>
