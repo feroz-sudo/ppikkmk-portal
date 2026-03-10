@@ -8,6 +8,8 @@ import {
     getSystemStats,
     getRecentActivities,
     getAllUsers,
+    updateUserRole,
+    updateUserStatus,
     User,
 } from "@/lib/firebase/db";
 import {
@@ -21,7 +23,8 @@ import {
     AlertCircle,
     ClipboardList,
     TrendingUp,
-    Settings
+    Settings,
+    ShieldAlert
 } from "lucide-react";
 import { format } from "date-fns";
 
@@ -36,6 +39,37 @@ function AdminDashboardContent() {
     const [allUsers, setAllUsers] = useState<User[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState("");
+    const [isUpdating, setIsUpdating] = useState<string | null>(null);
+
+    const handleRoleChange = async (uid: string, newRole: User['role']) => {
+        if (!confirm(`Are you sure you want to change this user's role to ${newRole.toUpperCase()}?`)) return;
+        setIsUpdating(uid);
+        try {
+            await updateUserRole(uid, newRole);
+            setAllUsers(users => users.map(u => u.uid === uid ? { ...u, role: newRole } : u));
+        } catch (error) {
+            console.error("Failed to update role:", error);
+            alert("Failed to update user role.");
+        } finally {
+            setIsUpdating(null);
+        }
+    };
+
+    const handleStatusChange = async (uid: string, newStatus: 'active' | 'archived') => {
+        const action = newStatus === 'archived' ? 'FREEZE' : 'UNFREEZE';
+        if (!confirm(`Are you sure you want to ${action} this account? Frozen accounts cannot log in but their data remains for audit.`)) return;
+
+        setIsUpdating(uid);
+        try {
+            await updateUserStatus(uid, newStatus);
+            setAllUsers(users => users.map(u => u.uid === uid ? { ...u, clinicalStatus: newStatus } : u));
+        } catch (error) {
+            console.error("Failed to update status:", error);
+            alert(`Failed to ${action.toLowerCase()} account.`);
+        } finally {
+            setIsUpdating(null);
+        }
+    };
 
     // Create a mapping of UID to User object for quick lookups
     const userMap = allUsers?.reduce((acc: any, u) => {
@@ -224,11 +258,39 @@ function AdminDashboardContent() {
                                                                     UNASSIGNED
                                                                 </span>
                                                             )}
+                                                            {u.clinicalStatus === 'archived' && (
+                                                                <span className="text-[9px] text-rose-600 font-black mt-1 uppercase tracking-tighter flex items-center">
+                                                                    <ShieldAlert size={10} className="mr-1" />
+                                                                    ACCOUNT FROZEN (AUDIT ONLY)
+                                                                </span>
+                                                            )}
                                                         </div>
                                                     </td>
-                                                    <td className="px-8 py-5 text-center">
-                                                        <button className="p-2 text-slate-300 group-hover:text-upsi-navy group-hover:translate-x-1 transition-all">
-                                                            <ChevronRight size={20} />
+                                                    <td className="px-8 py-5 text-right">
+                                                        <select
+                                                            value={u.role}
+                                                            onChange={(e) => handleRoleChange(u.uid, e.target.value as User['role'])}
+                                                            disabled={isUpdating === u.uid || u.uid === user?.uid}
+                                                            className={`text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-lg border mr-2 transition-all cursor-pointer outline-none
+                                                                ${isUpdating === u.uid ? 'opacity-50 cursor-not-allowed' : 'hover:border-upsi-navy'}
+                                                            `}
+                                                        >
+                                                            <option value="trainee">Trainee</option>
+                                                            <option value="supervisor">Supervisor</option>
+                                                            <option value="admin">Admin</option>
+                                                        </select>
+
+                                                        <button
+                                                            onClick={() => handleStatusChange(u.uid, u.clinicalStatus === 'archived' ? 'active' : 'archived')}
+                                                            disabled={isUpdating === u.uid || u.uid === user?.uid}
+                                                            className={`px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest border transition-all
+                                                                ${u.clinicalStatus === 'archived'
+                                                                    ? 'bg-rose-50 text-rose-600 border-rose-200 hover:bg-rose-100'
+                                                                    : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100 hover:text-slate-900'}
+                                                                ${isUpdating === u.uid || u.uid === user?.uid ? 'opacity-50 cursor-not-allowed' : ''}
+                                                            `}
+                                                        >
+                                                            {u.clinicalStatus === 'archived' ? 'Unfreeze' : 'Freeze'}
                                                         </button>
                                                     </td>
                                                 </tr>

@@ -476,6 +476,22 @@ export const updateTraineeSupervisor = async (traineeUid: string, supervisorUid:
     });
 };
 
+export const updateUserRole = async (uid: string, newRole: User['role']) => {
+    const docRef = doc(db, "users", uid);
+    await updateDoc(docRef, {
+        role: newRole,
+        updatedAt: new Date()
+    });
+};
+
+export const updateUserStatus = async (uid: string, newStatus: 'active' | 'archived') => {
+    const docRef = doc(db, "users", uid);
+    await updateDoc(docRef, {
+        clinicalStatus: newStatus,
+        updatedAt: new Date()
+    });
+};
+
 // Trainee Profile
 export const getTraineeProfile = async (uid: string): Promise<TraineeProfile | null> => {
     const docRef = doc(db, "trainee_profiles", uid);
