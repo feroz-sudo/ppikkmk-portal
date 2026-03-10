@@ -29,8 +29,8 @@ function AdminDashboardContent() {
     const { user, userRole } = useAuth();
     const router = useRouter();
     const searchParams = useSearchParams();
-    const activeTab = searchParams.get("tab") || "overview";
-
+    const tabParam = searchParams.get("tab");
+    const activeTab = (tabParam || "overview").toLowerCase().trim();
     const [stats, setStats] = useState<any>(null);
     const [recentActivities, setRecentActivities] = useState<any[]>([]);
     const [allUsers, setAllUsers] = useState<User[]>([]);
@@ -38,18 +38,20 @@ function AdminDashboardContent() {
     const [searchQuery, setSearchQuery] = useState("");
 
     // Create a mapping of UID to User object for quick lookups
-    const userMap = allUsers.reduce((acc: any, u) => {
-        acc[u.uid] = u;
+    const userMap = allUsers?.reduce((acc: any, u) => {
+        if (u && u.uid) {
+            acc[u.uid] = u;
+        }
         return acc;
-    }, {});
+    }, {}) || {};
 
     // Count trainees for each supervisor
-    const supervisorTraineeCounts = allUsers.reduce((acc: any, u) => {
-        if (u.role === 'trainee' && u.assignedSupervisorId) {
+    const supervisorTraineeCounts = allUsers?.reduce((acc: any, u) => {
+        if (u && u.role === 'trainee' && u.assignedSupervisorId) {
             acc[u.assignedSupervisorId] = (acc[u.assignedSupervisorId] || 0) + 1;
         }
         return acc;
-    }, {});
+    }, {}) || {};
 
     useEffect(() => {
         if (userRole && userRole !== 'admin') {
@@ -78,11 +80,11 @@ function AdminDashboardContent() {
         fetchData();
     }, [userRole]);
 
-    const filteredUsers = allUsers.filter(u =>
-        u.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        u.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        u.matricNumber?.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const filteredUsers = allUsers?.filter(u =>
+        u?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        u?.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        u?.matricNumber?.toLowerCase().includes(searchQuery.toLowerCase())
+    ) || [];
 
     if (loading) {
         return (
@@ -270,7 +272,9 @@ function AdminDashboardContent() {
                                             <div className="flex-1 min-w-0">
                                                 <div className="flex justify-between items-center mb-1">
                                                     <div className="text-[9px] font-black uppercase tracking-widest text-white/30 italic">
-                                                        {format(act.timestamp, "MMM dd • hh:mm a")}
+                                                        {act.timestamp && !isNaN(act.timestamp.getTime())
+                                                            ? format(act.timestamp, "MMM dd • hh:mm a")
+                                                            : "Unknown Date"}
                                                     </div>
                                                     <div className={`w-1.5 h-1.5 rounded-full ${act.type === 'log' ? 'bg-blue-400' : 'bg-emerald-400'} animate-pulse`} />
                                                 </div>
