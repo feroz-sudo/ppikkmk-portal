@@ -187,12 +187,12 @@ export default function RumusanPage() {
                             <tr className="bg-gray-50/50 print:bg-white border-b border-gray-100">
                                 <th className="px-8 py-6 font-black uppercase text-[10px] tracking-[0.2em] text-gray-400 border-r border-gray-100 w-24 text-center">Week No.</th>
                                 <th className="px-8 py-6 font-black uppercase text-[10px] tracking-[0.2em] text-gray-400 border-r border-gray-100 w-64">Date Range</th>
-                                <th className="px-6 py-6 font-black uppercase text-[10px] tracking-[0.2em] text-gray-400 border-r border-gray-100 text-center">KI</th>
-                                <th className="px-6 py-6 font-black uppercase text-[10px] tracking-[0.2em] text-gray-400 border-r border-gray-100 text-center">KK</th>
-                                <th className="px-6 py-6 font-black uppercase text-[10px] tracking-[0.2em] text-gray-400 border-r border-gray-100 text-center">AI</th>
-                                <th className="px-6 py-6 font-black uppercase text-[10px] tracking-[0.2em] text-upsi-navy border-r border-gray-100 text-center bg-blue-50/30">PP (Admin)</th>
-                                <th className="px-6 py-6 font-black uppercase text-[10px] tracking-[0.2em] text-gray-400 border-r border-gray-100 text-center">PE</th>
-                                <th className="px-6 py-6 font-black uppercase text-[10px] tracking-[0.2em] text-gray-400 border-r border-gray-100 text-center">PY</th>
+                                <th className="px-6 py-6 font-black uppercase text-[10px] tracking-[0.2em] text-gray-400 border-r border-gray-100 text-center">Kaunseling Individu</th>
+                                <th className="px-6 py-6 font-black uppercase text-[10px] tracking-[0.2em] text-gray-400 border-r border-gray-100 text-center">Kaunseling Kelompok</th>
+                                <th className="px-6 py-6 font-black uppercase text-[10px] tracking-[0.2em] text-gray-400 border-r border-gray-100 text-center">Aktiviti/ Intervensi</th>
+                                <th className="px-6 py-6 font-black uppercase text-[10px] tracking-[0.2em] text-upsi-navy border-r border-gray-100 text-center bg-blue-50/30">Pentadbiran/ Pengurusan</th>
+                                <th className="px-6 py-6 font-black uppercase text-[10px] tracking-[0.2em] text-gray-400 border-r border-gray-100 text-center">Perkembangan Profesional</th>
+                                <th className="px-6 py-6 font-black uppercase text-[10px] tracking-[0.2em] text-gray-400 border-r border-gray-100 text-center">Penyeliaan</th>
                                 <th className="px-8 py-6 font-black uppercase text-[10px] tracking-[0.2em] text-upsi-navy text-center bg-gray-50/80">TOTAL</th>
                             </tr>
                         </thead>
@@ -244,7 +244,7 @@ export default function RumusanPage() {
                                     (grandTotals["Psychoeducation/Community"] || 0) +
                                     (grandTotals["Testing & Assessment"] || 0)
                                 }</td>
-                                <td className="px-6 py-6 text-center text-lg bg-blue-900/30">{grandTotals["Management & Admin"] || 0}</td>
+                                <td className="px-6 py-6 text-center text-lg bg-blue-900/30 font-black text-upsi-gold">{grandTotals["Management & Admin"] || 0}</td>
                                 <td className="px-6 py-6 text-center text-lg">{grandTotals["Professional Development"] || 0}</td>
                                 <td className="px-6 py-6 text-center text-lg">{grandTotals["Supervision"] || 0}</td>
                                 <td className="px-8 py-6 text-center text-xl font-black bg-blue-900/50">{grandTotals.total || 0}</td>

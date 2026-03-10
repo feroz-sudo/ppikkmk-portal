@@ -24,12 +24,12 @@ export const SummarySection = ({ logs }: SummarySectionProps) => {
     };
 
     const categories: { label: string, keys: LogCategory[] | string[] }[] = [
-        { label: "Kaunseling Individu (KI)", keys: ["Individual Counselling"] },
-        { label: "Kaunseling Kelompok (KK)", keys: ["Group Counselling"] },
-        { label: "Aktiviti / Intervensi (AI)", keys: ["Crisis Intervention", "PFA/MHPSS", "Psychoeducation/Community", "Testing & Assessment"] },
-        { label: "Management / Admin (PP)", keys: ["Management & Admin", "Management/Admin"] },
-        { label: "Perkembangan Profesional (PE)", keys: ["Professional Development"] },
-        { label: "Penyeliaan (PY)", keys: ["Supervision"] }
+        { label: "Kaunseling Individu", keys: ["Individual Counselling"] },
+        { label: "Kaunseling Kelompok", keys: ["Group Counselling"] },
+        { label: "Aktiviti / Intervensi", keys: ["Crisis Intervention", "PFA/MHPSS", "Psychoeducation/Community", "Testing & Assessment"] },
+        { label: "Pentadbiran/Pengurusan", keys: ["Management & Admin", "Management/Admin"] },
+        { label: "Perkembangan Profesional", keys: ["Professional Development"] },
+        { label: "Penyeliaan", keys: ["Supervision"] }
     ];
 
     const getHours = (week: number, catKeys: LogCategory[]) => {
