@@ -15,7 +15,7 @@ export interface UserProfile {
     uid: string;
     name: string;
     email: string;
-    role: "trainee" | "supervisor";
+    role: "trainee" | "supervisor" | "admin";
     programType: "practicum" | "internship" | null;
     matricNumber: string;
     assignedSupervisorId?: string;
@@ -23,7 +23,7 @@ export interface UserProfile {
 
 interface AuthContextType {
     user: User | null;
-    userRole: "trainee" | "supervisor" | null;
+    userRole: "trainee" | "supervisor" | "admin" | null;
     userProfile: UserProfile | null;
     loading: boolean;
     signInWithGoogle: (program: "practicum" | "internship" | "supervisor") => Promise<void>;
@@ -43,7 +43,7 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [user, setUser] = useState<User | null>(null);
-    const [userRole, setUserRole] = useState<"trainee" | "supervisor" | null>(null);
+    const [userRole, setUserRole] = useState<"trainee" | "supervisor" | "admin" | null>(null);
     const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
     const [loading, setLoading] = useState(true);
 
@@ -90,8 +90,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             }
 
             const currentUser = result.user;
-            const role: "trainee" | "supervisor" = program === "supervisor" ? "supervisor" : "trainee";
-            const programType: "practicum" | "internship" | null = program === "supervisor" ? null : program;
+
+            // Define admin emails here or in env
+            const adminEmails = ["ferozsamad@gmail.com", "ahmadferoz@upsi.edu.my"];
+            const isAdmin = adminEmails.includes(currentUser.email || "");
+
+            const role: "trainee" | "supervisor" | "admin" = isAdmin ? "admin" : (program === "supervisor" ? "supervisor" : "trainee");
+            const programType: "practicum" | "internship" | null = (isAdmin || program === "supervisor") ? null : program;
 
             const userDocRef = doc(db, "users", currentUser.uid);
             const userDoc = await getDoc(userDocRef);
