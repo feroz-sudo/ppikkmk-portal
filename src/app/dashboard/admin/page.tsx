@@ -3,6 +3,7 @@
 import { useEffect, useState, Suspense } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 import {
     getSystemStats,
     getRecentActivities,
@@ -36,6 +37,20 @@ function AdminDashboardContent() {
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState("");
 
+    // Create a mapping of UID to User object for quick lookups
+    const userMap = allUsers.reduce((acc: any, u) => {
+        acc[u.uid] = u;
+        return acc;
+    }, {});
+
+    // Count trainees for each supervisor
+    const supervisorTraineeCounts = allUsers.reduce((acc: any, u) => {
+        if (u.role === 'trainee' && u.assignedSupervisorId) {
+            acc[u.assignedSupervisorId] = (acc[u.assignedSupervisorId] || 0) + 1;
+        }
+        return acc;
+    }, {});
+
     useEffect(() => {
         if (userRole && userRole !== 'admin') {
             router.push("/dashboard");
@@ -48,7 +63,7 @@ function AdminDashboardContent() {
             try {
                 const [s, a, u] = await Promise.all([
                     getSystemStats(),
-                    getRecentActivities(30),
+                    getRecentActivities(50),
                     getAllUsers()
                 ]);
                 setStats(s);
@@ -155,8 +170,8 @@ function AdminDashboardContent() {
                                     <thead className="bg-slate-50/50">
                                         <tr>
                                             <th className="px-8 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400">User Information</th>
-                                            <th className="px-8 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400">Role</th>
-                                            <th className="px-8 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400">Specialization</th>
+                                            <th className="px-8 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400">Role & Governance</th>
+                                            <th className="px-8 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400">Assignment / Specialized</th>
                                             <th className="px-8 py-4 text-center text-[10px] font-black uppercase tracking-widest text-slate-400">Action</th>
                                         </tr>
                                     </thead>
@@ -173,18 +188,41 @@ function AdminDashboardContent() {
                                                     <td className="px-8 py-5">
                                                         <div className="font-bold text-slate-800 text-sm">{u.name}</div>
                                                         <div className="text-xs text-slate-400">{u.email}</div>
-                                                        {u.matricNumber && <div className="text-[9px] font-black text-upsi-navy mt-1 uppercase tracking-tighter">{u.matricNumber}</div>}
+                                                        {u.matricNumber && <div className="text-[9px] font-black text-upsi-navy mt-1 uppercase tracking-tighter shrink-0">{u.matricNumber}</div>}
                                                     </td>
                                                     <td className="px-8 py-5">
-                                                        <span className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-tighter ${u.role === 'supervisor' ? 'bg-emerald-100 text-emerald-700' :
-                                                            u.role === 'admin' ? 'bg-amber-100 text-amber-700' :
-                                                                'bg-blue-100 text-blue-700'
-                                                            }`}>
-                                                            {u.role}
-                                                        </span>
+                                                        <div className="flex flex-col space-y-1">
+                                                            <span className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-tighter w-fit ${u.role === 'supervisor' ? 'bg-emerald-100 text-emerald-700' :
+                                                                u.role === 'admin' ? 'bg-amber-100 text-amber-700' :
+                                                                    'bg-blue-100 text-blue-700'
+                                                                }`}>
+                                                                {u.role}
+                                                            </span>
+                                                            {u.role === 'supervisor' && (
+                                                                <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest ml-1">
+                                                                    {supervisorTraineeCounts[u.uid] || 0} Managed Trainees
+                                                                </span>
+                                                            )}
+                                                        </div>
                                                     </td>
-                                                    <td className="px-8 py-5 text-[10px] text-slate-500 font-bold uppercase tracking-tight">
-                                                        {u.programType || 'GENERALIST'}
+                                                    <td className="px-8 py-5">
+                                                        <div className="flex flex-col">
+                                                            <span className="text-[10px] text-slate-600 font-bold uppercase tracking-tight">
+                                                                {u.programType || 'GENERALIST'}
+                                                            </span>
+                                                            {u.role === 'trainee' && u.assignedSupervisorId && (
+                                                                <span className="text-[9px] text-emerald-600 font-black mt-1 uppercase tracking-tighter flex items-center">
+                                                                    <ShieldCheck size={10} className="mr-1" />
+                                                                    SUPERVISOR: {userMap[u.assignedSupervisorId]?.name || 'ID: ' + u.assignedSupervisorId}
+                                                                </span>
+                                                            )}
+                                                            {u.role === 'trainee' && !u.assignedSupervisorId && (
+                                                                <span className="text-[9px] text-rose-400 font-black mt-1 uppercase tracking-tighter flex items-center italic">
+                                                                    <AlertCircle size={10} className="mr-1" />
+                                                                    UNASSIGNED
+                                                                </span>
+                                                            )}
+                                                        </div>
                                                     </td>
                                                     <td className="px-8 py-5 text-center">
                                                         <button className="p-2 text-slate-300 group-hover:text-upsi-navy group-hover:translate-x-1 transition-all">
@@ -212,35 +250,49 @@ function AdminDashboardContent() {
                                 System Activity Pulse
                             </h2>
 
-                            <div className={`grid grid-cols-1 ${activeTab === "overview" ? "gap-6" : "md:grid-cols-2 lg:grid-cols-3 gap-8"} relative z-10`}>
-                                {recentActivities.map((act, i) => (
-                                    <div key={act.id} className="flex gap-5 group items-start bg-white/5 p-5 rounded-3xl border border-white/5 hover:border-white/10 transition-all hover:bg-white/[0.08]">
-                                        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 shadow-lg ${act.type === 'log' ? 'bg-blue-500/20 text-blue-400' : 'bg-emerald-500/20 text-emerald-400'
-                                            }`}>
-                                            {act.type === 'log' ? <ClipboardList size={22} /> : <Activity size={22} />}
-                                        </div>
-                                        <div className="flex-1 min-w-0">
-                                            <div className="flex justify-between items-center mb-1">
-                                                <div className="text-[9px] font-black uppercase tracking-widest text-white/30 italic">
-                                                    {format(act.timestamp, "MMM dd • hh:mm a")}
+                            <div className={`grid grid-cols-1 ${activeTab === "overview" ? "gap-6 shadow-2xl" : "md:grid-cols-2 lg:grid-cols-3 gap-8"} relative z-10`}>
+                                {recentActivities.map((act, i) => {
+                                    const trainee = userMap[act.data.traineeId];
+                                    const activityPath = act.type === 'log'
+                                        ? `/dashboard/admin?tab=logs&id=${act.id}`
+                                        : `/dashboard/admin?tab=sessions&id=${act.id}`;
+
+                                    return (
+                                        <Link
+                                            key={act.id}
+                                            href={activityPath}
+                                            className="flex gap-5 group items-start bg-white/5 p-5 rounded-3xl border border-white/5 hover:border-upsi-gold/30 transition-all hover:bg-white/[0.08] cursor-pointer"
+                                        >
+                                            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 shadow-lg ${act.type === 'log' ? 'bg-blue-500/20 text-blue-400' : 'bg-emerald-500/20 text-emerald-400'
+                                                }`}>
+                                                {act.type === 'log' ? <ClipboardList size={22} /> : <Activity size={22} />}
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <div className="flex justify-between items-center mb-1">
+                                                    <div className="text-[9px] font-black uppercase tracking-widest text-white/30 italic">
+                                                        {format(act.timestamp, "MMM dd • hh:mm a")}
+                                                    </div>
+                                                    <div className={`w-1.5 h-1.5 rounded-full ${act.type === 'log' ? 'bg-blue-400' : 'bg-emerald-400'} animate-pulse`} />
                                                 </div>
-                                                <div className="w-1.5 h-1.5 rounded-full bg-upsi-gold animate-pulse shadow-[0_0_8px_rgba(249,179,20,0.8)]" />
+                                                <div className="text-sm font-black text-white/95 leading-tight group-hover:text-upsi-gold transition-colors text-ellipsis overflow-hidden whitespace-nowrap">
+                                                    {act.type === 'log' ? 'Logbook Submission' : 'Form Authentication'}
+                                                </div>
+                                                <div className="text-[10px] text-white/70 mt-1 font-bold uppercase tracking-tight">
+                                                    BY: {trainee?.name || 'Unknown Trainee'}
+                                                </div>
+                                                <div className="text-[10px] text-white/40 mt-2 font-medium line-clamp-2 leading-relaxed italic">
+                                                    {act.type === 'log' ? act.data.description : `Clinical intake for ${act.data.formData?.demographics?.name || 'Authorized Client'}`}
+                                                </div>
+                                                <div className="mt-4 flex items-center text-[8px] font-black uppercase text-upsi-gold tracking-[0.2em] opacity-30 group-hover:opacity-100 transition-opacity">
+                                                    Direct Audit Inspection <ChevronRight size={10} className="ml-1" />
+                                                </div>
                                             </div>
-                                            <div className="text-sm font-black text-white/95 leading-tight">
-                                                {act.type === 'log' ? 'Logbook Submission' : 'Form Authentication'}
-                                            </div>
-                                            <div className="text-[10px] text-white/50 mt-2 font-medium line-clamp-2 leading-relaxed">
-                                                {act.type === 'log' ? act.data.description : `Clinical intake for ${act.data.formData?.demographics?.name || 'Authorized Client'}`}
-                                            </div>
-                                            <div className="mt-3 flex items-center text-[8px] font-black uppercase text-upsi-gold tracking-[0.2em] opacity-0 group-hover:opacity-100 transition-opacity">
-                                                Inspect Record <ChevronRight size={10} className="ml-1" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
+                                        </Link>
+                                    );
+                                })}
                                 {recentActivities.length === 0 && (
-                                    <div className="text-center py-20 text-white/20 font-bold uppercase tracking-widest w-full">
-                                        No recent system activity recorded
+                                    <div className="text-center py-20 text-white/20 font-bold uppercase tracking-widest w-full border border-dashed border-white/10 rounded-3xl">
+                                        No recent clinical activity detected
                                     </div>
                                 )}
                             </div>
