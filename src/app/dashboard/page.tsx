@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from "next/navigation";
 import { getTraineeLogs, getTraineeSessions, Log, Session } from "@/lib/firebase/db";
 import { ProgressBar, GroupedProgress } from "@/components/dashboard/ProgressBar";
 import { LogbookForm } from "@/components/dashboard/LogbookForm";
@@ -25,15 +26,26 @@ const TARGETS = {
 };
 
 export default function DashboardPage() {
-    const { user } = useAuth();
+    const { user, userRole } = useAuth();
+    const router = useRouter();
     const [logs, setLogs] = useState<Log[]>([]);
     const [sessions, setSessions] = useState<Session[]>([]);
     const [supervisions, setSupervisions] = useState<Supervision[]>([]);
     const [loading, setLoading] = useState(true);
     const [showBooking, setShowBooking] = useState(false);
 
+    useEffect(() => {
+        if (!userRole) return;
+
+        if (userRole === 'admin') {
+            router.replace("/dashboard/admin");
+        } else if (userRole === 'supervisor') {
+            router.replace("/dashboard/supervisor");
+        }
+    }, [userRole, router]);
+
     const fetchDashboardData = useCallback(async () => {
-        if (user) {
+        if (user && userRole === 'trainee') {
             setLoading(true);
             try {
                 const [fetchedLogs, fetchedSessions, fetchedSupervisions] = await Promise.all([
@@ -49,21 +61,21 @@ export default function DashboardPage() {
             } finally {
                 setLoading(false);
             }
+        } else if (userRole && userRole !== 'trainee') {
+            setLoading(false);
         }
-    }, [user]);
+    }, [user, userRole]);
 
     useEffect(() => {
         fetchDashboardData();
     }, [fetchDashboardData]);
 
-    // Calculations
     const calcHours = (category: string) => {
         return logs
             .filter((log: Log) => log.category === category)
             .reduce((sum: number, log: Log) => sum + log.hours, 0);
     };
 
-    // Session Counts (from Clinical Forms)
     const indivSessionsCount = sessions.filter((s: Session) => s.formType === 'Form2').length;
     const groupSessionsCount = sessions.filter((s: Session) => s.formType === 'Form11').length;
 
@@ -82,6 +94,17 @@ export default function DashboardPage() {
     const ftfPercentage = Math.min(100, Math.round((currentFTF / TARGETS.FTF_TOTAL) * 100));
     const nftfPercentage = Math.min(100, Math.round((currentNFTF / TARGETS.NFTF_TOTAL) * 100));
 
+    if (loading || userRole !== 'trainee') {
+        return (
+            <div className="flex items-center justify-center min-vh-60">
+                <div className="text-center space-y-4">
+                    <div className="w-12 h-12 border-4 border-upsi-navy border-t-transparent rounded-full animate-spin mx-auto" />
+                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Personalizing Experience...</p>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="space-y-8 max-w-7xl mx-auto pb-12">
             {showBooking && user && (
@@ -92,7 +115,6 @@ export default function DashboardPage() {
                 />
             )}
 
-            {/* Header / Intro Area */}
             <div className="relative overflow-hidden bg-upsi-navy rounded-[2rem] p-8 text-white shadow-2xl glass-dark">
                 <div className="absolute top-0 right-0 p-8 opacity-10">
                     <LayoutDashboard size={120} />
@@ -124,7 +146,6 @@ export default function DashboardPage() {
                     </div>
                 </div>
 
-                {/* Main Progress Bar (Large) */}
                 <div className="mt-8 relative">
                     <div className="flex flex-col sm:flex-row justify-between items-center sm:items-end mb-2 gap-2">
                         <span className="text-[10px] md:text-sm font-bold uppercase tracking-widest text-white/70">Master Requirement (252h)</span>
@@ -139,12 +160,9 @@ export default function DashboardPage() {
                 </div>
             </div>
 
-            {/* SUPERVISION HUB */}
             <SupervisionTracker supervisions={supervisions} />
 
-            {/* QUICK STATS CARDS */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {/* Individual Counselling Count */}
                 <div className="glass shadow-premium rounded-3xl p-6 hover-lift border-b-4 border-emerald-500/50">
                     <div className="flex items-center space-x-3 text-emerald-600 mb-2">
                         <UserPlus size={18} />
@@ -153,7 +171,6 @@ export default function DashboardPage() {
                     <div className="text-3xl font-black text-slate-800">{indivSessionsCount} <span className="text-sm text-slate-400">/ 60</span></div>
                 </div>
 
-                {/* Group Counselling Count */}
                 <div className="glass shadow-premium rounded-3xl p-6 hover-lift border-b-4 border-cyan-500/50">
                     <div className="flex items-center space-x-3 text-cyan-600 mb-2">
                         <Users size={18} />
@@ -162,7 +179,6 @@ export default function DashboardPage() {
                     <div className="text-3xl font-black text-slate-800">{groupSessionsCount} <span className="text-sm text-slate-400">/ 36</span></div>
                 </div>
 
-                {/* FTF Percentage */}
                 <div className="glass shadow-premium rounded-3xl p-6 hover-lift border-b-4 border-blue-500/50">
                     <div className="flex items-center space-x-3 text-blue-600 mb-2">
                         <Target size={18} />
@@ -171,7 +187,6 @@ export default function DashboardPage() {
                     <div className="text-3xl font-black text-slate-800">{ftfPercentage}% <span className="text-sm text-slate-400">/ 96h</span></div>
                 </div>
 
-                {/* NFTF Percentage */}
                 <div className="glass shadow-premium rounded-3xl p-6 hover-lift border-b-4 border-purple-500/50">
                     <div className="flex items-center space-x-3 text-purple-600 mb-2">
                         <Clock size={18} />
@@ -182,10 +197,7 @@ export default function DashboardPage() {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-                {/* Left Column: Progress Breakdowns */}
                 <div className="lg:col-span-2 space-y-6">
-
                     <GroupedProgress
                         title="Face-to-Face (FTF)"
                         totalCurrent={currentFTF}
@@ -229,14 +241,10 @@ export default function DashboardPage() {
                             colorClass="bg-[#e83e8c]"
                         />
                     </GroupedProgress>
-
                 </div>
 
-                {/* Right Column: Log Input */}
                 <div className="lg:col-span-1 space-y-6">
                     <LogbookForm onLogAdded={fetchDashboardData} />
-
-                    {/* Recent Logs Quick View */}
                     <div className="glass p-6 rounded-[2rem] shadow-premium border border-slate-200">
                         <h3 className="text-lg font-bold text-gray-800 mb-4">Recent Entries</h3>
                         {loading ? (
@@ -260,9 +268,7 @@ export default function DashboardPage() {
                         )}
                     </div>
                 </div>
-
             </div>
-
             <Disclaimer variant="full" className="mt-12" />
         </div>
     );

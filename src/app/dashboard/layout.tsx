@@ -68,7 +68,31 @@ function SidebarNavContent({
 
     return (
         <nav className="flex-1 px-4 space-y-2 mt-4 overflow-y-auto pb-4 custom-scrollbar text-[11px]">
-            {userRole === "supervisor" ? (
+            {userRole === "admin" ? (
+                <>
+                    {/* ADMIN NAVIGATION */}
+                    <Link href="/dashboard/admin" onClick={handleLinkClick} className={getLinkClass("/dashboard/admin")}>
+                        <LayoutDashboard size={18} />
+                        <span className="font-bold uppercase tracking-widest text-[10px]">System Overview</span>
+                    </Link>
+                    <Link href="/dashboard/admin?tab=users" onClick={handleLinkClick} className={getLinkClass("/dashboard/admin?tab=users")}>
+                        <Users size={18} />
+                        <span className="font-bold uppercase tracking-widest text-[10px]">User Management</span>
+                    </Link>
+                    <Link href="/dashboard/admin?tab=activity" onClick={handleLinkClick} className={getLinkClass("/dashboard/admin?tab=activity")}>
+                        <Activity size={18} />
+                        <span className="font-bold uppercase tracking-widest text-[10px]">Activity Pulse</span>
+                    </Link>
+
+                    <div className="pt-6 space-y-2">
+                        <h3 className="px-3 py-2 text-[9px] font-black text-white/30 uppercase tracking-[0.3em]">Governance</h3>
+                        <Link href="/dashboard/settings" onClick={handleLinkClick} className={pathname === "/dashboard/settings" ? "bg-white/10 text-white flex items-center space-x-3 px-3 py-2.5 rounded-lg transition-all" : "flex items-center space-x-3 px-3 py-2.5 rounded-lg transition-all text-white/60 hover:text-white hover:bg-white/5"}>
+                            <Settings size={18} />
+                            <span className="font-bold uppercase tracking-widest text-[10px]">System Settings</span>
+                        </Link>
+                    </div>
+                </>
+            ) : userRole === "supervisor" ? (
                 <>
                     {/* SUPERVISOR NAV */}
                     <Link href="/dashboard/supervisor" onClick={handleLinkClick} className={getLinkClass("/dashboard/supervisor")}>
