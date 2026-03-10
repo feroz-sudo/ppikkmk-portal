@@ -1,15 +1,17 @@
 "use client";
 
-import { useState } from "react";
-import { LogCategory, addLogEntry } from "@/lib/firebase/db";
+import { useState, useEffect } from "react";
+import { LogCategory, addLogEntry, updateLogEntry, Log } from "@/lib/firebase/db";
 import { useAuth } from "@/contexts/AuthContext";
-import { Calendar, Clock, BookOpen, Send, ChevronDown } from "lucide-react";
+import { Calendar, Clock, BookOpen, Send, ChevronDown, X } from "lucide-react";
 
 interface LogbookFormProps {
     onLogAdded: () => void;
+    initialData?: Log;
+    onClose?: () => void;
 }
 
-export const LogbookForm = ({ onLogAdded }: LogbookFormProps) => {
+export const LogbookForm = ({ onLogAdded, initialData, onClose }: LogbookFormProps) => {
     const { user } = useAuth();
     const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
     const [category, setCategory] = useState<LogCategory>("Individual Counselling");
@@ -17,43 +19,67 @@ export const LogbookForm = ({ onLogAdded }: LogbookFormProps) => {
     const [description, setDescription] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    useEffect(() => {
+        if (initialData) {
+            setDate(initialData.date);
+            setCategory(initialData.category);
+            setHours(initialData.hours.toString());
+            setDescription(initialData.description);
+        }
+    }, [initialData]);
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!user || !hours) return;
 
         setIsSubmitting(true);
         try {
-            await addLogEntry({
+            const logData = {
                 traineeId: user.uid,
                 date,
                 category,
                 hours: parseFloat(hours),
                 description
-            });
+            };
+
+            if (initialData?.id) {
+                await updateLogEntry(initialData.id, logData);
+            } else {
+                await addLogEntry(logData);
+            }
+
             setDescription("");
             setHours("");
             onLogAdded();
+            if (onClose) onClose();
         } catch (error) {
-            console.error("Error adding log:", error);
-            alert("Failed to add log entry.");
+            console.error("Error saving log:", error);
+            alert("Failed to save log entry.");
         } finally {
             setIsSubmitting(false);
         }
     };
 
-    return (
-        <div className="glass rounded-[2rem] shadow-premium overflow-hidden border border-white">
+    const formContent = (
+        <div className={`glass rounded-[2rem] shadow-premium overflow-hidden border border-white ${onClose ? 'w-full max-w-lg mx-auto animate-in fade-in zoom-in duration-300' : ''}`}>
             <div className="bg-upsi-navy px-8 py-6 relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-600/20 to-transparent pointer-events-none" />
-                <h3 className="text-lg md:text-xl font-black text-white flex items-center space-x-3 relative z-10">
-                    <div className="p-2 bg-white/10 rounded-xl border border-white/20 shrink-0">
-                        <BookOpen size={20} className="text-upsi-gold" />
-                    </div>
-                    <div className="flex flex-col min-w-0">
-                        <span className="truncate">Daily Logbook Entry</span>
-                        <span className="text-[9px] md:text-[10px] text-white/50 uppercase tracking-[0.2em] font-bold mt-0.5 truncate">Clinical Attendance Log</span>
-                    </div>
-                </h3>
+                <div className="flex justify-between items-center relative z-10">
+                    <h3 className="text-lg md:text-xl font-black text-white flex items-center space-x-3">
+                        <div className="p-2 bg-white/10 rounded-xl border border-white/20 shrink-0">
+                            <BookOpen size={20} className="text-upsi-gold" />
+                        </div>
+                        <div className="flex flex-col min-w-0">
+                            <span className="truncate">{initialData ? 'Edit Clinical Log' : 'Daily Logbook Entry'}</span>
+                            <span className="text-[9px] md:text-[10px] text-white/50 uppercase tracking-[0.2em] font-bold mt-0.5 truncate">Clinical Attendance Log</span>
+                        </div>
+                    </h3>
+                    {onClose && (
+                        <button onClick={onClose} className="p-2 hover:bg-white/10 rounded-full transition-colors text-white/50 hover:text-white">
+                            <X size={20} />
+                        </button>
+                    )}
+                </div>
             </div>
 
             <form onSubmit={handleSubmit} className="p-8 space-y-6">
@@ -138,7 +164,7 @@ export const LogbookForm = ({ onLogAdded }: LogbookFormProps) => {
                         </div>
                     ) : (
                         <>
-                            <span className="uppercase tracking-widest text-xs">Validating Entry</span>
+                            <span className="uppercase tracking-widest text-xs">{initialData ? 'Update Clinical Entry' : 'Validating Entry'}</span>
                             <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                         </>
                     )}
@@ -146,4 +172,10 @@ export const LogbookForm = ({ onLogAdded }: LogbookFormProps) => {
             </form>
         </div>
     );
+
+    return onClose ? (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm overflow-y-auto">
+            {formContent}
+        </div>
+    ) : formContent;
 };

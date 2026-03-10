@@ -12,9 +12,12 @@ import {
     Filter,
     ArrowUpDown,
     CheckSquare,
-    MoreVertical
+    MoreVertical,
+    Plus,
+    Edit2
 } from "lucide-react";
 import { Disclaimer } from "@/components/Disclaimer";
+import { LogbookForm } from "@/components/dashboard/LogbookForm";
 
 // Helper to group logs by week
 const getWeekRange = (dateStr: string) => {
@@ -37,6 +40,8 @@ export default function LogbookPage() {
     const [logs, setLogs] = useState<Log[]>([]);
     const [loading, setLoading] = useState(true);
     const [selectedWeek, setSelectedWeek] = useState<string>("All");
+    const [isFormOpen, setIsFormOpen] = useState(false);
+    const [selectedLog, setSelectedLog] = useState<Log | undefined>(undefined);
 
     const fetchLogs = useCallback(async () => {
         if (user) {
@@ -81,6 +86,16 @@ export default function LogbookPage() {
                     <p className="text-slate-500 font-medium mt-1">Official Clinical Attendance Record</p>
                 </div>
                 <div className="flex items-center space-x-3">
+                    <button
+                        onClick={() => {
+                            setSelectedLog(undefined);
+                            setIsFormOpen(true);
+                        }}
+                        className="flex items-center space-x-2 bg-upsi-navy text-white px-5 py-2.5 rounded-xl font-bold hover:bg-blue-900 transition-all shadow-lg shadow-upsi-navy/20 hover-lift"
+                    >
+                        <Plus size={18} />
+                        <span>Add New Entry</span>
+                    </button>
                     <button
                         onClick={() => window.print()}
                         className="flex items-center space-x-2 bg-white border border-slate-200 px-5 py-2.5 rounded-xl font-bold text-slate-700 hover:bg-slate-50 transition-all shadow-sm hover-lift"
@@ -188,13 +203,21 @@ export default function LogbookPage() {
                                         <td className="px-6 py-5 text-center">
                                             <div className="flex items-center justify-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                                 <button
+                                                    onClick={() => {
+                                                        setSelectedLog(log);
+                                                        setIsFormOpen(true);
+                                                    }}
+                                                    className="p-2 text-slate-400 hover:text-upsi-navy hover:bg-blue-50 rounded-lg transition-all"
+                                                    title="Edit Entry"
+                                                >
+                                                    <Edit2 size={18} />
+                                                </button>
+                                                <button
                                                     onClick={() => handleDelete(log.id!)}
                                                     className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
+                                                    title="Delete Entry"
                                                 >
                                                     <Trash2 size={18} />
-                                                </button>
-                                                <button className="p-2 text-slate-400 hover:text-upsi-navy hover:bg-blue-50 rounded-lg transition-all">
-                                                    <MoreVertical size={18} />
                                                 </button>
                                             </div>
                                         </td>
@@ -207,6 +230,15 @@ export default function LogbookPage() {
             </div>
 
             <Disclaimer variant="full" className="mt-8" />
+
+            {/* Logbook Form Modal */}
+            {isFormOpen && (
+                <LogbookForm
+                    onLogAdded={fetchLogs}
+                    initialData={selectedLog}
+                    onClose={() => setIsFormOpen(false)}
+                />
+            )}
 
             {/* Print Styles for Lampiran A */}
             <style jsx global>{`

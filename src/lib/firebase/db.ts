@@ -225,6 +225,14 @@ export const deleteLogEntry = async (logId: string) => {
     await deleteDoc(doc(db, "logs", logId));
 };
 
+export const updateLogEntry = async (logId: string, log: Partial<Log>) => {
+    const docRef = doc(db, "logs", logId);
+    await updateDoc(docRef, {
+        ...log,
+        updatedAt: new Date()
+    });
+};
+
 // Clients
 export const addClient = async (client: Omit<Client, "createdAt">) => {
     return await addDoc(clientsRef, {
