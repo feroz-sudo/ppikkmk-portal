@@ -13,7 +13,8 @@ import {
     orderBy,
     serverTimestamp,
     setDoc,
-    onSnapshot
+    onSnapshot,
+    limit
 } from "firebase/firestore";
 
 export {
@@ -31,7 +32,8 @@ export {
     orderBy,
     serverTimestamp,
     setDoc,
-    onSnapshot
+    onSnapshot,
+    limit
 };
 
 // --- Types ---
@@ -39,7 +41,7 @@ export interface User {
     uid: string;
     name: string;
     email: string;
-    role: 'trainee' | 'supervisor';
+    role: 'trainee' | 'supervisor' | 'admin';
     programType: 'practicum' | 'internship' | null;
     matricNumber?: string;
     assignedSupervisorId?: string;
@@ -523,3 +525,58 @@ export const saveWeeklyReflection = async (reflection: Omit<WeeklyReflection, "i
         await addDoc(reflectionsRef, data);
     }
 };
+
+// --- Admin Helpers ---
+
+export async function getAllUsers() {
+    const q = query(collection(db, "users"), orderBy("name", "asc"));
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map(doc => ({ uid: doc.id, ...doc.data() } as unknown as User));
+}
+
+export async function getSystemStats() {
+    const [usersSnap, logsSnap, clientsSnap, sessionsSnap] = await Promise.all([
+        getDocs(collection(db, "users")),
+        getDocs(collection(db, "logs")),
+        getDocs(collection(db, "clients")),
+        getDocs(collection(db, "sessions"))
+    ]);
+
+    const logs = logsSnap.docs.map(doc => doc.data() as Log);
+    const totalHours = logs.reduce((sum, log) => sum + (log.hours || 0), 0);
+
+    return {
+        totalTrainees: usersSnap.docs.filter(doc => (doc.data() as User).role === 'trainee').length,
+        totalSupervisors: usersSnap.docs.filter(doc => (doc.data() as User).role === 'supervisor').length,
+        totalHours: Math.round(totalHours),
+        totalActivities: logsSnap.size + sessionsSnap.size,
+        pendingVerifications: sessionsSnap.docs.filter(doc => (doc.data() as Session).status === 'pending').length
+    };
+}
+
+export async function getRecentActivities(limitCount = 10) {
+    const logsRef = collection(db, "logs");
+    const sessionsRef = collection(db, "sessions");
+
+    const [logsSnap, sessionsSnap] = await Promise.all([
+        getDocs(query(logsRef, orderBy("date", "desc"), limit(limitCount))),
+        getDocs(query(sessionsRef, orderBy("createdAt", "desc"), limit(limitCount)))
+    ]);
+
+    const activities = [
+        ...logsSnap.docs.map(doc => ({
+            id: doc.id,
+            type: 'log' as const,
+            data: doc.data() as Log,
+            timestamp: doc.data().date instanceof Timestamp ? doc.data().date.toDate() : new Date(doc.data().date)
+        })),
+        ...sessionsSnap.docs.map(doc => ({
+            id: doc.id,
+            type: 'session' as const,
+            data: doc.data() as Session,
+            timestamp: doc.data().createdAt instanceof Timestamp ? doc.data().createdAt.toDate() : new Date(doc.data().createdAt || 0)
+        }))
+    ];
+
+    return activities.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime()).slice(0, limitCount);
+}

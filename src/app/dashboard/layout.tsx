@@ -31,7 +31,9 @@ import {
     Calculator,
     CheckCircle2,
     History as HistoryIcon,
+    ShieldCheck,
     UserCheck,
+    Activity,
     Inbox
 } from "lucide-react";
 import { Disclaimer } from "@/components/Disclaimer";
@@ -164,6 +166,26 @@ function SidebarNavContent({
                                 )}
                             </div>
                         ))}
+                    </div>
+                </>
+            ) : userRole === "admin" ? (
+                <>
+                    {/* ADMIN NAV */}
+                    <Link href="/dashboard/admin" onClick={handleLinkClick} className={getLinkClass("/dashboard/admin")}>
+                        <ShieldCheck size={20} className="text-amber-400" />
+                        <span className="font-black uppercase tracking-widest text-[11px]">Admin Center</span>
+                    </Link>
+
+                    <div className="pt-6 space-y-4">
+                        <h3 className="px-3 text-[9px] font-black text-white/30 uppercase tracking-[0.3em]">System Overview</h3>
+                        <Link href="/dashboard/admin?tab=users" onClick={handleLinkClick} className={getLinkClass("/dashboard/admin?tab=users")}>
+                            <Users size={18} />
+                            <span>User Management</span>
+                        </Link>
+                        <Link href="/dashboard/admin?tab=activity" onClick={handleLinkClick} className={getLinkClass("/dashboard/admin?tab=activity")}>
+                            <Activity size={18} />
+                            <span>System Activity</span>
+                        </Link>
                     </div>
                 </>
             ) : (
