@@ -12,6 +12,8 @@ import {
     updateUserStatus,
     User,
 } from "@/lib/firebase/db";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase/config";
 import {
     Users,
     Clock,
@@ -367,14 +369,126 @@ function AdminDashboardContent() {
                         </div>
                     </div>
                 )}
+
+                {(activeTab === "logs" || activeTab === "sessions") && (
+                    <div className="bg-white rounded-[2.5rem] shadow-premium border border-slate-100 overflow-hidden min-h-[500px] p-8 lg:p-12">
+                        <AuditInspector id={searchParams.get("id")} type={activeTab} userMap={userMap} />
+                    </div>
+                )}
             </div>
         </div>
     );
 }
 
-function StatCard({ label, value, unit, icon, color, alert }: any) {
+function AuditInspector({ id, type, userMap }: { id: string | null, type: string, userMap: any }) {
+    const router = useRouter();
+    const [data, setData] = useState<any>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (!id) return;
+        async function fetchDoc() {
+            try {
+                // Ensure correct collection name
+                const docRef = doc(db, type === 'logs' ? 'logs' : 'sessions', id as string);
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    setData(docSnap.data());
+                } else {
+                    setData(null);
+                }
+            } catch (error) {
+                console.error("Error fetching audit data:", error);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchDoc();
+    }, [id, type]);
+
+    if (loading) return (
+        <div className="flex flex-col items-center justify-center py-20">
+            <div className="w-10 h-10 border-4 border-upsi-navy border-t-transparent rounded-full animate-spin" />
+            <p className="mt-6 text-[10px] font-black uppercase text-slate-400 tracking-widest">Retrieving Secure Clinical Audit...</p>
+        </div>
+    );
+
+    if (!data) return (
+        <div className="py-20 text-center space-y-4">
+            <ShieldAlert size={48} className="mx-auto text-rose-300" />
+            <div className="text-slate-400 italic font-bold">Record not found or has been securely destroyed.</div>
+            <button onClick={() => router.push('/dashboard/admin?tab=activity')} className="px-6 py-2 bg-slate-100 text-slate-600 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-slate-200 transition-colors">
+                Return to Pulse
+            </button>
+        </div>
+    );
+
+    const traineeName = userMap[data.traineeId]?.name || 'Unknown Trainee';
+    const isLog = type === 'logs';
+
     return (
-        <div className={`bg-white p-8 rounded-[2.5rem] shadow-premium border border-slate-100 group hover:border-${color}-200 transition-all duration-300 relative overflow-hidden`}>
+        <div className="space-y-8 animate-in fade-in duration-500">
+            <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 pb-6 gap-4">
+                <div>
+                    <button onClick={() => router.push('/dashboard/admin?tab=activity')} className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-upsi-navy mb-4 flex items-center transition-colors">
+                        <ChevronRight className="rotate-180 mr-1" size={12} /> Back to Activity Pulse
+                    </button>
+                    <h2 className="text-2xl font-black text-slate-800 uppercase tracking-tighter flex items-center">
+                        <ShieldCheck className="mr-3 text-emerald-500" size={28} />
+                        Clinical Data Protocol Audit
+                    </h2>
+                    <p className="text-xs text-slate-500 mt-2 font-medium">Unique Identifier: <span className="font-mono text-upsi-navy bg-slate-50 px-2 py-1 rounded">{id}</span></p>
+                </div>
+                <div className="text-left md:text-right">
+                    <div className={`inline-flex px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest ${isLog ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600'}`}>
+                        {isLog ? 'LAMPIRAN A (LOG)' : (data.formData?.formType?.toUpperCase() || 'CLINICAL FORM')}
+                    </div>
+                </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100">
+                    <div className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-1 flex items-center"><UserCheck size={12} className="mr-1" /> Author / Trainee</div>
+                    <div className="font-bold text-slate-800">{traineeName}</div>
+                    <div className="text-xs text-slate-500 mt-1">ID: {data.traineeId}</div>
+                </div>
+                {data.supervisorId ? (
+                    <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100">
+                        <div className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-1 flex items-center"><ShieldCheck size={12} className="mr-1" /> Assigned Supervisor</div>
+                        <div className="font-bold text-slate-800">{userMap[data.supervisorId]?.name || 'Unknown'}</div>
+                        <div className={`text-[10px] font-black uppercase tracking-widest mt-2 ${data.supervisorStatus === 'verified' ? 'text-emerald-500' : 'text-amber-500'}`}>
+                            Status: {data.supervisorStatus || 'PENDING'}
+                        </div>
+                    </div>
+                ) : (
+                    <div className="bg-slate-50/50 rounded-2xl p-6 border border-slate-100 border-dashed">
+                        <div className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-1 flex items-center"><AlertCircle size={12} className="mr-1" /> Supervisor Action</div>
+                        <div className="font-bold text-slate-400 italic">Not Required / Applicable</div>
+                    </div>
+                )}
+                <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100">
+                    <div className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-1 flex items-center"><Clock size={12} className="mr-1" /> Timestamp / Event Date</div>
+                    <div className="font-bold text-slate-800">{data.date || 'Unknown Date'}</div>
+                    {data.timestamp && <div className="text-xs text-slate-500 mt-1">{new Date(data.timestamp.seconds * 1000).toLocaleString()}</div>}
+                </div>
+            </div>
+
+            <div className="bg-slate-900 rounded-3xl p-8 text-white relative overflow-hidden mt-8 shadow-2xl">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-upsi-gold/5 rounded-full -mr-32 -mt-32 blur-[80px]" />
+                <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-upsi-gold mb-6 border-b border-white/10 pb-4 flex items-center">
+                    <Settings size={14} className="mr-2 animate-spin-slow" /> Raw Encrypted Payload
+                </h3>
+                <pre className="text-[11px] font-mono text-emerald-400/80 overflow-auto max-h-[500px] custom-scrollbar leading-relaxed">
+                    {JSON.stringify(data, null, 2)}
+                </pre>
+            </div>
+        </div>
+    );
+}
+
+function StatCard({ label, value, unit, icon, color, alert, href }: any) {
+    const CardContent = () => (
+        <div className={`bg-white p-8 rounded-[2.5rem] shadow-premium border border-slate-100 group hover:border-${color}-200 transition-all duration-300 relative overflow-hidden h-full ${href ? 'cursor-pointer hover:shadow-lg hover:-translate-y-1' : ''}`}>
             {alert && (
                 <div className="absolute top-0 right-0 w-2 h-full bg-rose-500" />
             )}
@@ -382,6 +496,7 @@ function StatCard({ label, value, unit, icon, color, alert }: any) {
                 <div className={`p-4 bg-${color}-50 rounded-2xl group-hover:scale-110 transition-transform duration-500`}>
                     {icon}
                 </div>
+                {href && <ChevronRight size={20} className="text-slate-300 group-hover:text-slate-400 group-hover:translate-x-1 transition-all opacity-0 group-hover:opacity-100" />}
             </div>
             <div className="space-y-1">
                 <h3 className="text-[10px] font-black uppercase text-slate-400 tracking-widest">{label}</h3>
@@ -392,6 +507,12 @@ function StatCard({ label, value, unit, icon, color, alert }: any) {
             </div>
         </div>
     );
+
+    if (href) {
+        return <Link href={href} className="block h-full"><CardContent /></Link>;
+    }
+
+    return <CardContent />;
 }
 
 export default function AdminDashboard() {
@@ -408,3 +529,4 @@ export default function AdminDashboard() {
         </Suspense>
     );
 }
+
