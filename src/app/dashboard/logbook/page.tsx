@@ -107,7 +107,7 @@ export default function LogbookPage() {
             </div>
 
             {/* Filter & Summary Bar */}
-            <div className="glass p-6 rounded-[2rem] shadow-premium flex flex-col lg:flex-row lg:items-center justify-between gap-6 border border-white">
+            <div className="glass p-6 rounded-[2rem] shadow-premium flex flex-col lg:flex-row lg:items-center justify-between gap-6 border border-white no-print">
                 <div className="flex flex-wrap items-center gap-4">
                     <div className="flex items-center space-x-2 bg-slate-100 px-4 py-2 rounded-2xl border border-slate-200">
                         <Filter size={16} className="text-slate-400" />
@@ -148,8 +148,8 @@ export default function LogbookPage() {
                                 <th className="px-6 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Category</th>
                                 <th className="px-6 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Description</th>
                                 <th className="px-6 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 text-center">Hours</th>
-                                <th className="px-6 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 text-center">Status</th>
-                                <th className="px-6 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 text-center">Actions</th>
+                                <th className="px-6 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 text-center no-print">Status</th>
+                                <th className="px-6 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 text-center no-print">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100">
@@ -189,7 +189,7 @@ export default function LogbookPage() {
                                                 {log.hours}
                                             </div>
                                         </td>
-                                        <td className="px-6 py-5 text-center">
+                                        <td className="px-6 py-5 text-center no-print">
                                             {log.status === 'verified' ? (
                                                 <div className="flex items-center justify-center text-emerald-500" title="Verified by Supervisor">
                                                     <CheckCircle2 size={20} />
@@ -200,7 +200,7 @@ export default function LogbookPage() {
                                                 </div>
                                             )}
                                         </td>
-                                        <td className="px-6 py-5 text-center">
+                                        <td className="px-6 py-5 text-center no-print">
                                             <div className="flex items-center justify-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                                 <button
                                                     onClick={() => {
@@ -229,7 +229,7 @@ export default function LogbookPage() {
                 </div>
             </div>
 
-            <Disclaimer variant="full" className="mt-8" />
+            <Disclaimer variant="full" className="mt-8 no-print" />
 
             {/* Logbook Form Modal */}
             {isFormOpen && (
@@ -266,6 +266,10 @@ export default function LogbookPage() {
                     th {
                         background-color: #f8f8f8 !important;
                         color: black !important;
+                    }
+                    /* Ensure hidden columns don't leave gaps */
+                    .no-print {
+                        display: none !important;
                     }
                 }
             `}</style>
