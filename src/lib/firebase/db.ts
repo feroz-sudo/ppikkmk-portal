@@ -124,11 +124,15 @@ export interface ClinicalRecording {
 }
 
 export type LogCategory =
-    | 'Individual Counselling'
-    | 'Group Counselling'
-    | 'PFA/MHPSS'
-    | 'Management/Admin'
-    | 'Professional Development';
+    | 'Individual Counselling'    // a
+    | 'Group Counselling'         // b
+    | 'Crisis Intervention'       // c
+    | 'PFA/MHPSS'                 // d
+    | 'Psychoeducation/Community' // e
+    | 'Testing & Assessment'      // f
+    | 'Management & Admin'        // g
+    | 'Professional Development'  // h
+    | 'Supervision';              // i
 
 export interface Log {
     id?: string;
@@ -137,11 +141,72 @@ export interface Log {
     category: LogCategory;
     hours: number;
     description: string;
-    sessionId?: string; // Reference to clinical session
+    location?: string;   // PDF: Lokasi
+    startTime?: string;  // PDF: Masa (From)
+    endTime?: string;    // PDF: Masa (To)
+    sessionId?: string;  // Reference to clinical session
     status?: 'pending' | 'verified' | 'rejected' | 'revision_requested';
     verifiedBy?: string;
     verificationDate?: Timestamp | Date;
     createdAt?: Timestamp | Date;
+}
+
+export interface TraineeProfile {
+    uid: string;
+    fullName: string;
+    matricNumber: string;
+    icNumber: string;
+    address: string;
+    phone: string;
+    email: string;
+    practicumSite: string;
+    siteAddress: string;
+    emergencyContact: string; // Name & Phone
+    updatedAt: Timestamp | Date;
+}
+
+export interface PracticumContract {
+    traineeId: string;
+    internshipSite: string;
+    semesterYear: string;
+    localPreceptor: {
+        name: string;
+        phone: string;
+        email: string;
+    };
+    academicSupervisor: {
+        name: string;
+        phone: string;
+        email: string;
+    };
+    practicumCoordinator: {
+        name: string;
+        email: string;
+    };
+    startDate: string;
+    endDate: string;
+    isAgreed: boolean;
+    traineeSignatureDate?: string;
+    preceptorSignatureDate?: string;
+    supervisorSignatureDate?: string;
+    updatedAt: Timestamp | Date;
+}
+
+export interface WeeklyReflection {
+    id?: string;
+    traineeId: string;
+    weekNumber: number; // 1-16
+    reflections: {
+        individualCounselling: string;
+        groupCounselling: string;
+        activitiesIntervention: string;
+        adminManagement: string;
+        professionalDevelopment: string;
+        supervision: string;
+    };
+    status: 'pending' | 'reviewed';
+    supervisorFeedback?: string;
+    updatedAt: Timestamp | Date;
 }
 
 export interface Supervision {
@@ -167,6 +232,9 @@ export const supervisionsRef = collection(db, "supervisions");
 export const attendanceRef = collection(db, "attendance_signoffs");
 export const recordingsRef = collection(db, "clinical_recordings");
 export const marksRef = collection(db, "marks");
+export const profilesRef = collection(db, "trainee_profiles");
+export const contractsRef = collection(db, "practicum_contracts");
+export const reflectionsRef = collection(db, "weekly_reflections");
 
 // --- Services ---
 
@@ -287,10 +355,8 @@ export const syncSessionWithLog = async (session: Session & { id: string }) => {
         category = 'Individual Counselling';
     } else if (session.formType === 'Form11') {
         category = 'Group Counselling';
-    } else if (session.formType === 'Form8') {
-        category = 'PFA/MHPSS';
     } else if (session.formType === 'Form7') {
-        category = 'Management/Admin';
+        category = 'Management & Admin';
     }
 
     if (!category) return;
@@ -403,7 +469,57 @@ export const findTraineeByEmail = async (email: string): Promise<User | null> =>
 
 export const updateTraineeSupervisor = async (traineeUid: string, supervisorUid: string | null) => {
     const docRef = doc(db, "users", traineeUid);
-    await updateDoc(docRef, {
+    await updateDoc(doc(db, "users", traineeUid), {
         assignedSupervisorId: supervisorUid
     });
+};
+
+// Trainee Profile
+export const getTraineeProfile = async (uid: string): Promise<TraineeProfile | null> => {
+    const docRef = doc(db, "trainee_profiles", uid);
+    const docSnap = await getDoc(docRef);
+    return docSnap.exists() ? (docSnap.data() as TraineeProfile) : null;
+};
+
+export const saveTraineeProfile = async (profile: TraineeProfile) => {
+    const docRef = doc(db, "trainee_profiles", profile.uid);
+    await setDoc(docRef, { ...profile, updatedAt: new Date() });
+};
+
+// Practicum Contract
+export const getPracticumContract = async (traineeId: string): Promise<PracticumContract | null> => {
+    const q = query(contractsRef, where("traineeId", "==", traineeId));
+    const querySnapshot = await getDocs(q);
+    return !querySnapshot.empty ? (querySnapshot.docs[0].data() as PracticumContract) : null;
+};
+
+export const savePracticumContract = async (contract: PracticumContract) => {
+    const q = query(contractsRef, where("traineeId", "==", contract.traineeId));
+    const snap = await getDocs(q);
+    const data = { ...contract, updatedAt: new Date() };
+
+    if (!snap.empty) {
+        await updateDoc(doc(db, "practicum_contracts", snap.docs[0].id), data);
+    } else {
+        await addDoc(contractsRef, data);
+    }
+};
+
+// Weekly Reflection
+export const getWeeklyReflection = async (traineeId: string, weekNumber: number): Promise<WeeklyReflection | null> => {
+    const q = query(reflectionsRef, where("traineeId", "==", traineeId), where("weekNumber", "==", weekNumber));
+    const querySnapshot = await getDocs(q);
+    return !querySnapshot.empty ? ({ id: querySnapshot.docs[0].id, ...querySnapshot.docs[0].data() } as WeeklyReflection) : null;
+};
+
+export const saveWeeklyReflection = async (reflection: Omit<WeeklyReflection, "id" | "updatedAt" | "status">) => {
+    const q = query(reflectionsRef, where("traineeId", "==", reflection.traineeId), where("weekNumber", "==", reflection.weekNumber));
+    const snap = await getDocs(q);
+    const data = { ...reflection, status: 'pending', updatedAt: new Date() };
+
+    if (!snap.empty) {
+        await updateDoc(doc(db, "weekly_reflections", snap.docs[0].id), data);
+    } else {
+        await addDoc(reflectionsRef, data);
+    }
 };

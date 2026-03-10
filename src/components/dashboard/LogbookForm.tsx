@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { LogCategory, addLogEntry, updateLogEntry, Log } from "@/lib/firebase/db";
 import { useAuth } from "@/contexts/AuthContext";
-import { Calendar, Clock, BookOpen, Send, ChevronDown, X } from "lucide-react";
+import { Calendar, Clock, BookOpen, Send, ChevronDown, X, MapPin } from "lucide-react";
 
 interface LogbookFormProps {
     onLogAdded: () => void;
@@ -17,6 +17,9 @@ export const LogbookForm = ({ onLogAdded, initialData, onClose }: LogbookFormPro
     const [category, setCategory] = useState<LogCategory>("Individual Counselling");
     const [hours, setHours] = useState("");
     const [description, setDescription] = useState("");
+    const [location, setLocation] = useState("");
+    const [startTime, setStartTime] = useState("");
+    const [endTime, setEndTime] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
@@ -25,6 +28,9 @@ export const LogbookForm = ({ onLogAdded, initialData, onClose }: LogbookFormPro
             setCategory(initialData.category);
             setHours(initialData.hours.toString());
             setDescription(initialData.description);
+            setLocation(initialData.location || "");
+            setStartTime(initialData.startTime || "");
+            setEndTime(initialData.endTime || "");
         }
     }, [initialData]);
 
@@ -39,8 +45,12 @@ export const LogbookForm = ({ onLogAdded, initialData, onClose }: LogbookFormPro
                 date,
                 category,
                 hours: parseFloat(hours),
-                description
+                description,
+                location,
+                startTime,
+                endTime
             };
+            // ... rest of the content (skipped for conciseness in this thought but will be provided in tool)
 
             if (initialData?.id) {
                 await updateLogEntry(initialData.id, logData);
@@ -119,6 +129,44 @@ export const LogbookForm = ({ onLogAdded, initialData, onClose }: LogbookFormPro
                 </div>
 
                 <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 ml-1">Location (Lokasi)</label>
+                    <div className="relative group">
+                        <MapPin size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-upsi-navy transition-colors" />
+                        <input
+                            type="text"
+                            required
+                            placeholder="e.g. Bilik Kaunseling 1 / On-site"
+                            value={location}
+                            onChange={(e) => setLocation(e.target.value)}
+                            className="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-upsi-navy/5 focus:border-upsi-navy focus:bg-white outline-none transition-all font-bold text-slate-700"
+                        />
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 ml-1">Start Time</label>
+                        <input
+                            type="time"
+                            required
+                            value={startTime}
+                            onChange={(e) => setStartTime(e.target.value)}
+                            className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-upsi-navy/5 focus:border-upsi-navy focus:bg-white outline-none transition-all font-bold text-slate-700"
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 ml-1">End Time</label>
+                        <input
+                            type="time"
+                            required
+                            value={endTime}
+                            onChange={(e) => setEndTime(e.target.value)}
+                            className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-upsi-navy/5 focus:border-upsi-navy focus:bg-white outline-none transition-all font-bold text-slate-700"
+                        />
+                    </div>
+                </div>
+
+                <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 ml-1">Clinical Category</label>
                     <div className="relative">
                         <select
@@ -126,14 +174,18 @@ export const LogbookForm = ({ onLogAdded, initialData, onClose }: LogbookFormPro
                             onChange={(e) => setCategory(e.target.value as LogCategory)}
                             className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-upsi-navy/5 focus:border-upsi-navy focus:bg-white outline-none transition-all font-bold text-slate-700 appearance-none cursor-pointer"
                         >
-                            <optgroup label="Face-to-Face">
+                            <optgroup label="Direct Service (Bersemuka)">
                                 <option value="Individual Counselling">Individual Counselling</option>
                                 <option value="Group Counselling">Group Counselling</option>
-                            </optgroup>
-                            <optgroup label="Non-Face-to-Face">
+                                <option value="Crisis Intervention">Crisis Intervention</option>
                                 <option value="PFA/MHPSS">PFA / MHPSS</option>
-                                <option value="Management/Admin">Management / Admin</option>
+                            </optgroup>
+                            <optgroup label="Professional Activities">
+                                <option value="Psychoeducation/Community">Psychoeducation / Community</option>
+                                <option value="Testing & Assessment">Testing & Assessment</option>
+                                <option value="Management & Admin">Management & Admin</option>
                                 <option value="Professional Development">Professional Development</option>
+                                <option value="Supervision">Supervision (Clinical/Triadic/Group)</option>
                             </optgroup>
                         </select>
                         <ChevronDown size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />

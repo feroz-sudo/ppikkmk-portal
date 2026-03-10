@@ -73,9 +73,13 @@ export default function RumusanPage() {
             const categories: Record<LogCategory, number> = {
                 "Individual Counselling": 0,
                 "Group Counselling": 0,
+                "Crisis Intervention": 0,
                 "PFA/MHPSS": 0,
-                "Management/Admin": 0,
-                "Professional Development": 0
+                "Psychoeducation/Community": 0,
+                "Testing & Assessment": 0,
+                "Management & Admin": 0,
+                "Professional Development": 0,
+                "Supervision": 0
             };
 
             weekLogs.forEach(log => {
@@ -101,9 +105,13 @@ export default function RumusanPage() {
     const categories: LogCategory[] = [
         "Individual Counselling",
         "Group Counselling",
+        "Crisis Intervention",
         "PFA/MHPSS",
-        "Management/Admin",
-        "Professional Development"
+        "Psychoeducation/Community",
+        "Testing & Assessment",
+        "Management & Admin",
+        "Professional Development",
+        "Supervision"
     ];
 
     const grandTotals = summaries.reduce((acc, week) => {
