@@ -187,11 +187,12 @@ export default function RumusanPage() {
                             <tr className="bg-gray-50/50 print:bg-white border-b border-gray-100">
                                 <th className="px-8 py-6 font-black uppercase text-[10px] tracking-[0.2em] text-gray-400 border-r border-gray-100 w-24 text-center">Week No.</th>
                                 <th className="px-8 py-6 font-black uppercase text-[10px] tracking-[0.2em] text-gray-400 border-r border-gray-100 w-64">Date Range</th>
-                                {categories.map(cat => (
-                                    <th key={cat} className="px-6 py-6 font-black uppercase text-[10px] tracking-[0.2em] text-gray-400 border-r border-gray-100 text-center leading-relaxed">
-                                        {cat.split(' ').map((word, i) => <div key={i}>{word}</div>)}
-                                    </th>
-                                ))}
+                                <th className="px-6 py-6 font-black uppercase text-[10px] tracking-[0.2em] text-gray-400 border-r border-gray-100 text-center">KI</th>
+                                <th className="px-6 py-6 font-black uppercase text-[10px] tracking-[0.2em] text-gray-400 border-r border-gray-100 text-center">KK</th>
+                                <th className="px-6 py-6 font-black uppercase text-[10px] tracking-[0.2em] text-gray-400 border-r border-gray-100 text-center">AI</th>
+                                <th className="px-6 py-6 font-black uppercase text-[10px] tracking-[0.2em] text-upsi-navy border-r border-gray-100 text-center bg-blue-50/30">PP (Admin)</th>
+                                <th className="px-6 py-6 font-black uppercase text-[10px] tracking-[0.2em] text-gray-400 border-r border-gray-100 text-center">PE</th>
+                                <th className="px-6 py-6 font-black uppercase text-[10px] tracking-[0.2em] text-gray-400 border-r border-gray-100 text-center">PY</th>
                                 <th className="px-8 py-6 font-black uppercase text-[10px] tracking-[0.2em] text-upsi-navy text-center bg-gray-50/80">TOTAL</th>
                             </tr>
                         </thead>
@@ -214,11 +215,17 @@ export default function RumusanPage() {
                                                 <span className="text-[10px] font-black uppercase text-gray-400 tracking-wider mt-1 italic">Week {idx + 1}</span>
                                             </div>
                                         </td>
-                                        {categories.map(cat => (
-                                            <td key={cat} className={`px-6 py-6 border-r border-gray-50 text-center font-bold ${week.categories[cat] > 0 ? 'text-gray-900 bg-blue-50/10' : 'text-gray-300'}`}>
-                                                {week.categories[cat] || "-"}
-                                            </td>
-                                        ))}
+                                        <td className="px-6 py-6 border-r border-gray-50 text-center font-bold">{week.categories["Individual Counselling"] || "-"}</td>
+                                        <td className="px-6 py-6 border-r border-gray-50 text-center font-bold">{week.categories["Group Counselling"] || "-"}</td>
+                                        <td className="px-6 py-6 border-r border-gray-50 text-center font-bold">{
+                                            (week.categories["Crisis Intervention"] || 0) +
+                                            (week.categories["PFA/MHPSS"] || 0) +
+                                            (week.categories["Psychoeducation/Community"] || 0) +
+                                            (week.categories["Testing & Assessment"] || 0) || "-"
+                                        }</td>
+                                        <td className="px-6 py-6 border-r border-gray-50 text-center font-bold bg-blue-50/20 text-upsi-navy">{week.categories["Management & Admin"] || "-"}</td>
+                                        <td className="px-6 py-6 border-r border-gray-50 text-center font-bold">{week.categories["Professional Development"] || "-"}</td>
+                                        <td className="px-6 py-6 border-r border-gray-50 text-center font-bold">{week.categories["Supervision"] || "-"}</td>
                                         <td className="px-8 py-6 text-center font-black text-upsi-navy bg-gray-50/50 group-hover:bg-upsi-navy/5 transition-colors">
                                             {week.total}
                                         </td>
@@ -229,9 +236,17 @@ export default function RumusanPage() {
                         <tfoot className="border-t-2 border-gray-100 bg-upsi-navy font-bold">
                             <tr className="text-white">
                                 <td colSpan={2} className="px-8 py-6 uppercase tracking-[0.2em] text-[11px] font-black text-right">Grand Totals:</td>
-                                {categories.map(cat => (
-                                    <td key={cat} className="px-6 py-6 text-center text-lg">{grandTotals[cat] || 0}</td>
-                                ))}
+                                <td className="px-6 py-6 text-center text-lg">{grandTotals["Individual Counselling"] || 0}</td>
+                                <td className="px-6 py-6 text-center text-lg">{grandTotals["Group Counselling"] || 0}</td>
+                                <td className="px-6 py-6 text-center text-lg">{
+                                    (grandTotals["Crisis Intervention"] || 0) +
+                                    (grandTotals["PFA/MHPSS"] || 0) +
+                                    (grandTotals["Psychoeducation/Community"] || 0) +
+                                    (grandTotals["Testing & Assessment"] || 0)
+                                }</td>
+                                <td className="px-6 py-6 text-center text-lg bg-blue-900/30">{grandTotals["Management & Admin"] || 0}</td>
+                                <td className="px-6 py-6 text-center text-lg">{grandTotals["Professional Development"] || 0}</td>
+                                <td className="px-6 py-6 text-center text-lg">{grandTotals["Supervision"] || 0}</td>
                                 <td className="px-8 py-6 text-center text-xl font-black bg-blue-900/50">{grandTotals.total || 0}</td>
                             </tr>
                         </tfoot>

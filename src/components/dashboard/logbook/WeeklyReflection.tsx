@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { WeeklyReflection, saveWeeklyReflection, getWeeklyReflection } from "@/lib/firebase/db";
 import { useAuth } from "@/contexts/AuthContext";
-import { Brain, Save, Loader2, AlertCircle, ChevronLeft, ChevronRight, CheckCircle2 } from "lucide-react";
+import { Brain, Save, Loader2, AlertCircle, ChevronLeft, ChevronRight, CheckCircle2, FileDown, Clock } from "lucide-react";
 
 export const ReflectionSection = () => {
     const { user } = useAuth();
@@ -124,16 +124,32 @@ export const ReflectionSection = () => {
                             </h2>
                             <p className="text-blue-100/60 text-[9px] font-black uppercase tracking-[0.2em] mt-1">Minggu {week} Detailed Review</p>
                         </div>
-                        <button
-                            onClick={() => window.print()}
-                            className="no-print bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border border-white/10 flex items-center space-x-2"
-                        >
-                            <Save size={14} />
-                            <span>Print Reflection</span>
-                        </button>
+                        <div className="flex items-center space-x-3 no-print">
+                            <button
+                                onClick={() => window.print()}
+                                className="bg-white/10 hover:bg-white/20 text-white px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border border-white/10 flex items-center space-x-2"
+                            >
+                                <FileDown size={14} />
+                                <span>Print Week {week} Reflection</span>
+                            </button>
+                        </div>
                     </div>
 
                     <form onSubmit={handleSave} className="p-10 space-y-10">
+                        <div className="flex justify-between items-center no-print">
+                            <div className="flex items-center space-x-2 text-slate-400">
+                                <Clock size={14} />
+                                <span className="text-[10px] font-bold uppercase tracking-widest">Auto-saved Draft available</span>
+                            </div>
+                            <button
+                                type="submit"
+                                disabled={saving}
+                                className="bg-upsi-navy text-white px-8 py-3 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-900 transition-all shadow-lg shadow-upsi-navy/20 flex items-center space-x-3 active:scale-95"
+                            >
+                                <Save size={16} />
+                                <span>{saving ? "Saving..." : "Save & Update Reflection"}</span>
+                            </button>
+                        </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                             {categories.map((cat) => (
                                 <div key={cat.key} className="space-y-3">

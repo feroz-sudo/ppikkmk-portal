@@ -23,13 +23,13 @@ export const SummarySection = ({ logs }: SummarySectionProps) => {
         return Math.min(16, Math.max(1, diff + 1));
     };
 
-    const categories: { label: string, keys: LogCategory[] }[] = [
-        { label: "Kaunseling Individu", keys: ["Individual Counselling"] },
-        { label: "Kaunseling Kelompok", keys: ["Group Counselling"] },
-        { label: "Aktiviti / Intervensi", keys: ["Crisis Intervention", "PFA/MHPSS", "Psychoeducation/Community", "Testing & Assessment"] },
-        { label: "Pengurusan Pentadbiran", keys: ["Management & Admin"] },
-        { label: "Perkembangan Profesional", keys: ["Professional Development"] },
-        { label: "Penyeliaan", keys: ["Supervision"] }
+    const categories: { label: string, keys: LogCategory[] | string[] }[] = [
+        { label: "Kaunseling Individu (KI)", keys: ["Individual Counselling"] },
+        { label: "Kaunseling Kelompok (KK)", keys: ["Group Counselling"] },
+        { label: "Aktiviti / Intervensi (AI)", keys: ["Crisis Intervention", "PFA/MHPSS", "Psychoeducation/Community", "Testing & Assessment"] },
+        { label: "Management / Admin (PP)", keys: ["Management & Admin", "Management/Admin"] },
+        { label: "Perkembangan Profesional (PE)", keys: ["Professional Development"] },
+        { label: "Penyeliaan (PY)", keys: ["Supervision"] }
     ];
 
     const getHours = (week: number, catKeys: LogCategory[]) => {
@@ -73,7 +73,7 @@ export const SummarySection = ({ logs }: SummarySectionProps) => {
                                     <tr key={w} className="hover:bg-slate-50/30 transition-colors">
                                         <td className="px-4 py-3 text-center border-r border-slate-100 font-bold text-slate-400 text-xs">W{w}</td>
                                         {categories.map(cat => {
-                                            const h = getHours(w, cat.keys);
+                                            const h = getHours(w, cat.keys as any);
                                             weekTotal += h;
                                             return <td key={cat.label} className={`px-4 py-3 text-center text-xs font-medium ${h > 0 ? 'text-slate-800 font-bold' : 'text-slate-300'}`}>{h || '-'}</td>
                                         })}
