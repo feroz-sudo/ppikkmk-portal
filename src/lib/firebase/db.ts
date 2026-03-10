@@ -392,3 +392,18 @@ export const saveTraineeMarks = async (marks: Omit<TraineeMarks, "id" | "updated
         await updateDoc(doc(db, "marks", snapshot.docs[0].id), data);
     }
 };
+
+// Trainee Management
+export const findTraineeByEmail = async (email: string): Promise<User | null> => {
+    const q = query(usersRef, where("email", "==", email), where("role", "==", "trainee"));
+    const snapshot = await getDocs(q);
+    if (snapshot.empty) return null;
+    return { uid: snapshot.docs[0].id, ...snapshot.docs[0].data() } as User;
+};
+
+export const updateTraineeSupervisor = async (traineeUid: string, supervisorUid: string | null) => {
+    const docRef = doc(db, "users", traineeUid);
+    await updateDoc(docRef, {
+        assignedSupervisorId: supervisorUid
+    });
+};

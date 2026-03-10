@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { collection, query, where, getDocs } from "firebase/firestore";
-import { db, User, Supervision, updateSupervisionStatus, onSnapshot } from "@/lib/firebase/db";
+import { db, User, Supervision, updateSupervisionStatus, onSnapshot, updateTraineeSupervisor } from "@/lib/firebase/db";
 import {
     Users,
     FileText,
@@ -18,9 +18,12 @@ import {
     AlertCircle,
     Inbox,
     Award,
-    CheckCircle2
+    CheckCircle2,
+    Trash2,
+    Loader2
 } from "lucide-react";
 import Link from "next/link";
+import { ManageTrainees } from "@/components/dashboard/supervisor/ManageTrainees";
 
 export default function SupervisorDashboard() {
     const { user, userRole } = useAuth();
@@ -28,6 +31,7 @@ export default function SupervisorDashboard() {
     const [requests, setRequests] = useState<Supervision[]>([]);
     const [loading, setLoading] = useState(true);
     const [actionLoading, setActionLoading] = useState<string | null>(null);
+    const [removingTrainee, setRemovingTrainee] = useState<string | null>(null);
 
     useEffect(() => {
         if (!user || userRole !== "supervisor") return;
@@ -72,11 +76,25 @@ export default function SupervisorDashboard() {
         setActionLoading(requestId);
         try {
             await updateSupervisionStatus(requestId, status);
-            // No need to manually fetchData(), the onSnapshot listener handles it!
         } catch (error) {
             console.error("Failed to update status", error);
         } finally {
             setActionLoading(null);
+        }
+    };
+
+    const handleRemoveTrainee = async (e: React.MouseEvent, traineeUid: string, traineeName: string) => {
+        e.preventDefault(); // Prevent link navigation
+        if (!window.confirm(`Are you sure you want to remove ${traineeName} from your assigned trainees?`)) return;
+
+        setRemovingTrainee(traineeUid);
+        try {
+            await updateTraineeSupervisor(traineeUid, null);
+        } catch (error) {
+            console.error("Failed to remove trainee", error);
+            alert("Failed to remove trainee. Please try again.");
+        } finally {
+            setRemovingTrainee(null);
         }
     };
 
@@ -113,6 +131,9 @@ export default function SupervisorDashboard() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
                 {/* Pending Actions Column */}
                 <div className="lg:col-span-1 space-y-8">
+                    {/* Add Trainee Management Section */}
+                    <ManageTrainees supervisorId={user!.uid} />
+
                     <div className="flex items-center justify-between px-4">
                         <h2 className="text-xs font-black text-slate-400 uppercase tracking-[0.3em]">Supervision Requests</h2>
                         <span className="bg-upsi-gold text-upsi-navy px-3 py-1 rounded-full text-[10px] font-black shadow-lg shadow-upsi-gold/20">
@@ -200,8 +221,22 @@ export default function SupervisorDashboard() {
                                 <Link
                                     key={trainee.uid}
                                     href={`/dashboard/supervisor/portfolio/${trainee.uid}`}
-                                    className="bg-white p-8 rounded-[2.5rem] shadow-premium border border-slate-100 hover:border-upsi-navy/20 transition-all group flex flex-col justify-between"
+                                    className="bg-white p-8 rounded-[2.5rem] shadow-premium border border-slate-100 hover:border-upsi-navy/20 transition-all group flex flex-col justify-between relative"
                                 >
+                                    {/* Remove button */}
+                                    <button
+                                        onClick={(e) => handleRemoveTrainee(e, trainee.uid, trainee.name)}
+                                        disabled={removingTrainee === trainee.uid}
+                                        className="absolute top-6 right-6 p-2 text-slate-300 hover:bg-red-50 hover:text-red-500 rounded-xl transition-all opacity-0 group-hover:opacity-100 z-10"
+                                        title="Unlink Trainee"
+                                    >
+                                        {removingTrainee === trainee.uid ? (
+                                            <Loader2 className="animate-spin" size={16} />
+                                        ) : (
+                                            <Trash2 size={16} />
+                                        )}
+                                    </button>
+
                                     <div className="flex items-start justify-between mb-10">
                                         <div className="flex items-center space-x-5">
                                             <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-upsi-navy to-blue-800 text-white flex items-center justify-center font-black text-xl shadow-lg group-hover:rotate-6 transition-transform">
@@ -214,10 +249,6 @@ export default function SupervisorDashboard() {
                                                 <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest">{trainee.matricNumber}</p>
                                             </div>
                                         </div>
-                                        <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${trainee.clinicalStatus === 'completed' ? "bg-emerald-100 text-emerald-700" : "bg-blue-100 text-blue-700"
-                                            }`}>
-                                            {trainee.clinicalStatus || 'Active'}
-                                        </span>
                                     </div>
 
                                     <div className="pt-6 border-t border-slate-50 flex items-center justify-between">
