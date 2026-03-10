@@ -71,15 +71,15 @@ function SidebarNavContent({
             {userRole === "admin" ? (
                 <>
                     {/* ADMIN NAVIGATION */}
-                    <Link href="/dashboard/admin" onClick={handleLinkClick} className={getLinkClass("/dashboard/admin")}>
+                    <Link href="/dashboard/admin" onClick={handleLinkClick} className={getLinkClass("/dashboard/admin", !searchParams.has('tab') || searchParams.get('tab') === 'overview')}>
                         <LayoutDashboard size={18} />
                         <span className="font-bold uppercase tracking-widest text-[10px]">System Overview</span>
                     </Link>
-                    <Link href="/dashboard/admin?tab=users" onClick={handleLinkClick} className={getLinkClass("/dashboard/admin?tab=users")}>
+                    <Link href="/dashboard/admin?tab=users" onClick={handleLinkClick} className={getLinkClass("/dashboard/admin?tab=users", searchParams.get('tab') === 'users')}>
                         <Users size={18} />
                         <span className="font-bold uppercase tracking-widest text-[10px]">User Management</span>
                     </Link>
-                    <Link href="/dashboard/admin?tab=activity" onClick={handleLinkClick} className={getLinkClass("/dashboard/admin?tab=activity")}>
+                    <Link href="/dashboard/admin?tab=activity" onClick={handleLinkClick} className={getLinkClass("/dashboard/admin?tab=activity", searchParams.get('tab') === 'activity')}>
                         <Activity size={18} />
                         <span className="font-bold uppercase tracking-widest text-[10px]">Activity Pulse</span>
                     </Link>
@@ -408,8 +408,8 @@ export default function DashboardLayout({
     const isFormActive = (path: string) => pathname === path;
 
     const baseLinkClass = "flex items-center space-x-3 px-3 py-2.5 rounded-xl transition-all duration-200 hover-lift";
-    const getLinkClass = (path: string) =>
-        `${baseLinkClass} ${isActive(path)
+    const getLinkClass = (path: string, forceActive?: boolean) =>
+        `${baseLinkClass} ${forceActive !== undefined ? forceActive : isActive(path)
             ? 'bg-gradient-to-r from-upsi-gold to-yellow-500 text-upsi-navy font-bold shadow-lg shadow-upsi-gold/20'
             : 'hover:bg-white/10 text-white/80 hover:text-white'}`;
 

@@ -150,35 +150,37 @@ function AdminDashboardContent() {
                 </div>
             </div>
 
-            {/* Stats Grid - Visible on all tabs for quick context */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <StatCard
-                    label="Total Trainees"
-                    value={stats?.totalTrainees}
-                    icon={<Users size={20} className="text-blue-500" />}
-                    color="blue"
-                />
-                <StatCard
-                    label="Active Supervisors"
-                    value={stats?.totalSupervisors}
-                    icon={<UserCheck size={20} className="text-emerald-500" />}
-                    color="emerald"
-                />
-                <StatCard
-                    label="Clinical Hours"
-                    value={stats?.totalHours}
-                    unit="HRS"
-                    icon={<Clock size={20} className="text-amber-500" />}
-                    color="amber"
-                />
-                <StatCard
-                    label="Pending Forms"
-                    value={stats?.pendingVerifications}
-                    icon={<AlertCircle size={20} className="text-rose-500" />}
-                    color="rose"
-                    alert={stats?.pendingVerifications > 0}
-                />
-            </div>
+            {/* Stats Grid - Only visible on overview for better UX */}
+            {activeTab === "overview" && (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 animate-in slide-in-from-bottom flex-shrink-0">
+                    <StatCard
+                        label="Total Trainees"
+                        value={stats?.totalTrainees}
+                        icon={<Users size={20} className="text-blue-500" />}
+                        color="blue"
+                    />
+                    <StatCard
+                        label="Active Supervisors"
+                        value={stats?.totalSupervisors}
+                        icon={<UserCheck size={20} className="text-emerald-500" />}
+                        color="emerald"
+                    />
+                    <StatCard
+                        label="Clinical Hours"
+                        value={stats?.totalHours}
+                        unit="HRS"
+                        icon={<Clock size={20} className="text-amber-500" />}
+                        color="amber"
+                    />
+                    <StatCard
+                        label="Pending Forms"
+                        value={stats?.pendingVerifications}
+                        icon={<AlertCircle size={20} className="text-rose-500" />}
+                        color="rose"
+                        alert={stats?.pendingVerifications > 0}
+                    />
+                </div>
+            )}
 
             {/* Tabbed Content */}
             <div className="transition-all duration-500">
