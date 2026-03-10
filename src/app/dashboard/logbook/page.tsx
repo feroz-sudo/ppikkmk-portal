@@ -181,7 +181,7 @@ export default function LogbookPage() {
                                                 {log.category}
                                             </span>
                                         </td>
-                                        <td className="px-6 py-5 text-sm text-slate-600 max-w-xs truncate">
+                                        <td className="px-6 py-5 text-sm text-slate-600 whitespace-pre-wrap min-w-[300px]">
                                             {log.description}
                                         </td>
                                         <td className="px-6 py-5 text-center">
