@@ -90,10 +90,23 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             }
 
             const currentUser = result.user;
+            const email = currentUser.email || "";
 
-            // Define admin emails here or in env
+            // 1. Admin Whitelist (Bypass domain checks)
             const adminEmails = ["ferozsamad@gmail.com", "ahmadferoz@upsi.edu.my"];
-            const isAdmin = adminEmails.includes(currentUser.email || "");
+            const isAdmin = adminEmails.includes(email);
+
+            // 2. Domain Validation
+            if (!isAdmin) {
+                if (program === "supervisor" && !email.endsWith("@fpm.upsi.edu.my")) {
+                    await firebaseSignOut(auth);
+                    throw new Error("SUPERVISOR ACCESS DENIED: Only @fpm.upsi.edu.my emails are authorized for supervisor accounts.");
+                }
+                if ((program === "practicum" || program === "internship") && !email.endsWith("@siswa.upsi.edu.my")) {
+                    await firebaseSignOut(auth);
+                    throw new Error("TRAINEE ACCESS DENIED: Only @siswa.upsi.edu.my emails are authorized for trainees.");
+                }
+            }
 
             const role: "trainee" | "supervisor" | "admin" = isAdmin ? "admin" : (program === "supervisor" ? "supervisor" : "trainee");
             const programType: "practicum" | "internship" | null = (isAdmin || program === "supervisor") ? null : program;
