@@ -136,7 +136,7 @@ function ClientRegistrationContent() {
                             onClick={() => router.push(`/dashboard/clients/${type.toLowerCase()}/${paddedNumber}`)}
                             className="bg-upsi-navy text-white font-bold py-4 px-8 rounded-xl hover:bg-blue-900 transition-all flex items-center justify-center space-x-2"
                         >
-                            <span>Go to Client Folder</span>
+                            <span className="no-black">Go to Client Folder</span>
                             <ChevronRight size={20} />
                         </button>
                         <button
@@ -288,7 +288,7 @@ function ClientRegistrationContent() {
                         ) : (
                             <>
                                 <Save size={24} />
-                                <span className="text-xl">Register & Initialize Folder</span>
+                                <span className="text-xl no-black">Register & Initialize Folder</span>
                             </>
                         )}
                     </button>

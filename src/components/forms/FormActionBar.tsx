@@ -34,8 +34,8 @@ export const FormActionBar: React.FC<FormActionBarProps> = ({ formName, isSubmit
                 className="pointer-events-auto no-print flex-1 md:flex-none flex items-center justify-center space-x-2 bg-upsi-navy text-white font-bold py-2.5 px-6 md:py-3 md:px-6 rounded-xl shadow-lg hover:bg-blue-900 transition-all disabled:opacity-60 disabled:cursor-not-allowed text-sm md:text-base"
             >
                 <Save size={18} />
-                <span className="hidden sm:inline">{isSubmitting ? "Saving..." : `Save ${formName}`}</span>
-                <span className="sm:hidden">{isSubmitting ? "Saving..." : "Save"}</span>
+                <span className="hidden sm:inline no-black">{isSubmitting ? "Saving..." : `Save ${formName}`}</span>
+                <span className="sm:hidden no-black">{isSubmitting ? "Saving..." : "Save"}</span>
             </button>
         </div>
     );
