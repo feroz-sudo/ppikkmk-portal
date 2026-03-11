@@ -20,8 +20,10 @@ export const Disclaimer: React.FC<DisclaimerProps> = ({ variant = "full", classN
             router.push("/dashboard/admin");
         } else {
             try {
-                // Trigger login as supervisor (which redirects to admin if email matches)
-                await signInWithGoogle("supervisor");
+                // Trigger pure admin login (bypassing impersonation overrides)
+                localStorage.removeItem("adminOverrideRole");
+                localStorage.removeItem("adminOverrideProgram");
+                await signInWithGoogle("admin");
             } catch (err) {
                 console.error("Admin login failed", err);
             }
