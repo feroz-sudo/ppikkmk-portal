@@ -56,7 +56,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         // Handle redirect result for mobile devices
         const checkRedirect = async () => {
             try {
-                const result = await getRedirectResult(auth);
+                const result = await getRedirectResult(auth, browserPopupRedirectResolver);
                 if (result) {
                     const credential = GoogleAuthProvider.credentialFromResult(result);
                     if (credential?.accessToken) {
@@ -72,29 +72,76 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         checkRedirect();
 
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-            setUser(currentUser);
-
             if (currentUser) {
-                const userDocRef = doc(db, "users", currentUser.uid);
-                const userDoc = await getDoc(userDocRef);
+                try {
+                    const email = currentUser.email || "";
+                    
+                    // 1. Admin Whitelist
+                    const adminEmails = ["ferozsamad@gmail.com", "ahmadferoz@upsi.edu.my"];
+                    const isAdmin = adminEmails.includes(email);
 
-                if (userDoc.exists()) {
-                    const data = userDoc.data() as UserProfile;
-                    
-                    // Auto-fill matricNumber from email if missing for trainees
-                    if (data.role === "trainee" && !data.matricNumber && data.email) {
+                    // 2. Fetch or Create Profile
+                    const userDocRef = doc(db, "users", currentUser.uid);
+                    const userDoc = await getDoc(userDocRef);
+
+                    let role: "trainee" | "supervisor" | "admin";
+                    let profile: UserProfile;
+
+                    if (userDoc.exists()) {
+                        profile = userDoc.data() as UserProfile;
+                        role = profile.role;
+                        
+                        // Auto-fill matricNumber from email if missing for trainees
+                        if (role === "trainee" && !profile.matricNumber && profile.email) {
+                            const { extractMatricFromEmail } = await import("@/lib/drive/saveToDrive");
+                            profile.matricNumber = extractMatricFromEmail(profile.email);
+                        }
+                    } else {
+                        // NEW USER initialization
+                        // Note: If we don't have programType (from redirect/popup button click), 
+                        // we default to trainee if domain matches.
+                        const isSupervisor = email.endsWith("@fpm.upsi.edu.my");
+                        role = isAdmin ? "admin" : (isSupervisor ? "supervisor" : "trainee");
+                        
                         const { extractMatricFromEmail } = await import("@/lib/drive/saveToDrive");
-                        data.matricNumber = extractMatricFromEmail(data.email);
+                        const initialMatric = extractMatricFromEmail(email);
+
+                        profile = {
+                            uid: currentUser.uid,
+                            name: currentUser.displayName || "",
+                            email: email,
+                            role,
+                            programType: null, // Will be updated by signIn button context if possible
+                            matricNumber: initialMatric,
+                            assignedSupervisorId: ""
+                        };
+                        await setDoc(userDocRef, profile);
                     }
-                    
-                    setUserRole(data.role);
-                    setUserProfile(data);
-                } else {
-                    // New user — will be properly initialised on sign-in button click
-                    setUserRole("trainee");
+
+                    // 3. ENFORCE DOMAIN VALIDATION (Always)
+                    if (!isAdmin) {
+                        if (role === "supervisor" && !email.endsWith("@fpm.upsi.edu.my")) {
+                            await firebaseSignOut(auth);
+                            throw new Error("SUPERVISOR ACCESS DENIED: Only @fpm.upsi.edu.my emails are authorized.");
+                        }
+                        if (role === "trainee" && !email.endsWith("@siswa.upsi.edu.my")) {
+                            await firebaseSignOut(auth);
+                            throw new Error("TRAINEE ACCESS DENIED: Only @siswa.upsi.edu.my emails are authorized.");
+                        }
+                    }
+
+                    setUser(currentUser);
+                    setUserRole(role);
+                    setUserProfile(profile);
+                } catch (error: any) {
+                    console.error("[Auth] Initialization Error:", error);
+                    alert(error.message);
+                    setUser(null);
+                    setUserRole(null);
                     setUserProfile(null);
                 }
             } else {
+                setUser(null);
                 setUserRole(null);
                 setUserProfile(null);
             }
@@ -141,8 +188,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
             if (isMobile) {
                 console.log("[Auth] Mobile detected, using signInWithRedirect...");
+                // Pass program info to localStorage so it can be picked up after redirect
+                localStorage.setItem("pendingProgramType", program);
                 await signInWithRedirect(auth, provider, browserPopupRedirectResolver);
-                // The page will redirect, so nothing more happens here
                 return;
             }
 
@@ -154,53 +202,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                 localStorage.setItem("googleEmail", result.user.email || "");
             }
 
+            // User handling is now centralized in onAuthStateChanged
+            // We just need to ensure the programType is updated if it was a new user
             const currentUser = result.user;
-            const email = currentUser.email || "";
-
-            // 1. Admin Whitelist (Bypass domain checks)
-            const adminEmails = ["ferozsamad@gmail.com", "ahmadferoz@upsi.edu.my"];
-            const isAdmin = adminEmails.includes(email);
-
-            // 2. Domain Validation
-            if (!isAdmin) {
-                if (program === "supervisor" && !email.endsWith("@fpm.upsi.edu.my")) {
-                    await firebaseSignOut(auth);
-                    throw new Error("SUPERVISOR ACCESS DENIED: Only @fpm.upsi.edu.my emails are authorized for supervisor accounts.");
-                }
-                if ((program === "practicum" || program === "internship") && !email.endsWith("@siswa.upsi.edu.my")) {
-                    await firebaseSignOut(auth);
-                    throw new Error("TRAINEE ACCESS DENIED: Only @siswa.upsi.edu.my emails are authorized for trainees.");
-                }
-            }
-
-            const role: "trainee" | "supervisor" | "admin" = isAdmin ? "admin" : (program === "supervisor" ? "supervisor" : "trainee");
-            const programType: "practicum" | "internship" | null = (isAdmin || program === "supervisor") ? null : program;
-
             const userDocRef = doc(db, "users", currentUser.uid);
-            const userDoc = await getDoc(userDocRef);
+            await updateDoc(userDocRef, { 
+                programType: (program === "supervisor") ? null : program 
+            });
 
-            if (userDoc.exists()) {
-                await updateDoc(userDocRef, { role, programType });
-            } else {
-                const { extractMatricFromEmail } = await import("@/lib/drive/saveToDrive");
-                const initialMatric = extractMatricFromEmail(email);
-
-                await setDoc(userDocRef, {
-                    uid: currentUser.uid,
-                    name: currentUser.displayName,
-                    email: currentUser.email,
-                    role,
-                    programType,
-                    matricNumber: initialMatric,
-                    assignedSupervisorId: ""
-                });
-            }
         } catch (error: any) {
             console.error("DEBUG: Firebase Auth Error:", error);
             if (error.code === "auth/unauthorized-domain") {
-                alert("DOMAIN ERROR: Please add this exact URL to Firebase Authorized Domains.");
+                alert("DOMAIN ERROR: Please add this exact URL (including www if used) to Firebase Authorized Domains in the console.");
             } else if (error.code === "auth/popup-blocked" || error.message?.includes("Cross-Origin-Opener-Policy")) {
-                alert("POPUP BLOCKED: Your browser blocked the login window. Please enable popups or try a different browser.");
+                alert("POPUP BLOCKED: Your browser blocked the login window. This usually happens in mobile apps like WhatsApp or Facebook. Please open in Safari or Chrome directly.");
             } else {
                 alert("Login Error: " + error.message);
             }
