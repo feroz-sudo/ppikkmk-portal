@@ -6,6 +6,9 @@ import {
     onAuthStateChanged,
     GoogleAuthProvider,
     signInWithPopup,
+    signInWithRedirect,
+    getRedirectResult,
+    browserPopupRedirectResolver,
     signOut as firebaseSignOut
 } from "firebase/auth";
 import { auth, db } from "@/lib/firebase/config";
@@ -50,6 +53,24 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        // Handle redirect result for mobile devices
+        const checkRedirect = async () => {
+            try {
+                const result = await getRedirectResult(auth);
+                if (result) {
+                    const credential = GoogleAuthProvider.credentialFromResult(result);
+                    if (credential?.accessToken) {
+                        localStorage.setItem("googleDriveToken", credential.accessToken);
+                        localStorage.setItem("googleEmail", result.user.email || "");
+                        console.log("[Auth] Redirect result processed successfully");
+                    }
+                }
+            } catch (error) {
+                console.error("[Auth] Redirect result error:", error);
+            }
+        };
+        checkRedirect();
+
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             setUser(currentUser);
 
@@ -115,6 +136,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             access_type: 'offline' 
         });
         try {
+            // Helper to detect mobile devices
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+            if (isMobile) {
+                console.log("[Auth] Mobile detected, using signInWithRedirect...");
+                await signInWithRedirect(auth, provider, browserPopupRedirectResolver);
+                // The page will redirect, so nothing more happens here
+                return;
+            }
+
+            console.log("[Auth] Desktop detected, using signInWithPopup...");
             const result = await signInWithPopup(auth, provider);
             const credential = GoogleAuthProvider.credentialFromResult(result);
             if (credential?.accessToken) {
