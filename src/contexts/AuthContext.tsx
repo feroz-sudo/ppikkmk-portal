@@ -111,7 +111,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         provider.addScope("https://www.googleapis.com/auth/drive.file");
         // Force consent screen to ensure Drive permissions are requested if not already granted
         provider.setCustomParameters({ 
-            prompt: 'consent select_account',
+            prompt: 'select_account',
             access_type: 'offline' 
         });
         try {
