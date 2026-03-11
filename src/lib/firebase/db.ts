@@ -492,6 +492,14 @@ export const updateUserStatus = async (uid: string, newStatus: 'active' | 'archi
     });
 };
 
+/**
+ * Update user's name and matric number
+ */
+export const updateUserProfile = async (uid: string, updates: { name: string, matricNumber: string }) => {
+    const userRef = doc(db, "users", uid);
+    await updateDoc(userRef, updates);
+};
+
 // Trainee Profile
 export const getTraineeProfile = async (uid: string): Promise<TraineeProfile | null> => {
     const docRef = doc(db, "trainee_profiles", uid);

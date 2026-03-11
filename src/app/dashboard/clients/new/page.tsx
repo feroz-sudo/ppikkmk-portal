@@ -35,12 +35,10 @@ function ClientRegistrationContent() {
     // Derived values
     const typePrefix = userProfile?.programType === "internship" ? "I" : "P";
     const matricNumber = userProfile?.matricNumber || "";
-    // Ensure matricNumber starts with 'M' if it's not empty and doesn't already have it
-    const formattedMatric = matricNumber.toUpperCase().startsWith('M')
-        ? matricNumber.toUpperCase()
-        : (matricNumber ? `M${matricNumber.toUpperCase()}` : 'UNKNOWN');
+    // Normalize matric number
+    const formattedMatric = matricNumber.toUpperCase();
 
-    const clinicalId = `${typePrefix}${type.toUpperCase()}${formattedMatric}`;
+    const clinicalId = `${typePrefix}${type.toUpperCase()}-${formattedMatric}`;
     const paddedNumber = clientNumber.padStart(3, '0');
     const folderPath = `${clinicalId}/${paddedNumber}/`;
 

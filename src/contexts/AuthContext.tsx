@@ -28,6 +28,7 @@ interface AuthContextType {
     loading: boolean;
     signInWithGoogle: (program: "practicum" | "internship" | "supervisor") => Promise<void>;
     signOut: () => Promise<void>;
+    updateProfile: (name: string, matricNumber: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -37,6 +38,7 @@ const AuthContext = createContext<AuthContextType>({
     loading: true,
     signInWithGoogle: async () => { },
     signOut: async () => { },
+    updateProfile: async () => { },
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -74,6 +76,24 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
         return () => unsubscribe();
     }, []);
+
+    const updateProfile = async (name: string, matricNumber: string) => {
+        if (!user) return;
+        try {
+            const { updateUserProfile } = await import("@/lib/firebase/db");
+            await updateUserProfile(user.uid, { name, matricNumber });
+            
+            // Re-fetch profile to update state
+            const userDocRef = doc(db, "users", user.uid);
+            const userDoc = await getDoc(userDocRef);
+            if (userDoc.exists()) {
+                setUserProfile(userDoc.data() as UserProfile);
+            }
+        } catch (error) {
+            console.error("Failed to update profile", error);
+            throw error;
+        }
+    };
 
     /**
      * Sign in with Google and set programType based on which button the user clicked.
@@ -148,7 +168,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, userRole, userProfile, loading, signInWithGoogle, signOut }}>
+        <AuthContext.Provider value={{ user, userRole, userProfile, loading, signInWithGoogle, signOut, updateProfile }}>
             {children}
         </AuthContext.Provider>
     );

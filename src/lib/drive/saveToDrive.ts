@@ -64,17 +64,13 @@ export const buildClinicalId = (
 ): string => {
     const prefix = programType === 'internship' ? 'I' : 'P';
 
-    // Normalize the trainee identifier (Matric Number preferred, otherwise fallback)
+    // Normalize the trainee identifier
     let traineePart = matricNumber || 'UNKNOWN';
+    traineePart = traineePart.toUpperCase();
 
-    // Ensure the trainee identifier part starts with 'M' as per clinical requirements
-    if (traineePart !== 'UNKNOWN' && !traineePart.toUpperCase().startsWith('M')) {
-        traineePart = `M${traineePart.toUpperCase()}`;
-    } else {
-        traineePart = traineePart.toUpperCase();
-    }
-
-    return `${prefix}${clientType}${traineePart}`;
+    // The standardized format for PPIKKMK: [P/I][KI/KK]-[MATRIC]
+    // Example: PKI-M20241001148
+    return `${prefix}${clientType}-${traineePart}`;
 };
 
 /**
@@ -103,7 +99,8 @@ export const uploadToGoogleDrive = async (
         const paddedClientId = clientId.padStart(3, '0');
         const paddedSessionId = sessionId.padStart(2, '0');
 
-        const fileName = `${clinicalId}_${paddedClientId}_${paddedSessionId}.pdf`;
+        // Example Filename: PKI-M20241001148-C001-S01.pdf
+        const fileName = `${clinicalId}-C${paddedClientId}-S${paddedSessionId}.pdf`;
         const folderNames = [clinicalId, paddedClientId, paddedSessionId];
         let currentParentId: string | undefined = undefined;
 

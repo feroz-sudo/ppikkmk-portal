@@ -72,7 +72,7 @@ export default function KKClientListPage() {
                                             <Link href={`/dashboard/clients/kk/${client.clientId}`} className="block w-full h-full">
                                                 <div className="font-bold text-gray-900 group-hover:text-upsi-navy transition-colors text-lg">{client.demographics.name}</div>
                                                 <div className="text-xs font-mono text-upsi-navy font-bold mt-0.5 bg-blue-50 inline-block px-2 py-0.5 rounded border border-blue-100 uppercase">
-                                                    {buildClinicalId(userProfile?.programType ?? null, client.type, userProfile?.matricNumber || 'UNKNOWN')}/{client.clientId.padStart(3, '0')}
+                                                    {buildClinicalId(userProfile?.programType ?? null, client.type, userProfile?.matricNumber || 'UNKNOWN')}-C{client.clientId.padStart(3, '0')}
                                                 </div>
                                                 <div className="text-xs text-gray-400 mt-1.5 flex items-center">
                                                     <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mr-2"></span>
