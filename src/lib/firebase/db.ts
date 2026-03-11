@@ -304,11 +304,16 @@ export const updateLogEntry = async (logId: string, log: Partial<Log>) => {
 };
 
 // Clients
-export const addClient = async (client: Omit<Client, "createdAt">) => {
-    return await addDoc(clientsRef, {
-        ...client,
-        createdAt: new Date()
+export const addClient = async (clientData: Omit<Client, "createdAt">) => {
+    const docRef = await addDoc(collection(db, "clients"), {
+        ...clientData,
+        createdAt: serverTimestamp(),
     });
+    return docRef;
+};
+
+export const deleteClient = async (clientId: string) => {
+    await deleteDoc(doc(db, "clients", clientId));
 };
 
 export const getTraineeClients = async (traineeId: string): Promise<Client[]> => {

@@ -2,48 +2,61 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import { getTraineeClients, Client } from "@/lib/firebase/db";
+import { getTraineeClients, Client, deleteClient } from "@/lib/firebase/db";
 import { buildClinicalId } from "@/lib/drive/saveToDrive";
 import Link from "next/link";
-import { PlusCircle, Search } from "lucide-react";
+import { PlusCircle, Search, Trash2 } from "lucide-react";
 
 export default function KKClientListPage() {
     const { user, userProfile } = useAuth();
     const [clients, setClients] = useState<Client[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        async function fetchClients() {
-            if (!user) return;
-            try {
-                const allClients = await getTraineeClients(user.uid);
-                // Filter only KK clients
-                setClients(allClients.filter(c => c.type === "KK"));
-            } catch (error) {
-                console.error("Failed to fetch clients:", error);
-            } finally {
-                setIsLoading(false);
-            }
+    async function fetchClients() {
+        if (!user) return;
+        try {
+            const allClients = await getTraineeClients(user.uid);
+            // Filter only KK clients
+            setClients(allClients.filter(c => c.type === "KK"));
+        } catch (error) {
+            console.error("Failed to fetch clients:", error);
+        } finally {
+            setIsLoading(false);
         }
+    }
+
+    useEffect(() => {
         fetchClients();
     }, [user]);
 
+    const handleDelete = async (clientId: string, clientName: string) => {
+        if (window.confirm(`Are you sure to delete this client?`)) {
+            try {
+                await deleteClient(clientId);
+                setClients(prev => prev.filter(c => c.id !== clientId));
+            } catch (error) {
+                console.error("Failed to delete client:", error);
+                alert("Failed to delete client. Please try again.");
+            }
+        }
+    };
+
     if (isLoading) {
-        return <div className="p-8 text-center text-gray-500">Loading clients...</div>;
+        return <div className="p-8 text-center text-gray-500">Loading groups...</div>;
     }
 
     return (
         <div className="max-w-6xl mx-auto pb-12" style={{ fontFamily: "Arial, sans-serif" }}>
             <div className="flex justify-between items-center mb-6">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900 border-l-4 border-upsi-gold pl-3">
+                    <h1 className="text-3xl font-bold text-gray-900 border-l-4 border-upsi-navy pl-3">
                         Kaunseling Kelompok (KK) Clients
                     </h1>
-                    <p className="text-gray-500 mt-1 pl-4">Manage and view all your registered group clients.</p>
+                    <p className="text-gray-500 mt-1 pl-4">Manage and view all your registered group sessions.</p>
                 </div>
                 <Link
                     href="/dashboard/clients/new?type=KK"
-                    className="flex items-center space-x-2 bg-upsi-navy text-white font-bold py-2.5 px-5 rounded-lg hover:bg-blue-900 transition-colors shadow-sm"
+                    className="flex items-center space-x-2 bg-upsi-gold text-upsi-navy font-bold py-2.5 px-5 rounded-lg hover:bg-yellow-500 transition-colors shadow-sm"
                 >
                     <PlusCircle size={20} />
                     <span>Add New Group</span>
@@ -54,20 +67,21 @@ export default function KKClientListPage() {
                 {clients.length === 0 ? (
                     <div className="p-12 text-center flex flex-col items-center">
                         <Search className="text-gray-300 mb-4" size={48} />
-                        <h3 className="text-xl font-bold text-gray-700">No KK Clients Found</h3>
-                        <p className="text-gray-500 mt-2 mb-6">You haven&apos;t registered any Kaunseling Kelompok (KK) clients yet. Use the Add New Group button above to register via Form 11.</p>
+                        <h3 className="text-xl font-bold text-gray-700">No KK Groups Found</h3>
+                        <p className="text-gray-500 mt-2 mb-6">You haven&apos;t registered any Kaunseling Kelompok (KK) groups yet. Use the Add New Group button above to register.</p>
                     </div>
                 ) : (
                     <div className="overflow-x-auto">
                         <table className="w-full text-left border-collapse">
                             <thead>
                                 <tr>
-                                    <th className="bg-upsi-navy text-white font-bold py-4 px-6 border-b border-blue-800 rounded-tl-xl rounded-tr-xl text-sm" style={{ fontFamily: "Arial, sans-serif" }}>Group File ID</th>
+                                    <th className="bg-upsi-navy text-white font-bold py-4 px-6 border-b border-blue-800 rounded-tl-xl text-sm" style={{ fontFamily: "Arial, sans-serif" }}>Group File ID</th>
+                                    <th className="bg-upsi-navy text-white font-bold py-4 px-6 border-b border-blue-800 rounded-tr-xl text-sm text-right" style={{ fontFamily: "Arial, sans-serif" }}>Action</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100">
                                 {clients.map((client) => (
-                                    <tr key={client.id} className="hover:bg-gray-50 transition-colors group cursor-pointer">
+                                    <tr key={client.id} className="hover:bg-gray-50 transition-colors group">
                                         <td className="py-4 px-6">
                                             <Link href={`/dashboard/clients/kk/${client.clientId}`} className="block w-full h-full">
                                                 <div className="font-bold text-gray-900 group-hover:text-upsi-navy transition-colors text-lg">{client.demographics.name}</div>
@@ -79,6 +93,15 @@ export default function KKClientListPage() {
                                                     Added {new Date(client.createdAt instanceof Object && 'seconds' in client.createdAt ? client.createdAt.seconds * 1000 : (client.createdAt as Date)).toLocaleDateString()}
                                                 </div>
                                             </Link>
+                                        </td>
+                                        <td className="py-4 px-6 text-right">
+                                            <button
+                                                onClick={() => handleDelete(client.id!, client.demographics.name)}
+                                                className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
+                                                title="Delete Group"
+                                            >
+                                                <Trash2 size={20} />
+                                            </button>
                                         </td>
                                     </tr>
                                 ))}

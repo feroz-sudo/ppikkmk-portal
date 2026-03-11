@@ -2,31 +2,44 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import { getTraineeClients, Client } from "@/lib/firebase/db";
+import { getTraineeClients, Client, deleteClient } from "@/lib/firebase/db";
 import { buildClinicalId } from "@/lib/drive/saveToDrive";
 import Link from "next/link";
-import { PlusCircle, Search } from "lucide-react";
+import { PlusCircle, Search, Trash2 } from "lucide-react";
 
 export default function KIClientListPage() {
     const { user, userProfile } = useAuth();
     const [clients, setClients] = useState<Client[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        async function fetchClients() {
-            if (!user) return;
-            try {
-                const allClients = await getTraineeClients(user.uid);
-                // Filter only KI clients
-                setClients(allClients.filter(c => c.type === "KI"));
-            } catch (error) {
-                console.error("Failed to fetch clients:", error);
-            } finally {
-                setIsLoading(false);
-            }
+    async function fetchClients() {
+        if (!user) return;
+        try {
+            const allClients = await getTraineeClients(user.uid);
+            // Filter only KI clients
+            setClients(allClients.filter(c => c.type === "KI"));
+        } catch (error) {
+            console.error("Failed to fetch clients:", error);
+        } finally {
+            setIsLoading(false);
         }
+    }
+
+    useEffect(() => {
         fetchClients();
     }, [user]);
+
+    const handleDelete = async (clientId: string, clientName: string) => {
+        if (window.confirm(`Are you sure to delete this client?`)) {
+            try {
+                await deleteClient(clientId);
+                setClients(prev => prev.filter(c => c.id !== clientId));
+            } catch (error) {
+                console.error("Failed to delete client:", error);
+                alert("Failed to delete client. Please try again.");
+            }
+        }
+    };
 
     if (isLoading) {
         return <div className="p-8 text-center text-gray-500">Loading clients...</div>;
@@ -62,12 +75,13 @@ export default function KIClientListPage() {
                         <table className="w-full text-left border-collapse">
                             <thead>
                                 <tr>
-                                    <th className="bg-upsi-navy text-white font-bold py-4 px-6 border-b border-blue-800 rounded-tl-xl rounded-tr-xl text-sm" style={{ fontFamily: "Arial, sans-serif" }}>Client File ID</th>
+                                    <th className="bg-upsi-navy text-white font-bold py-4 px-6 border-b border-blue-800 rounded-tl-xl text-sm" style={{ fontFamily: "Arial, sans-serif" }}>Client File ID</th>
+                                    <th className="bg-upsi-navy text-white font-bold py-4 px-6 border-b border-blue-800 rounded-tr-xl text-sm text-right" style={{ fontFamily: "Arial, sans-serif" }}>Action</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100">
                                 {clients.map((client) => (
-                                    <tr key={client.id} className="hover:bg-gray-50 transition-colors group cursor-pointer">
+                                    <tr key={client.id} className="hover:bg-gray-50 transition-colors group">
                                         <td className="py-4 px-6">
                                             <Link href={`/dashboard/clients/ki/${client.clientId}`} className="block w-full h-full">
                                                 <div className="font-bold text-gray-900 group-hover:text-upsi-navy transition-colors text-lg">{client.demographics.name}</div>
@@ -79,6 +93,15 @@ export default function KIClientListPage() {
                                                     Added {new Date(client.createdAt instanceof Object && 'seconds' in client.createdAt ? client.createdAt.seconds * 1000 : (client.createdAt as Date)).toLocaleDateString()}
                                                 </div>
                                             </Link>
+                                        </td>
+                                        <td className="py-4 px-6 text-right">
+                                            <button
+                                                onClick={() => handleDelete(client.id!, client.demographics.name)}
+                                                className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
+                                                title="Delete Client"
+                                            >
+                                                <Trash2 size={20} />
+                                            </button>
                                         </td>
                                     </tr>
                                 ))}
