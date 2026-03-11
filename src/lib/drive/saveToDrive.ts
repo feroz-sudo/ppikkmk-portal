@@ -68,9 +68,37 @@ export const buildClinicalId = (
     let traineePart = matricNumber || 'UNKNOWN';
     traineePart = traineePart.toUpperCase();
 
-    // The standardized format for PPIKKMK: [P/I][KI/KK]-[MATRIC]
-    // Example: PKI-M20241001148
-    return `${prefix}${clientType}-${traineePart}`;
+    // The standardized format for PPIKKMK: [P/I][KI/KK][MATRIC]
+    // Example: PKIM20241001148
+    return `${prefix}${clientType}${traineePart}`;
+};
+
+/**
+ * Initializes the 2-layer folder structure in Google Drive during client registration.
+ * Path: [ClinicalID] / [ClientID]
+ * 
+ * @param accessToken Google OAuth2 token
+ * @param clinicalId  e.g. PKIM20241001148
+ * @param clientId    e.g. '001'
+ */
+export const initializeClientFolders = async (
+    accessToken: string,
+    clinicalId: string,
+    clientId: string
+) => {
+    try {
+        const paddedClientId = clientId.padStart(3, '0');
+        const folderNames = [clinicalId, paddedClientId];
+        let currentParentId: string | undefined = undefined;
+
+        for (const folderName of folderNames) {
+            currentParentId = await getOrCreateFolder(accessToken, folderName, currentParentId);
+        }
+        return currentParentId;
+    } catch (error) {
+        console.error("Folder Initialization Error:", error);
+        throw error;
+    }
 };
 
 /**
@@ -99,8 +127,8 @@ export const uploadToGoogleDrive = async (
         const paddedClientId = clientId.padStart(3, '0');
         const paddedSessionId = sessionId.padStart(2, '0');
 
-        // Example Filename: PKI-M20241001148-C001-S01.pdf
-        const fileName = `${clinicalId}-C${paddedClientId}-S${paddedSessionId}.pdf`;
+        // Example Filename: PKIM20241001148_001_01.pdf
+        const fileName = `${clinicalId}_${paddedClientId}_${paddedSessionId}.pdf`;
         const folderNames = [clinicalId, paddedClientId, paddedSessionId];
         let currentParentId: string | undefined = undefined;
 

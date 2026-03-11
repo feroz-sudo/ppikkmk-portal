@@ -3,6 +3,7 @@
 import React, { useState, useEffect, Suspense } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { addClient, Client } from "@/lib/firebase/db";
+import { initializeClientFolders } from "@/lib/drive/saveToDrive";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
     UserPlus,
@@ -11,7 +12,8 @@ import {
     Save,
     CheckCircle2,
     Info,
-    ChevronRight
+    ChevronRight,
+    CloudCheck
 } from "lucide-react";
 import Link from "next/link";
 
@@ -31,6 +33,7 @@ function ClientRegistrationContent() {
     const [isSuccess, setIsSuccess] = useState(false);
     const [filingPath, setFilingPath] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [driveStatus, setDriveStatus] = useState<'idle' | 'syncing' | 'success' | 'error'>('idle');
 
     // Derived values
     const typePrefix = userProfile?.programType === "internship" ? "I" : "P";
@@ -38,7 +41,8 @@ function ClientRegistrationContent() {
     // Normalize matric number
     const formattedMatric = matricNumber.toUpperCase();
 
-    const clinicalId = `${typePrefix}${type.toUpperCase()}-${formattedMatric}`;
+    // Compact format: [P/I][KI/KK][MATRIC]
+    const clinicalId = `${typePrefix}${type.toUpperCase()}${formattedMatric}`;
     const paddedNumber = clientNumber.padStart(3, '0');
     const folderPath = `${clinicalId}/${paddedNumber}/`;
 
@@ -65,10 +69,23 @@ function ClientRegistrationContent() {
 
             await addClient(clientData);
 
+            // Trigger Google Drive Folder Initialization
+            const driveToken = localStorage.getItem("googleDriveToken");
+            if (driveToken) {
+                setDriveStatus('syncing');
+                try {
+                    await initializeClientFolders(driveToken, clinicalId, paddedNumber);
+                    setDriveStatus('success');
+                } catch (err) {
+                    console.error("Drive sync failed:", err);
+                    setDriveStatus('error');
+                }
+            }
+
             setFilingPath(folderPath);
             setIsSuccess(true);
 
-            // Auto-redirect after 3 seconds or user can click
+            // Auto-redirect after 3.5 seconds
             setTimeout(() => {
                 router.push(`/dashboard/clients/${type.toLowerCase()}/${paddedNumber}`);
             }, 3500);
@@ -94,7 +111,21 @@ function ClientRegistrationContent() {
                     <p className="text-gray-600 mb-8">The client has been registered and initialized in the system.</p>
 
                     <div className="bg-gray-50 rounded-xl p-6 border border-gray-100 mb-8 text-left">
-                        <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Filing & Drive Path</p>
+                        <div className="flex justify-between items-center mb-3">
+                            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Filing & Drive Path</p>
+                            {driveStatus === 'success' && (
+                                <div className="flex items-center text-green-600 text-[10px] font-bold uppercase tracking-widest">
+                                    <CloudCheck size={14} className="mr-1" />
+                                    Drive Initialized
+                                </div>
+                            )}
+                            {driveStatus === 'syncing' && (
+                                <div className="flex items-center text-blue-600 text-[10px] font-bold uppercase tracking-widest animate-pulse">
+                                    <div className="w-2 h-2 bg-blue-600 rounded-full mr-1 animate-ping" />
+                                    Initializing Drive...
+                                </div>
+                            )}
+                        </div>
                         <code className="text-lg font-mono text-upsi-navy font-bold block break-all">
                             {filingPath}
                         </code>
