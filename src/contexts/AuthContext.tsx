@@ -59,6 +59,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
                 if (userDoc.exists()) {
                     const data = userDoc.data() as UserProfile;
+                    
+                    // Auto-fill matricNumber from email if missing for trainees
+                    if (data.role === "trainee" && !data.matricNumber && data.email) {
+                        const { extractMatricFromEmail } = await import("@/lib/drive/saveToDrive");
+                        data.matricNumber = extractMatricFromEmail(data.email);
+                    }
+                    
                     setUserRole(data.role);
                     setUserProfile(data);
                 } else {
@@ -137,13 +144,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             if (userDoc.exists()) {
                 await updateDoc(userDocRef, { role, programType });
             } else {
+                const { extractMatricFromEmail } = await import("@/lib/drive/saveToDrive");
+                const initialMatric = extractMatricFromEmail(email);
+
                 await setDoc(userDocRef, {
                     uid: currentUser.uid,
                     name: currentUser.displayName,
                     email: currentUser.email,
                     role,
                     programType,
-                    matricNumber: "",
+                    matricNumber: initialMatric,
                     assignedSupervisorId: ""
                 });
             }

@@ -29,7 +29,10 @@ export default function KIClientListPage() {
         fetchClients();
     }, [user]);
 
-    const handleDelete = async (clientId: string, clientName: string) => {
+    const handleDelete = async (e: React.MouseEvent, clientId: string, clientName: string) => {
+        e.stopPropagation();
+        e.preventDefault();
+        
         if (window.confirm(`Are you sure to delete this client?`)) {
             try {
                 await deleteClient(clientId);
@@ -96,8 +99,8 @@ export default function KIClientListPage() {
                                         </td>
                                         <td className="py-4 px-6 text-right">
                                             <button
-                                                onClick={() => handleDelete(client.id!, client.demographics.name)}
-                                                className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
+                                                onClick={(e) => handleDelete(e, client.id!, client.demographics.name)}
+                                                className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all relative z-10"
                                                 title="Delete Client"
                                             >
                                                 <Trash2 size={20} />

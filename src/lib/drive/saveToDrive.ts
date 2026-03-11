@@ -47,6 +47,15 @@ const getOrCreateFolder = async (accessToken: string, folderName: string, parent
 };
 
 /**
+ * Helper to extract matric number from UPSI student email.
+ * e.g. m20241001148@siswa.upsi.edu.my -> M20241001148
+ */
+export const extractMatricFromEmail = (email: string | null | undefined): string => {
+    if (!email || !email.includes('@siswa.upsi.edu.my')) return "";
+    return email.split('@')[0].toUpperCase();
+};
+
+/**
  * Builds the canonical Clinical File ID used for both folder hierarchy and file naming.
  *
  * Format  : [TypePrefix][ClientType][TraineeID]
@@ -56,16 +65,18 @@ const getOrCreateFolder = async (accessToken: string, folderName: string, parent
  * @param programType  'practicum' | 'internship' | null  → prefix P or I
  * @param clientType   'KI' | 'KK'
  * @param matricNumber e.g. 'M20241001148'
+ * @param email        Optional email to fallback if matricNumber is empty
  */
 export const buildClinicalId = (
     programType: 'practicum' | 'internship' | null,
     clientType: 'KI' | 'KK',
-    matricNumber: string
+    matricNumber: string,
+    email?: string
 ): string => {
     const prefix = programType === 'internship' ? 'I' : 'P';
-
+    
     // Normalize the trainee identifier
-    let traineePart = matricNumber || 'UNKNOWN';
+    let traineePart = matricNumber || extractMatricFromEmail(email) || 'UNKNOWN';
     traineePart = traineePart.toUpperCase();
 
     // The standardized format for PPIKKMK: [P/I][KI/KK][MATRIC]
