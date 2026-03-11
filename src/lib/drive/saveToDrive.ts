@@ -3,10 +3,15 @@
 
 // Helper to find or create a specific folder in Google Drive
 const getOrCreateFolder = async (accessToken: string, folderName: string, parentId?: string): Promise<string> => {
+    // Search for existing folder
     let q = `name='${folderName}' and mimeType='application/vnd.google-apps.folder' and trashed=false`;
     if (parentId) {
         q += ` and '${parentId}' in parents`;
+    } else {
+        q += ` and 'root' in parents`; // Ensure root folders are searched in My Drive
     }
+
+    console.log(`[Drive] Searching for folder: "${folderName}" ${parentId ? `under parent: ${parentId}` : "in root"}`);
 
     const searchRes = await fetch(`https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(q)}&fields=files(id,name)`, {
         headers: { Authorization: `Bearer ${accessToken}` }
@@ -22,9 +27,13 @@ const getOrCreateFolder = async (accessToken: string, folderName: string, parent
 
     const data = await searchRes.json();
     if (data.files && data.files.length > 0) {
-        return data.files[0].id;
+        const foundId = data.files[0].id;
+        console.log(`[Drive] Found existing folder: "${folderName}" with ID: ${foundId}`);
+        return foundId;
     }
 
+    // Create if not found
+    console.log(`[Drive] Folder "${folderName}" not found. Creating...`);
     const createRes = await fetch('https://www.googleapis.com/drive/v3/files', {
         method: 'POST',
         headers: {
@@ -34,15 +43,18 @@ const getOrCreateFolder = async (accessToken: string, folderName: string, parent
         body: JSON.stringify({
             name: folderName,
             mimeType: 'application/vnd.google-apps.folder',
-            parents: parentId ? [parentId] : []
+            parents: parentId ? [parentId] : ['root'] // Explicitly use root
         })
     });
 
     if (!createRes.ok) {
-        throw new Error(`Failed to create folder ${folderName}: ${createRes.statusText}`);
+        const errText = await createRes.text();
+        console.error(`[Drive] Create failed for ${folderName}:`, errText);
+        throw new Error(`Failed to create folder ${folderName}: ${createRes.status} - ${errText}`);
     }
 
     const createData = await createRes.json();
+    console.log(`[Drive] Created folder: "${folderName}" with ID: ${createData.id}`);
     return createData.id;
 };
 
@@ -86,7 +98,7 @@ export const buildClinicalId = (
 
 /**
  * Initializes the 2-layer folder structure in Google Drive during client registration.
- * Path: [ClinicalID] / [ClientID]
+ * Path: [ClinicalID]_[ClientID] / 01
  * 
  * @param accessToken Google OAuth2 token
  * @param clinicalId  e.g. PKIM20241001148
@@ -99,13 +111,17 @@ export const initializeClientFolders = async (
 ) => {
     try {
         const paddedClientId = clientId.padStart(3, '0');
-        const folderNames = [clinicalId, paddedClientId];
-        let currentParentId: string | undefined = undefined;
+        // Layer 1: [ClinicalID]_[ClientID] (e.g. PKIM20241022134_001)
+        const mainFolderName = `${clinicalId}_${paddedClientId}`;
+        // Layer 2: Initial session folder (01)
+        const subFolderName = '01';
 
-        for (const folderName of folderNames) {
-            currentParentId = await getOrCreateFolder(accessToken, folderName, currentParentId);
-        }
-        return currentParentId;
+        console.log(`[Drive] Initializing folders for ${mainFolderName}/${subFolderName}...`);
+        
+        const mainFolderId = await getOrCreateFolder(accessToken, mainFolderName);
+        const subFolderId = await getOrCreateFolder(accessToken, subFolderName, mainFolderId);
+
+        return subFolderId;
     } catch (error) {
         console.error("Folder Initialization Error:", error);
         throw error;
@@ -113,12 +129,12 @@ export const initializeClientFolders = async (
 };
 
 /**
- * Uploads a PDF to Google Drive following the strict 3-layer clinical folder structure.
+ * Uploads a PDF to Google Drive following the 2-layer clinical folder structure.
  *
- * Folder path : [ClinicalID] / [ClientID] / [SessionID]
+ * Folder path : [ClinicalID]_[ClientID] / [SessionID]
  * File name   : [ClinicalID]_[ClientID]_[SessionID].pdf
  *
- * Example: PKIM20241001148/001/01 → PKIM20241001148_001_01.pdf
+ * Example: PKIM20241001148_001/01 → PKIM20241001148_001_01.pdf
  *
  * @param accessToken  Google OAuth2 token
  * @param pdfBlob      Generated PDF blob
@@ -140,17 +156,20 @@ export const uploadToGoogleDrive = async (
 
         // Example Filename: PKIM20241001148_001_01.pdf
         const fileName = `${clinicalId}_${paddedClientId}_${paddedSessionId}.pdf`;
-        const folderNames = [clinicalId, paddedClientId, paddedSessionId];
-        let currentParentId: string | undefined = undefined;
+        
+        // 2-Layer Folder Structure
+        const mainFolderName = `${clinicalId}_${paddedClientId}`;
+        const subFolderName = paddedSessionId;
 
-        for (const folderName of folderNames) {
-            currentParentId = await getOrCreateFolder(accessToken, folderName, currentParentId);
-        }
+        console.log(`[Drive] Navigating to folder: ${mainFolderName}/${subFolderName} for upload...`);
+        
+        const mainFolderId = await getOrCreateFolder(accessToken, mainFolderName);
+        const subFolderId = await getOrCreateFolder(accessToken, subFolderName, mainFolderId);
 
         const metadata = {
             name: fileName,
             mimeType: 'application/pdf',
-            parents: currentParentId ? [currentParentId] : [],
+            parents: [subFolderId],
             description: 'Auto-generated Clinical Session Report'
         };
 
@@ -158,6 +177,8 @@ export const uploadToGoogleDrive = async (
         form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
         form.append('file', pdfBlob);
 
+        console.log(`[Drive] Uploading ${fileName} to Google Drive...`);
+        
         const res = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
             method: 'POST',
             headers: { Authorization: `Bearer ${accessToken}` },
@@ -165,10 +186,12 @@ export const uploadToGoogleDrive = async (
         });
 
         if (!res.ok) {
-            throw new Error(`Drive Upload Failed: ${res.statusText}`);
+            const errText = await res.text();
+            throw new Error(`Drive Upload Failed (${res.status}): ${errText}`);
         }
 
         const data = await res.json();
+        console.log(`[Drive] Upload successful! File ID: ${data.id}`);
         return data.id;
 
     } catch (error) {

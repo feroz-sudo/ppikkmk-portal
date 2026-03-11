@@ -109,11 +109,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const signInWithGoogle = async (program: "practicum" | "internship" | "supervisor") => {
         const provider = new GoogleAuthProvider();
         provider.addScope("https://www.googleapis.com/auth/drive.file");
+        // Force consent screen to ensure Drive permissions are requested if not already granted
+        provider.setCustomParameters({ 
+            prompt: 'consent select_account',
+            access_type: 'offline' 
+        });
         try {
             const result = await signInWithPopup(auth, provider);
             const credential = GoogleAuthProvider.credentialFromResult(result);
             if (credential?.accessToken) {
                 localStorage.setItem("googleDriveToken", credential.accessToken);
+                localStorage.setItem("googleEmail", result.user.email || "");
             }
 
             const currentUser = result.user;

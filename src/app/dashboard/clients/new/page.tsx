@@ -34,17 +34,18 @@ function ClientRegistrationContent() {
     const [filingPath, setFilingPath] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [driveStatus, setDriveStatus] = useState<'idle' | 'syncing' | 'success' | 'error'>('idle');
+    const [driveError, setDriveError] = useState<string | null>(null);
 
     // Derived values
     const typePrefix = userProfile?.programType === "internship" ? "I" : "P";
-    const matricNumber = userProfile?.matricNumber || "";
-    // Normalize matric number
+    const matricNumber = userProfile?.matricNumber || 
+                        (userProfile?.email ? userProfile.email.split('@')[0].toUpperCase() : "");
     const formattedMatric = matricNumber.toUpperCase();
 
     // Compact format: [P/I][KI/KK][MATRIC]
     const clinicalId = `${typePrefix}${type.toUpperCase()}${formattedMatric}`;
     const paddedNumber = clientNumber.padStart(3, '0');
-    const folderPath = `${clinicalId}/${paddedNumber}/`;
+    const folderPath = `${clinicalId}_${paddedNumber}/01`;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -71,30 +72,75 @@ function ClientRegistrationContent() {
 
             // Trigger Google Drive Folder Initialization
             const driveToken = localStorage.getItem("googleDriveToken");
+            let driveSyncSuccess = false;
+
             if (driveToken) {
                 setDriveStatus('syncing');
+                setDriveError(null);
                 try {
+                    console.log("[Drive] Initializing folders for:", clinicalId, paddedNumber);
                     await initializeClientFolders(driveToken, clinicalId, paddedNumber);
                     setDriveStatus('success');
-                } catch (err) {
+                    driveSyncSuccess = true;
+                    console.log("[Drive] Initialization successful");
+                    const targetEmail = localStorage.getItem("googleEmail") || "your Google Account";
+                    alert(`✅ Google Drive Initialized!\n\nFolder: ${clinicalId}_${paddedNumber}\nAccount: ${targetEmail}\n\nRedirecting to dashboard...`);
+                } catch (err: any) {
                     console.error("Drive sync failed:", err);
                     setDriveStatus('error');
+                    setDriveError(err.message || "Unknown Drive error");
+                    alert("⚠️ Google Drive Sync Failed: " + (err.message || "Unknown error") + "\n\nYou can still access the client, but the Drive folder was not created.");
                 }
+            } else {
+                console.warn("No Google Drive token found in localStorage.");
+                setDriveStatus('error');
+                setDriveError("Google Drive access token missing. Please logout and login again.");
             }
 
             setFilingPath(folderPath);
             setIsSuccess(true);
 
-            // Auto-redirect after 3.5 seconds
-            setTimeout(() => {
-                router.push(`/dashboard/clients/${type.toLowerCase()}/${paddedNumber}`);
-            }, 3500);
+            // ONLY auto-redirect if Drive sync was successful
+            if (driveSyncSuccess) {
+                console.log("[Registration] Sync succeeded, auto-redirecting in 3.5s...");
+                setTimeout(() => {
+                    router.push(`/dashboard/clients/${type.toLowerCase()}/${paddedNumber}`);
+                }, 3500);
+            } else {
+                console.log("[Registration] Sync failed or no token, staying on success screen for manual review.");
+            }
 
         } catch (error) {
             console.error("Failed to register client:", error);
             alert("Failed to register client. Please try again.");
         } finally {
             setIsSubmitting(false);
+        }
+    };
+
+    const handleRetryDriveSync = async () => {
+        const driveToken = localStorage.getItem("googleDriveToken");
+        if (!driveToken) {
+            setDriveStatus('error');
+            setDriveError("Google Drive access token missing. Please logout and login again.");
+            return;
+        }
+
+        setDriveStatus('syncing');
+        setDriveError(null);
+        try {
+            console.log("[Drive] Manually retrying folder initialization...");
+            await initializeClientFolders(driveToken, clinicalId, paddedNumber);
+            setDriveStatus('success');
+            
+            // Redirect now that sync is fixed
+            setTimeout(() => {
+                router.push(`/dashboard/clients/${type.toLowerCase()}/${paddedNumber}`);
+            }, 2000);
+        } catch (err: any) {
+            console.error("Manual Drive sync failed:", err);
+            setDriveStatus('error');
+            setDriveError(err.message || "Unknown Drive error");
         }
     };
 
@@ -125,6 +171,14 @@ function ClientRegistrationContent() {
                                     Initializing Drive...
                                 </div>
                             )}
+                            {driveStatus === 'error' && (
+                                <div className="flex flex-col items-end text-red-500 text-[10px] font-bold uppercase tracking-widest">
+                                    <span>Drive Sync Failed</span>
+                                    <span className="text-[8px] opacity-70 normal-case font-normal mt-0.5 max-w-[200px] text-right">
+                                        {driveError}
+                                    </span>
+                                </div>
+                            )}
                         </div>
                         <code className="text-lg font-mono text-upsi-navy font-bold block break-all">
                             {filingPath}
@@ -132,6 +186,15 @@ function ClientRegistrationContent() {
                     </div>
 
                     <div className="flex flex-col space-y-3">
+                        {(driveStatus === 'error' || driveStatus === 'syncing') && (
+                            <button
+                                onClick={handleRetryDriveSync}
+                                disabled={driveStatus === 'syncing'}
+                                className="bg-upsi-gold text-white font-bold py-4 px-8 rounded-xl hover:bg-yellow-600 transition-all flex items-center justify-center space-x-2"
+                            >
+                                <span className="no-black">{driveStatus === 'syncing' ? 'Syncing...' : 'Retry Drive Sync'}</span>
+                            </button>
+                        )}
                         <button
                             onClick={() => router.push(`/dashboard/clients/${type.toLowerCase()}/${paddedNumber}`)}
                             className="bg-upsi-navy text-white font-bold py-4 px-8 rounded-xl hover:bg-blue-900 transition-all flex items-center justify-center space-x-2"
@@ -169,6 +232,20 @@ function ClientRegistrationContent() {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Google Account Verification */}
+                <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                        <div className="bg-blue-100 p-2 rounded-lg text-upsi-navy border border-blue-200">
+                            <CloudCheck size={20} />
+                        </div>
+                        <div>
+                            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Syncing to Google Account</p>
+                            <p className="text-sm text-upsi-navy font-black">
+                                {typeof window !== 'undefined' ? localStorage.getItem("googleEmail") : ""}
+                            </p>
+                        </div>
+                    </div>
+                </div>
                 {/* Type Selector Card */}
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
                     <div className="bg-gray-50 px-6 py-4 border-b border-gray-200">
