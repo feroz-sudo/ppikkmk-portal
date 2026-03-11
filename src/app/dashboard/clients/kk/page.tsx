@@ -6,11 +6,14 @@ import { getTraineeClients, Client, deleteClient } from "@/lib/firebase/db";
 import { buildClinicalId } from "@/lib/drive/saveToDrive";
 import Link from "next/link";
 import { PlusCircle, Search, Trash2 } from "lucide-react";
+import { ConfirmationModal } from "@/components/ui/ConfirmationModal";
 
 export default function KKClientListPage() {
     const { user, userProfile } = useAuth();
     const [clients, setClients] = useState<Client[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [groupToDelete, setGroupToDelete] = useState<{ id: string, name: string } | null>(null);
 
     async function fetchClients() {
         if (!user) return;
@@ -32,16 +35,27 @@ export default function KKClientListPage() {
     const handleDelete = async (e: React.MouseEvent, clientId: string, clientName: string) => {
         e.stopPropagation();
         e.preventDefault();
+        setGroupToDelete({ id: clientId, name: clientName });
+        setIsModalOpen(true);
+    };
 
-        if (window.confirm(`Are you sure to delete this client?`)) {
-            try {
-                await deleteClient(clientId);
-                setClients(prev => prev.filter(c => c.id !== clientId));
-            } catch (error) {
-                console.error("Failed to delete client:", error);
-                alert("Failed to delete client. Please try again.");
-            }
+    const confirmDelete = async () => {
+        if (!groupToDelete) return;
+        try {
+            await deleteClient(groupToDelete.id);
+            setClients(prev => prev.filter(c => c.id !== groupToDelete.id));
+        } catch (error) {
+            console.error("Failed to delete group:", error);
+            alert("Failed to delete group. Please try again.");
+        } finally {
+            setIsModalOpen(false);
+            setGroupToDelete(null);
         }
+    };
+
+    const cancelDelete = () => {
+        setIsModalOpen(false);
+        setGroupToDelete(null);
     };
 
     if (isLoading) {
@@ -119,6 +133,14 @@ export default function KKClientListPage() {
                     <strong>Important:</strong> KK Clients are meant for group counselling. Once you create a group, it will be available in dropdowns specifically mapped as a Kaunseling Kelompok.
                 </div>
             </div>
+
+            <ConfirmationModal
+                isOpen={isModalOpen}
+                title="Delete Group"
+                message={`Are you sure to delete this group? This action will permanently remove ${groupToDelete?.name} from the registry.`}
+                onConfirm={confirmDelete}
+                onCancel={cancelDelete}
+            />
         </div>
     );
 }

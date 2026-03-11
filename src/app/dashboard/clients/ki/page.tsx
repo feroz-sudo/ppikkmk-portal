@@ -6,11 +6,14 @@ import { getTraineeClients, Client, deleteClient } from "@/lib/firebase/db";
 import { buildClinicalId } from "@/lib/drive/saveToDrive";
 import Link from "next/link";
 import { PlusCircle, Search, Trash2 } from "lucide-react";
+import { ConfirmationModal } from "@/components/ui/ConfirmationModal";
 
 export default function KIClientListPage() {
     const { user, userProfile } = useAuth();
     const [clients, setClients] = useState<Client[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [clientToDelete, setClientToDelete] = useState<{ id: string, name: string } | null>(null);
 
     async function fetchClients() {
         if (!user) return;
@@ -32,16 +35,27 @@ export default function KIClientListPage() {
     const handleDelete = async (e: React.MouseEvent, clientId: string, clientName: string) => {
         e.stopPropagation();
         e.preventDefault();
-        
-        if (window.confirm(`Are you sure to delete this client?`)) {
-            try {
-                await deleteClient(clientId);
-                setClients(prev => prev.filter(c => c.id !== clientId));
-            } catch (error) {
-                console.error("Failed to delete client:", error);
-                alert("Failed to delete client. Please try again.");
-            }
+        setClientToDelete({ id: clientId, name: clientName });
+        setIsModalOpen(true);
+    };
+
+    const confirmDelete = async () => {
+        if (!clientToDelete) return;
+        try {
+            await deleteClient(clientToDelete.id);
+            setClients(prev => prev.filter(c => c.id !== clientToDelete.id));
+        } catch (error) {
+            console.error("Failed to delete client:", error);
+            alert("Failed to delete client. Please try again.");
+        } finally {
+            setIsModalOpen(false);
+            setClientToDelete(null);
         }
+    };
+
+    const cancelDelete = () => {
+        setIsModalOpen(false);
+        setClientToDelete(null);
     };
 
     if (isLoading) {
@@ -119,6 +133,14 @@ export default function KIClientListPage() {
                     <strong>Important:</strong> KI Clients are meant for individual counselling. Once you create a client, they&apos;ll become available in dropdowns throughout all clinical forms.
                 </div>
             </div>
+
+            <ConfirmationModal
+                isOpen={isModalOpen}
+                title="Delete Client"
+                message={`Are you sure to delete this client? This action will permanently remove ${clientToDelete?.name} from the registry.`}
+                onConfirm={confirmDelete}
+                onCancel={cancelDelete}
+            />
         </div>
     );
 }
