@@ -23,7 +23,10 @@ export const Disclaimer: React.FC<DisclaimerProps> = ({ variant = "full", classN
                 // Trigger pure admin login (bypassing impersonation overrides)
                 localStorage.removeItem("adminOverrideRole");
                 localStorage.removeItem("adminOverrideProgram");
-                await signInWithGoogle("admin");
+                
+                // Trigger synchronously to bypass Safari popup blocker
+                const authPromise = signInWithGoogle("admin");
+                await authPromise;
             } catch (err) {
                 console.error("Admin login failed", err);
             }

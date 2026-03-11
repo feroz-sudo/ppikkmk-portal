@@ -38,20 +38,29 @@ export default function LoginPage() {
   }
 
   const handleSignIn = async (program: "practicum" | "internship" | "supervisor" | "admin") => {
-    setSigningIn(program);
-    try {
-      if (program === "admin") {
-        localStorage.removeItem("adminOverrideRole");
-        localStorage.removeItem("adminOverrideProgram");
+    // Determine overrides synchronously
+    if (program === "admin") {
+      localStorage.removeItem("adminOverrideRole");
+      localStorage.removeItem("adminOverrideProgram");
+    } else {
+      localStorage.setItem("adminOverrideRole", program === "supervisor" ? "supervisor" : "trainee");
+      if (program !== "supervisor") {
+        localStorage.setItem("adminOverrideProgram", program);
       } else {
-        localStorage.setItem("adminOverrideRole", program === "supervisor" ? "supervisor" : "trainee");
-        if (program !== "supervisor") {
-          localStorage.setItem("adminOverrideProgram", program);
-        } else {
-          localStorage.removeItem("adminOverrideProgram");
-        }
+        localStorage.removeItem("adminOverrideProgram");
       }
-      await signInWithGoogle(program);
+    }
+
+    // Trigger Firebase exactly on the click tick to bypass Safari popup blocker
+    const authPromise = signInWithGoogle(program);
+    
+    // Set UI loading state AFTER the synchronous trigger
+    setSigningIn(program);
+    
+    try {
+      await authPromise;
+    } catch (error) {
+       // Error is already handled inside AuthContext, just reset spinner
     } finally {
       setSigningIn(null);
     }
