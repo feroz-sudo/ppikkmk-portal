@@ -37,9 +37,20 @@ export default function LoginPage() {
     );
   }
 
-  const handleSignIn = async (program: "practicum" | "internship" | "supervisor") => {
+  const handleSignIn = async (program: "practicum" | "internship" | "supervisor" | "admin") => {
     setSigningIn(program);
     try {
+      if (program === "admin") {
+        localStorage.removeItem("adminOverrideRole");
+        localStorage.removeItem("adminOverrideProgram");
+      } else {
+        localStorage.setItem("adminOverrideRole", program === "supervisor" ? "supervisor" : "trainee");
+        if (program !== "supervisor") {
+          localStorage.setItem("adminOverrideProgram", program);
+        } else {
+          localStorage.removeItem("adminOverrideProgram");
+        }
+      }
       await signInWithGoogle(program);
     } finally {
       setSigningIn(null);
@@ -162,10 +173,16 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* Footer Branding */}
+      {/* Footer Branding with Hidden Admin Access */}
       <footer className="mt-8 sm:mt-12 text-center text-[10px] sm:text-xs font-medium text-slate-400/60 transition-opacity hover:opacity-100 px-6">
         <div className="flex flex-wrap items-center justify-center gap-2">
-          <span>PPIKKMK Portal</span>
+          <span 
+             className="cursor-pointer hover:text-upsi-gold transition-colors"
+             onClick={() => handleSignIn("admin")}
+             title="Super Admin Access"
+          >
+            PPIKKMK Portal
+          </span>
           <span className="w-1 h-1 bg-upsi-gold rounded-full hidden sm:inline-block" />
           <span>Universiti Pendidikan Sultan Idris</span>
         </div>

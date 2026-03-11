@@ -29,7 +29,7 @@ interface AuthContextType {
     userRole: "trainee" | "supervisor" | "admin" | null;
     userProfile: UserProfile | null;
     loading: boolean;
-    signInWithGoogle: (program: "practicum" | "internship" | "supervisor") => Promise<void>;
+    signInWithGoogle: (program: "practicum" | "internship" | "supervisor" | "admin") => Promise<void>;
     signOut: () => Promise<void>;
     updateProfile: (name: string, matricNumber: string) => Promise<void>;
 }
@@ -128,6 +128,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                             await firebaseSignOut(auth);
                             throw new Error("TRAINEE ACCESS DENIED: Only @siswa.upsi.edu.my emails are authorized.");
                         }
+                    } else {
+                        // ADMIN IMPERSONATION OVERRIDE
+                        const overrideRole = localStorage.getItem("adminOverrideRole") as "trainee" | "supervisor" | "admin" | null;
+                        const overrideProgram = localStorage.getItem("adminOverrideProgram") as "practicum" | "internship" | null;
+                        
+                        if (overrideRole) {
+                            role = overrideRole;
+                            profile.role = overrideRole;
+                            if (overrideRole === "trainee") {
+                                profile.programType = overrideProgram || "practicum";
+                            } else {
+                                profile.programType = null;
+                            }
+                            console.log(`[Auth] Admin impersonating ${role} (${profile.programType || 'N/A'})`);
+                        }
                     }
 
                     setUser(currentUser);
@@ -172,9 +187,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     /**
      * Sign in with Google and set programType based on which button the user clicked.
-     * @param program  "practicum" | "internship" | "supervisor"
+     * @param program  "practicum" | "internship" | "supervisor" | "admin"
      */
-    const signInWithGoogle = async (program: "practicum" | "internship" | "supervisor") => {
+    const signInWithGoogle = async (program: "practicum" | "internship" | "supervisor" | "admin") => {
         const provider = new GoogleAuthProvider();
         provider.addScope("https://www.googleapis.com/auth/drive.file");
         // Force consent screen to ensure Drive permissions are requested if not already granted
@@ -203,12 +218,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             }
 
             // User handling is now centralized in onAuthStateChanged
-            // We just need to ensure the programType is updated if it was a new user
             const currentUser = result.user;
-            const userDocRef = doc(db, "users", currentUser.uid);
-            await updateDoc(userDocRef, { 
-                programType: (program === "supervisor") ? null : program 
-            });
+            
+            // Only update DB programType if not an admin (admins use overrides to preserve main DB record)
+            const adminEmails = ["ferozsamad@gmail.com", "ahmadferoz@upsi.edu.my"];
+            const isAdmin = adminEmails.includes(currentUser.email || "");
+            
+            if (!isAdmin) {
+                const userDocRef = doc(db, "users", currentUser.uid);
+                await updateDoc(userDocRef, { 
+                    programType: (program === "supervisor" || program === "admin") ? null : program 
+                });
+            }
 
         } catch (error: any) {
             console.error("DEBUG: Firebase Auth Error:", error);
