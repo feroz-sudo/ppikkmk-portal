@@ -1,35 +1,91 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Helper to check if user is signed in
+    
+    // Check if the user is authenticated
     function isSignedIn() {
       return request.auth != null;
     }
 
-    // Trainees can only manage their own client files and sessions
-    match /clients/{clientId} {
-      allow read, write: if isSignedIn() && request.auth.uid == resource.data.traineeId;
-      allow create: if isSignedIn();
-    }
-
-    match /sessions/{sessionId} {
-      allow read, write: if isSignedIn() && request.auth.uid == resource.data.traineeId;
-      allow create: if isSignedIn();
-    }
-
-    match /logs/{logId} {
-      allow read, write: if isSignedIn() && request.auth.uid == resource.data.traineeId;
-      allow create: if isSignedIn();
-    }
-
-    // User profiles
-    match /users/{userId} {
-      allow read, write: if isSignedIn() && request.auth.uid == userId;
+    // Identify if the user is a Super Admin
+    function isAdmin() {
+      return isSignedIn() && (request.auth.token.email == 'ferozsamad@gmail.com' || request.auth.token.email == 'ahmadferoz@upsi.edu.my');
     }
     
-    // Default deny
+    // Identify if the user is a Supervisor
+    function isSupervisor() {
+      return isSignedIn() && request.auth.token.email.matches('.*@fpm[.]upsi[.]edu[.]my');
+    }
+    
+    // Identify if the user is a Trainee
+    function isTrainee() {
+      return isSignedIn() && request.auth.token.email.matches('.*@siswa[.]upsi[.]edu[.]my');
+    }
+
+    // Users collection
+    match /users/{userId} {
+      // Everyone can read their own profile. Admins and supervisors can read all profiles.
+      allow read: if isSignedIn() && (request.auth.uid == userId || isAdmin() || isSupervisor());
+      
+      // Users can update their own profile. Admins can update any profile.
+      allow write: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+      
+      // Anyone signed in can create their initial profile
+      allow create: if isSignedIn();
+    }
+
+    // Clients collection
+    match /clients/{clientId} {
+      allow read: if isSignedIn() && (resource.data.traineeId == request.auth.uid || isAdmin() || isSupervisor());
+      allow write: if isSignedIn() && (
+        (resource == null && request.resource.data.traineeId == request.auth.uid) || 
+        (resource != null && resource.data.traineeId == request.auth.uid) || 
+        isAdmin() || 
+        isSupervisor()
+      );
+    }
+
+    // Sessions collection
+    match /sessions/{sessionId} {
+      allow read: if isSignedIn() && (resource.data.traineeId == request.auth.uid || isAdmin() || isSupervisor());
+      allow write: if isSignedIn() && (
+        (resource == null && request.resource.data.traineeId == request.auth.uid) || 
+        (resource != null && resource.data.traineeId == request.auth.uid) || 
+        isAdmin() || 
+        isSupervisor()
+      );
+    }
+
+    // Logs collection
+    match /logs/{logId} {
+      allow read: if isSignedIn() && (resource.data.traineeId == request.auth.uid || isAdmin() || isSupervisor());
+      allow write: if isSignedIn() && (
+        (resource == null && request.resource.data.traineeId == request.auth.uid) || 
+        (resource != null && resource.data.traineeId == request.auth.uid) || 
+        isAdmin() || 
+        isSupervisor()
+      );
+    }
+
+    // Supervisions collection
+    match /supervisions/{supervisionId} {
+      allow read: if isSignedIn() && (
+        resource.data.traineeId == request.auth.uid || 
+        resource.data.supervisorId == request.auth.uid || 
+        isAdmin() || 
+        isSupervisor()
+      );
+      allow write: if isSignedIn() && (
+        (resource == null && request.resource.data.traineeId == request.auth.uid) || 
+        (resource != null && (resource.data.traineeId == request.auth.uid || resource.data.supervisorId == request.auth.uid)) || 
+        isAdmin() || 
+        isSupervisor()
+      );
+    }
+
+    // Default Fallback
     match /{document=**} {
-      allow read, write: if false;
+      allow read, write: if isAdmin();
     }
   }
 }
