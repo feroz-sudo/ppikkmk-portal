@@ -200,6 +200,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             }
 
         } catch (error: any) {
+            if (error.code === "auth/popup-closed-by-user" || error.code === "auth/cancelled-popup-request") {
+                console.warn("[Auth] Login popup was closed by the user.");
+                return; // Silently exit, no need to alert or show an error overlay
+            }
+            
             console.error("DEBUG: Firebase Auth Error:", error);
             if (error.code === "auth/unauthorized-domain") {
                 alert("DOMAIN ERROR: Please add this exact URL (including www if used) to Firebase Authorized Domains in the console.");

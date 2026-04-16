@@ -184,38 +184,82 @@ export default function LogHarianForm() {
                                 <div className="bg-white p-4 font-black text-slate-700 bg-slate-50">Aktiviti Profesional Kaunselor KMK</div>
                                 
                                 {/* Row 1 */}
-                                <div className="bg-white p-4 flex justify-between items-center">
-                                    <span className="text-sm">1. Kaunseling Individu KMK</span>
+                                <div className="bg-white p-4 flex justify-between items-start">
+                                    <div className="flex-1 pr-2">
+                                        <div className="text-sm font-bold">1. Kaunseling Individu KMK</div>
+                                        <div className="text-[9px] text-slate-500 mt-1 leading-tight">
+                                            * Temubual Pengambilan/ Temubual Klinikal<br/>
+                                            * Penilaian / saringan status mental<br/>
+                                            <span className="italic">* Wajib dalam semua jenis sesi kaunseling</span>
+                                        </div>
+                                    </div>
                                     <input type="number" step="0.5" value={f2fIndiv} onChange={(e) => setF2fIndiv(e.target.value)} className="w-16 border rounded p-1 text-center font-bold" />
                                 </div>
-                                <div className="bg-white p-4 flex justify-between items-center">
-                                    <span className="text-sm">1. Aktiviti / Intervensi (Krisis, PFA, Pengujian, dll)</span>
+                                <div className="bg-white p-4 flex justify-between items-start">
+                                    <div className="flex-1 pr-2">
+                                        <div className="text-sm font-bold">1. Aktiviti / Intervensi</div>
+                                        <div className="text-[9px] text-slate-500 mt-1 leading-tight">
+                                            i. Intervensi Krisis<br/>
+                                            ii. PFA / MHPSS<br/>
+                                            iii. Pengujian: Tadbir, Analisis, Interpretasi<br/>
+                                            iv. Aktiviti Psikopendidikan / Komuniti<br/>
+                                            &bull; Outreach komuniti / kampus<br/>
+                                            &bull; Rujukan &bull; Konsultasi &bull; Pembentangan program atau kes
+                                        </div>
+                                    </div>
                                     <input type="number" step="0.5" value={profAct} onChange={(e) => setProfAct(e.target.value)} className="w-16 border rounded p-1 text-center font-bold" />
                                 </div>
 
                                 {/* Row 2 */}
-                                <div className="bg-white p-4 flex justify-between items-center">
-                                    <span className="text-sm">2. Kaunseling Kelompok KMK</span>
+                                <div className="bg-white p-4 flex justify-between items-start">
+                                    <div className="flex-1 pr-2">
+                                        <div className="text-sm font-bold">2. Kaunseling Kelompok KMK</div>
+                                        <div className="text-[9px] text-slate-500 mt-1 leading-tight">
+                                            * Temubual Pengambilan/ Temubual Klinikal<br/>
+                                            * Penilaian / saringan status mental<br/>
+                                            <span className="italic">* Wajib dalam semua jenis sesi kaunseling</span>
+                                        </div>
+                                    </div>
                                     <input type="number" step="0.5" value={f2fKelompok} onChange={(e) => setF2fKelompok(e.target.value)} className="w-16 border rounded p-1 text-center font-bold" />
                                 </div>
-                                <div className="bg-white p-4 flex justify-between items-center">
-                                    <span className="text-sm">2. Pengurusan dan Pentadbiran</span>
+                                <div className="bg-white p-4 flex justify-between items-start">
+                                    <div className="flex-1 pr-2">
+                                        <div className="text-sm font-bold">2. Pengurusan dan Pentadbiran</div>
+                                        <div className="text-[9px] text-slate-500 mt-1 leading-tight">
+                                            &bull; Pengurusan rekod dan buku log<br/>
+                                            &bull; Konseptualisasi / formulasi kes<br/>
+                                            &bull; Penulisan laporan Refleksi
+                                        </div>
+                                    </div>
                                     <input type="number" step="0.5" value={admin} onChange={(e) => setAdmin(e.target.value)} className="w-16 border rounded p-1 text-center font-bold" />
                                 </div>
 
                                 {/* Row 3 */}
                                 <div className="bg-white p-4 flex justify-between items-center">
                                 </div>
-                                <div className="bg-white p-4 flex justify-between items-center">
-                                    <span className="text-sm">3. Perkembangan Profesional</span>
+                                <div className="bg-white p-4 flex justify-between items-start">
+                                    <div className="flex-1 pr-2">
+                                        <div className="text-sm font-bold">3. Perkembangan Profesional</div>
+                                        <div className="text-[9px] text-slate-500 mt-1 leading-tight">
+                                            &bull; Pembentang / peserta konferens profesional / bengkel berkaitan bidang<br/>
+                                            &bull; Membaca literatur professional
+                                        </div>
+                                    </div>
                                     <input type="number" step="0.5" value={profDev} onChange={(e) => setProfDev(e.target.value)} className="w-16 border rounded p-1 text-center font-bold" />
                                 </div>
 
                                 {/* Row 4 */}
                                 <div className="bg-white p-4 flex justify-between items-center">
                                 </div>
-                                <div className="bg-white p-4 flex justify-between items-center">
-                                    <span className="text-sm">4. Penyeliaan</span>
+                                <div className="bg-white p-4 flex justify-between items-start">
+                                    <div className="flex-1 pr-2">
+                                        <div className="text-sm font-bold">4. Penyeliaan</div>
+                                        <div className="text-[9px] text-slate-500 mt-1 leading-tight">
+                                            &bull; Individu<br/>
+                                            &bull; Triadik<br/>
+                                            &bull; Kumpulan
+                                        </div>
+                                    </div>
                                     <input type="number" step="0.5" value={supervision} onChange={(e) => setSupervision(e.target.value)} className="w-16 border rounded p-1 text-center font-bold" />
                                 </div>
 

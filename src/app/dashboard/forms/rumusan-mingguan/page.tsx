@@ -36,6 +36,8 @@ export default function RumusanMingguanForm() {
 
     // Form State
     const [weekNumber, setWeekNumber] = useState("1");
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
     
     // Matrix State
     const [matrix, setMatrix] = useState<Record<string, Record<string, string>>>({});
@@ -59,9 +61,13 @@ export default function RumusanMingguanForm() {
             if (snapshot.exists()) {
                 const data = snapshot.data();
                 setMatrix(data.matrix || {});
+                setStartDate(data.startDate || "");
+                setEndDate(data.endDate || "");
                 setDebugMsg(`Week ${week} loaded successfully.`);
             } else {
                 setMatrix({});
+                setStartDate("");
+                setEndDate("");
                 setDebugMsg("No previous saves for this week.");
             }
         } catch (error: any) {
@@ -83,6 +89,8 @@ export default function RumusanMingguanForm() {
                 traineeId: user.uid,
                 type: "rumusanMingguan",
                 weekNumber,
+                startDate,
+                endDate,
                 matrix,
                 updatedAt: new Date()
             });
@@ -117,15 +125,23 @@ export default function RumusanMingguanForm() {
                             <h2 className="text-2xl font-black text-upsi-navy tracking-tight">RUMUSAN JAM MINGGUAN</h2>
                             <p className="text-xs text-slate-500 font-bold uppercase tracking-widest mt-1">Buku Log Praktikum</p>
                         </div>
-                        <div className="flex items-center space-x-3 bg-white p-2 px-4 rounded-xl shadow-sm border border-slate-200">
-                            <span className="text-xs font-bold text-slate-500 uppercase">Minggu Ke:</span>
-                            <input 
-                                type="number" 
-                                min="1" max="20"
-                                value={weekNumber} 
-                                onChange={(e) => setWeekNumber(e.target.value)}
-                                className="w-16 font-black text-lg text-center bg-transparent border-b-2 border-upsi-gold focus:outline-none focus:border-upsi-navy"
-                            />
+                        <div className="flex flex-col items-end space-y-3">
+                            <div className="flex items-center space-x-3 bg-white p-2 px-4 rounded-xl shadow-sm border border-slate-200">
+                                <span className="text-xs font-bold text-slate-500 uppercase">Minggu Ke:</span>
+                                <input 
+                                    type="number" 
+                                    min="1" max="20"
+                                    value={weekNumber} 
+                                    onChange={(e) => setWeekNumber(e.target.value)}
+                                    className="w-16 font-black text-lg text-center bg-transparent border-b-2 border-upsi-gold focus:outline-none focus:border-upsi-navy"
+                                />
+                            </div>
+                            <div className="flex items-center space-x-2 text-xs font-bold text-slate-600 bg-white p-2 px-4 rounded-xl shadow-sm border border-slate-200">
+                                <span>Dari</span>
+                                <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} className="border-b border-slate-300 focus:outline-none focus:border-upsi-navy bg-transparent" />
+                                <span>ke</span>
+                                <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} className="border-b border-slate-300 focus:outline-none focus:border-upsi-navy bg-transparent" />
+                            </div>
                         </div>
                     </div>
 

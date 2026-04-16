@@ -105,12 +105,12 @@ export default function RefleksiMingguanForm() {
                         {/* List of 6 */}
                         <div className="space-y-6">
                             {[
-                                { title: "1. Kaunseling/ Terapi Individu", state: kaunselingIndividu, set: setKaunselingIndividu },
-                                { title: "2. Kaunseling/ Terapi Kelompok", state: kaunselingKelompok, set: setKaunselingKelompok },
-                                { title: "3. Aktiviti / Intervensi", state: aktivitiIntervensi, set: setAktivitiIntervensi },
-                                { title: "4. Pengurusan Pentadbiran", state: pengurusan, set: setPengurusan },
-                                { title: "5. Perkembangan Profesional", state: perkembangan, set: setPerkembangan },
-                                { title: "6. Penyeliaan (pengalaman diselia oleh Penyelia Akademik dan/atau Lapangan)", state: penyeliaan, set: setPenyeliaan }
+                                { title: "1. Kaunseling/ Terapi Individu (kekuatan, kelemahan dan cara mengatasi, dan lain-lain)", state: kaunselingIndividu, set: setKaunselingIndividu },
+                                { title: "2. Kaunseling/ Terapi Kelompok (kekuatan, kelemahan dan cara mengatasi, dan lain-lain)", state: kaunselingKelompok, set: setKaunselingKelompok },
+                                { title: "3. Aktiviti / Intervensi (kekuatan, kelemahan dan cara mengatasi, dan lain-lain)", state: aktivitiIntervensi, set: setAktivitiIntervensi },
+                                { title: "4. Pengurusan Pentadbiran (kekuatan, kelemahan dan cara mengatasi, dan lain-lain)", state: pengurusan, set: setPengurusan },
+                                { title: "5. Perkembangan Profesional (kekuatan, kelemahan dan cara mengatasi, dan lain-lain)", state: perkembangan, set: setPerkembangan },
+                                { title: "6. Penyeliaan (pengalaman diselia oleh Penyeliaan Akademik dan / atau Lapangan)", state: penyeliaan, set: setPenyeliaan }
                             ].map((item, index) => (
                                 <div key={index} className="border border-slate-200 rounded-xl overflow-hidden">
                                     <div className="bg-slate-50 p-3 border-b border-slate-200 font-bold text-slate-700">
