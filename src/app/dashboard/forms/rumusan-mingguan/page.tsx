@@ -117,8 +117,8 @@ export default function RumusanMingguanForm() {
     return (
         <div className="flex flex-col h-full bg-slate-50 relative pb-20">
             <FormHeader title="Rumusan Jam Mingguan" refCode="PPIKKMK/RUMUSAN_MINGGUAN" />
-            <div className="flex-1 overflow-y-auto p-4 sm:p-8 custom-scrollbar">
-                <form id="rumusanMingguanForm" onSubmit={handleSave} className="max-w-6xl mx-auto bg-white shadow-xl rounded-2xl print:shadow-none print:bg-transparent">
+            <div className="flex-1 overflow-y-auto p-4 sm:p-8 custom-scrollbar print:overflow-visible print:w-full print:p-0">
+                <form id="rumusanMingguanForm" onSubmit={handleSave} className="max-w-6xl mx-auto bg-white shadow-xl rounded-2xl print:shadow-none print:bg-transparent print:max-w-full print:w-full">
                     {/* Header */}
                     <div className="p-8 border-b border-slate-200 flex justify-between items-center bg-teal-50/50 rounded-t-2xl">
                         <div>
@@ -146,54 +146,63 @@ export default function RumusanMingguanForm() {
                     </div>
 
                     <div className="p-8">
-                        <div className="overflow-x-auto border border-slate-200 rounded-xl">
-                            <table className="w-full text-left text-sm border-collapse">
-                                <thead className="bg-slate-50">
+                        <div className="w-full overflow-x-auto border border-slate-200 rounded-xl print:overflow-visible print:border-black">
+                            <table className="w-full text-center text-sm border-collapse print:text-[11px]">
+                                <colgroup>
+                                    <col className="w-1/4 print:w-1/4" />
+                                    <col className="w-[9%]" />
+                                    <col className="w-[9%]" />
+                                    <col className="w-[9%]" />
+                                    <col className="w-[9%]" />
+                                    <col className="w-[9%]" />
+                                    <col className="w-[9%]" />
+                                    <col className="w-[9%]" />
+                                    <col className="w-[12%]" />
+                                </colgroup>
+                                <thead className="bg-slate-50 border-b border-slate-200 print:bg-transparent">
                                     <tr>
-                                        <th className="p-3 border-r border-b border-slate-200 font-black text-slate-700 w-[25%] uppercase text-xs">Aktiviti</th>
+                                        <th className="p-3 font-bold border-r border-slate-200 text-left print:p-1 print:border-black uppercase">Aktiviti</th>
                                         {DAYS.map(day => (
-                                            <th key={day.id} className="p-2 border-r border-b border-slate-200 font-bold text-slate-600 text-center text-xs uppercase w-[9%]">
+                                            <th key={day.id} className="p-3 font-bold border-r border-slate-200 print:p-1 print:border-black uppercase text-xs">
                                                 {day.label}
                                             </th>
                                         ))}
-                                        <th className="p-3 border-b border-slate-200 font-black text-upsi-navy text-center uppercase text-xs">
-                                            Total
-                                        </th>
+                                        <th className="p-3 font-black text-slate-800 print:p-1 print:border-black uppercase text-xs">Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {CATEGORIES.map(cat => (
-                                        <tr key={cat.id} className="hover:bg-slate-50/50 border-b border-slate-100">
-                                            <td className="p-3 border-r border-slate-200 text-slate-700 font-bold text-xs">{cat.label}</td>
+                                        <tr key={cat.id} className="border-b border-slate-200 hover:bg-slate-50 print:border-black">
+                                            <td className="p-3 border-r border-slate-200 text-left font-bold text-slate-700 leading-tight print:p-2 print:border-black">
+                                                {cat.label}
+                                            </td>
                                             {DAYS.map(day => (
-                                                <td key={day.id} className="p-0 border-r border-slate-200">
+                                                <td key={day.id} className="border-r border-slate-200 focus-within:bg-slate-50/50 print:border-black p-0 align-middle">
                                                     <input 
                                                         type="number" 
                                                         step="0.5"
                                                         value={matrix[cat.id]?.[day.id] || ""}
                                                         onChange={(e) => updateCell(cat.id, day.id, e.target.value)}
-                                                        className="w-full h-full p-3 text-center bg-transparent focus:outline-none focus:ring-2 focus:ring-upsi-navy/20"
+                                                        className="w-full h-full bg-transparent border-none text-center outline-none focus:ring-2 focus:ring-upsi-navy/20 font-medium py-3 print:py-1 print:min-w-0"
                                                     />
                                                 </td>
                                             ))}
-                                            <td className="p-3 text-center font-black text-upsi-navy bg-slate-50/50">
-                                                {getRowTotal(cat.id) > 0 ? getRowTotal(cat.id) : ""}
+                                            <td className="p-3 font-black text-slate-800 print:border-black print:p-2 align-middle">
+                                                {getRowTotal(cat.id) > 0 ? getRowTotal(cat.id) : "-"}
                                             </td>
                                         </tr>
                                     ))}
 
                                     {/* Footer / Total Row */}
-                                    <tr className="bg-slate-100">
-                                        <td className="p-4 border-r border-slate-200 font-black text-slate-800 text-right uppercase tracking-widest text-xs">
-                                            Jumlah Jam
-                                        </td>
+                                    <tr className="bg-upsi-navy text-white print:bg-transparent print:text-black print:border-black">
+                                        <td className="p-4 border-r border-slate-200 print:border-black text-right font-black uppercase tracking-widest print:p-2">JUMLAH JAM</td>
                                         {DAYS.map(day => (
-                                            <td key={day.id} className="p-3 border-r border-slate-200 text-center font-black text-slate-700">
-                                                {getColTotal(day.id) > 0 ? getColTotal(day.id) : ""}
+                                            <td key={day.id} className="p-4 border-r border-slate-200 print:border-black font-black print:p-2">
+                                                {getColTotal(day.id) > 0 ? getColTotal(day.id) : "-"}
                                             </td>
                                         ))}
-                                        <td className="p-4 text-center font-black text-white bg-upsi-navy text-lg">
-                                            {getGrandTotal()}
+                                        <td className="p-4 font-black text-xl text-upsi-gold bg-black/20 print:bg-transparent print:text-black print:border-black print:p-2">
+                                            {getGrandTotal() > 0 ? getGrandTotal() : "0"}
                                         </td>
                                     </tr>
                                 </tbody>
@@ -201,7 +210,7 @@ export default function RumusanMingguanForm() {
                         </div>
 
                         {/* Signatures */}
-                        <div className="mt-12 grid grid-cols-2 gap-12 max-w-4xl mx-auto items-end pt-12">
+                        <div className="mt-12 grid grid-cols-2 gap-12 max-w-4xl mx-auto items-end pt-12 break-inside-avoid print:mt-6 print:pt-6">
                             <div className="text-center">
                                 <div className="border-b-2 border-slate-400 w-full mb-2"></div>
                                 <p className="font-bold text-xs uppercase tracking-widest text-slate-500">Tandatangan Kaunselor Pelatih</p>

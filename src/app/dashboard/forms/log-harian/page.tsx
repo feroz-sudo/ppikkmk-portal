@@ -179,96 +179,125 @@ export default function LogHarianForm() {
                         <div>
                             <h3 className="font-black text-slate-800 tracking-tight text-lg mb-4 bg-slate-100 p-4 rounded-xl text-center uppercase">RUMUSAN JAM HARIAN AKTIVITI PRAKTIKUM</h3>
                             
-                            <div className="grid grid-cols-2 gap-px bg-slate-200 border border-slate-200 rounded-xl overflow-hidden">
-                                <div className="bg-white p-4 font-black text-slate-700 bg-slate-50">Perkhidmatan Bersemuka (F2F)</div>
-                                <div className="bg-white p-4 font-black text-slate-700 bg-slate-50">Aktiviti Profesional Kaunselor KMK</div>
-                                
-                                {/* Row 1 */}
-                                <div className="bg-white p-4 flex justify-between items-start">
-                                    <div className="flex-1 pr-2">
-                                        <div className="text-sm font-bold">1. Kaunseling Individu KMK</div>
-                                        <div className="text-[9px] text-slate-500 mt-1 leading-tight">
-                                            * Temubual Pengambilan/ Temubual Klinikal<br/>
-                                            * Penilaian / saringan status mental<br/>
-                                            <span className="italic">* Wajib dalam semua jenis sesi kaunseling</span>
-                                        </div>
-                                    </div>
-                                    <input type="number" step="0.5" value={f2fIndiv} onChange={(e) => setF2fIndiv(e.target.value)} className="w-16 border rounded p-1 text-center font-bold" />
-                                </div>
-                                <div className="bg-white p-4 flex justify-between items-start">
-                                    <div className="flex-1 pr-2">
-                                        <div className="text-sm font-bold">1. Aktiviti / Intervensi</div>
-                                        <div className="text-[9px] text-slate-500 mt-1 leading-tight">
-                                            i. Intervensi Krisis<br/>
-                                            ii. PFA / MHPSS<br/>
-                                            iii. Pengujian: Tadbir, Analisis, Interpretasi<br/>
-                                            iv. Aktiviti Psikopendidikan / Komuniti<br/>
-                                            &bull; Outreach komuniti / kampus<br/>
-                                            &bull; Rujukan &bull; Konsultasi &bull; Pembentangan program atau kes
-                                        </div>
-                                    </div>
-                                    <input type="number" step="0.5" value={profAct} onChange={(e) => setProfAct(e.target.value)} className="w-16 border rounded p-1 text-center font-bold" />
-                                </div>
+                            <table className="w-full border-collapse border border-slate-200 bg-white">
+                                <thead>
+                                    <tr className="bg-slate-50">
+                                        <th className="p-4 font-black text-slate-700 border border-slate-200 w-1/2 text-left">Perkhidmatan Bersemuka (F2F)</th>
+                                        <th className="p-4 font-black text-slate-700 border border-slate-200 w-1/2 text-left">Aktiviti Profesional Kaunselor KMK</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {/* Row 1 */}
+                                    <tr>
+                                        <td className="p-4 border border-slate-200 align-top">
+                                            <div className="flex justify-between items-start">
+                                                <div className="flex-1 pr-2">
+                                                    <div className="text-sm font-bold">1. Kaunseling Individu KMK</div>
+                                                    <div className="text-[9px] text-slate-500 mt-1 leading-tight">
+                                                        * Temubual Pengambilan/ Temubual Klinikal<br/>
+                                                        * Penilaian / saringan status mental<br/>
+                                                        <span className="italic">* Wajib dalam semua jenis sesi kaunseling</span>
+                                                    </div>
+                                                </div>
+                                                <input type="number" step="0.5" value={f2fIndiv} onChange={(e) => setF2fIndiv(e.target.value)} className="w-16 border rounded p-1 text-center font-bold print:border-b print:border-x-0 print:border-t-0 print:rounded-none" />
+                                            </div>
+                                        </td>
+                                        <td className="p-4 border border-slate-200 align-top">
+                                            <div className="flex justify-between items-start">
+                                                <div className="flex-1 pr-2">
+                                                    <div className="text-sm font-bold">1. Aktiviti / Intervensi</div>
+                                                    <div className="text-[9px] text-slate-500 mt-1 leading-tight">
+                                                        i. Intervensi Krisis<br/>
+                                                        ii. PFA / MHPSS<br/>
+                                                        iii. Pengujian: Tadbir, Analisis, Interpretasi<br/>
+                                                        iv. Aktiviti Psikopendidikan / Komuniti<br/>
+                                                        &bull; Outreach komuniti / kampus<br/>
+                                                        &bull; Rujukan &bull; Konsultasi &bull; Pembentangan program atau kes
+                                                    </div>
+                                                </div>
+                                                <input type="number" step="0.5" value={profAct} onChange={(e) => setProfAct(e.target.value)} className="w-16 border rounded p-1 text-center font-bold print:border-b print:border-x-0 print:border-t-0 print:rounded-none" />
+                                            </div>
+                                        </td>
+                                    </tr>
 
-                                {/* Row 2 */}
-                                <div className="bg-white p-4 flex justify-between items-start">
-                                    <div className="flex-1 pr-2">
-                                        <div className="text-sm font-bold">2. Kaunseling Kelompok KMK</div>
-                                        <div className="text-[9px] text-slate-500 mt-1 leading-tight">
-                                            * Temubual Pengambilan/ Temubual Klinikal<br/>
-                                            * Penilaian / saringan status mental<br/>
-                                            <span className="italic">* Wajib dalam semua jenis sesi kaunseling</span>
-                                        </div>
-                                    </div>
-                                    <input type="number" step="0.5" value={f2fKelompok} onChange={(e) => setF2fKelompok(e.target.value)} className="w-16 border rounded p-1 text-center font-bold" />
-                                </div>
-                                <div className="bg-white p-4 flex justify-between items-start">
-                                    <div className="flex-1 pr-2">
-                                        <div className="text-sm font-bold">2. Pengurusan dan Pentadbiran</div>
-                                        <div className="text-[9px] text-slate-500 mt-1 leading-tight">
-                                            &bull; Pengurusan rekod dan buku log<br/>
-                                            &bull; Konseptualisasi / formulasi kes<br/>
-                                            &bull; Penulisan laporan Refleksi
-                                        </div>
-                                    </div>
-                                    <input type="number" step="0.5" value={admin} onChange={(e) => setAdmin(e.target.value)} className="w-16 border rounded p-1 text-center font-bold" />
-                                </div>
+                                    {/* Row 2 */}
+                                    <tr>
+                                        <td className="p-4 border border-slate-200 align-top">
+                                            <div className="flex justify-between items-start">
+                                                <div className="flex-1 pr-2">
+                                                    <div className="text-sm font-bold">2. Kaunseling Kelompok KMK</div>
+                                                    <div className="text-[9px] text-slate-500 mt-1 leading-tight">
+                                                        * Temubual Pengambilan/ Temubual Klinikal<br/>
+                                                        * Penilaian / saringan status mental<br/>
+                                                        <span className="italic">* Wajib dalam semua jenis sesi kaunseling</span>
+                                                    </div>
+                                                </div>
+                                                <input type="number" step="0.5" value={f2fKelompok} onChange={(e) => setF2fKelompok(e.target.value)} className="w-16 border rounded p-1 text-center font-bold print:border-b print:border-x-0 print:border-t-0 print:rounded-none" />
+                                            </div>
+                                        </td>
+                                        <td className="p-4 border border-slate-200 align-top">
+                                            <div className="flex justify-between items-start">
+                                                <div className="flex-1 pr-2">
+                                                    <div className="text-sm font-bold">2. Pengurusan dan Pentadbiran</div>
+                                                    <div className="text-[9px] text-slate-500 mt-1 leading-tight">
+                                                        &bull; Pengurusan rekod dan buku log<br/>
+                                                        &bull; Konseptualisasi / formulasi kes<br/>
+                                                        &bull; Penulisan laporan Refleksi
+                                                    </div>
+                                                </div>
+                                                <input type="number" step="0.5" value={admin} onChange={(e) => setAdmin(e.target.value)} className="w-16 border rounded p-1 text-center font-bold print:border-b print:border-x-0 print:border-t-0 print:rounded-none" />
+                                            </div>
+                                        </td>
+                                    </tr>
 
-                                {/* Row 3 */}
-                                <div className="bg-white p-4 flex justify-between items-center">
-                                </div>
-                                <div className="bg-white p-4 flex justify-between items-start">
-                                    <div className="flex-1 pr-2">
-                                        <div className="text-sm font-bold">3. Perkembangan Profesional</div>
-                                        <div className="text-[9px] text-slate-500 mt-1 leading-tight">
-                                            &bull; Pembentang / peserta konferens profesional / bengkel berkaitan bidang<br/>
-                                            &bull; Membaca literatur professional
-                                        </div>
-                                    </div>
-                                    <input type="number" step="0.5" value={profDev} onChange={(e) => setProfDev(e.target.value)} className="w-16 border rounded p-1 text-center font-bold" />
-                                </div>
+                                    {/* Row 3 */}
+                                    <tr>
+                                        <td className="p-4 border border-slate-200 align-top">
+                                        </td>
+                                        <td className="p-4 border border-slate-200 align-top">
+                                            <div className="flex justify-between items-start">
+                                                <div className="flex-1 pr-2">
+                                                    <div className="text-sm font-bold">3. Perkembangan Profesional</div>
+                                                    <div className="text-[9px] text-slate-500 mt-1 leading-tight">
+                                                        &bull; Pembentang / peserta konferens profesional / bengkel berkaitan bidang<br/>
+                                                        &bull; Membaca literatur professional
+                                                    </div>
+                                                </div>
+                                                <input type="number" step="0.5" value={profDev} onChange={(e) => setProfDev(e.target.value)} className="w-16 border rounded p-1 text-center font-bold print:border-b print:border-x-0 print:border-t-0 print:rounded-none" />
+                                            </div>
+                                        </td>
+                                    </tr>
 
-                                {/* Row 4 */}
-                                <div className="bg-white p-4 flex justify-between items-center">
-                                </div>
-                                <div className="bg-white p-4 flex justify-between items-start">
-                                    <div className="flex-1 pr-2">
-                                        <div className="text-sm font-bold">4. Penyeliaan</div>
-                                        <div className="text-[9px] text-slate-500 mt-1 leading-tight">
-                                            &bull; Individu<br/>
-                                            &bull; Triadik<br/>
-                                            &bull; Kumpulan
-                                        </div>
-                                    </div>
-                                    <input type="number" step="0.5" value={supervision} onChange={(e) => setSupervision(e.target.value)} className="w-16 border rounded p-1 text-center font-bold" />
-                                </div>
+                                    {/* Row 4 */}
+                                    <tr>
+                                        <td className="p-4 border border-slate-200 align-top">
+                                        </td>
+                                        <td className="p-4 border border-slate-200 align-top">
+                                            <div className="flex justify-between items-start">
+                                                <div className="flex-1 pr-2">
+                                                    <div className="text-sm font-bold">4. Penyeliaan</div>
+                                                    <div className="text-[9px] text-slate-500 mt-1 leading-tight">
+                                                        &bull; Individu<br/>
+                                                        &bull; Triadik<br/>
+                                                        &bull; Kumpulan
+                                                    </div>
+                                                </div>
+                                                <input type="number" step="0.5" value={supervision} onChange={(e) => setSupervision(e.target.value)} className="w-16 border rounded p-1 text-center font-bold print:border-b print:border-x-0 print:border-t-0 print:rounded-none" />
+                                            </div>
+                                        </td>
+                                    </tr>
 
-                                {/* Total Row */}
-                                <div className="col-span-2 bg-upsi-navy text-white p-4 flex justify-end items-center space-x-6">
-                                    <span className="font-black text-lg tracking-widest uppercase">JUMLAH JAM</span>
-                                    <div className="bg-white/20 px-6 py-2 rounded-xl text-xl font-black">{totalJam} Jam</div>
-                                </div>
-                            </div>
+                                    {/* Total Row */}
+                                    <tr>
+                                        <td colSpan={2} className="p-0 border border-slate-200">
+                                            <div className="bg-upsi-navy text-white p-4 flex justify-end items-center space-x-6">
+                                                <span className="font-black text-lg tracking-widest uppercase">JUMLAH JAM</span>
+                                                <div className="bg-white/20 px-6 py-2 rounded-xl text-xl font-black print:text-black print:bg-transparent print:border print:border-black print:rounded-none">{totalJam} Jam</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
 
                     </div>
