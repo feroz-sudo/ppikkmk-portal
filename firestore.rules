@@ -83,6 +83,21 @@ service cloud.firestore {
       );
     }
 
+    // Weekly Forms collection
+    match /weekly_forms/{formId} {
+      allow read: if isSignedIn() && (
+        resource.data.traineeId == request.auth.uid || 
+        isAdmin() || 
+        isSupervisor()
+      );
+      allow write: if isSignedIn() && (
+        (resource == null && request.resource.data.traineeId == request.auth.uid) || 
+        (resource != null && resource.data.traineeId == request.auth.uid) || 
+        isAdmin() || 
+        isSupervisor()
+      );
+    }
+
     // Default Fallback
     match /{document=**} {
       allow read, write: if isAdmin();

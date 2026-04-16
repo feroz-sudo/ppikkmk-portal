@@ -55,6 +55,8 @@ function SidebarNavContent({
     pathname,
     isFormsOpen,
     toggleForms,
+    isWeeklyFormsOpen,
+    toggleWeeklyForms,
     setIsSidebarOpen,
     isMobile
 }: any) {
@@ -224,6 +226,37 @@ function SidebarNavContent({
                         <span>Guidelines</span>
                     </Link>
 
+                    {/* WEEKLY FORMS DROPDOWN */}
+                    <div className="mt-4">
+                        <button
+                            onClick={() => toggleWeeklyForms()}
+                            className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg transition-colors mt-2 ${isWeeklyFormsOpen ? 'bg-white/10 font-bold' : 'hover:bg-white/10'}`}
+                        >
+                            <div className="flex items-center space-x-3">
+                                <Calendar size={20} className={isWeeklyFormsOpen ? "text-white" : "text-emerald-400"} />
+                                <span className="text-[11px] uppercase tracking-widest">Weekly Reports</span>
+                            </div>
+                            {isWeeklyFormsOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+                        </button>
+
+                        {isWeeklyFormsOpen && (
+                            <div className="mt-1 ml-4 pl-4 border-l border-white/20 space-y-1 py-1">
+                                <Link href="/dashboard/forms/log-harian" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/log-harian")}>
+                                    <ClipboardList size={14} className={pathname === "/dashboard/forms/log-harian" ? "text-emerald-400" : "text-blue-300"} />
+                                    <span className="text-[10px] uppercase font-bold tracking-tight">LOG HARIAN</span>
+                                </Link>
+                                <Link href="/dashboard/forms/refleksi-mingguan" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/refleksi-mingguan")}>
+                                    <BrainCircuit size={14} className={pathname === "/dashboard/forms/refleksi-mingguan" ? "text-emerald-400" : "text-purple-300"} />
+                                    <span className="text-[10px] uppercase font-bold tracking-tight">REFLEKSI KENDIRI</span>
+                                </Link>
+                                <Link href="/dashboard/forms/rumusan-mingguan" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/rumusan-mingguan")}>
+                                    <Calculator size={14} className={pathname === "/dashboard/forms/rumusan-mingguan" ? "text-emerald-400" : "text-orange-300"} />
+                                    <span className="text-[10px] uppercase font-bold tracking-tight">RUMUSAN JAM MINGGUAN</span>
+                                </Link>
+                            </div>
+                        )}
+                    </div>
+
                     {/* FORMS DROPDOWN */}
                     <div className="mt-2">
                         <button
@@ -303,6 +336,7 @@ export default function DashboardLayout({
     const router = useRouter();
     const pathname = usePathname();
     const [isFormsOpen, setIsFormsOpen] = useState(false);
+    const [isWeeklyFormsOpen, setIsWeeklyFormsOpen] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Default closed on mobile
     const [isMobile, setIsMobile] = useState(false);
     const [assignedTrainees, setAssignedTrainees] = useState<User[]>([]);
@@ -391,7 +425,9 @@ export default function DashboardLayout({
 
     // Automatically open forms dropdown if we are on a form route
     useEffect(() => {
-        if (pathname?.startsWith('/dashboard/forms')) {
+        if (pathname?.startsWith('/dashboard/forms/log-harian') || pathname?.startsWith('/dashboard/forms/refleksi-mingguan') || pathname?.startsWith('/dashboard/forms/rumusan-mingguan')) {
+            setIsWeeklyFormsOpen(true);
+        } else if (pathname?.startsWith('/dashboard/forms')) {
             setIsFormsOpen(true);
         }
     }, [pathname]);
@@ -464,6 +500,8 @@ export default function DashboardLayout({
                         pathname={pathname}
                         isFormsOpen={isFormsOpen}
                         toggleForms={() => setIsFormsOpen(!isFormsOpen)}
+                        isWeeklyFormsOpen={isWeeklyFormsOpen}
+                        toggleWeeklyForms={() => setIsWeeklyFormsOpen(!isWeeklyFormsOpen)}
                         setIsSidebarOpen={setIsSidebarOpen}
                         isMobile={isMobile}
                     />
