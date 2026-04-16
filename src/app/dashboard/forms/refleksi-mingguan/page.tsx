@@ -76,7 +76,7 @@ export default function RefleksiMingguanForm() {
 
     return (
         <div className="flex flex-col h-full bg-slate-50 relative pb-20">
-            <FormHeader title="Refleksi Kendiri Mingguan" subtitle="Weekly Self-Reflection Form" />
+            <FormHeader title="Refleksi Kendiri Mingguan" refCode="PPIKKMK/REFLEKSI" />
             <div className="flex-1 overflow-y-auto p-4 sm:p-8 custom-scrollbar">
                 <form id="refleksiForm" onSubmit={handleSave} className="max-w-5xl mx-auto bg-white shadow-xl rounded-2xl print:shadow-none print:bg-transparent">
                     {/* Header */}
@@ -129,7 +129,11 @@ export default function RefleksiMingguanForm() {
                     </div>
                 </form>
             </div>
-            <FormActionBar formId="refleksiForm" formTitle={`Refleksi Kendiri - Minggu ${weekNumber}`} debugMsg={debugMsg} />
+            <FormActionBar
+                formName={`Refleksi Kendiri - Minggu ${weekNumber}`}
+                isSubmitting={isSubmitting}
+                onSave={() => handleSave({ preventDefault: () => {} } as React.FormEvent)}
+            />
         </div>
     );
 }

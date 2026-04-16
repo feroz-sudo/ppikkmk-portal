@@ -107,7 +107,7 @@ export default function LogHarianForm() {
 
     return (
         <div className="flex flex-col h-full bg-slate-50 relative pb-20">
-            <FormHeader title="Log Harian & Rumusan Jam" subtitle="Weekly Logbook Tracker" />
+            <FormHeader title="Log Harian & Rumusan Jam" refCode="PPIKKMK/LOG_HARIAN" />
             <div className="flex-1 overflow-y-auto p-4 sm:p-8 custom-scrollbar">
                 <form id="logHarianForm" onSubmit={handleSave} className="max-w-5xl mx-auto bg-white shadow-xl rounded-2xl print:shadow-none print:bg-transparent">
                     {/* Header */}
@@ -230,7 +230,11 @@ export default function LogHarianForm() {
                     </div>
                 </form>
             </div>
-            <FormActionBar formId="logHarianForm" formTitle={`Log Harian - Minggu ${weekNumber}`} debugMsg={debugMsg} />
+            <FormActionBar
+                formName={`Log Harian - Minggu ${weekNumber}`}
+                isSubmitting={isSubmitting}
+                onSave={() => handleSave({ preventDefault: () => {} } as React.FormEvent)}
+            />
         </div>
     );
 }

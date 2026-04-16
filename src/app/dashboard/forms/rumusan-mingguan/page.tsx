@@ -108,7 +108,7 @@ export default function RumusanMingguanForm() {
 
     return (
         <div className="flex flex-col h-full bg-slate-50 relative pb-20">
-            <FormHeader title="Rumusan Jam Mingguan" subtitle="Weekly Hours Summary" />
+            <FormHeader title="Rumusan Jam Mingguan" refCode="PPIKKMK/RUMUSAN_MINGGUAN" />
             <div className="flex-1 overflow-y-auto p-4 sm:p-8 custom-scrollbar">
                 <form id="rumusanMingguanForm" onSubmit={handleSave} className="max-w-6xl mx-auto bg-white shadow-xl rounded-2xl print:shadow-none print:bg-transparent">
                     {/* Header */}
@@ -200,7 +200,11 @@ export default function RumusanMingguanForm() {
                     </div>
                 </form>
             </div>
-            <FormActionBar formId="rumusanMingguanForm" formTitle={`Rumusan Mingguan - Minggu ${weekNumber}`} debugMsg={debugMsg} />
+            <FormActionBar
+                formName={`Rumusan Mingguan - Minggu ${weekNumber}`}
+                isSubmitting={isSubmitting}
+                onSave={() => handleSave({ preventDefault: () => {} } as React.FormEvent)}
+            />
         </div>
     );
 }
