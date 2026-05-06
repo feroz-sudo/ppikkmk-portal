@@ -66,6 +66,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                     let role: "trainee" | "supervisor" | "admin";
                     let profile: UserProfile;
 
+                    const pendingProgram = localStorage.getItem("pendingProgramType");
+                    const targetProgram = (pendingProgram === "supervisor" || pendingProgram === "admin") ? null : pendingProgram as "practicum" | "internship" | null;
+
                     if (userDoc.exists()) {
                         profile = userDoc.data() as UserProfile;
                         role = profile.role;
@@ -75,10 +78,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                             const { extractMatricFromEmail } = await import("@/lib/drive/saveToDrive");
                             profile.matricNumber = extractMatricFromEmail(profile.email);
                         }
+
+                        // Sync programType if they clicked a specific login button
+                        if (!isAdmin && targetProgram && profile.programType !== targetProgram) {
+                            profile.programType = targetProgram;
+                            await updateDoc(userDocRef, { programType: targetProgram });
+                        }
+
                     } else {
                         // NEW USER initialization
-                        // Note: If we don't have programType (from redirect/popup button click), 
-                        // we default to trainee if domain matches.
                         const isSupervisor = email.endsWith("@fpm.upsi.edu.my");
                         role = isAdmin ? "admin" : (isSupervisor ? "supervisor" : "trainee");
                         
@@ -90,12 +98,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                             name: currentUser.displayName || "",
                             email: email,
                             role,
-                            programType: null, // Will be updated by signIn button context if possible
+                            programType: targetProgram, 
                             matricNumber: initialMatric,
                             assignedSupervisorId: ""
                         };
                         await setDoc(userDocRef, profile);
                     }
+                    
+                    // Clear the pending program type after consumption
+                    localStorage.removeItem("pendingProgramType");
 
                     // 3. ENFORCE DOMAIN VALIDATION (Always)
                     if (!isAdmin) {
@@ -176,6 +187,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             prompt: 'select_account',
             access_type: 'offline' 
         });
+        // Store selected program temporarily so onAuthStateChanged can pick it up
+        localStorage.setItem("pendingProgramType", program);
+
         try {
             console.log("[Auth] Triggering universal signInWithPopup...");
             const result = await signInWithPopup(auth, provider);
@@ -186,18 +200,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             }
 
             // User handling is now centralized in onAuthStateChanged
-            const currentUser = result.user;
-            
-            // Only update DB programType if not an admin (admins use overrides to preserve main DB record)
-            const adminEmails = ["ferozsamad@gmail.com", "ahmadferoz@upsi.edu.my"];
-            const isAdmin = adminEmails.includes(currentUser.email || "");
-            
-            if (!isAdmin) {
-                const userDocRef = doc(db, "users", currentUser.uid);
-                await updateDoc(userDocRef, { 
-                    programType: (program === "supervisor" || program === "admin") ? null : program 
-                });
-            }
+            // We no longer blindly updateDoc here because it causes race conditions
+            // for brand new users whose documents haven't been created yet.
 
         } catch (error: any) {
             if (error.code === "auth/popup-closed-by-user" || error.code === "auth/cancelled-popup-request") {
