@@ -161,23 +161,23 @@ export default function RumusanMingguanForm() {
                                 </colgroup>
                                 <thead className="bg-slate-50 border-b border-slate-200 print:bg-transparent">
                                     <tr>
-                                        <th className="p-3 font-bold border-r border-slate-200 text-left print:p-1 print:border-black uppercase">Aktiviti</th>
+                                        <th className="p-3 font-bold border border-slate-200 text-left print:p-1 print:border-black uppercase">Aktiviti</th>
                                         {DAYS.map(day => (
-                                            <th key={day.id} className="p-3 font-bold border-r border-slate-200 print:p-1 print:border-black uppercase text-xs">
+                                            <th key={day.id} className="p-3 font-bold border border-slate-200 print:p-1 print:border-black uppercase text-xs">
                                                 {day.label}
                                             </th>
                                         ))}
-                                        <th className="p-3 font-black text-slate-800 print:p-1 print:border-black uppercase text-xs">Total</th>
+                                        <th className="p-3 font-black text-slate-800 border border-slate-200 print:p-1 print:border-black uppercase text-xs">Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {CATEGORIES.map(cat => (
-                                        <tr key={cat.id} className="border-b border-slate-200 hover:bg-slate-50 print:border-black">
-                                            <td className="p-3 border-r border-slate-200 text-left font-bold text-slate-700 leading-tight print:p-2 print:border-black">
+                                        <tr key={cat.id} className="hover:bg-slate-50">
+                                            <td className="p-3 border border-slate-200 text-left font-bold text-slate-700 leading-tight print:p-2 print:border-black">
                                                 {cat.label}
                                             </td>
                                             {DAYS.map(day => (
-                                                <td key={day.id} className="border-r border-slate-200 focus-within:bg-slate-50/50 print:border-black p-0 align-middle">
+                                                <td key={day.id} className="border border-slate-200 focus-within:bg-slate-50/50 print:border-black p-0 align-middle">
                                                     <input 
                                                         type="number" 
                                                         step="0.5"
@@ -187,21 +187,21 @@ export default function RumusanMingguanForm() {
                                                     />
                                                 </td>
                                             ))}
-                                            <td className="p-3 font-black text-slate-800 print:border-black print:p-2 align-middle">
+                                            <td className="p-3 font-black text-slate-800 border border-slate-200 print:border-black print:p-2 align-middle">
                                                 {getRowTotal(cat.id) > 0 ? getRowTotal(cat.id) : "-"}
                                             </td>
                                         </tr>
                                     ))}
 
                                     {/* Footer / Total Row */}
-                                    <tr className="bg-upsi-navy text-white print:bg-transparent print:text-black print:border-black">
-                                        <td className="p-4 border-r border-slate-200 print:border-black text-right font-black uppercase tracking-widest print:p-2">JUMLAH JAM</td>
+                                    <tr className="bg-upsi-navy text-white print:bg-transparent print:text-black">
+                                        <td className="p-4 border border-slate-200 print:border-black text-right font-black uppercase tracking-widest print:p-2">JUMLAH JAM</td>
                                         {DAYS.map(day => (
-                                            <td key={day.id} className="p-4 border-r border-slate-200 print:border-black font-black print:p-2">
+                                            <td key={day.id} className="p-4 border border-slate-200 print:border-black font-black print:p-2">
                                                 {getColTotal(day.id) > 0 ? getColTotal(day.id) : "-"}
                                             </td>
                                         ))}
-                                        <td className="p-4 font-black text-xl text-upsi-gold bg-black/20 print:bg-transparent print:text-black print:border-black print:p-2">
+                                        <td className="p-4 border border-slate-200 font-black text-xl text-upsi-gold bg-black/20 print:bg-transparent print:text-black print:border-black print:p-2">
                                             {getGrandTotal() > 0 ? getGrandTotal() : "0"}
                                         </td>
                                     </tr>
