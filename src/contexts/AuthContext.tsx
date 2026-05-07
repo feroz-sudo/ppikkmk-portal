@@ -182,10 +182,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const signInWithGoogle = async (program: "practicum" | "internship" | "supervisor" | "admin") => {
         const provider = new GoogleAuthProvider();
         provider.addScope("https://www.googleapis.com/auth/drive.file");
-        // Force consent screen to ensure Drive permissions are requested if not already granted
-        provider.setCustomParameters({ 
-            prompt: 'select_account'
-        });
+        // Removed setCustomParameters completely as it can cause 400 Malformed Request on iOS Chrome
         // Store selected program temporarily so onAuthStateChanged can pick it up
         localStorage.setItem("pendingProgramType", program);
 
