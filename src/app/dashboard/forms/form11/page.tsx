@@ -22,8 +22,11 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
     // React 19 Search Params Unwrapping
     const unwrappedSearch = React.use(searchParams);
     const searchParamsHooks = useSearchParams();
-    const prefillSessionId = unwrappedSearch.clientId as string | undefined;
+    const prefillClientId = unwrappedSearch.clientId as string | undefined;
+    const prefillSessionId = unwrappedSearch.sessionId as string | undefined;
     const docId = searchParamsHooks.get("docId") || (unwrappedSearch.docId as string | undefined);
+
+    const [selectedClient, setSelectedClient] = useState<any>(null);
 
     // Logistics Data
     const [counsellorName, setCounsellorName] = useState("");
@@ -35,8 +38,26 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
 
     // Auto-Mount URL Parameters
     useEffect(() => {
+        if (prefillSessionId) {
+            setNumberOfSession(prefillSessionId);
+        }
+    }, [prefillSessionId]);
+
+    useEffect(() => {
         async function fetchInitialData() {
             if (!user) return;
+
+            // Load client details if prefillClientId exists
+            if (prefillClientId) {
+                try {
+                    const clientDoc = await getDoc(doc(db, "clients", prefillClientId));
+                    if (clientDoc.exists()) {
+                        setSelectedClient({ id: clientDoc.id, ...clientDoc.data() });
+                    }
+                } catch (error) {
+                    console.error("Failed to load client details", error);
+                }
+            }
 
             // If we have a docId, we are EDITING
             if (docId) {
@@ -78,13 +99,9 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
                 }
                 return;
             }
-
-            if (prefillSessionId) {
-                setNumberOfSession(prefillSessionId);
-            }
         }
         fetchInitialData();
-    }, [user, prefillSessionId, docId]);
+    }, [user, prefillClientId, docId]);
 
     // Dynamic Group Members Array (always exactly 8 elements to prevent out-of-bounds state crashes)
     const [groupMembers, setGroupMembers] = useState(Array.from({ length: 8 }, () => ({ name: "", progress: "" })));
@@ -161,7 +178,7 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
 
         const firstMemberName = groupMembers[0]?.name || "Group Session";
 
-        const effectiveClientId = "GROUP-SESSION";
+        const effectiveClientId = selectedClient?.id || prefillClientId || "GROUP-SESSION";
         const clientType = "KK"; // Default to KK for groups
 
         setIsSubmitting(true);
@@ -234,19 +251,18 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
                         clientType as any,
                         userProfile?.matricNumber || user.uid
                     );
-                    // Mock a client object for PDF generator since it expects one
                     const mockClient = {
                         id: effectiveClientId,
-                        clientId: "GROUP",
+                        clientId: selectedClient?.clientId || "GROUP",
                         type: clientType,
-                        demographics: { name: firstMemberName }
+                        demographics: { name: selectedClient?.demographics?.name || firstMemberName }
                     };
                     const pdfBlob = await generateSessionPDF(sessionData, mockClient as any, clinicalId);
                     await uploadToGoogleDrive(
                         driveToken,
                         pdfBlob,
                         clinicalId,
-                        "GROUP",
+                        selectedClient?.clientId || "GROUP",
                         sessionData.sessionId
                     );
                     alert("Group Counselling Report & PDF saved to Google Drive successfully!");
