@@ -265,17 +265,25 @@ export default function KKClientFolderPage({ params }: PageProps) {
                                                                     <div className="text-xs text-gray-400">{f.duration} hrs</div>
                                                                 </div>
                                                             </div>
-                                                            <button
-                                                                onClick={async () => {
-                                                                    const { generateSessionPDF } = await import("@/lib/pdf/generatePDF");
-                                                                    const pdfBlob = await generateSessionPDF(f, client!);
-                                                                    const url = URL.createObjectURL(pdfBlob);
-                                                                    window.open(url);
-                                                                }}
-                                                                className="text-xs text-upsi-navy hover:underline font-semibold bg-blue-50 px-2 py-1 rounded"
-                                                            >
-                                                                View PDF
-                                                            </button>
+                                                            <div className="flex space-x-2">
+                                                                <Link
+                                                                    href={`/dashboard/forms/${f.formType.toLowerCase()}?clientId=${client?.id}&sessionId=${encodeURIComponent(f.sessionId)}&docId=${f.id}`}
+                                                                    className="text-xs text-upsi-navy hover:underline font-semibold bg-blue-50 px-2 py-1 rounded flex items-center"
+                                                                >
+                                                                    Edit
+                                                                </Link>
+                                                                <button
+                                                                    onClick={async () => {
+                                                                        const { generateSessionPDF } = await import("@/lib/pdf/generatePDF");
+                                                                        const pdfBlob = await generateSessionPDF(f, client!);
+                                                                        const url = URL.createObjectURL(pdfBlob);
+                                                                        window.open(url);
+                                                                    }}
+                                                                    className="text-xs text-upsi-navy hover:underline font-semibold bg-gray-50 px-2 py-1 rounded"
+                                                                >
+                                                                    View PDF
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     );
                                                 })}
