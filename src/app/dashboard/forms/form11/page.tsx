@@ -19,12 +19,10 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
     const { user, userProfile } = useAuth();
     const router = useRouter();
 
-    // React 19 Search Params Unwrapping
-    const unwrappedSearch = React.use(searchParams);
     const searchParamsHooks = useSearchParams();
-    const prefillClientId = unwrappedSearch.clientId as string | undefined;
-    const prefillSessionId = unwrappedSearch.sessionId as string | undefined;
-    const docId = searchParamsHooks.get("docId") || (unwrappedSearch.docId as string | undefined);
+    const prefillClientId = searchParamsHooks.get("clientId") || undefined;
+    const prefillSessionId = searchParamsHooks.get("sessionId") || undefined;
+    const docId = searchParamsHooks.get("docId") || undefined;
 
     const [selectedClient, setSelectedClient] = useState<any>(null);
 
