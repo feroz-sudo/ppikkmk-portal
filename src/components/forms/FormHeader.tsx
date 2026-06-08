@@ -3,9 +3,11 @@ import React from "react";
 interface FormHeaderProps {
     title: string;
     refCode: string;
+    subTitle?: string;
+    subSubTitle?: string;
 }
 
-export const FormHeader: React.FC<FormHeaderProps> = ({ title, refCode }) => {
+export const FormHeader: React.FC<FormHeaderProps> = ({ title, refCode, subTitle, subSubTitle }) => {
     return (
         <div className="form-header relative pb-6 border-b-2 border-gray-300 mb-8 w-full print:border-gray-400">
             {/* Top-Right Identifier (Absolute) */}
@@ -30,14 +32,22 @@ export const FormHeader: React.FC<FormHeaderProps> = ({ title, refCode }) => {
                         {title}
                     </h2>
                     <div className="flex flex-col items-center">
-                        <h3 className="text-[9px] sm:text-[10px] md:text-xs font-bold text-gray-800 uppercase tracking-[0.2em] mb-1">
-                            Praktikum & Internship
-                        </h3>
-                        <h3 className="text-[10px] sm:text-xs md:text-base font-bold text-black uppercase tracking-tight">
-                            Kaunseling (Kesihatan Mental Klinikal)
-                        </h3>
+                        {subTitle !== undefined ? (
+                            <h3 className="text-[10px] sm:text-xs md:text-base font-bold text-black uppercase tracking-tight">
+                                {subTitle}
+                            </h3>
+                        ) : (
+                            <>
+                                <h3 className="text-[9px] sm:text-[10px] md:text-xs font-bold text-gray-800 uppercase tracking-[0.2em] mb-1">
+                                    Praktikum & Internship
+                                </h3>
+                                <h3 className="text-[10px] sm:text-xs md:text-base font-bold text-black uppercase tracking-tight">
+                                    Kaunseling (Kesihatan Mental Klinikal)
+                                </h3>
+                            </>
+                        )}
                         <h3 className="text-[10px] sm:text-xs md:text-sm font-bold text-gray-900 uppercase tracking-tight">
-                            Universiti Pendidikan Sultan Idris
+                            {subSubTitle || "Universiti Pendidikan Sultan Idris"}
                         </h3>
                     </div>
                 </div>

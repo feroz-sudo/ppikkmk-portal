@@ -319,7 +319,9 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
                 <form onSubmit={handleSubmit} className="p-0 sm:p-4 md:p-8 space-y-8 bg-white overflow-x-auto">
                     <FormHeader
                         title="GROUP COUNSELING REPORT"
-                        refCode="Group_Counselling_Report/KKMK_UPSI/11-2025"
+                        refCode="Group_Counseling_Report/CMHC_UPSI/11-2025"
+                        subTitle="INTERNSHIP IN CLINICAL MENTAL HEALTH COUNSELING"
+                        subSubTitle="UNIVERSITI PENDIDIKAN SULTAN IDRIS"
                     />
 
                     {/* Logistics Data Section Group */}

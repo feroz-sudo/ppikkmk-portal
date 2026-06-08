@@ -3,6 +3,9 @@ import autoTable from 'jspdf-autotable';
 import { Session, Client } from '../firebase/db';
 
 export const generateSessionPDF = async (session: Session, client: Client, clinicalId?: string): Promise<Blob> => {
+    if (session.formType === 'Form11') {
+        return generateForm11PDF(session, client, clinicalId);
+    }
     const doc = new jsPDF({
         orientation: 'portrait',
         unit: 'mm',
@@ -48,7 +51,7 @@ export const generateSessionPDF = async (session: Session, client: Client, clini
         Form6: 'Crisis_Intervention_Report/KKMK_UPSI/06-2025',
         Form7: 'Consultation_Report/KKMK_UPSI/07-2025',
         Form8: 'PFA_MHPSS_Report/KKMK_UPSI/08-2025',
-        Form11: 'Group_Counseling_Report/KKMK_UPSI/11-2025',
+        Form11: 'Group_Counseling_Report/CMHC_UPSI/11-2025',
         Form13: 'Psychological_Assessment_Report/KKMK_UPSI/13-2025'
     };
 
@@ -442,6 +445,219 @@ export const generateSessionPDF = async (session: Session, client: Client, clini
         doc.setFont('helvetica', 'bold');
         doc.setTextColor(112, 128, 144); // Slate Grayish
         doc.text("CONFIDENTIAL DOCUMENT (FOR PROFESSIONAL USE ONLY)", 105, 285, { align: 'center' });
+    }
+
+    return doc.output('blob');
+};
+
+const generateForm11PDF = async (session: Session, client: Client, clinicalId?: string): Promise<Blob> => {
+    const doc = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4'
+    });
+
+    // Helper to render string
+    const renderStr = (val: any) => val !== undefined && val !== null && val !== "" ? String(val) : "";
+
+    // Header logo & branding
+    try {
+        const logoRes = await fetch('/upsi-logo.png');
+        const buffer = await logoRes.arrayBuffer();
+        let binary = '';
+        const bytes = new Uint8Array(buffer);
+        for (let i = 0; i < bytes.byteLength; i++) { binary += String.fromCharCode(bytes[i]); }
+        const base64 = window.btoa(binary);
+        doc.addImage(`data:image/png;base64,${base64}`, 'PNG', 15, 12, 45, 20);
+    } catch (e) {
+        console.warn("Could not load logos for PDF", e);
+    }
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(13);
+    doc.setTextColor(0, 0, 0);
+    doc.text("GROUP COUNSELING REPORT", 130, 18, { align: 'center' });
+    doc.setFontSize(11);
+    doc.text("INTERNSHIP IN CLINICAL MENTAL HEALTH COUNSELING", 130, 24, { align: 'center' });
+    doc.text("UNIVERSITI PENDIDIKAN SULTAN IDRIS", 130, 30, { align: 'center' });
+
+    const logisticsData = session.formData?.logisticsData || {};
+    const groupMembers = session.formData?.groupMembers || [];
+
+    // Format date and time
+    let dateVal = "";
+    let timeVal = "";
+    if (logisticsData.dateTime) {
+        const parts = logisticsData.dateTime.split('T');
+        dateVal = parts[0] || "";
+        timeVal = parts[1] || "";
+    }
+
+    // Prepare table body mirroring the original form layout
+    const tableBody = [
+        [
+            { content: 'Group Leader/Counselor', styles: { fontStyle: 'bold', fillColor: [252, 229, 205], textColor: [0, 0, 0] } },
+            { content: renderStr(logisticsData.counsellorName || logisticsData.counselorName), colSpan: 5 }
+        ],
+        [
+            { content: 'Date', styles: { fontStyle: 'bold' } },
+            { content: dateVal },
+            { content: 'Time', styles: { fontStyle: 'bold' } },
+            { content: timeVal },
+            { content: 'Duration', styles: { fontStyle: 'bold' } },
+            { content: renderStr(logisticsData.duration) }
+        ],
+        [
+            { content: 'Type of Group', styles: { fontStyle: 'bold' } },
+            { content: renderStr(logisticsData.typeOfGroup), colSpan: 5 }
+        ],
+        [
+            { content: 'Number of Session', styles: { fontStyle: 'bold' } },
+            { content: renderStr(logisticsData.numberOfSession), colSpan: 5 }
+        ],
+        [
+            { content: 'Number of Clients\nAttending the Group', styles: { fontStyle: 'bold' } },
+            { content: renderStr(logisticsData.numberOfClientsAttending), colSpan: 5 }
+        ],
+        [
+            { content: 'Name of Clients Attending\nThe Group', styles: { fontStyle: 'bold' } },
+            { 
+                content: Array.from({ length: 8 }).map((_, idx) => {
+                    const memberName = groupMembers[idx]?.name || "";
+                    return `${idx + 1}. ${memberName}`;
+                }).join('\n'), 
+                colSpan: 5 
+            }
+        ],
+        [
+            { content: 'Issues Focused of the day', styles: { fontStyle: 'bold' } },
+            { content: renderStr(session.formData?.narrative?.issuesFocused), colSpan: 5 }
+        ],
+        [
+            { content: 'Session Objectives', styles: { fontStyle: 'bold' } },
+            { content: renderStr(session.formData?.narrative?.sessionObjectives), colSpan: 5 }
+        ]
+    ];
+
+    autoTable(doc, {
+        startY: 38,
+        theme: 'grid',
+        styles: { font: 'helvetica', fontSize: 9, cellPadding: 2.5, lineColor: [0, 0, 0], lineWidth: 0.2, textColor: [0, 0, 0] },
+        columnStyles: {
+            0: { cellWidth: 45 },
+            1: { cellWidth: 35 },
+            2: { cellWidth: 20 },
+            3: { cellWidth: 30 },
+            4: { cellWidth: 25 },
+            5: { cellWidth: 25 }
+        },
+        body: tableBody as any,
+    });
+
+    let yPos = (doc as any).lastAutoTable.finalY + 10;
+
+    const checkPageBreak = (neededHeight: number) => {
+        if (yPos + neededHeight > 280) {
+            doc.addPage();
+            yPos = 20;
+        }
+    };
+
+    // Render Narrative Sections in plain text layout
+    const narrative = session.formData?.narrative || {};
+    const sections = [
+        { title: "Background Information of the Group Members /Observations Result", content: narrative.backgroundInfo },
+        { title: "Group Initial Stage", content: narrative.groupInitialStage },
+        { title: "Mid-Stage/Group Working Stage", content: narrative.midStageWorking },
+        { title: "Theoretical Approach/Group Techniques Used", content: narrative.theoreticalApproach },
+        { title: "Diagnostic Impression/Intervention", content: narrative.diagnosticImpression },
+        { title: "Client Progress/Barriers (Internal/External Dynamics Supporting or Hindering Change)", content: narrative.clientProgressBarriers },
+        { title: "Treatment Planning", content: narrative.treatmentPlanning },
+        { title: "Termination/Closing Stage and Follow Up Actions", content: narrative.terminationClosing },
+        { title: "Counselor's Comments/Reflections", content: narrative.counsellorsComments || narrative.counselorsComments }
+    ];
+
+    sections.forEach((sec) => {
+        const textContent = renderStr(sec.content);
+        const splitText = doc.splitTextToSize(textContent, 180);
+        checkPageBreak(splitText.length * 5 + 15);
+
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10.5);
+        doc.text(sec.title, 15, yPos);
+        yPos += 7;
+
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(10);
+        doc.text(splitText, 15, yPos);
+        yPos += (splitText.length * 5) + 10;
+    });
+
+    // Force Page Break for Brief Individual Progress Report Section
+    doc.addPage();
+    yPos = 20;
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(11.5);
+    doc.text("Brief Individual Progress Report For Each Group Member", 15, yPos);
+    yPos += 10;
+
+    // Render group member progress report fields
+    groupMembers.forEach((member: any, idx: number) => {
+        checkPageBreak(30);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10);
+        const memberNameText = member.name ? ` (${member.name.toUpperCase()})` : '';
+        doc.text(`Group Member ${idx + 1}:${memberNameText}`, 15, yPos);
+        yPos += 6;
+
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9.5);
+        const progressText = member.progress || "";
+        const splitProgress = doc.splitTextToSize(progressText, 180);
+        doc.text(splitProgress, 15, yPos);
+        yPos += (splitProgress.length * 5) + 10;
+    });
+
+    // Render signature block
+    checkPageBreak(55);
+    yPos += 5;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10);
+    doc.text("Report by:", 15, yPos);
+    yPos += 12;
+
+    doc.setLineDashPattern([0.5, 0.5], 0);
+    doc.setLineWidth(0.4);
+    doc.line(15, yPos, 95, yPos);
+    doc.setLineDashPattern([], 0);
+
+    yPos += 5;
+    const signatureName = session.formData?.counselorNameSignature || session.formData?.traineeSignature || "";
+    doc.text(`(  ${signatureName.toUpperCase()}  )`, 15, yPos);
+    yPos += 6;
+    doc.setFont('helvetica', 'normal');
+    doc.text("CMCH Counselor Trainee", 15, yPos);
+    yPos += 5;
+    doc.text("Universiti Pendidikan Sultan Idris", 15, yPos);
+    yPos += 5;
+    doc.text("35900 Tanjong Malim, Perak", 15, yPos);
+
+    // Apply header/footers on all pages
+    const pageCount = (doc as any).internal.getNumberOfPages();
+    for (let i = 1; i <= pageCount; i++) {
+        doc.setPage(i);
+        // Header Reference
+        doc.setFont('helvetica', 'italic');
+        doc.setFontSize(9);
+        doc.setTextColor(0, 0, 0);
+        doc.text("Group_Counseling_Report/CMHC_UPSI/11-2025", 195, 10, { align: 'right' });
+
+        // Left Confidential Footer
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9.5);
+        doc.setTextColor(50, 50, 50);
+        doc.text("Confidential Document (For Professional Use Only)", 15, 285);
     }
 
     return doc.output('blob');
