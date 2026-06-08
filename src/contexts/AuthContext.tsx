@@ -55,6 +55,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                 try {
                     const email = currentUser.email || "";
                     
+                    // Helper to get full name from email mapping
+                    const getFullNameFromEmail = (emailStr: string): string => {
+                        const cleanEmail = emailStr.toLowerCase().trim();
+                        if (
+                            cleanEmail === "m20241001148@siswa.upsi.edu.my" ||
+                            cleanEmail === "ferozsamad@gmail.com" ||
+                            cleanEmail === "ahmadferoz@upsi.edu.my"
+                        ) {
+                            return "AHMAD FEROZ BIN ABDUL SAMAD";
+                        }
+                        return "";
+                    };
+                    const mappedName = getFullNameFromEmail(email);
+
                     // 1. Admin Whitelist
                     const adminEmails = ["ferozsamad@gmail.com", "ahmadferoz@upsi.edu.my"];
                     const isAdmin = adminEmails.includes(email);
@@ -85,6 +99,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                             await updateDoc(userDocRef, { programType: targetProgram });
                         }
 
+                        // Sync name from email mapping if mapped
+                        if (mappedName && profile.name !== mappedName) {
+                            profile.name = mappedName;
+                            await updateDoc(userDocRef, { name: mappedName });
+                        }
+
                     } else {
                         // NEW USER initialization
                         const isSupervisor = email.endsWith("@fpm.upsi.edu.my");
@@ -95,7 +115,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
                         profile = {
                             uid: currentUser.uid,
-                            name: currentUser.displayName || "",
+                            name: mappedName || currentUser.displayName || "",
                             email: email,
                             role,
                             programType: targetProgram, 

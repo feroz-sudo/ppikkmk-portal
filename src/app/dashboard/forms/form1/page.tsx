@@ -7,6 +7,7 @@ import { Save, ClipboardList, AlertCircle } from "lucide-react";
 import { FormActionBar } from "@/components/forms/FormActionBar";
 import { addSession, updateSession, syncSessionWithLog, Client, db, Session } from "@/lib/firebase/db";
 import { doc, getDoc } from "firebase/firestore";
+import { parseSafeDate } from "@/lib/date";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FormHeader } from "@/components/forms/FormHeader";
 
@@ -153,6 +154,13 @@ function Form1IntakeContent() {
     const [treatmentPlanning, setTreatmentPlanning] = useState("");
     const [counselorName, setCounselorName] = useState("");
 
+    useEffect(() => {
+        const nameToUse = userProfile?.name || user?.displayName || "";
+        if (nameToUse) {
+            setCounselorName(prev => prev || nameToUse);
+        }
+    }, [user, userProfile]);
+
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -169,9 +177,7 @@ function Form1IntakeContent() {
 
         setIsSubmitting(true);
         try {
-            let safeDate = new Date();
-            const parsed = new Date(`${sessionDate}T${sessionTime || "00:00"}`);
-            if (!isNaN(parsed.getTime())) safeDate = parsed;
+            const safeDate = parseSafeDate(`${sessionDate}T${sessionTime || "00:00"}`);
 
             const sessionData = {
                 sessionId: sessionNumber,

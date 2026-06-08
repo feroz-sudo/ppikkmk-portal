@@ -107,6 +107,13 @@ export function Form3CaseConceptualizationPage({ searchParams }: PageProps) {
     // Footer
     const [counsellorName, setCounsellorName] = useState("");
 
+    useEffect(() => {
+        const nameToUse = userProfile?.name || user?.displayName || "";
+        if (nameToUse) {
+            setCounsellorName(prev => prev || nameToUse);
+        }
+    }, [user, userProfile]);
+
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -196,9 +203,9 @@ export function Form3CaseConceptualizationPage({ searchParams }: PageProps) {
                 alert("Case Conceptualization saved to database! (PDF Skipped: No Google Drive authorization. Please log out and log back in to grant permission).");
             }
             router.push(`/dashboard/clients/${effectiveClient.type.toLowerCase()}/${effectiveClient.clientId}`);
-        } catch (error) {
+        } catch (error: any) {
             console.error(error);
-            alert("Failed to save Case Conceptualization.");
+            alert(`Failed to save Case Conceptualization: ${error.message || "Unknown error"}`);
         } finally {
             setIsSubmitting(false);
         }

@@ -44,6 +44,13 @@ export function Form5TerminationSessionPage({ searchParams }: PageProps) {
     const [counsellorName, setCounsellorName] = useState("");
 
     useEffect(() => {
+        const nameToUse = userProfile?.name || user?.displayName || "";
+        if (nameToUse) {
+            setCounsellorName(prev => prev || nameToUse);
+        }
+    }, [user, userProfile]);
+
+    useEffect(() => {
         async function fetchInitialData() {
             if (!user) return;
             if (docId) {
@@ -178,9 +185,9 @@ export function Form5TerminationSessionPage({ searchParams }: PageProps) {
                 alert("Termination Report saved to database!");
             }
             router.push(`/dashboard/clients/${effectiveClient.type.toLowerCase()}/${effectiveClient.clientId}`);
-        } catch (error) {
+        } catch (error: any) {
             console.error(error);
-            alert("Failed to save Termination Report.");
+            alert(`Failed to save Termination Report: ${error.message || "Unknown error"}`);
         } finally {
             setIsSubmitting(false);
         }

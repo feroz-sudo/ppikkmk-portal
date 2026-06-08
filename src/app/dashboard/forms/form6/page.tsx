@@ -7,6 +7,7 @@ import { Save, ShieldAlert } from "lucide-react";
 import { FormActionBar } from "@/components/forms/FormActionBar";
 import { addSession, updateSession, syncSessionWithLog, Client, db, Session } from "@/lib/firebase/db";
 import { doc, getDoc } from "firebase/firestore";
+import { parseSafeDate } from "@/lib/date";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FormHeader } from "@/components/forms/FormHeader";
 import { Suspense } from "react";
@@ -37,6 +38,13 @@ export function Form6CrisisInterventionPage({ searchParams }: PageProps) {
     const [outcome, setOutcome] = useState("");
     const [followUpRequired, setFollowUpRequired] = useState("");
     const [counsellorName, setCounsellorName] = useState("");
+
+    useEffect(() => {
+        const nameToUse = userProfile?.name || user?.displayName || "";
+        if (nameToUse) {
+            setCounsellorName(prev => prev || nameToUse);
+        }
+    }, [user, userProfile]);
 
     useEffect(() => {
         async function fetchInitialData() {
@@ -103,7 +111,7 @@ export function Form6CrisisInterventionPage({ searchParams }: PageProps) {
                 sessionId: `C${Date.now()}`,
                 clientId: effectiveClient.id!,
                 traineeId: user.uid,
-                date: new Date(date || Date.now()),
+                date: parseSafeDate(date),
                 duration: 0,
                 formType: "Form6" as const, // Official Form 6 is Crisis Intervention
                 formData: {
@@ -160,9 +168,9 @@ export function Form6CrisisInterventionPage({ searchParams }: PageProps) {
                 alert("Crisis Report saved to database!");
             }
             router.push(`/dashboard/clients/${effectiveClient.type.toLowerCase()}/${effectiveClient.clientId}`);
-        } catch (error) {
+        } catch (error: any) {
             console.error(error);
-            alert("Failed to save Crisis Report.");
+            alert(`Failed to save Crisis Report: ${error.message || "Unknown error"}`);
         } finally {
             setIsSubmitting(false);
         }

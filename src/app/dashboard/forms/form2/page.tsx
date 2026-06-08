@@ -7,6 +7,7 @@ import { Save, FileText } from "lucide-react";
 import { FormActionBar } from "@/components/forms/FormActionBar";
 import { addSession, updateSession, syncSessionWithLog, Client, db, Session } from "@/lib/firebase/db";
 import { doc, getDoc } from "firebase/firestore";
+import { parseSafeDate } from "@/lib/date";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FormHeader } from "@/components/forms/FormHeader";
 
@@ -109,6 +110,13 @@ export default function Form2ProgressiveNotesPage({ searchParams }: PageProps) {
     // Footer
     const [counsellorName, setCounsellorName] = useState("");
 
+    useEffect(() => {
+        const nameToUse = userProfile?.name || user?.displayName || "";
+        if (nameToUse) {
+            setCounsellorName(prev => prev || nameToUse);
+        }
+    }, [user, userProfile]);
+
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -128,7 +136,7 @@ export default function Form2ProgressiveNotesPage({ searchParams }: PageProps) {
                 sessionId: sessionNumber, // Overridden to use actual user input rather than timestamp
                 clientId: effectiveClient.id!,
                 traineeId: user.uid,
-                date: new Date(`${sessionDate}T${sessionTime || "00:00"}`),
+                date: parseSafeDate(`${sessionDate}T${sessionTime || "00:00"}`),
                 duration: parseFloat(duration) || 1.0,
                 formType: "Form2" as const,
                 formData: {
@@ -207,9 +215,9 @@ export default function Form2ProgressiveNotesPage({ searchParams }: PageProps) {
             }
 
             router.push(`/dashboard/clients/${effectiveClient.type.toLowerCase()}/${effectiveClient.clientId}`);
-        } catch (error) {
+        } catch (error: any) {
             console.error(error);
-            alert("Failed to save to database.");
+            alert(`Failed to save to database: ${error.message || "Unknown error"}`);
         } finally {
             setIsSubmitting(false);
         }

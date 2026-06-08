@@ -54,7 +54,9 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
                         setNumberOfSession(ld.numberOfSession);
                         setNumberOfClientsAttending(ld.numberOfClientsAttending);
 
-                        setGroupMembers(formData.groupMembers || [{ name: "", progress: "" }]);
+                        const loadedMembers = formData.groupMembers || [];
+                        const paddedMembers = Array.from({ length: 8 }, (_, idx) => loadedMembers[idx] || { name: "", progress: "" });
+                        setGroupMembers(paddedMembers);
 
                         const n = formData.narrative;
                         setIssuesFocused(n.issuesFocused);
@@ -84,8 +86,8 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
         fetchInitialData();
     }, [user, prefillSessionId, docId]);
 
-    // Dynamic Group Members Array
-    const [groupMembers, setGroupMembers] = useState([{ name: "", progress: "" }]);
+    // Dynamic Group Members Array (always exactly 8 elements to prevent out-of-bounds state crashes)
+    const [groupMembers, setGroupMembers] = useState(Array.from({ length: 8 }, () => ({ name: "", progress: "" })));
 
     // Narrative Fields
     const [issuesFocused, setIssuesFocused] = useState("");
@@ -104,6 +106,14 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
     // Footer
     const [traineeSignature, setTraineeSignature] = useState("");
 
+    useEffect(() => {
+        const nameToUse = userProfile?.name || user?.displayName || "";
+        if (nameToUse) {
+            setCounsellorName(prev => prev || nameToUse);
+            setTraineeSignature(prev => prev || nameToUse);
+        }
+    }, [user, userProfile]);
+
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleAddMember = () => {
@@ -116,12 +126,24 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
 
     const handleUpdateMemberName = (index: number, newName: string) => {
         const updatedMembers = [...groupMembers];
+        while (updatedMembers.length <= index) {
+            updatedMembers.push({ name: "", progress: "" });
+        }
+        if (!updatedMembers[index]) {
+            updatedMembers[index] = { name: "", progress: "" };
+        }
         updatedMembers[index].name = newName;
         setGroupMembers(updatedMembers);
     };
 
     const handleUpdateMemberProgress = (index: number, newProgress: string) => {
         const updatedMembers = [...groupMembers];
+        while (updatedMembers.length <= index) {
+            updatedMembers.push({ name: "", progress: "" });
+        }
+        if (!updatedMembers[index]) {
+            updatedMembers[index] = { name: "", progress: "" };
+        }
         updatedMembers[index].progress = newProgress;
         setGroupMembers(updatedMembers);
     };
@@ -148,7 +170,14 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
                 sessionId: `C${Date.now()}`,
                 clientId: effectiveClientId,
                 traineeId: user.uid,
-                date: new Date(dateTime || Date.now()),
+                date: (() => {
+                    let safeDate = new Date();
+                    if (dateTime) {
+                        const parsed = new Date(dateTime);
+                        if (!isNaN(parsed.getTime())) safeDate = parsed;
+                    }
+                    return safeDate;
+                })(),
                 duration: parseFloat(duration) || 0,
                 formType: "Form11" as const,
                 formData: {
@@ -234,9 +263,9 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
                 alert("Group Counselling Report saved to database! (PDF Skipped: No Google Drive authorization. Please log out and log back in to grant permission).");
             }
             router.push(`/dashboard`);
-        } catch (error) {
+        } catch (error: any) {
             console.error(error);
-            alert("Failed to save Group Counselling Report.");
+            alert(`Failed to save Group Counselling Report: ${error.message || "Unknown error"}`);
         } finally {
             setIsSubmitting(false);
         }
@@ -262,7 +291,7 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
 
     return (
         <div className="max-w-4xl mx-auto pb-12 print:pb-0">
-            <div className="bg-white overflow-hidden">
+            <div className="bg-white">
                 <div className="bg-white px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
                     <div>
                         <h1 className="text-2xl font-bold text-upsi-navy flex items-center space-x-3">
@@ -284,7 +313,8 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
                         <div className="bg-white px-4 py-3 border-b-2 border-black flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
                             <label className="font-bold text-black uppercase text-sm sm:text-base sm:min-w-[200px]">Group Leader/Counsellor</label>
                             <span className="hidden sm:inline font-bold text-black">:</span>
-                            <input required type="text" value={counsellorName} onChange={e => setCounsellorName(e.target.value)} className="flex-1 p-1 bg-transparent border-none focus:ring-0 font-medium text-black border-b sm:border-none border-gray-200" placeholder="Enter name" />
+                            <input required type="text" value={counsellorName} onChange={e => setCounsellorName(e.target.value)} className="flex-1 p-1 bg-transparent border-none focus:ring-0 font-medium text-black border-b sm:border-none border-gray-200 print:hidden" placeholder="Enter name" />
+                            <span className="hidden print:inline font-bold text-black pl-2 uppercase">{counsellorName || "Enter name"}</span>
                         </div>
 
                         <div className="p-4 sm:p-6 lg:p-8">
@@ -331,10 +361,13 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
                                                 type="text"
                                                 value={groupMembers[idx]?.name || ""}
                                                 onChange={e => handleUpdateMemberName(idx, e.target.value)}
-                                                className="flex-1 p-2 border-b border-gray-200 group-focus-within:border-black outline-none bg-white text-sm font-bold uppercase transition-colors"
+                                                className="flex-1 p-2 border-b border-gray-200 group-focus-within:border-black outline-none bg-white text-sm font-bold uppercase transition-colors print:hidden"
                                                 placeholder={`Member ${idx + 1}`}
                                                 required={idx < (parseInt(numberOfClientsAttending) || 0)}
                                             />
+                                            <span className="hidden print:inline font-bold text-black border-b border-black flex-1 p-2 uppercase text-sm">
+                                                {groupMembers[idx]?.name || `Member ${idx + 1}`}
+                                            </span>
                                         </div>
                                     ))}
                                 </div>
@@ -369,9 +402,12 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
                                         rows={field.rows}
                                         value={field.value}
                                         onChange={e => field.setter(e.target.value)}
-                                        className="w-full p-4 border-none focus:ring-0 outline-none text-gray-700 bg-white placeholder-gray-300"
+                                        className="w-full p-4 border-none focus:ring-0 outline-none text-gray-700 bg-white placeholder-gray-300 print:hidden"
                                         placeholder={`Enter ${field.label.toLowerCase()}...`}
                                     />
+                                    <div className="hidden print:block p-4 text-black text-sm whitespace-pre-wrap min-h-[100px] border-t border-black">
+                                        {field.value || "N/A"}
+                                    </div>
                                 </div>
                             </div>
                         ))}
@@ -392,10 +428,13 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
                                         rows={3}
                                         value={groupMembers[idx]?.progress || ""}
                                         onChange={e => handleUpdateMemberProgress(idx, e.target.value)}
-                                        className="w-full p-4 bg-transparent border-b border-dotted border-gray-300 focus:border-upsi-navy outline-none resize-none"
+                                        className="w-full p-4 bg-transparent border-b border-dotted border-gray-300 focus:border-upsi-navy outline-none resize-none print:hidden"
                                         placeholder={`Enter progress for member ${idx + 1}...`}
                                         required={idx < (parseInt(numberOfClientsAttending) || 0)}
                                     />
+                                    <div className="hidden print:block p-4 text-black text-sm whitespace-pre-wrap border-b border-dotted border-gray-300">
+                                        {groupMembers[idx]?.progress || "N/A"}
+                                    </div>
                                 </div>
                             ))}
                         </div>
@@ -414,9 +453,10 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
                                         type="text"
                                         value={traineeSignature}
                                         onChange={e => setTraineeSignature(e.target.value)}
-                                        className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase text-sm"
+                                        className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase text-sm print:hidden"
                                         placeholder="Enter Full Name"
                                     />
+                                    <span className="hidden print:inline font-bold text-black text-center flex-1 py-1 uppercase text-sm">{traineeSignature || "Enter Full Name"}</span>
                                     <span className="text-black font-bold text-lg">)</span>
                                 </div>
                                 <div className="text-black text-[11px] sm:text-xs space-y-1 font-bold">

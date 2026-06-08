@@ -97,6 +97,13 @@ export function Form4TreatmentPlanPage({ searchParams }: PageProps) {
     // Footer
     const [counsellorName, setCounsellorName] = useState("");
 
+    useEffect(() => {
+        const nameToUse = userProfile?.name || user?.displayName || "";
+        if (nameToUse) {
+            setCounsellorName(prev => prev || nameToUse);
+        }
+    }, [user, userProfile]);
+
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleAddRow = () => {
@@ -197,9 +204,9 @@ export function Form4TreatmentPlanPage({ searchParams }: PageProps) {
                 alert("Treatment Plan saved to database! (PDF Skipped: No Google Drive authorization. Please log out and log back in to grant permission).");
             }
             router.push(`/dashboard/clients/${effectiveClient.type.toLowerCase()}/${effectiveClient.clientId}`);
-        } catch (error) {
+        } catch (error: any) {
             console.error(error);
-            alert("Failed to save Treatment Plan.");
+            alert(`Failed to save Treatment Plan: ${error.message || "Unknown error"}`);
         } finally {
             setIsSubmitting(false);
         }

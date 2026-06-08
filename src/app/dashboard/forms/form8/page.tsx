@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { FormActionBar } from "@/components/forms/FormActionBar";
 import { addSession, updateSession, syncSessionWithLog, Client, db, Session } from "@/lib/firebase/db";
 import { doc, getDoc } from "firebase/firestore";
+import { parseSafeDate } from "@/lib/date";
 import { useSearchParams } from "next/navigation";
 import { FormHeader } from "@/components/forms/FormHeader";
 import { Suspense } from "react";
@@ -103,6 +104,14 @@ export function Form8PFAMHPSSReportPage({ searchParams }: PageProps) {
     const [siteSupervisorSignature, setSiteSupervisorSignature] = useState("");
     const [academicSupervisorSignature, setAcademicSupervisorSignature] = useState("");
 
+    useEffect(() => {
+        const nameToUse = userProfile?.name || user?.displayName || "";
+        if (nameToUse) {
+            setCounselorName(prev => prev || nameToUse);
+            setTraineeSignature(prev => prev || nameToUse);
+        }
+    }, [user, userProfile]);
+
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -122,7 +131,7 @@ export function Form8PFAMHPSSReportPage({ searchParams }: PageProps) {
                 sessionId: `C${Date.now()}`,
                 clientId: effectiveClient.id!,
                 traineeId: user.uid,
-                date: new Date(dateTime || Date.now()),
+                date: parseSafeDate(dateTime),
                 duration: parseFloat(duration) || 0,
                 formType: "Form8" as const,
                 formData: {
@@ -206,9 +215,9 @@ export function Form8PFAMHPSSReportPage({ searchParams }: PageProps) {
                 alert("PFA/MHPSS Report saved to database! (PDF Skipped: No Google Drive authorization. Please log out and log back in to grant permission).");
             }
             router.push(effectiveClient.clientId === "PROGRAM" ? "/dashboard/programs" : `/dashboard/clients/${effectiveClient.type.toLowerCase()}/${effectiveClient.clientId}`);
-        } catch (error) {
+        } catch (error: any) {
             console.error(error);
-            alert("Failed to save PFA/MHPSS Report.");
+            alert(`Failed to save PFA/MHPSS Report: ${error.message || "Unknown error"}`);
         } finally {
             setIsSubmitting(false);
         }
