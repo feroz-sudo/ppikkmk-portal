@@ -115,14 +115,68 @@ export const generateSessionPDF = async (session: Session, client: Client, clini
         }
     }
 
+    const getFriendlySessionNumber = () => {
+        if (session.formData?.logisticsData?.numberOfSession) {
+            return String(session.formData.logisticsData.numberOfSession);
+        }
+        if (session.formData?.personalData?.sessionNumber) {
+            return String(session.formData.personalData.sessionNumber);
+        }
+        if (session.formData?.sessionNumber) {
+            return String(session.formData.sessionNumber);
+        }
+        if (session.sessionId && !session.sessionId.startsWith('C1')) {
+            return session.sessionId;
+        }
+        return "1";
+    };
+
+    const getFriendlyDate = () => {
+        if (session.formData?.logisticsData?.dateTime) {
+            const dt = session.formData.logisticsData.dateTime;
+            return dt.split('T')[0];
+        }
+        if (session.formData?.personalData?.sessionDateTime) {
+            return session.formData.personalData.sessionDateTime.split(' ')[0];
+        }
+        return formattedDate;
+    };
+
+    const getFriendlyDuration = () => {
+        if (session.formData?.logisticsData?.duration) {
+            return `${session.formData.logisticsData.duration} hrs`;
+        }
+        if (session.formData?.personalData?.duration) {
+            return `${session.formData.personalData.duration} hrs`;
+        }
+        if (session.duration) {
+            return `${session.duration} hrs`;
+        }
+        return "N/A";
+    };
+
     const headerBody = [];
-    if (session.formData && session.formData.personalData) {
-        // Form 1 (or any form with Personal Data) already captures Date, Session Number, etc. inside it.
-        headerBody.push(['Client File Number:', renderStr(client.demographics.name)]);
+    if (client.type === 'KK') {
+        headerBody.push([
+            'Group Identifier:', renderStr(client.demographics.name),
+            'Clinical File ID:', renderStr(clinicalId)
+        ]);
+        headerBody.push([
+            'Session Number:', getFriendlySessionNumber(),
+            'Date:', getFriendlyDate()
+        ]);
+        headerBody.push([
+            'Duration:', getFriendlyDuration(),
+            'Type of Group:', renderStr(session.formData?.logisticsData?.typeOfGroup)
+        ]);
     } else {
-        // Forms without Personal Data (like Form 2) need these details at the top.
-        headerBody.push(['Client File Number:', renderStr(client.demographics.name), 'Date:', formattedDate]);
-        headerBody.push(['Session Number:', renderStr(session.sessionId), 'Duration:', `${renderStr(session.duration)} hrs`]);
+        if (session.formData && session.formData.personalData) {
+            headerBody.push(['Client Name:', renderStr(client.demographics.name), 'Client File Number:', renderStr(client.clientId || 'N/A')]);
+        } else {
+            headerBody.push(['Client Name:', renderStr(client.demographics.name), 'Client File Number:', renderStr(client.clientId || 'N/A')]);
+            headerBody.push(['Session Number:', getFriendlySessionNumber(), 'Date:', getFriendlyDate()]);
+            headerBody.push(['Duration:', getFriendlyDuration(), '', '']);
+        }
     }
 
     autoTable(doc, {
@@ -143,9 +197,10 @@ export const generateSessionPDF = async (session: Session, client: Client, clini
         }
     };
 
-    const addSection = (title: string, content: string | Record<string, any>) => {
+    const addSection = (title: string, content: any) => {
         let displayTitle = title.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase()); // Convert camelCase to Title Case
         if (title === 'sessionDateTime') displayTitle = 'Session Date & Time';
+        if (title === 'groupMembers') displayTitle = 'Group Members & Brief Progress';
 
         checkPageBreak(15);
         doc.setFont('helvetica', 'bold');
@@ -153,7 +208,31 @@ export const generateSessionPDF = async (session: Session, client: Client, clini
         doc.setFont('helvetica', 'normal');
         yPos += 6;
 
-        if (typeof content === 'object' && content !== null) {
+        if (title === 'groupMembers' && Array.isArray(content)) {
+            // Render group members as a clean table with Name and Brief Progress
+            const tableBody = content
+                .filter(member => member && (member.name || member.progress))
+                .map((member, idx) => [
+                    String(idx + 1),
+                    renderStr(member.name),
+                    renderStr(member.progress)
+                ]);
+
+            autoTable(doc, {
+                startY: yPos,
+                theme: 'grid',
+                head: [['No.', 'Member Name', 'Brief Progress Report']],
+                headStyles: { fillColor: [240, 240, 240], textColor: [0, 0, 0], fontStyle: 'bold' },
+                styles: { font: 'helvetica', fontSize: 9, cellPadding: 3 },
+                columnStyles: {
+                    0: { cellWidth: 10, halign: 'center' },
+                    1: { fontStyle: 'bold', cellWidth: 45 },
+                    2: { cellWidth: 125 }
+                },
+                body: tableBody,
+            });
+            yPos = (doc as any).lastAutoTable.finalY + 8;
+        } else if (typeof content === 'object' && content !== null) {
             // Render nested objects as sub-tables (e.g., personalData in Form 1)
             const tableBody = Object.entries(content).map(([k, v]) => {
                 let rowLabel = LABEL_MAPPING[k] || k.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
@@ -168,7 +247,6 @@ export const generateSessionPDF = async (session: Session, client: Client, clini
                 columnStyles: { 0: { fontStyle: 'bold', cellWidth: 50 }, 1: { cellWidth: 130 } },
                 body: tableBody,
             });
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             yPos = (doc as any).lastAutoTable.finalY + 8;
         } else {
             // Render standard narrative strings
@@ -181,11 +259,11 @@ export const generateSessionPDF = async (session: Session, client: Client, clini
     };
 
     if (session.formData) {
-        // Automatically iterate all roots of formData, putting objects (like personalData) first, then long naratives
+        // Automatically iterate all roots of formData, putting objects (like personalData) first, then long narratives
         const entries = Object.entries(session.formData);
 
         // Render Objects first
-        entries.filter(e => typeof e[1] === 'object').forEach(([k, v]) => addSection(k, v as Record<string, any>));
+        entries.filter(e => typeof e[1] === 'object').forEach(([k, v]) => addSection(k, v));
 
         // Render Strings next
         entries.filter(e => typeof e[1] !== 'object').forEach(([k, v]) => addSection(k, String(v)));
@@ -264,7 +342,12 @@ export const generateSessionPDF = async (session: Session, client: Client, clini
         yPos = (doc as any).lastAutoTable.finalY + 10;
     } else {
         // Standard Single Signature (Forms 1, 2, 3, 4, 5, 6, 11, 13)
-        const name = session.formData?.counsellorName || session.formData?.traineeSignature || session.formData?.counselorNameSignature || "";
+        const name = session.formData?.counselorNameSignature || 
+                     session.formData?.traineeSignature || 
+                     session.formData?.counsellorName || 
+                     session.formData?.logisticsData?.counsellorName || 
+                     session.formData?.logisticsData?.counselorName || 
+                     "";
         drawSignatureRow("Report by:", name);
 
         doc.setFontSize(11);
