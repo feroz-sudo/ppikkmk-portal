@@ -331,8 +331,11 @@ export const addSession = async (session: Omit<Session, "createdAt" | "status">)
     });
 };
 
-export const getClientSessions = async (clientId: string): Promise<Session[]> => {
-    const q = query(sessionsRef, where("clientId", "==", clientId));
+export const getClientSessions = async (clientId: string, traineeId?: string): Promise<Session[]> => {
+    let q = query(sessionsRef, where("clientId", "==", clientId));
+    if (traineeId) {
+        q = query(sessionsRef, where("clientId", "==", clientId), where("traineeId", "==", traineeId));
+    }
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Session));
 };
@@ -369,7 +372,7 @@ export const syncSessionWithLog = async (session: Session & { id: string }) => {
     if (!category) return;
 
     // 2. Check if log already exists for this session
-    const q = query(logsRef, where("sessionId", "==", session.id));
+    const q = query(logsRef, where("traineeId", "==", session.traineeId), where("sessionId", "==", session.id));
     const snap = await getDocs(q);
 
     const dateStr = session.date instanceof Date

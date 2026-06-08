@@ -322,35 +322,41 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
                                 <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
                                     <label className="font-bold text-gray-800 uppercase text-xs sm:text-sm sm:min-w-[120px]">Date</label>
                                     <span className="hidden sm:inline font-bold text-gray-800">:</span>
-                                    <input required type="date" value={dateTime.split('T')[0]} onChange={e => setDateTime(e.target.value + 'T' + (dateTime.split('T')[1] || '00:00'))} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm" />
+                                    <input required type="date" value={dateTime.split('T')[0]} onChange={e => setDateTime(e.target.value + 'T' + (dateTime.split('T')[1] || '00:00'))} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm print:hidden" />
+                                    <span className="hidden print:inline font-bold text-black border-b border-black flex-1 p-2 text-sm">{dateTime.split('T')[0] || ""}</span>
                                 </div>
                                 <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
                                     <label className="font-bold text-gray-800 uppercase text-xs sm:text-sm sm:min-w-[120px]">Time</label>
                                     <span className="hidden sm:inline font-bold text-gray-800">:</span>
-                                    <input required type="time" value={dateTime.split('T')[1] || ''} onChange={e => setDateTime((dateTime.split('T')[0] || '') + 'T' + e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm" />
+                                    <input required type="time" value={dateTime.split('T')[1] || ''} onChange={e => setDateTime((dateTime.split('T')[0] || '') + 'T' + e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm print:hidden" />
+                                    <span className="hidden print:inline font-bold text-black border-b border-black flex-1 p-2 text-sm">{dateTime.split('T')[1] || ""}</span>
                                 </div>
                                 <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
                                     <label className="font-bold text-gray-800 uppercase text-xs sm:text-sm sm:min-w-[120px]">Duration</label>
                                     <span className="hidden sm:inline font-bold text-gray-800">:</span>
-                                    <input required type="text" value={duration} onChange={e => setDuration(e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm" placeholder="e.g. 1.5 hours" />
+                                    <input required type="text" value={duration} onChange={e => setDuration(e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm print:hidden" placeholder="e.g. 1.5 hours" />
+                                    <span className="hidden print:inline font-bold text-black border-b border-black flex-1 p-2 text-sm">{duration || ""}</span>
                                 </div>
                                 <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
                                     <label className="font-bold text-gray-800 uppercase text-xs sm:text-sm sm:min-w-[120px]">Type of Group</label>
                                     <span className="hidden sm:inline font-bold text-gray-800">:</span>
-                                    <input required type="text" value={typeOfGroup} onChange={e => setTypeOfGroup(e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm" placeholder="e.g. Support" />
+                                    <input required type="text" value={typeOfGroup} onChange={e => setTypeOfGroup(e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm print:hidden" placeholder="e.g. Support" />
+                                    <span className="hidden print:inline font-bold text-black border-b border-black flex-1 p-2 text-sm">{typeOfGroup || ""}</span>
                                 </div>
                                 <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
                                     <label className="font-bold text-gray-800 uppercase text-xs sm:text-sm sm:min-w-[120px]">Number of Session</label>
                                     <span className="hidden sm:inline font-bold text-gray-800">:</span>
-                                    <input required type="number" value={numberOfSession} onChange={e => setNumberOfSession(e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm" />
+                                    <input required type="number" value={numberOfSession} onChange={e => setNumberOfSession(e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm print:hidden" />
+                                    <span className="hidden print:inline font-bold text-black border-b border-black flex-1 p-2 text-sm">{numberOfSession || ""}</span>
                                 </div>
                                 <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
                                     <label className="font-bold text-gray-800 uppercase text-xs sm:text-sm sm:min-w-[150px]">Clients Attending</label>
                                     <span className="hidden sm:inline font-bold text-gray-800">:</span>
-                                    <input required type="number" min="1" max="8" value={numberOfClientsAttending} onChange={e => setNumberOfClientsAttending(e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm text-center sm:text-left" />
+                                    <input required type="number" min="1" max="8" value={numberOfClientsAttending} onChange={e => setNumberOfClientsAttending(e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm text-center sm:text-left print:hidden" />
+                                    <span className="hidden print:inline font-bold text-black border-b border-black flex-1 p-2 text-sm text-center sm:text-left">{numberOfClientsAttending || ""}</span>
                                 </div>
                             </div>
-
+ 
                             <div className="mt-10">
                                 <h3 className="text-sm font-bold text-black uppercase mb-6 border-l-4 border-black pl-3 leading-tight">Name of Clients Attending The Group (1-8):</h3>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
@@ -365,8 +371,8 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
                                                 placeholder={`Member ${idx + 1}`}
                                                 required={idx < (parseInt(numberOfClientsAttending) || 0)}
                                             />
-                                            <span className="hidden print:inline font-bold text-black border-b border-black flex-1 p-2 uppercase text-sm">
-                                                {groupMembers[idx]?.name || `Member ${idx + 1}`}
+                                            <span className="hidden print:inline font-bold text-black border-b border-black flex-1 p-2 uppercase text-sm min-h-[36px]">
+                                                {groupMembers[idx]?.name || ""}
                                             </span>
                                         </div>
                                     ))}

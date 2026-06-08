@@ -64,7 +64,7 @@ export default function KIClientFolderPage({ params }: PageProps) {
                     setSummary(matchedClient.demographics.clinicalSummary || "");
 
                     if (matchedClient.id) {
-                        const clientSessions = await getClientSessions(matchedClient.id);
+                        const clientSessions = await getClientSessions(matchedClient.id, user.uid);
                         setSessions(clientSessions);
                     }
                 }
