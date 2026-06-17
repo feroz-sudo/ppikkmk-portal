@@ -357,6 +357,19 @@ export const updateSession = async (sessionId: string, data: Partial<Session>) =
     await updateDoc(docRef, data);
 };
 
+export const deleteSession = async (sessionId: string) => {
+    // 1. Delete associated log if exists
+    const q = query(logsRef, where("sessionId", "==", sessionId));
+    const snap = await getDocs(q);
+    if (!snap.empty) {
+        for (const logDoc of snap.docs) {
+            await deleteDoc(doc(db, "logs", logDoc.id));
+        }
+    }
+    // 2. Delete the session document
+    await deleteDoc(doc(db, "sessions", sessionId));
+};
+
 // Automation: Sync Session with Logbook
 export const syncSessionWithLog = async (session: Session & { id: string }) => {
     // 1. Determine category

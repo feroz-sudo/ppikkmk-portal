@@ -190,18 +190,12 @@ export function Form4TreatmentPlanPage({ searchParams }: PageProps) {
                         effectiveClient.clientId,
                         sessionData.sessionId
                     );
-                    alert("Treatment Plan & PDF saved to Google Drive successfully!");
                 } catch (driveErr: any) {
                     if (driveErr.message === "UNAUTHORIZED_DRIVE_ACCESS") {
                         localStorage.removeItem("googleDriveToken");
-                        alert("Google Drive session expired. Your report was saved to the database, but the PDF upload failed. Please log out and back in to re-authorize Google Drive.");
-                    } else {
-                        console.error("Drive upload failed:", driveErr);
-                        alert(`⚠️ Report saved to Database successfully, but Google Drive Upload Failed. \n\nDrive Error: ${driveErr.message || driveErr}`);
                     }
+                    console.error("Drive upload failed:", driveErr);
                 }
-            } else {
-                alert("Treatment Plan saved to database! (PDF Skipped: No Google Drive authorization. Please log out and log back in to grant permission).");
             }
             router.push(`/dashboard/clients/${effectiveClient.type.toLowerCase()}/${effectiveClient.clientId}`);
         } catch (error: any) {
@@ -235,155 +229,218 @@ export function Form4TreatmentPlanPage({ searchParams }: PageProps) {
 
                 <form onSubmit={handleSubmit} className="p-0 sm:p-4 md:p-8 space-y-8 bg-white overflow-x-auto">
                     <FormHeader
-                        title="TREATMENT PLANNING"
-                        refCode="Clinical_Treatment_Plan/KKMK_UPSI/04-2025"
+                        title="CLINICAL TREATMENT PLAN"
+                        refCode="Clinical_Treatment_Plan/CMHC_UPSI/04-2025"
+                        subTitle="PRACTICUM & INTERNSHIP IN CLINICAL MENTAL HEALTH COUNSELING"
+                        subSubTitle="UNIVERSITI PENDIDIKAN SULTAN IDRIS"
                     />
 
-                    {/* Demographic Information Section Group */}
-                    <div className="bg-white space-y-6">
-                        <h2 className="text-xl font-bold text-black uppercase tracking-wide">DEMOGRAPHIC INFORMATION</h2>
+                    {/* PRINT-ONLY ORIGINAL LAYOUT TABLE & SECTIONS */}
+                    <div className="hidden print:block w-full text-black">
+                        <table className="w-full border-collapse border border-black text-black text-[11px] font-sans">
+                            <tbody>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Client Full Name</td>
+                                    <td className="border border-black p-2 w-[25%] uppercase">{clientFullName}</td>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Ethnic/Sex</td>
+                                    <td className="border border-black p-2 w-[25%]">{ethnic} / {sex}</td>
+                                </tr>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Age</td>
+                                    <td className="border border-black p-2 w-[25%]">{age}</td>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Diagnosis</td>
+                                    <td className="border border-black p-2 w-[25%]">{diagnosis}</td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-                        <div className="grid grid-cols-1 md:grid-cols-[220px_auto_1fr] gap-x-2 gap-y-4 md:gap-y-6 items-start md:items-center">
+                        <h2 className="text-base font-bold text-black uppercase text-center mt-6 mb-4">CLINICAL TREATMENT PLAN</h2>
 
-                            <div className="font-bold text-black text-sm uppercase md:py-2">Client Full Name</div>
-                            <div className="hidden md:block font-bold text-black">:</div>
-                            <div><input required type="text" value={clientFullName} onChange={e => setClientFullName(e.target.value)} className={inputClasses} placeholder="Enter Client's Actual Name" /></div>
-
-                            <div className="font-bold text-black text-sm uppercase md:py-2">Ethnic/Sex</div>
-                            <div className="hidden md:block font-bold text-black">:</div>
-                            <div className="flex space-x-2 items-center w-full">
-                                <select required value={ethnic} onChange={e => setEthnic(e.target.value)} className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white w-2/3 text-sm">
-                                    <option value="" disabled>Select Ethnic</option>
-                                    <option value="Malay">Malay</option>
-                                    <option value="Chinese">Chinese</option>
-                                    <option value="Indian">Indian</option>
-                                    <option value="Bumiputera - Sarawak">Bumiputera - Sarawak</option>
-                                    <option value="Bumiputera - Sabah">Bumiputera - Sabah</option>
-                                    <option value="Orang Asli">Orang Asli</option>
-                                    <option value="Others">Others</option>
-                                </select>
-                                <span className="text-gray-400">/</span>
-                                <select required value={sex} onChange={e => setSex(e.target.value)} className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white w-1/3 text-center text-sm">
-                                    <option value="" disabled>Select Sex</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </select>
-                            </div>
-
-                            <div className="font-bold text-black text-sm uppercase md:py-2">Age</div>
-                            <div className="hidden md:block font-bold text-black">:</div>
-                            <div><input required type="text" value={age} onChange={e => setAge(e.target.value)} className={inputClasses} placeholder="e.g. 24" /></div>
-
-                            <div className="font-bold text-black text-sm uppercase md:py-2">Diagnosis</div>
-                            <div className="hidden md:block font-bold text-black">:</div>
-                            <div><input required type="text" value={diagnosis} onChange={e => setDiagnosis(e.target.value)} className={inputClasses} placeholder="e.g. Generalized Anxiety Disorder" /></div>
-
-                        </div>
-                    </div>
-
-                    {/* Dynamic Treatment Plan Table */}
-                    <div className="mt-8">
-                        <h2 className="text-2xl font-bold text-gray-900 uppercase tracking-wide underline underline-offset-8 decoration-2 mb-10 text-center">CLINICAL TREATMENT PLAN</h2>
-
-                        <div className="rounded-xl border border-gray-300 overflow-hidden shadow-sm min-w-[700px]">
-                            <div className="grid grid-cols-12 bg-white text-black border-b-2 border-black font-bold">
-                                <div className="col-span-3 p-4 border-r border-black uppercase underline underline-offset-4 decoration-2">Goal(s)</div>
-                                <div className="col-span-5 p-4 border-r border-black uppercase underline underline-offset-4 decoration-2">Therapeutic Intervention</div>
-                                <div className="col-span-3 p-4 border-r border-black uppercase underline underline-offset-4 decoration-2">Outcome Measures of Change</div>
-                                <div className="col-span-1 p-4 text-center no-print text-[10px] uppercase text-gray-400 italic">Actions</div>
-                            </div>
-
-                            <div className="bg-white flex flex-col">
+                        {/* Treatment plans print grid */}
+                        <table className="w-full border-collapse border border-black text-black text-[11px] font-sans mt-4">
+                            <thead>
+                                <tr className="bg-gray-100">
+                                    <th className="border border-black p-2 font-bold w-[30%] uppercase text-left">Goal(s)</th>
+                                    <th className="border border-black p-2 font-bold w-[40%] uppercase text-left">Therapeutic Intervention</th>
+                                    <th className="border border-black p-2 font-bold w-[30%] uppercase text-left">Outcome Measures of Change</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                                 {treatmentPlans.map((plan, index) => (
-                                    <div key={index} className="grid grid-cols-12 bg-white border-b border-black items-stretch last:border-b-0">
-                                        <div className="col-span-3 border-r border-black p-2">
-                                            <textarea
-                                                required
-                                                rows={6}
-                                                value={plan.goal}
-                                                onChange={e => handleUpdateRow(index, "goal", e.target.value)}
-                                                className="w-full p-2 outline-none text-black bg-transparent text-sm resize-none"
-                                                placeholder="State clinical goal..."
-                                            />
-                                        </div>
-                                        <div className="col-span-5 border-r border-black p-2">
-                                            <textarea
-                                                required
-                                                rows={6}
-                                                value={plan.intervention}
-                                                onChange={e => handleUpdateRow(index, "intervention", e.target.value)}
-                                                className="w-full p-2 outline-none text-black bg-transparent text-sm resize-none"
-                                                placeholder="Describe treatment approach..."
-                                            />
-                                        </div>
-                                        <div className="col-span-3 border-r border-black p-2">
-                                            <textarea
-                                                required
-                                                rows={6}
-                                                value={plan.outcome}
-                                                onChange={e => handleUpdateRow(index, "outcome", e.target.value)}
-                                                className="w-full p-2 outline-none text-black bg-transparent text-sm resize-none"
-                                                placeholder="Define success metrics..."
-                                            />
-                                        </div>
-                                        <div className="col-span-1 flex items-center justify-center p-2 no-print">
-                                            <button
-                                                type="button"
-                                                onClick={() => handleRemoveRow(index)}
-                                                disabled={treatmentPlans.length === 1}
-                                                className="p-3 text-red-400 hover:text-red-600 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-                                                title="Remove Goal"
-                                            >
-                                                <Trash2 size={18} />
-                                            </button>
-                                        </div>
-                                    </div>
+                                    <tr key={index}>
+                                        <td className="border border-black p-2 whitespace-pre-wrap">{plan.goal || "N/A"}</td>
+                                        <td className="border border-black p-2 whitespace-pre-wrap">{plan.intervention || "N/A"}</td>
+                                        <td className="border border-black p-2 whitespace-pre-wrap">{plan.outcome || "N/A"}</td>
+                                    </tr>
                                 ))}
-                            </div>
-                            <div className="bg-white p-4 border-t border-black no-print">
-                                <button
-                                    type="button"
-                                    onClick={handleAddRow}
-                                    className="flex items-center space-x-2 text-black font-bold px-4 py-2 hover:bg-white rounded-lg transition-colors border-2 border-black"
-                                >
-                                    <Plus size={18} />
-                                    <span>Add New Goal Row</span>
-                                </button>
+                            </tbody>
+                        </table>
+
+                        {/* Signature section */}
+                        <div className="mt-12 w-full break-inside-avoid">
+                            <p className="text-black font-bold text-xs">Report by:</p>
+                            <div className="w-full max-w-[280px] mt-12">
+                                <div className="border-b border-black w-full mb-2"></div>
+                                <p className="font-bold text-black uppercase text-center text-xs mb-4">
+                                    ( {counsellorName || "Enter Full Name"} )
+                                </p>
+                                <div className="text-black text-[10px] font-bold space-y-0.5 leading-tight">
+                                    <p className="uppercase">CMCH Counselor Trainee</p>
+                                    <p className="uppercase font-normal">Universiti Pendidikan Sultan Idris</p>
+                                    <p className="uppercase font-normal">35900 Tanjong Malim, Perak</p>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* Footer Section */}
-                    <div className="pt-10 pb-4 mt-12 w-full">
-                        <div className="mb-6 flex flex-col items-start w-full max-w-md">
-                            <h3 className="text-black font-bold mb-4 uppercase text-sm">Report by:</h3>
-                            <div className="w-full">
-                                <div className="border-b-2 border-dotted border-black w-full mb-3 h-8"></div>
-                                <div className="flex justify-between items-center w-full px-1">
-                                    <span className="text-black font-bold text-lg">(</span>
-                                    <input
-                                        required
-                                        type="text"
-                                        value={counsellorName}
-                                        onChange={e => setCounsellorName(e.target.value)}
-                                        className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase text-sm"
-                                        placeholder="Enter Full Name"
-                                    />
-                                    <span className="text-black font-bold text-lg">)</span>
+                    {/* INTERACTIVE FORM CONTAINER (HIDDEN DURING PRINT) */}
+                    <div className="print:hidden space-y-8">
+                        {/* Demographic Information Section Group */}
+                        <div className="bg-white space-y-6">
+                            <h2 className="text-xl font-bold text-black uppercase tracking-wide">DEMOGRAPHIC INFORMATION</h2>
+
+                            <div className="grid grid-cols-1 md:grid-cols-[220px_auto_1fr] gap-x-2 gap-y-4 md:gap-y-6 items-start md:items-center">
+
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Client Full Name</div>
+                                <div className="hidden md:block font-bold text-black">:</div>
+                                <div><input required type="text" value={clientFullName} onChange={e => setClientFullName(e.target.value)} className={inputClasses} placeholder="Enter Client's Actual Name" /></div>
+
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Ethnic/Sex</div>
+                                <div className="hidden md:block font-bold text-black">:</div>
+                                <div className="flex space-x-2 items-center w-full">
+                                    <select required value={ethnic} onChange={e => setEthnic(e.target.value)} className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white w-2/3 text-sm">
+                                        <option value="" disabled>Select Ethnic</option>
+                                        <option value="Malay">Malay</option>
+                                        <option value="Chinese">Chinese</option>
+                                        <option value="Indian">Indian</option>
+                                        <option value="Bumiputera - Sarawak">Bumiputera - Sarawak</option>
+                                        <option value="Bumiputera - Sabah">Bumiputera - Sabah</option>
+                                        <option value="Orang Asli">Orang Asli</option>
+                                        <option value="Others">Others</option>
+                                    </select>
+                                    <span className="text-gray-400">/</span>
+                                    <select required value={sex} onChange={e => setSex(e.target.value)} className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white w-1/3 text-center text-sm">
+                                        <option value="" disabled>Select Sex</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Age</div>
+                                <div className="hidden md:block font-bold text-black">:</div>
+                                <div><input required type="text" value={age} onChange={e => setAge(e.target.value)} className={inputClasses} placeholder="e.g. 24" /></div>
+
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Diagnosis</div>
+                                <div className="hidden md:block font-bold text-black">:</div>
+                                <div><input required type="text" value={diagnosis} onChange={e => setDiagnosis(e.target.value)} className={inputClasses} placeholder="e.g. Generalized Anxiety Disorder" /></div>
+
+                            </div>
+                        </div>
+
+                        {/* Dynamic Treatment Plan Table */}
+                        <div className="mt-8">
+                            <h2 className="text-2xl font-bold text-gray-900 uppercase tracking-wide underline underline-offset-8 decoration-2 mb-10 text-center">CLINICAL TREATMENT PLAN</h2>
+
+                            <div className="rounded-xl border border-gray-300 overflow-hidden shadow-sm min-w-[700px]">
+                                <div className="grid grid-cols-12 bg-white text-black border-b-2 border-black font-bold">
+                                    <div className="col-span-3 p-4 border-r border-black uppercase underline underline-offset-4 decoration-2">Goal(s)</div>
+                                    <div className="col-span-5 p-4 border-r border-black uppercase underline underline-offset-4 decoration-2">Therapeutic Intervention</div>
+                                    <div className="col-span-3 p-4 border-r border-black uppercase underline underline-offset-4 decoration-2">Outcome Measures of Change</div>
+                                    <div className="col-span-1 p-4 text-center no-print text-[10px] uppercase text-gray-400 italic">Actions</div>
+                                </div>
+
+                                <div className="bg-white flex flex-col">
+                                    {treatmentPlans.map((plan, index) => (
+                                        <div key={index} className="grid grid-cols-12 bg-white border-b border-black items-stretch last:border-b-0">
+                                            <div className="col-span-3 border-r border-black p-2">
+                                                <textarea
+                                                    required
+                                                    rows={6}
+                                                    value={plan.goal}
+                                                    onChange={e => handleUpdateRow(index, "goal", e.target.value)}
+                                                    className="w-full p-2 outline-none text-black bg-transparent text-sm resize-none"
+                                                    placeholder="State clinical goal..."
+                                                />
+                                            </div>
+                                            <div className="col-span-5 border-r border-black p-2">
+                                                <textarea
+                                                    required
+                                                    rows={6}
+                                                    value={plan.intervention}
+                                                    onChange={e => handleUpdateRow(index, "intervention", e.target.value)}
+                                                    className="w-full p-2 outline-none text-black bg-transparent text-sm resize-none"
+                                                    placeholder="Describe treatment approach..."
+                                                />
+                                            </div>
+                                            <div className="col-span-3 border-r border-black p-2">
+                                                <textarea
+                                                    required
+                                                    rows={6}
+                                                    value={plan.outcome}
+                                                    onChange={e => handleUpdateRow(index, "outcome", e.target.value)}
+                                                    className="w-full p-2 outline-none text-black bg-transparent text-sm resize-none"
+                                                    placeholder="Define success metrics..."
+                                                />
+                                            </div>
+                                            <div className="col-span-1 flex items-center justify-center p-2 no-print">
+                                                <button
+                                                    type="button"
+                                                    onClick={() => handleRemoveRow(index)}
+                                                    disabled={treatmentPlans.length === 1}
+                                                    className="p-3 text-red-400 hover:text-red-600 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                                                    title="Remove Goal"
+                                                >
+                                                    <Trash2 size={18} />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className="bg-white p-4 border-t border-black no-print">
+                                    <button
+                                        type="button"
+                                        onClick={handleAddRow}
+                                        className="flex items-center space-x-2 text-black font-bold px-4 py-2 hover:bg-white rounded-lg transition-colors border-2 border-black"
+                                    >
+                                        <Plus size={18} />
+                                        <span>Add New Goal Row</span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="text-black text-[11px] sm:text-xs space-y-1 font-bold">
-                            <p className="uppercase">CMCH Counselor Trainee</p>
-                            <p className="uppercase font-normal tracking-tight">Universiti Pendidikan Sultan Idris</p>
-                            <p className="uppercase font-normal tracking-tight">35900 Tanjong Malim, Perak</p>
-                        </div>
+                        {/* Footer Section */}
+                        <div className="pt-10 pb-4 mt-12 w-full">
+                            <div className="mb-6 flex flex-col items-start w-full max-w-md">
+                                <h3 className="text-black font-bold mb-4 uppercase text-sm">Report by:</h3>
+                                <div className="w-full">
+                                    <div className="border-b-2 border-dotted border-black w-full mb-3 h-8"></div>
+                                    <div className="flex justify-between items-center w-full px-1">
+                                        <span className="text-black font-bold text-lg">(</span>
+                                        <input
+                                            required
+                                            type="text"
+                                            value={counsellorName}
+                                            onChange={e => setCounsellorName(e.target.value)}
+                                            className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase text-sm"
+                                            placeholder="Enter Full Name"
+                                        />
+                                        <span className="text-black font-bold text-lg">)</span>
+                                    </div>
+                                </div>
+                            </div>
 
-                        <div className="mt-16 text-center w-full pt-4 border-t border-dashed border-gray-200">
-                            <p className="text-xs font-bold text-slate-500 uppercase tracking-widest pl-[0.1em]">
-                                Confidential Document (For Professional Use Only)
-                            </p>
+                            <div className="text-black text-[11px] sm:text-xs space-y-1 font-bold">
+                                <p className="uppercase">CMCH Counselor Trainee</p>
+                                <p className="uppercase font-normal tracking-tight">Universiti Pendidikan Sultan Idris</p>
+                                <p className="uppercase font-normal tracking-tight">35900 Tanjong Malim, Perak</p>
+                            </div>
+
+                            <div className="mt-16 text-center w-full pt-4 border-t border-dashed border-gray-200">
+                                <p className="text-xs font-bold text-slate-500 uppercase tracking-widest pl-[0.1em]">
+                                    Confidential Document (For Professional Use Only)
+                                </p>
+                            </div>
                         </div>
                     </div>
 

@@ -263,18 +263,12 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
                         selectedClient?.clientId || "GROUP",
                         sessionData.sessionId
                     );
-                    alert("Group Counselling Report & PDF saved to Google Drive successfully!");
                 } catch (driveErr: any) {
                     if (driveErr.message === "UNAUTHORIZED_DRIVE_ACCESS") {
                         localStorage.removeItem("googleDriveToken");
-                        alert("Google Drive session expired. Your report was saved to the database, but the PDF upload failed. Please log out and back in to re-authorize Google Drive.");
-                    } else {
-                        console.error("Drive upload failed:", driveErr);
-                        alert(`⚠️ Report saved to Database successfully, but Google Drive Upload Failed. \n\nDrive Error: ${driveErr.message || driveErr}`);
                     }
+                    console.error("Drive upload failed:", driveErr);
                 }
-            } else {
-                alert("Group Counselling Report saved to database! (PDF Skipped: No Google Drive authorization. Please log out and log back in to grant permission).");
             }
             router.push(`/dashboard`);
         } catch (error: any) {
@@ -320,179 +314,273 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
                     <FormHeader
                         title="GROUP COUNSELING REPORT"
                         refCode="Group_Counseling_Report/CMHC_UPSI/11-2025"
-                        subTitle="INTERNSHIP IN CLINICAL MENTAL HEALTH COUNSELING"
+                        subTitle="PRACTICUM & INTERNSHIP IN CLINICAL MENTAL HEALTH COUNSELING"
                         subSubTitle="UNIVERSITI PENDIDIKAN SULTAN IDRIS"
                     />
 
-                    {/* Logistics Data Section Group */}
-                    <div className="bg-white mb-8 border-2 border-black">
-                        <div className="bg-white px-4 py-3 border-b-2 border-black flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-                            <label className="font-bold text-black uppercase text-sm sm:text-base sm:min-w-[200px]">Group Leader/Counsellor</label>
-                            <span className="hidden sm:inline font-bold text-black">:</span>
-                            <input required type="text" value={counsellorName} onChange={e => setCounsellorName(e.target.value)} className="flex-1 p-1 bg-transparent border-none focus:ring-0 font-medium text-black border-b sm:border-none border-gray-200 print:hidden" placeholder="Enter name" />
-                            <span className="hidden print:inline font-bold text-black pl-2 uppercase">{counsellorName || "Enter name"}</span>
+                    {/* PRINT-ONLY ORIGINAL LAYOUT TABLE & SECTIONS */}
+                    <div className="hidden print:block w-full text-black">
+                        <table className="w-full border-collapse border border-black text-black text-[11px] font-sans">
+                            <tbody>
+                                <tr>
+                                    <td className="border border-black bg-[#fce5cd] p-2 font-bold w-[25%]">Group Leader/Counselor</td>
+                                    <td className="border border-black p-2 font-bold uppercase" colSpan={5}>{counsellorName}</td>
+                                </tr>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Date</td>
+                                    <td className="border border-black p-2 w-[25%]">{dateTime.split('T')[0]}</td>
+                                    <td className="border border-black p-2 font-bold w-[10%]">Time</td>
+                                    <td className="border border-black p-2 w-[15%]">{dateTime.split('T')[1]}</td>
+                                    <td className="border border-black p-2 font-bold w-[10%]">Duration</td>
+                                    <td className="border border-black p-2 w-[15%]">{duration}</td>
+                                </tr>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold">Type of Group</td>
+                                    <td className="border border-black p-2" colSpan={5}>{typeOfGroup}</td>
+                                </tr>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold">Number of Session</td>
+                                    <td className="border border-black p-2" colSpan={5}>{numberOfSession}</td>
+                                </tr>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold">Number of Clients Attending the Group</td>
+                                    <td className="border border-black p-2" colSpan={5}>{numberOfClientsAttending}</td>
+                                </tr>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold">Name of Clients Attending The Group</td>
+                                    <td className="border border-black p-2" colSpan={5}>
+                                        <div className="grid grid-cols-2 gap-x-8 gap-y-1">
+                                            {Array.from({ length: 8 }).map((_, idx) => (
+                                                <div key={idx} className="flex">
+                                                    <span className="w-6 font-bold">{idx + 1}.</span>
+                                                    <span className="uppercase">{groupMembers[idx]?.name || ""}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold">Issues Focused of the day</td>
+                                    <td className="border border-black p-2 whitespace-pre-wrap" colSpan={5}>{issuesFocused || "N/A"}</td>
+                                </tr>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold">Session Objectives</td>
+                                    <td className="border border-black p-2 whitespace-pre-wrap" colSpan={5}>{sessionObjectives || "N/A"}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        {/* Plain text styled narratives */}
+                        <div className="space-y-8 mt-8">
+                            {[
+                                { label: "Background Information of the Group Members /Observations Result", value: backgroundInfo },
+                                { label: "Group Initial Stage", value: groupInitialStage },
+                                { label: "Mid-Stage/Group Working Stage", value: midStageWorking },
+                                { label: "Theoretical Approach/Group Techniques Used", value: theoreticalApproach },
+                                { label: "Diagnostic Impression/Intervention", value: diagnosticImpression },
+                                { label: "Client Progress/Barriers (Internal/External Dynamics Supporting or Hindering Change)", value: clientProgressBarriers },
+                                { label: "Treatment Planning", value: treatmentPlanning },
+                                { label: "Termination/Closing Stage and Follow Up Actions", value: terminationClosing },
+                                { label: "Counselor's Comments/Reflections", value: counsellorsComments }
+                            ].map((sec, idx) => (
+                                <div key={idx} className="space-y-2 break-inside-avoid">
+                                    <h3 className="font-bold text-black text-xs uppercase">{sec.label}</h3>
+                                    <p className="text-black text-[11px] whitespace-pre-wrap leading-relaxed min-h-[40px] pl-1">
+                                        {sec.value || "N/A"}
+                                    </p>
+                                </div>
+                            ))}
                         </div>
 
-                        <div className="p-4 sm:p-6 lg:p-8">
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-6">
-                                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-                                    <label className="font-bold text-gray-800 uppercase text-xs sm:text-sm sm:min-w-[120px]">Date</label>
-                                    <span className="hidden sm:inline font-bold text-gray-800">:</span>
-                                    <input required type="date" value={dateTime.split('T')[0]} onChange={e => setDateTime(e.target.value + 'T' + (dateTime.split('T')[1] || '00:00'))} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm print:hidden" />
-                                    <span className="hidden print:inline font-bold text-black border-b border-black flex-1 p-2 text-sm">{dateTime.split('T')[0] || ""}</span>
-                                </div>
-                                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-                                    <label className="font-bold text-gray-800 uppercase text-xs sm:text-sm sm:min-w-[120px]">Time</label>
-                                    <span className="hidden sm:inline font-bold text-gray-800">:</span>
-                                    <input required type="time" value={dateTime.split('T')[1] || ''} onChange={e => setDateTime((dateTime.split('T')[0] || '') + 'T' + e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm print:hidden" />
-                                    <span className="hidden print:inline font-bold text-black border-b border-black flex-1 p-2 text-sm">{dateTime.split('T')[1] || ""}</span>
-                                </div>
-                                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-                                    <label className="font-bold text-gray-800 uppercase text-xs sm:text-sm sm:min-w-[120px]">Duration</label>
-                                    <span className="hidden sm:inline font-bold text-gray-800">:</span>
-                                    <input required type="text" value={duration} onChange={e => setDuration(e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm print:hidden" placeholder="e.g. 1.5 hours" />
-                                    <span className="hidden print:inline font-bold text-black border-b border-black flex-1 p-2 text-sm">{duration || ""}</span>
-                                </div>
-                                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-                                    <label className="font-bold text-gray-800 uppercase text-xs sm:text-sm sm:min-w-[120px]">Type of Group</label>
-                                    <span className="hidden sm:inline font-bold text-gray-800">:</span>
-                                    <input required type="text" value={typeOfGroup} onChange={e => setTypeOfGroup(e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm print:hidden" placeholder="e.g. Support" />
-                                    <span className="hidden print:inline font-bold text-black border-b border-black flex-1 p-2 text-sm">{typeOfGroup || ""}</span>
-                                </div>
-                                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-                                    <label className="font-bold text-gray-800 uppercase text-xs sm:text-sm sm:min-w-[120px]">Number of Session</label>
-                                    <span className="hidden sm:inline font-bold text-gray-800">:</span>
-                                    <input required type="number" value={numberOfSession} onChange={e => setNumberOfSession(e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm print:hidden" />
-                                    <span className="hidden print:inline font-bold text-black border-b border-black flex-1 p-2 text-sm">{numberOfSession || ""}</span>
-                                </div>
-                                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-                                    <label className="font-bold text-gray-800 uppercase text-xs sm:text-sm sm:min-w-[150px]">Clients Attending</label>
-                                    <span className="hidden sm:inline font-bold text-gray-800">:</span>
-                                    <input required type="number" min="1" max="8" value={numberOfClientsAttending} onChange={e => setNumberOfClientsAttending(e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm text-center sm:text-left print:hidden" />
-                                    <span className="hidden print:inline font-bold text-black border-b border-black flex-1 p-2 text-sm text-center sm:text-left">{numberOfClientsAttending || ""}</span>
-                                </div>
+                        {/* Brief Individual Progress Report */}
+                        <div className="page-break-before mt-8">
+                            <h3 className="font-bold text-black text-xs uppercase mb-4">Brief Individual Progress Report For Each Group Member</h3>
+                            <div className="space-y-6">
+                                {Array.from({ length: 8 }).map((_, idx) => (
+                                    <div key={idx} className="space-y-2 break-inside-avoid">
+                                        <p className="font-bold text-black text-[11px]">
+                                            Group Member {idx + 1}: {groupMembers[idx]?.name ? `(${groupMembers[idx].name.toUpperCase()})` : ""}
+                                        </p>
+                                        <p className="text-black text-[11px] border-b border-gray-300 pb-2 whitespace-pre-wrap min-h-[30px] pl-1">
+                                            {groupMembers[idx]?.progress || "N/A"}
+                                        </p>
+                                    </div>
+                                ))}
                             </div>
- 
-                            <div className="mt-10">
-                                <h3 className="text-sm font-bold text-black uppercase mb-6 border-l-4 border-black pl-3 leading-tight">Name of Clients Attending The Group (1-8):</h3>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                                    {Array.from({ length: 8 }).map((_, idx) => (
-                                        <div key={idx} className="flex items-center space-x-3 group">
-                                            <span className="text-gray-400 font-bold w-4 text-xs">{idx + 1}.</span>
-                                            <input
-                                                type="text"
-                                                value={groupMembers[idx]?.name || ""}
-                                                onChange={e => handleUpdateMemberName(idx, e.target.value)}
-                                                className="flex-1 p-2 border-b border-gray-200 group-focus-within:border-black outline-none bg-white text-sm font-bold uppercase transition-colors print:hidden"
-                                                placeholder={`Member ${idx + 1}`}
-                                                required={idx < (parseInt(numberOfClientsAttending) || 0)}
-                                            />
-                                            <span className="hidden print:inline font-bold text-black border-b border-black flex-1 p-2 uppercase text-sm min-h-[36px]">
-                                                {groupMembers[idx]?.name || ""}
-                                            </span>
-                                        </div>
-                                    ))}
+                        </div>
+
+                        {/* Signature section */}
+                        <div className="mt-12 w-full break-inside-avoid">
+                            <p className="text-black font-bold text-xs">Report by:</p>
+                            <div className="w-full max-w-[280px] mt-12">
+                                <div className="border-b border-black w-full mb-2"></div>
+                                <p className="font-bold text-black uppercase text-center text-xs mb-4">
+                                    ( {traineeSignature || "Enter Full Name"} )
+                                </p>
+                                <div className="text-black text-[10px] font-bold space-y-0.5 leading-tight">
+                                    <p className="uppercase">CMCH Counselor Trainee</p>
+                                    <p className="uppercase font-normal">Universiti Pendidikan Sultan Idris</p>
+                                    <p className="uppercase font-normal">35900 Tanjong Malim, Perak</p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* Narrative Sections */}
-                    <div className="space-y-10">
-                        {[
-                            { label: "Issues Focused of the day", value: issuesFocused, setter: setIssuesFocused, rows: 4 },
-                            { label: "Session Objectives", value: sessionObjectives, setter: setSessionObjectives, rows: 4 },
-                            { label: "Background Information of the Group Members /Observations Result", value: backgroundInfo, setter: setBackgroundInfo, rows: 5 },
-                            { label: "Group Initial Stage", value: groupInitialStage, setter: setGroupInitialStage, rows: 5 },
-                            { label: "Mid-Stage/Group Working Stage", value: midStageWorking, setter: setMidStageWorking, rows: 6 },
-                            { label: "Theoretical Approach/Group Techniques Used", value: theoreticalApproach, setter: setTheoreticalApproach, rows: 5 },
-                            { label: "Diagnostic Impression/Intervention", value: diagnosticImpression, setter: setDiagnosticImpression, rows: 5 },
-                            { label: "Client Progress/Barriers (Internal/External Dynamics Supporting or Hindering Change)", value: clientProgressBarriers, setter: setClientProgressBarriers, rows: 6 },
-                            { label: "Treatment Planning", value: treatmentPlanning, setter: setTreatmentPlanning, rows: 5 },
-                            { label: "Termination/Closing Stage and Follow Up Actions", value: terminationClosing, setter: setTerminationClosing, rows: 5 },
-                            { label: "Counsellor’s Comments/Reflections", value: counsellorsComments, setter: setCounsellorsComments, rows: 5 }
-                        ].map((field, idx) => (
-                            <div key={idx} className="bg-white shadow-none">
-                                <div className="bg-white px-4 py-2 border-b-2 border-black">
-                                    <label className="text-lg font-bold text-black uppercase">
-                                        {field.label}
-                                    </label>
+                    {/* INTERACTIVE FORM CONTAINER (HIDDEN DURING PRINT) */}
+                    <div className="print:hidden space-y-8">
+                        {/* Logistics Data Section Group */}
+                        <div className="bg-white mb-8 border-2 border-black">
+                            <div className="bg-white px-4 py-3 border-b-2 border-black flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                                <label className="font-bold text-black uppercase text-sm sm:text-base sm:min-w-[200px]">Group Leader/Counsellor</label>
+                                <span className="hidden sm:inline font-bold text-black">:</span>
+                                <input required type="text" value={counsellorName} onChange={e => setCounsellorName(e.target.value)} className="flex-1 p-1 bg-transparent border-none focus:ring-0 font-medium text-black border-b sm:border-none border-gray-200" placeholder="Enter name" />
+                            </div>
+
+                            <div className="p-4 sm:p-6 lg:p-8">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-6">
+                                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                                        <label className="font-bold text-gray-800 uppercase text-xs sm:text-sm sm:min-w-[120px]">Date</label>
+                                        <span className="hidden sm:inline font-bold text-gray-800">:</span>
+                                        <input required type="date" value={dateTime.split('T')[0]} onChange={e => setDateTime(e.target.value + 'T' + (dateTime.split('T')[1] || '00:00'))} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm" />
+                                    </div>
+                                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                                        <label className="font-bold text-gray-800 uppercase text-xs sm:text-sm sm:min-w-[120px]">Time</label>
+                                        <span className="hidden sm:inline font-bold text-gray-800">:</span>
+                                        <input required type="time" value={dateTime.split('T')[1] || ''} onChange={e => setDateTime((dateTime.split('T')[0] || '') + 'T' + e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm" />
+                                    </div>
+                                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                                        <label className="font-bold text-gray-800 uppercase text-xs sm:text-sm sm:min-w-[120px]">Duration</label>
+                                        <span className="hidden sm:inline font-bold text-gray-800">:</span>
+                                        <input required type="text" value={duration} onChange={e => setDuration(e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm" placeholder="e.g. 1.5 hours" />
+                                    </div>
+                                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                                        <label className="font-bold text-gray-800 uppercase text-xs sm:text-sm sm:min-w-[120px]">Type of Group</label>
+                                        <span className="hidden sm:inline font-bold text-gray-800">:</span>
+                                        <input required type="text" value={typeOfGroup} onChange={e => setTypeOfGroup(e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm" placeholder="e.g. Support" />
+                                    </div>
+                                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                                        <label className="font-bold text-gray-800 uppercase text-xs sm:text-sm sm:min-w-[120px]">Number of Session</label>
+                                        <span className="hidden sm:inline font-bold text-gray-800">:</span>
+                                        <input required type="number" value={numberOfSession} onChange={e => setNumberOfSession(e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm" />
+                                    </div>
+                                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                                        <label className="font-bold text-gray-800 uppercase text-xs sm:text-sm sm:min-w-[150px]">Clients Attending</label>
+                                        <span className="hidden sm:inline font-bold text-gray-800">:</span>
+                                        <input required type="number" min="1" max="8" value={numberOfClientsAttending} onChange={e => setNumberOfClientsAttending(e.target.value)} className="flex-1 p-2 border-b border-black outline-none bg-white font-bold text-sm text-center sm:text-left" />
+                                    </div>
                                 </div>
-                                <div className="p-1">
-                                    <textarea
-                                        required
-                                        rows={field.rows}
-                                        value={field.value}
-                                        onChange={e => field.setter(e.target.value)}
-                                        className="w-full p-4 border-none focus:ring-0 outline-none text-gray-700 bg-white placeholder-gray-300 print:hidden"
-                                        placeholder={`Enter ${field.label.toLowerCase()}...`}
-                                    />
-                                    <div className="hidden print:block p-4 text-black text-sm whitespace-pre-wrap min-h-[100px] border-t border-black">
-                                        {field.value || "N/A"}
+
+                                <div className="mt-10">
+                                    <h3 className="text-sm font-bold text-black uppercase mb-6 border-l-4 border-black pl-3 leading-tight">Name of Clients Attending The Group (1-8):</h3>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                                        {Array.from({ length: 8 }).map((_, idx) => (
+                                            <div key={idx} className="flex items-center space-x-3 group">
+                                                <span className="text-gray-400 font-bold w-4 text-xs">{idx + 1}.</span>
+                                                <input
+                                                    type="text"
+                                                    value={groupMembers[idx]?.name || ""}
+                                                    onChange={e => handleUpdateMemberName(idx, e.target.value)}
+                                                    className="flex-1 p-2 border-b border-gray-200 group-focus-within:border-black outline-none bg-white text-sm font-bold uppercase transition-colors"
+                                                    placeholder={`Member ${idx + 1}`}
+                                                    required={idx < (parseInt(numberOfClientsAttending) || 0)}
+                                                />
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
                             </div>
-                        ))}
-                    </div>
-
-                    {/* Individual Progress Matrix */}
-                    <div className="mt-12">
-                        <div className="bg-white px-4 py-2 border-2 border-black">
-                            <h2 className="text-xl font-bold text-black uppercase tracking-wide">Brief Individual Progress Report For Each Group Member</h2>
                         </div>
-                        <div className="p-0 space-y-8">
-                            {Array.from({ length: 8 }).map((_, idx) => (
-                                <div key={idx} className="space-y-2">
-                                    <h3 className="font-bold text-black uppercase text-sm bg-white p-2 border-l-4 border-black flex items-center justify-between">
-                                        <span>Group Member {idx + 1} {groupMembers[idx]?.name ? `(${groupMembers[idx].name})` : ""}</span>
-                                    </h3>
-                                    <textarea
-                                        rows={3}
-                                        value={groupMembers[idx]?.progress || ""}
-                                        onChange={e => handleUpdateMemberProgress(idx, e.target.value)}
-                                        className="w-full p-4 bg-transparent border-b border-dotted border-gray-300 focus:border-upsi-navy outline-none resize-none print:hidden"
-                                        placeholder={`Enter progress for member ${idx + 1}...`}
-                                        required={idx < (parseInt(numberOfClientsAttending) || 0)}
-                                    />
-                                    <div className="hidden print:block p-4 text-black text-sm whitespace-pre-wrap border-b border-dotted border-gray-300">
-                                        {groupMembers[idx]?.progress || "N/A"}
+
+                        {/* Narrative Sections */}
+                        <div className="space-y-10">
+                            {[
+                                { label: "Issues Focused of the day", value: issuesFocused, setter: setIssuesFocused, rows: 4 },
+                                { label: "Session Objectives", value: sessionObjectives, setter: setSessionObjectives, rows: 4 },
+                                { label: "Background Information of the Group Members /Observations Result", value: backgroundInfo, setter: setBackgroundInfo, rows: 5 },
+                                { label: "Group Initial Stage", value: groupInitialStage, setter: setGroupInitialStage, rows: 5 },
+                                { label: "Mid-Stage/Group Working Stage", value: midStageWorking, setter: setMidStageWorking, rows: 6 },
+                                { label: "Theoretical Approach/Group Techniques Used", value: theoreticalApproach, setter: setTheoreticalApproach, rows: 5 },
+                                { label: "Diagnostic Impression/Intervention", value: diagnosticImpression, setter: setDiagnosticImpression, rows: 5 },
+                                { label: "Client Progress/Barriers (Internal/External Dynamics Supporting or Hindering Change)", value: clientProgressBarriers, setter: setClientProgressBarriers, rows: 6 },
+                                { label: "Treatment Planning", value: treatmentPlanning, setter: setTreatmentPlanning, rows: 5 },
+                                { label: "Termination/Closing Stage and Follow Up Actions", value: terminationClosing, setter: setTerminationClosing, rows: 5 },
+                                { label: "Counsellor’s Comments/Reflections", value: counsellorsComments, setter: setCounsellorsComments, rows: 5 }
+                            ].map((field, idx) => (
+                                <div key={idx} className="bg-white shadow-none">
+                                    <div className="bg-white px-4 py-2 border-b-2 border-black">
+                                        <label className="text-lg font-bold text-black uppercase">
+                                            {field.label}
+                                        </label>
+                                    </div>
+                                    <div className="p-1">
+                                        <textarea
+                                            required
+                                            rows={field.rows}
+                                            value={field.value}
+                                            onChange={e => field.setter(e.target.value)}
+                                            className="w-full p-4 border-none focus:ring-0 outline-none text-gray-700 bg-white placeholder-gray-300"
+                                            placeholder={`Enter ${field.label.toLowerCase()}...`}
+                                        />
                                     </div>
                                 </div>
                             ))}
                         </div>
-                    </div>
 
-                    {/* Footer Section */}
-                    <div className="pt-10 pb-4 border-t border-gray-300 mt-12 w-full">
-                        <div className="mt-4 w-full">
-                            <h3 className="text-black font-bold mb-8 uppercase text-sm">REPORT BY:</h3>
-                            <div className="w-full max-w-md">
-                                <div className="border-b-2 border-dotted border-black w-full mb-3 h-8"></div>
-                                <div className="flex justify-between items-center w-full px-1 mb-8">
-                                    <span className="text-black font-bold text-lg">(</span>
-                                    <input
-                                        required
-                                        type="text"
-                                        value={traineeSignature}
-                                        onChange={e => setTraineeSignature(e.target.value)}
-                                        className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase text-sm print:hidden"
-                                        placeholder="Enter Full Name"
-                                    />
-                                    <span className="hidden print:inline font-bold text-black text-center flex-1 py-1 uppercase text-sm">{traineeSignature || "Enter Full Name"}</span>
-                                    <span className="text-black font-bold text-lg">)</span>
-                                </div>
-                                <div className="text-black text-[11px] sm:text-xs space-y-1 font-bold">
-                                    <p className="uppercase font-bold">CMCH Counselor Trainee</p>
-                                    <p className="uppercase font-normal tracking-tight">Universiti Pendidikan Sultan Idris</p>
-                                    <p className="uppercase font-normal tracking-tight">35900 Tanjong Malim, Perak</p>
-                                </div>
+                        {/* Individual Progress Matrix */}
+                        <div className="mt-12">
+                            <div className="bg-white px-4 py-2 border-2 border-black">
+                                <h2 className="text-xl font-bold text-black uppercase tracking-wide">Brief Individual Progress Report For Each Group Member</h2>
+                            </div>
+                            <div className="p-0 space-y-8">
+                                {Array.from({ length: 8 }).map((_, idx) => (
+                                    <div key={idx} className="space-y-2">
+                                        <h3 className="font-bold text-black uppercase text-sm bg-white p-2 border-l-4 border-black flex items-center justify-between">
+                                            <span>Group Member {idx + 1} {groupMembers[idx]?.name ? `(${groupMembers[idx].name})` : ""}</span>
+                                        </h3>
+                                        <textarea
+                                            rows={3}
+                                            value={groupMembers[idx]?.progress || ""}
+                                            onChange={e => handleUpdateMemberProgress(idx, e.target.value)}
+                                            className="w-full p-4 bg-transparent border-b border-dotted border-gray-300 focus:border-upsi-navy outline-none resize-none"
+                                            placeholder={`Enter progress for member ${idx + 1}...`}
+                                            required={idx < (parseInt(numberOfClientsAttending) || 0)}
+                                        />
+                                    </div>
+                                ))}
                             </div>
                         </div>
 
-                        <div className="mt-20 text-center w-full pt-4 border-t border-dashed border-gray-200">
-                            <p className="text-xs font-bold text-slate-500 uppercase tracking-widest pl-[0.1em]">
-                                Confidential Document (For Professional Use Only)
-                            </p>
+                        {/* Footer Section */}
+                        <div className="pt-10 pb-4 border-t border-gray-300 mt-12 w-full">
+                            <div className="mt-4 w-full">
+                                <h3 className="text-black font-bold mb-8 uppercase text-sm">REPORT BY:</h3>
+                                <div className="w-full max-w-md">
+                                    <div className="border-b-2 border-dotted border-black w-full mb-3 h-8"></div>
+                                    <div className="flex justify-between items-center w-full px-1 mb-8">
+                                        <span className="text-black font-bold text-lg">(</span>
+                                        <input
+                                            required
+                                            type="text"
+                                            value={traineeSignature}
+                                            onChange={e => setTraineeSignature(e.target.value)}
+                                            className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase text-sm"
+                                            placeholder="Enter Full Name"
+                                        />
+                                        <span className="text-black font-bold text-lg">)</span>
+                                    </div>
+                                    <div className="text-black text-[11px] sm:text-xs space-y-1 font-bold">
+                                        <p className="uppercase font-bold">CMCH Counselor Trainee</p>
+                                        <p className="uppercase font-normal tracking-tight">Universiti Pendidikan Sultan Idris</p>
+                                        <p className="uppercase font-normal tracking-tight">35900 Tanjong Malim, Perak</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="mt-20 text-center w-full pt-4 border-t border-dashed border-gray-200">
+                                <p className="text-xs font-bold text-slate-500 uppercase tracking-widest pl-[0.1em]">
+                                    Confidential Document (For Professional Use Only)
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </form>

@@ -33,6 +33,7 @@ export function Form5TerminationSessionPage({ searchParams }: PageProps) {
     const [age, setAge] = useState("");
     const [position, setPosition] = useState("");
     const [diagnosis, setDiagnosis] = useState("");
+    const [dateOfReport, setDateOfReport] = useState(new Date().toISOString().split("T")[0]);
 
     // Narrative Fields
     const [synopsis, setSynopsis] = useState("");
@@ -67,6 +68,7 @@ export function Form5TerminationSessionPage({ searchParams }: PageProps) {
                         setAge(pd.age || "");
                         setPosition(pd.position || "");
                         setDiagnosis(pd.diagnosis || "");
+                        setDateOfReport(pd.dateOfReport || new Date().toISOString().split("T")[0]);
                         setSynopsis(formData.synopsis || "");
                         setEvaluationCurrentFunctioning(formData.evaluationCurrentFunctioning || "");
                         setJustificationTermination(formData.justificationTermination || "");
@@ -132,7 +134,8 @@ export function Form5TerminationSessionPage({ searchParams }: PageProps) {
                         ethnicGender: `${ethnic} / ${gender}`,
                         age,
                         position,
-                        diagnosis
+                        diagnosis,
+                        dateOfReport
                     },
                     synopsis,
                     evaluationCurrentFunctioning,
@@ -177,12 +180,9 @@ export function Form5TerminationSessionPage({ searchParams }: PageProps) {
                         effectiveClient.clientId,
                         sessionData.sessionId
                     );
-                    alert("Termination Report & PDF saved successfully!");
                 } catch (driveErr: any) {
-                    alert(`⚠️ Report saved to Database, but Google Drive Upload Failed.`);
+                    console.error("Drive upload failed:", driveErr);
                 }
-            } else {
-                alert("Termination Report saved to database!");
             }
             router.push(`/dashboard/clients/${effectiveClient.type.toLowerCase()}/${effectiveClient.clientId}`);
         } catch (error: any) {
@@ -208,75 +208,164 @@ export function Form5TerminationSessionPage({ searchParams }: PageProps) {
 
                 <form onSubmit={handleSubmit} className="p-0 sm:p-4 md:p-8 space-y-8 bg-white">
                     <FormHeader
-                        title="TERMINATION SESSION"
-                        refCode="Termination_Session/KKMK_UPSI/05-2025"
+                        title="TERMINATION OF COUNSELING SESSION"
+                        refCode="Termination_Session/CMHC_UPSI/05-2025"
+                        subTitle="PRACTICUM & INTERNSHIP IN CLINICAL MENTAL HEALTH COUNSELING"
+                        subSubTitle="UNIVERSITI PENDIDIKAN SULTAN IDRIS"
                     />
 
-                    <div className="bg-white space-y-6">
-                        <h2 className="text-xl font-bold text-black uppercase underline underline-offset-4 mb-4">DEMOGRAPHIC INFORMATION</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-[220px_auto_1fr] gap-x-2 gap-y-4 md:gap-y-6 items-start md:items-center">
-                            <div className="font-bold text-black uppercase text-sm md:py-2">Client Name</div>
-                            <div className="hidden md:block font-bold text-black text-center">:</div>
-                            <input required type="text" value={clientName} onChange={e => setClientName(e.target.value)} className={inputClasses} />
+                    {/* PRINT-ONLY ORIGINAL LAYOUT TABLE & SECTIONS */}
+                    <div className="hidden print:block w-full text-black">
+                        <table className="w-full border-collapse border border-black text-black text-[11px] font-sans">
+                            <tbody>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Client Name</td>
+                                    <td className="border border-black p-2 w-[25%] uppercase">{clientName}</td>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Gender</td>
+                                    <td className="border border-black p-2 w-[25%]">{gender}</td>
+                                </tr>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Age</td>
+                                    <td className="border border-black p-2 w-[25%]">{age}</td>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Ethnic</td>
+                                    <td className="border border-black p-2 w-[25%]">{ethnic}</td>
+                                </tr>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Position</td>
+                                    <td className="border border-black p-2 w-[25%]">{position}</td>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Diagnosis</td>
+                                    <td className="border border-black p-2 w-[25%]">{diagnosis}</td>
+                                </tr>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Date of Report</td>
+                                    <td className="border border-black p-2" colSpan={3}>{dateOfReport}</td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-                            <div className="font-bold text-black uppercase text-sm md:py-2">Gender</div>
-                            <div className="hidden md:block font-bold text-black text-center">:</div>
-                            <select value={gender} onChange={e => setGender(e.target.value)} className={`${inputClasses} text-sm`}>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                            </select>
+                        {/* Plain text styled narratives */}
+                        <div className="space-y-8 mt-8">
+                            {[
+                                { label: "Synopsis", value: synopsis },
+                                { label: "Evaluation of The Client's Current Functioning Level", value: evaluationCurrentFunctioning },
+                                { label: "Justification for Termination", value: justificationTermination },
+                                { label: "Summary of progress towards goals (including final diagnostic impression)", value: summaryProgress },
+                                { label: "Clinical Evaluation", value: clinicalEvaluation },
+                                { label: "Follow Up Plan", value: followUpPlan }
+                            ].map((sec, idx) => (
+                                <div key={idx} className="space-y-2 break-inside-avoid">
+                                    <h3 className="font-bold text-black text-xs uppercase">{sec.label.toUpperCase()}</h3>
+                                    <p className="text-black text-[11px] whitespace-pre-wrap leading-relaxed min-h-[40px] pl-1">
+                                        {sec.value || "N/A"}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
 
-                            <div className="font-bold text-black uppercase text-sm md:py-2">Age</div>
-                            <div className="hidden md:block font-bold text-black text-center">:</div>
-                            <input required type="text" value={age} onChange={e => setAge(e.target.value)} className={inputClasses} />
-
-                            <div className="font-bold text-black uppercase text-sm md:py-2">Designation</div>
-                            <div className="hidden md:block font-bold text-black text-center">:</div>
-                            <input required type="text" value={position} onChange={e => setPosition(e.target.value)} className={inputClasses} placeholder="Counsellor Trainee" />
-
-                            <div className="font-bold text-black uppercase text-sm md:py-2">Date of Report</div>
-                            <div className="hidden md:block font-bold text-black text-center">:</div>
-                            <input required type="date" className={inputClasses} />
+                        {/* Signature section */}
+                        <div className="mt-12 w-full break-inside-avoid">
+                            <p className="text-black font-bold text-xs">Report by:</p>
+                            <div className="w-full max-w-[280px] mt-12">
+                                <div className="border-b border-black w-full mb-2"></div>
+                                <p className="font-bold text-black uppercase text-center text-xs mb-4">
+                                    ( {counsellorName || "Enter Full Name"} )
+                                </p>
+                                <div className="text-black text-[10px] font-bold space-y-0.5 leading-tight">
+                                    <p className="uppercase">CMCH Counselor Trainee</p>
+                                    <p className="uppercase font-normal">Universiti Pendidikan Sultan Idris</p>
+                                    <p className="uppercase font-normal">35900 Tanjong Malim, Perak</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="space-y-12">
-                        {[
-                            { label: "Synopsis", value: synopsis, setter: setSynopsis, rows: 5 },
-                            { label: "Evaluation of The Client's Current Functioning Level", value: evaluationCurrentFunctioning, setter: setEvaluationCurrentFunctioning, rows: 6 },
-                            { label: "Justification for Termination", value: justificationTermination, setter: setJustificationTermination, rows: 6 },
-                            { label: "Summary of Progress Towards Goals", value: summaryProgress, setter: setSummaryProgress, rows: 8 },
-                            { label: "Clinical Evaluation", value: clinicalEvaluation, setter: setClinicalEvaluation, rows: 8 },
-                            { label: "Follow Up Plan", value: followUpPlan, setter: setFollowUpPlan, rows: 6 }
-                        ].map((f, i) => (
-                            <div key={i} className="space-y-4">
-                                <label className="text-xl font-bold text-black uppercase underline underline-offset-4 block mb-2">{f.label}</label>
-                                <textarea required rows={f.rows} value={f.value} onChange={e => f.setter(e.target.value)} className={textareaClasses} />
-                            </div>
-                        ))}
-                    </div>
+                    {/* INTERACTIVE FORM CONTAINER (HIDDEN DURING PRINT) */}
+                    <div className="print:hidden space-y-8">
+                        {/* Demographic Information Section Group */}
+                        <div className="bg-white space-y-6">
+                            <h2 className="text-xl font-bold text-black uppercase underline underline-offset-4 mb-4">DEMOGRAPHIC INFORMATION</h2>
+                            <div className="grid grid-cols-1 md:grid-cols-[220px_auto_1fr] gap-x-2 gap-y-4 md:gap-y-6 items-start md:items-center">
+                                <div className="font-bold text-black uppercase text-sm md:py-2">Client Name</div>
+                                <div className="hidden md:block font-bold text-black text-center">:</div>
+                                <input required type="text" value={clientName} onChange={e => setClientName(e.target.value)} className={inputClasses} />
 
-                    {/* Report By Section */}
-                    <div className="pt-10 pb-4 mt-12 w-full">
-                        <div className="mt-4 w-full">
-                            <h3 className="text-black font-bold mb-8 uppercase text-sm">REPORT BY:</h3>
-                            <div className="w-full max-w-md">
-                                <div className="border-b-2 border-dotted border-black w-full mb-3 h-8"></div>
-                                <div className="flex justify-between items-center w-full px-1 mb-8">
-                                    <span className="text-black font-bold text-lg">(</span>
-                                    <input
-                                        required
-                                        type="text"
-                                        defaultValue={counsellorName}
-                                        className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase text-sm"
-                                        placeholder="Enter Full Name"
-                                    />
-                                    <span className="text-black font-bold text-lg">)</span>
+                                <div className="font-bold text-black uppercase text-sm md:py-2">Ethnic</div>
+                                <div className="hidden md:block font-bold text-black text-center">:</div>
+                                <select required value={ethnic} onChange={e => setEthnic(e.target.value)} className={`${inputClasses} text-sm`}>
+                                    <option value="" disabled>Select Ethnic</option>
+                                    <option value="Malay">Malay</option>
+                                    <option value="Chinese">Chinese</option>
+                                    <option value="Indian">Indian</option>
+                                    <option value="Bumiputera - Sarawak">Bumiputera - Sarawak</option>
+                                    <option value="Bumiputera - Sabah">Bumiputera - Sabah</option>
+                                    <option value="Orang Asli">Orang Asli</option>
+                                    <option value="Others">Others</option>
+                                </select>
+
+                                <div className="font-bold text-black uppercase text-sm md:py-2">Gender</div>
+                                <div className="hidden md:block font-bold text-black text-center">:</div>
+                                <select value={gender} onChange={e => setGender(e.target.value)} className={`${inputClasses} text-sm`}>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+
+                                <div className="font-bold text-black uppercase text-sm md:py-2">Age</div>
+                                <div className="hidden md:block font-bold text-black text-center">:</div>
+                                <input required type="text" value={age} onChange={e => setAge(e.target.value)} className={inputClasses} />
+
+                                <div className="font-bold text-black uppercase text-sm md:py-2">Designation</div>
+                                <div className="hidden md:block font-bold text-black text-center">:</div>
+                                <input required type="text" value={position} onChange={e => setPosition(e.target.value)} className={inputClasses} placeholder="Counsellor Trainee" />
+
+                                <div className="font-bold text-black uppercase text-sm md:py-2">Diagnosis</div>
+                                <div className="hidden md:block font-bold text-black text-center">:</div>
+                                <input required type="text" value={diagnosis} onChange={e => setDiagnosis(e.target.value)} className={inputClasses} placeholder="Diagnosis details..." />
+
+                                <div className="font-bold text-black uppercase text-sm md:py-2">Date of Report</div>
+                                <div className="hidden md:block font-bold text-black text-center">:</div>
+                                <input required type="date" value={dateOfReport} onChange={e => setDateOfReport(e.target.value)} className={inputClasses} />
+                            </div>
+                        </div>
+
+                        <div className="space-y-12">
+                            {[
+                                { label: "Synopsis", value: synopsis, setter: setSynopsis, rows: 5 },
+                                { label: "Evaluation of The Client's Current Functioning Level", value: evaluationCurrentFunctioning, setter: setEvaluationCurrentFunctioning, rows: 6 },
+                                { label: "Justification for Termination", value: justificationTermination, setter: setJustificationTermination, rows: 6 },
+                                { label: "Summary of Progress Towards Goals", value: summaryProgress, setter: setSummaryProgress, rows: 8 },
+                                { label: "Clinical Evaluation", value: clinicalEvaluation, setter: setClinicalEvaluation, rows: 8 },
+                                { label: "Follow Up Plan", value: followUpPlan, setter: setFollowUpPlan, rows: 6 }
+                            ].map((f, i) => (
+                                <div key={i} className="space-y-4">
+                                    <label className="text-xl font-bold text-black uppercase underline underline-offset-4 block mb-2">{f.label}</label>
+                                    <textarea required rows={f.rows} value={f.value} onChange={e => f.setter(e.target.value)} className={textareaClasses} />
                                 </div>
-                                <div className="text-black text-[11px] sm:text-xs space-y-1 font-bold">
-                                    <p className="uppercase font-bold">CMCH Counselor Trainee</p>
-                                    <p className="uppercase font-normal tracking-tight">Universiti Pendidikan Sultan Idris</p>
-                                    <p className="uppercase font-normal tracking-tight">35900 Tanjong Malim, Perak</p>
+                            ))}
+                        </div>
+
+                        {/* Report By Section */}
+                        <div className="pt-10 pb-4 mt-12 w-full">
+                            <div className="mt-4 w-full">
+                                <h3 className="text-black font-bold mb-8 uppercase text-sm">REPORT BY:</h3>
+                                <div className="w-full max-w-md">
+                                    <div className="border-b-2 border-dotted border-black w-full mb-3 h-8"></div>
+                                    <div className="flex justify-between items-center w-full px-1 mb-8">
+                                        <span className="text-black font-bold text-lg">(</span>
+                                        <input
+                                            required
+                                            type="text"
+                                            value={counsellorName}
+                                            onChange={e => setCounsellorName(e.target.value)}
+                                            className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase text-sm"
+                                            placeholder="Enter Full Name"
+                                        />
+                                        <span className="text-black font-bold text-lg">)</span>
+                                    </div>
+                                    <div className="text-black text-[11px] sm:text-xs space-y-1 font-bold">
+                                        <p className="uppercase font-bold">CMCH Counselor Trainee</p>
+                                        <p className="uppercase font-normal tracking-tight">Universiti Pendidikan Sultan Idris</p>
+                                        <p className="uppercase font-normal tracking-tight">35900 Tanjong Malim, Perak</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

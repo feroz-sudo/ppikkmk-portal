@@ -209,6 +209,10 @@ function SidebarNavContent({
                         <Calculator size={20} />
                         <span>Rumusan / Lampiran B</span>
                     </Link>
+                    <Link href="/dashboard/sessions" onClick={handleLinkClick} className={getLinkClass("/dashboard/sessions")}>
+                        <HistoryIcon size={20} />
+                        <span>Session History</span>
+                    </Link>
                     <Link href="/dashboard/clients/ki" onClick={handleLinkClick} className={getLinkClass("/dashboard/clients/ki")}>
                         <UserPlus size={20} />
                         <span>Individual (KI)</span>

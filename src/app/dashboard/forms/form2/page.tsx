@@ -200,18 +200,12 @@ export default function Form2ProgressiveNotesPage({ searchParams }: PageProps) {
                         effectiveClient.clientId,
                         sessionData.sessionId
                     );
-                    alert("Progressive Notes & PDF saved to Google Drive successfully!");
                 } catch (driveErr: any) {
                     if (driveErr.message === "UNAUTHORIZED_DRIVE_ACCESS") {
                         localStorage.removeItem("googleDriveToken");
-                        alert("Google Drive session expired. Your report was saved to the database, but the PDF upload failed. Please log out and back in to re-authorize Google Drive.");
-                    } else {
-                        console.error("Drive upload failed:", driveErr);
-                        alert(`⚠️ Report saved to Database successfully, but Google Drive Upload Failed. \n\nDrive Error: ${driveErr.message || driveErr}`);
                     }
+                    console.error("Drive upload failed:", driveErr);
                 }
-            } else {
-                alert("Progressive Notes saved to database! (PDF Skipped: No Google Drive authorization. Please log out and log back in to grant permission).");
             }
 
             router.push(`/dashboard/clients/${effectiveClient.type.toLowerCase()}/${effectiveClient.clientId}`);
@@ -262,118 +256,181 @@ export default function Form2ProgressiveNotesPage({ searchParams }: PageProps) {
                 <form onSubmit={handleSubmit} className="p-0 sm:p-4 md:p-8 space-y-8 bg-white">
                     <FormHeader
                         title="PROGRESSIVE NOTES"
-                        refCode="Progressive_Notes/KKMK_UPSI/02-2025"
+                        refCode="Progressive_Notes/CMHC_UPSI/02-2025"
+                        subTitle="PRACTICUM & INTERNSHIP IN CLINICAL MENTAL HEALTH COUNSELING"
+                        subSubTitle="UNIVERSITI PENDIDIKAN SULTAN IDRIS"
                     />
 
-                    {/* Personal Data Section Group */}
-                    <div className="bg-white p-4 sm:p-6 sm:p-8 border-2 border-black space-y-6">
-                        <h2 className="text-xl font-bold text-black uppercase tracking-wide">PERSONAL DATA</h2>
+                    {/* PRINT-ONLY ORIGINAL LAYOUT TABLE & SECTIONS */}
+                    <div className="hidden print:block w-full text-black">
+                        <h2 className="text-sm font-bold text-black uppercase tracking-wide mb-3">PERSONAL DATA:</h2>
+                        <table className="w-full border-collapse border border-black text-black text-[11px] font-sans">
+                            <tbody>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Session Number</td>
+                                    <td className="border border-black p-2 w-[25%]">{sessionNumber}</td>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Session Date & Time</td>
+                                    <td className="border border-black p-2 w-[25%]">{sessionDate} {sessionTime}</td>
+                                </tr>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Client Full Name</td>
+                                    <td className="border border-black p-2 w-[25%] uppercase">{clientFullName}</td>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Date of Report</td>
+                                    <td className="border border-black p-2 w-[25%]">{dateOfReport}</td>
+                                </tr>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Diagnosis</td>
+                                    <td className="border border-black p-2" colSpan={3}>{diagnosis}</td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-                        <div className="grid grid-cols-1 md:grid-cols-[220px_auto_1fr] gap-y-4 md:gap-y-6 gap-x-2 items-start md:items-center">
-
-                            <div className="font-bold text-black text-sm uppercase md:py-2">Session Number</div>
-                            <div className="hidden md:block font-bold text-black">:</div>
-                            <div><input required type="text" value={sessionNumber} onChange={e => setSessionNumber(e.target.value)} className={inputClasses} placeholder="e.g. 02" /></div>
-
-                            <div className="font-bold text-black text-sm uppercase md:py-2">Session Date & Time</div>
-                            <div className="hidden md:block font-bold text-black">:</div>
-                            <div className="flex flex-col sm:flex-row gap-2">
-                                <input required type="date" value={sessionDate} onChange={e => setSessionDate(e.target.value)} className={`${inputClasses} flex-1`} />
-                                <input required type="time" value={sessionTime} onChange={e => setSessionTime(e.target.value)} className={`${inputClasses} flex-1`} />
-                            </div>
-
-                            <div className="font-bold text-black text-sm uppercase md:py-2">Duration (Hours)</div>
-                            <div className="hidden md:block font-bold text-black">:</div>
-                            <div><input required type="number" step="0.5" min="0.5" value={duration} onChange={e => setDuration(e.target.value)} className={inputClasses} placeholder="e.g. 1.0" /></div>
-
-                            <div className="font-bold text-black text-sm uppercase md:py-2">Client Full Name</div>
-                            <div className="hidden md:block font-bold text-black">:</div>
-                            <div><input required type="text" value={clientFullName} onChange={e => setClientFullName(e.target.value)} className={inputClasses} placeholder="Enter Client's Actual Name" /></div>
-
-                            <div className="font-bold text-black text-sm uppercase md:py-2">Date of Report</div>
-                            <div className="hidden md:block font-bold text-black">:</div>
-                            <div><input required type="date" value={dateOfReport} onChange={e => setDateOfReport(e.target.value)} className={inputClasses} /></div>
-
-                            <div className="font-bold text-black text-sm uppercase md:py-2">Diagnosis</div>
-                            <div className="hidden md:block font-bold text-black">:</div>
-                            <div><input required type="text" value={diagnosis} onChange={e => setDiagnosis(e.target.value)} className={inputClasses} placeholder="e.g. Major Depressive Disorder" /></div>
-
+                        {/* Plain text styled narratives */}
+                        <div className="space-y-8 mt-8">
+                            {[
+                                { label: "Subjective (S)", value: subjective },
+                                { label: "Objective (O)", value: objective },
+                                { label: "Assessment (A)", value: assessment },
+                                { label: "Plan (P)", value: plan }
+                            ].map((sec, idx) => (
+                                <div key={idx} className="space-y-2 break-inside-avoid">
+                                    <h3 className="font-bold text-black text-xs uppercase">{sec.label.toUpperCase()}</h3>
+                                    <p className="text-black text-[11px] whitespace-pre-wrap leading-relaxed min-h-[40px] pl-1">
+                                        {sec.value || "N/A"}
+                                    </p>
+                                </div>
+                            ))}
                         </div>
-                    </div>
 
-                    {/* SOAP Narrative Sections */}
-                    <div className="space-y-3 bg-white p-2 border-none">
-                        <label className="text-lg font-bold text-black uppercase border-b-2 border-black pb-1 inline-block mb-2">SUBJECTIVE (S)</label>
-                        <textarea required rows={8} value={subjective} onChange={e => setSubjective(e.target.value)} className={textareaClasses} />
-                    </div>
-
-                    <div className="space-y-3 bg-white p-2 border-none">
-                        <label className="text-xl font-bold text-black uppercase underline underline-offset-4 block mb-2">OBJECTIVE (O)</label>
-                        <textarea required rows={8} value={objective} onChange={e => setObjective(e.target.value)} className={textareaClasses} />
-                    </div>
-
-                    <div className="space-y-3 bg-white p-2 border-none">
-                        <label className="text-xl font-bold text-black uppercase underline underline-offset-4 block mb-2">ASSESSMENT (A)</label>
-                        <textarea required rows={8} value={assessment} onChange={e => setAssessment(e.target.value)} className={textareaClasses} />
-                    </div>
-
-                    <div className="space-y-3 bg-white p-2 border-none">
-                        <label className="text-xl font-bold text-black uppercase underline underline-offset-4 block mb-2">PLAN (P)</label>
-                        <textarea required rows={8} value={plan} onChange={e => setPlan(e.target.value)} className={textareaClasses} />
-                    </div>
-
-                    {/* Footer Section */}
-                    <div className="pt-10 pb-4 mt-12 w-full">
-                        <div className="mb-6 flex flex-col items-start w-full max-w-md">
-                            <h3 className="text-black font-bold mb-4 uppercase text-sm">Report by:</h3>
-                            <div className="w-full">
-                                <div className="border-b-2 border-dotted border-black w-full mb-3 h-8"></div>
-                                <div className="flex justify-between items-center w-full px-1">
-                                    <span className="text-black font-bold text-lg">(</span>
-                                    <input
-                                        required
-                                        type="text"
-                                        value={counsellorName}
-                                        onChange={e => setCounsellorName(e.target.value)}
-                                        className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase text-sm"
-                                        placeholder="Enter Full Name"
-                                    />
-                                    <span className="text-black font-bold text-lg">)</span>
+                        {/* Signature section */}
+                        <div className="mt-12 w-full break-inside-avoid">
+                            <p className="text-black font-bold text-xs">Report by:</p>
+                            <div className="w-full max-w-[280px] mt-12">
+                                <div className="border-b border-black w-full mb-2"></div>
+                                <p className="font-bold text-black uppercase text-center text-xs mb-4">
+                                    ( {counsellorName || "Enter Full Name"} )
+                                </p>
+                                <div className="text-black text-[10px] font-bold space-y-0.5 leading-tight">
+                                    <p className="uppercase">CMCH Counselor Trainee</p>
+                                    <p className="uppercase font-normal">Universiti Pendidikan Sultan Idris</p>
+                                    <p className="uppercase font-normal">35900 Tanjong Malim, Perak</p>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <div className="text-black text-[11px] sm:text-xs space-y-1 font-bold">
-                            <p className="uppercase">CMCH Counselor Trainee</p>
-                            <p className="uppercase font-normal tracking-tight">Universiti Pendidikan Sultan Idris</p>
-                            <p className="uppercase font-normal tracking-tight">35900 Tanjong Malim, Perak</p>
+                    {/* INTERACTIVE FORM CONTAINER (HIDDEN DURING PRINT) */}
+                    <div className="print:hidden space-y-8">
+                        {/* Personal Data Section Group */}
+                        <div className="bg-white p-4 sm:p-6 border-2 border-black space-y-6">
+                            <h2 className="text-xl font-bold text-black uppercase tracking-wide">PERSONAL DATA</h2>
+
+                            <div className="grid grid-cols-1 md:grid-cols-[220px_auto_1fr] gap-y-4 md:gap-y-6 gap-x-2 items-start md:items-center">
+
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Session Number</div>
+                                <div className="hidden md:block font-bold text-black">:</div>
+                                <div><input required type="text" value={sessionNumber} onChange={e => setSessionNumber(e.target.value)} className={inputClasses} placeholder="e.g. 02" /></div>
+
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Session Date & Time</div>
+                                <div className="hidden md:block font-bold text-black">:</div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <input required type="date" value={sessionDate} onChange={e => setSessionDate(e.target.value)} className={`${inputClasses} flex-1`} />
+                                    <input required type="time" value={sessionTime} onChange={e => setSessionTime(e.target.value)} className={`${inputClasses} flex-1`} />
+                                </div>
+
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Duration (Hours)</div>
+                                <div className="hidden md:block font-bold text-black">:</div>
+                                <div><input required type="number" step="0.5" min="0.5" value={duration} onChange={e => setDuration(e.target.value)} className={inputClasses} placeholder="e.g. 1.0" /></div>
+
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Client Full Name</div>
+                                <div className="hidden md:block font-bold text-black">:</div>
+                                <div><input required type="text" value={clientFullName} onChange={e => setClientFullName(e.target.value)} className={inputClasses} placeholder="Enter Client's Actual Name" /></div>
+
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Date of Report</div>
+                                <div className="hidden md:block font-bold text-black">:</div>
+                                <div><input required type="date" value={dateOfReport} onChange={e => setDateOfReport(e.target.value)} className={inputClasses} /></div>
+
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Diagnosis</div>
+                                <div className="hidden md:block font-bold text-black">:</div>
+                                <div><input required type="text" value={diagnosis} onChange={e => setDiagnosis(e.target.value)} className={inputClasses} placeholder="e.g. Major Depressive Disorder" /></div>
+
+                            </div>
                         </div>
 
-                        <div className="mt-12 bg-white p-6 border-2 border-black text-sm text-black space-y-4">
-                            <h4 className="font-bold text-black uppercase border-b-2 border-black pb-2">Guiding Notes for Writing SOAP Note</h4>
-                            <p className="italic text-gray-500 mb-2">The Four Parts of a SOAP Note</p>
-                            <div>
-                                <p className="font-bold text-black uppercase">1. Subjective</p>
-                                <p className="mt-1">The subjective component of a SOAP note focuses on the patient&apos;s personal experiences, feelings, and concerns. This section should include details about the patient&apos;s chief complaint, history of present illness, medical and family history, and any relevant social or environmental factors. When writing the subjective portion, it&apos;s essential to use the patient&apos;s words as much as possible to accurately convey their perspective.</p>
-                            </div>
-                            <div>
-                                <p className="font-bold text-black uppercase">2. Objective</p>
-                                <p className="mt-1">The objective section of a SOAP note records observable data and factual information about the patient. This can include vital signs, physical examination findings, laboratory results, and any additional diagnostic data. In the context of mental health treatment, the objective section may also include details about the patient&apos;s appearance, behavior, and speech patterns.</p>
-                            </div>
-                            <div>
-                                <p className="font-bold text-black uppercase">3. Assessment</p>
-                                <p className="mt-1">The assessment portion of a SOAP note is where the healthcare provider evaluates the information gathered during the subjective and objective sections. This section may include a diagnosis, a summary of the patient&apos;s progress, and any potential risk factors or complications. In the case of anxiety and depression, the assessment might focus on the severity of symptoms, the effectiveness of current interventions, and any co-occurring conditions.</p>
-                            </div>
-                            <div>
-                                <p className="font-bold text-black uppercase">4. Plan</p>
-                                <p className="mt-1">The plan section outlines the next steps in the patient&apos;s treatment, including any changes to their current interventions or the addition of new therapies. For anxiety and depression, this might involve adjustments to medications, the introduction of new coping strategies, or referrals to additional support services.</p>
-                            </div>
+                        {/* SOAP Narrative Sections */}
+                        <div className="space-y-3 bg-white p-2 border-none">
+                            <label className="text-lg font-bold text-black uppercase border-b-2 border-black pb-1 inline-block mb-2">SUBJECTIVE (S)</label>
+                            <textarea required rows={8} value={subjective} onChange={e => setSubjective(e.target.value)} className={textareaClasses} />
                         </div>
 
-                        <div className="mt-16 text-center w-full pt-4 border-t border-dashed border-gray-200">
-                            <p className="text-xs font-bold text-slate-500 uppercase tracking-widest pl-[0.1em]">
-                                Confidential Document (For Professional Use Only)
-                            </p>
+                        <div className="space-y-3 bg-white p-2 border-none">
+                            <label className="text-xl font-bold text-black uppercase underline underline-offset-4 block mb-2">OBJECTIVE (O)</label>
+                            <textarea required rows={8} value={objective} onChange={e => setObjective(e.target.value)} className={textareaClasses} />
+                        </div>
+
+                        <div className="space-y-3 bg-white p-2 border-none">
+                            <label className="text-xl font-bold text-black uppercase underline underline-offset-4 block mb-2">ASSESSMENT (A)</label>
+                            <textarea required rows={8} value={assessment} onChange={e => setAssessment(e.target.value)} className={textareaClasses} />
+                        </div>
+
+                        <div className="space-y-3 bg-white p-2 border-none">
+                            <label className="text-xl font-bold text-black uppercase underline underline-offset-4 block mb-2">PLAN (P)</label>
+                            <textarea required rows={8} value={plan} onChange={e => setPlan(e.target.value)} className={textareaClasses} />
+                        </div>
+
+                        {/* Footer Section */}
+                        <div className="pt-10 pb-4 mt-12 w-full">
+                            <div className="mb-6 flex flex-col items-start w-full max-w-md">
+                                <h3 className="text-black font-bold mb-4 uppercase text-sm">Report by:</h3>
+                                <div className="w-full">
+                                    <div className="border-b-2 border-dotted border-black w-full mb-3 h-8"></div>
+                                    <div className="flex justify-between items-center w-full px-1">
+                                        <span className="text-black font-bold text-lg">(</span>
+                                        <input
+                                            required
+                                            type="text"
+                                            value={counsellorName}
+                                            onChange={e => setCounsellorName(e.target.value)}
+                                            className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase text-sm"
+                                            placeholder="Enter Full Name"
+                                        />
+                                        <span className="text-black font-bold text-lg">)</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="text-black text-[11px] sm:text-xs space-y-1 font-bold">
+                                <p className="uppercase">CMCH Counselor Trainee</p>
+                                <p className="uppercase font-normal tracking-tight">Universiti Pendidikan Sultan Idris</p>
+                                <p className="uppercase font-normal tracking-tight">35900 Tanjong Malim, Perak</p>
+                            </div>
+
+                            <div className="mt-12 bg-white p-6 border-2 border-black text-sm text-black space-y-4">
+                                <h4 className="font-bold text-black uppercase border-b-2 border-black pb-2">Guiding Notes for Writing SOAP Note</h4>
+                                <p className="italic text-gray-500 mb-2">The Four Parts of a SOAP Note</p>
+                                <div>
+                                    <p className="font-bold text-black uppercase">1. Subjective</p>
+                                    <p className="mt-1">The subjective component of a SOAP note focuses on the patient&apos;s personal experiences, feelings, and concerns. This section should include details about the patient&apos;s chief complaint, history of present illness, medical and family history, and any relevant social or environmental factors. When writing the subjective portion, it&apos;s essential to use the patient&apos;s words as much as possible to accurately convey their perspective.</p>
+                                </div>
+                                <div>
+                                    <p className="font-bold text-black uppercase">2. Objective</p>
+                                    <p className="mt-1">The objective section of a SOAP note records observable data and factual information about the patient. This can include vital signs, physical examination findings, laboratory results, and any additional diagnostic data. In the context of mental health treatment, the objective section may also include details about the patient&apos;s appearance, behavior, and speech patterns.</p>
+                                </div>
+                                <div>
+                                    <p className="font-bold text-black uppercase">3. Assessment</p>
+                                    <p className="mt-1">The assessment portion of a SOAP note is where the healthcare provider evaluates the information gathered during the subjective and objective sections. This section may include a diagnosis, a summary of the patient&apos;s progress, and any potential risk factors or complications. In the case of anxiety and depression, the assessment might focus on the severity of symptoms, the effectiveness of current interventions, and any co-occurring conditions.</p>
+                                </div>
+                                <div>
+                                    <p className="font-bold text-black uppercase">4. Plan</p>
+                                    <p className="mt-1">The plan section outlines the next steps in the patient&apos;s treatment, including any changes to their current interventions or the addition of new therapies. For anxiety and depression, this might involve adjustments to medications, the introduction of new coping strategies, or referrals to additional support services.</p>
+                                </div>
+                            </div>
+
+                            <div className="mt-16 text-center w-full pt-4 border-t border-dashed border-gray-200">
+                                <p className="text-xs font-bold text-slate-500 uppercase tracking-widest pl-[0.1em]">
+                                    Confidential Document (For Professional Use Only)
+                                </p>
+                            </div>
                         </div>
                     </div>
 

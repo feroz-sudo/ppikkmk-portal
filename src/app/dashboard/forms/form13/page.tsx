@@ -211,18 +211,12 @@ export function Form13PsychologicalAssessmentPage({ searchParams }: PageProps) {
                         effectiveClient.clientId,
                         sessionData.sessionId
                     );
-                    alert("Psychological Assessment Report & PDF saved to Google Drive successfully!");
                 } catch (driveErr: any) {
                     if (driveErr.message === "UNAUTHORIZED_DRIVE_ACCESS") {
                         localStorage.removeItem("googleDriveToken");
-                        alert("Google Drive session expired. Your report was saved to the database, but the PDF upload failed. Please log out and back in to re-authorize Google Drive.");
-                    } else {
-                        console.error("Drive upload failed:", driveErr);
-                        alert(`⚠️ Report saved to Database successfully, but Google Drive Upload Failed. \n\nDrive Error: ${driveErr.message || driveErr}`);
                     }
+                    console.error("Drive upload failed:", driveErr);
                 }
-            } else {
-                alert("Psychological Assessment Report saved to database! (PDF Skipped: No Google Drive authorization. Please log out and log back in to grant permission).");
             }
             router.push(`/dashboard/clients/${effectiveClient.type.toLowerCase()}/${effectiveClient.clientId}`);
         } catch (error: any) {
@@ -273,101 +267,205 @@ export function Form13PsychologicalAssessmentPage({ searchParams }: PageProps) {
                 <form onSubmit={handleSubmit} className="p-0 sm:p-4 md:p-8 space-y-8 bg-white">
                     <FormHeader
                         title="PSYCHOLOGICAL ASSESSMENT REPORT"
-                        refCode="Evaluation/KKMK_UPSI/13-2025"
+                        refCode="Clinical_Assessment_Report/CMHC_UPSI/13-2025"
+                        subTitle="PRACTICUM & INTERNSHIP IN CLINICAL MENTAL HEALTH COUNSELING"
+                        subSubTitle="UNIVERSITI PENDIDIKAN SULTAN IDRIS"
                     />
 
-                    {/* PERSONAL DATA Section */}
-                    <div className="space-y-6">
-                        <h2 className="text-xl font-bold text-black border-b-2 border-black pb-2 uppercase tracking-wide w-full mb-6">PERSONAL DATA</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-[220px_auto_1fr] gap-x-2 gap-y-4 md:gap-y-6 items-start md:items-center pl-0 sm:pl-4">
+                    {/* PRINT-ONLY ORIGINAL LAYOUT TABLE & SECTIONS */}
+                    <div className="hidden print:block w-full text-black">
+                        <h2 className="text-[11px] font-bold uppercase mb-2">PERSONAL DATA:</h2>
+                        <table className="w-full border-collapse border border-black text-black text-[11px] font-sans">
+                            <tbody>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Client Full Name</td>
+                                    <td className="border border-black p-2 w-[75%]" colSpan={3}>{clientFullName}</td>
+                                </tr>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Ethnic/Sex</td>
+                                    <td className="border border-black p-2 w-[25%]">{ethnic} / {sex}</td>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Date of Birth</td>
+                                    <td className="border border-black p-2 w-[25%]">{dateOfBirth}</td>
+                                </tr>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Identification Card No</td>
+                                    <td className="border border-black p-2 w-[25%]">{identificationCardNo}</td>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Age</td>
+                                    <td className="border border-black p-2 w-[25%]">{age}</td>
+                                </tr>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Designation</td>
+                                    <td className="border border-black p-2 w-[25%]">{designation}</td>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Date of Assessment</td>
+                                    <td className="border border-black p-2 w-[25%]">{dateOfAssessment}</td>
+                                </tr>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Assessment Conducted By</td>
+                                    <td className="border border-black p-2 w-[75%]" colSpan={3}>{assessmentConductedBy}</td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-                            {/* Row 1 */}
-                            <div className="font-bold text-black text-sm uppercase md:py-2">Client Full Name</div>
-                            <div className="hidden md:block font-bold text-black text-center">:</div>
-                            <div><input required type="text" value={clientFullName} onChange={e => setClientFullName(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" placeholder="Enter full name" /></div>
-
-                            {/* Row 2 */}
-                            <div className="font-bold text-black text-sm uppercase md:py-2">Ethnic/Sex</div>
-                            <div className="hidden md:block font-bold text-black text-center">:</div>
-                            <div className="flex space-x-2 items-center w-full">
-                                <input required type="text" value={ethnic} onChange={e => setEthnic(e.target.value)} className="w-1/2 p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" placeholder="Ethnic" />
-                                <span className="text-black font-bold">/</span>
-                                <input required type="text" value={sex} onChange={e => setSex(e.target.value)} className="w-1/2 p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" placeholder="Sex" />
+                        {/* Plain text styled narratives */}
+                        <div className="space-y-4 mt-4">
+                            <div className="border border-black p-2">
+                                <h3 className="font-bold uppercase text-[11px] border-b border-black pb-1 mb-1">REASON FOR REFERRAL</h3>
+                                <div className="min-h-[80px] whitespace-pre-wrap text-[11px] font-mono leading-relaxed">{reasonForReferral}</div>
                             </div>
 
-                            {/* Row 3 */}
-                            <div className="font-bold text-black text-sm uppercase md:py-2">Date of Birth</div>
-                            <div className="hidden md:block font-bold text-black text-center">:</div>
-                            <div><input required type="date" value={dateOfBirth} onChange={e => setDateOfBirth(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" /></div>
+                            <div className="border border-black p-2">
+                                <h3 className="font-bold uppercase text-[11px] border-b border-black pb-1 mb-1">BEHAVIOUR OBSERVATION</h3>
+                                <div className="min-h-[80px] whitespace-pre-wrap text-[11px] font-mono leading-relaxed">{behaviourObservation}</div>
+                            </div>
 
-                            {/* Row 4 */}
-                            <div className="font-bold text-black text-sm uppercase md:py-2">Identification Card No</div>
-                            <div className="hidden md:block font-bold text-black text-center">:</div>
-                            <div><input required type="text" value={identificationCardNo} onChange={e => setIdentificationCardNo(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" placeholder="IC Number" /></div>
+                            <div className="border border-black p-2">
+                                <h3 className="font-bold uppercase text-[11px] border-b border-black pb-1 mb-1">PSYCHOLOGICAL TESTS ADMINISTERED:</h3>
+                                <div className="min-h-[80px] whitespace-pre-wrap text-[11px] font-mono leading-relaxed">{psychologicalTestsAdministered}</div>
+                            </div>
 
-                            {/* Row 5 */}
-                            <div className="font-bold text-black text-sm uppercase md:py-2">Age</div>
-                            <div className="hidden md:block font-bold text-black text-center">:</div>
-                            <div><input required type="text" value={age} onChange={e => setAge(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" placeholder="Age" /></div>
+                            <div className="border border-black p-2">
+                                <h3 className="font-bold uppercase text-[11px] border-b border-black pb-1 mb-1">TEST RESULTS AND INTERPRETATION</h3>
+                                <div className="min-h-[120px] whitespace-pre-wrap text-[11px] font-mono leading-relaxed">{testResultsAndInterpretation}</div>
+                            </div>
 
-                            {/* Row 6 */}
-                            <div className="font-bold text-black text-sm uppercase md:py-2">Designation</div>
-                            <div className="hidden md:block font-bold text-black text-center">:</div>
-                            <div><input required type="text" value={designation} onChange={e => setDesignation(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" placeholder="Role/Year/Program" /></div>
+                            <div className="border border-black p-2">
+                                <h3 className="font-bold uppercase text-[11px] border-b border-black pb-1 mb-1">DIAGNOSTIC IMPRESSION</h3>
+                                <div className="min-h-[80px] whitespace-pre-wrap text-[11px] font-mono leading-relaxed">{diagnosticImpression}</div>
+                            </div>
 
-                            {/* Row 7 */}
-                            <div className="font-bold text-black text-sm uppercase md:py-2">Date of Assessment</div>
-                            <div className="hidden md:block font-bold text-black text-center">:</div>
-                            <div><input required type="date" value={dateOfAssessment} onChange={e => setDateOfAssessment(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" /></div>
+                            <div className="border border-black p-2">
+                                <h3 className="font-bold uppercase text-[11px] border-b border-black pb-1 mb-1">
+                                    SUMMARY OF FINDINGS
+                                    <span className="text-[9px] font-normal italic block lowercase -mt-1">
+                                        (Psychological Functioning Based On Assessment Results, Relationship Between Symptoms, Test Findings, and Real-Life Concerns, Strengths, Protective Factors, and Areas Needing Support)
+                                    </span>
+                                </h3>
+                                <div className="min-h-[120px] whitespace-pre-wrap text-[11px] font-mono leading-relaxed">{summaryOfFindings}</div>
+                            </div>
 
-                            {/* Row 8 */}
-                            <div className="font-bold text-black text-sm uppercase md:py-2">Duration (Hours)</div>
-                            <div className="hidden md:block font-bold text-black text-center">:</div>
-                            <div><input required type="number" step="0.5" min="0.5" value={duration} onChange={e => setDuration(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" placeholder="e.g. 1.0" /></div>
+                            <div className="border border-black p-2">
+                                <h3 className="font-bold uppercase text-[11px] border-b border-black pb-1 mb-1">RECOMMENDATIONS/TREATMENT PLAN</h3>
+                                <div className="min-h-[80px] whitespace-pre-wrap text-[11px] font-mono leading-relaxed">{recommendationsTreatmentPlan}</div>
+                            </div>
 
-                            {/* Row 9 */}
-                            <div className="font-bold text-black text-sm uppercase md:py-2">Assessment Conducted By</div>
-                            <div className="hidden md:block font-bold text-black text-center">:</div>
-                            <div><input required type="text" value={assessmentConductedBy} onChange={e => setAssessmentConductedBy(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" placeholder="Assessor Name" /></div>
+                            <div className="border border-black p-2">
+                                <h3 className="font-bold uppercase text-[11px] border-b border-black pb-1 mb-1">PROGNOSIS</h3>
+                                <div className="min-h-[60px] whitespace-pre-wrap text-[11px] font-mono leading-relaxed">{prognosis}</div>
+                            </div>
+                        </div>
+
+                        {/* Report by block */}
+                        <div className="mt-8 w-full font-sans">
+                            <h3 className="text-black font-bold mb-8 uppercase text-[11px]">Report by:</h3>
+                            <div className="w-full max-w-xs text-[11px]">
+                                <div className="border-b border-black w-full mb-1 h-6"></div>
+                                <div className="mb-2">
+                                    <span className="text-black font-bold">( {traineeSignature} )</span>
+                                </div>
+                                <div className="text-black leading-tight">
+                                    <p className="font-bold">CMCH Counselor Trainee</p>
+                                    <p className="font-normal">Universiti Pendidikan Sultan Idris</p>
+                                    <p className="font-normal">35900 Tanjong Malim, Perak</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    {/* Narrative Assessment Matrix */}
-                    {[
-                        { label: "REASON FOR REFERRAL", value: reasonForReferral, setter: setReasonForReferral, rows: 4 },
-                        { label: "BEHAVIOUR OBSERVATION", value: behaviourObservation, setter: setBehaviourObservation, rows: 5 },
-                        { label: "PSYCHOLOGICAL TESTS ADMINISTERED", value: psychologicalTestsAdministered, setter: setPsychologicalTestsAdministered, rows: 5 },
-                        { label: "TEST RESULTS AND INTERPRETATION", value: testResultsAndInterpretation, setter: setTestResultsAndInterpretation, rows: 8 },
-                        { label: "DIAGNOSTIC IMPRESSION", value: diagnosticImpression, setter: setDiagnosticImpression, rows: 5 },
-                        {
-                            label: "SUMMARY OF FINDINGS",
-                            value: summaryOfFindings,
-                            setter: setSummaryOfFindings,
-                            rows: 8,
-                            sublabel: "(Psychological Functioning Based On Assessment Results, Relationship Between Symptoms, Test Findings, and Real-Life Concerns, Strengths, Protective Factors, and Areas Needing Support)"
-                        },
-                        { label: "RECOMMENDATIONS/TREATMENT PLAN", value: recommendationsTreatmentPlan, setter: setRecommendationsTreatmentPlan, rows: 6 },
-                        { label: "PROGNOSIS", value: prognosis, setter: setPrognosis, rows: 4 }
-                    ].map((field, idx) => (
-                        <div key={idx} className="space-y-4 pt-4">
-                            <h2 className="text-xl font-bold text-gray-900 underline uppercase tracking-wide">
-                                {field.label}
-                            </h2>
-                            {field.sublabel && (
-                                <p className="text-[11px] font-bold text-gray-600 italic -mt-2 leading-tight">
-                                    {field.sublabel}
-                                </p>
-                            )}
-                            <textarea
-                                required
-                                rows={field.rows}
-                                value={field.value}
-                                onChange={e => field.setter(e.target.value)}
-                                className="w-full p-2 bg-transparent border-none focus:ring-0 outline-none text-gray-700 bg-white placeholder-gray-300 leading-relaxed"
-                                placeholder={`Enter ${field.label.toLowerCase()}...`}
-                            />
+                    {/* INTERACTIVE FORM FIELDS - HIDDEN IN PRINT */}
+                    <div className="space-y-8 print:hidden">
+                        {/* PERSONAL DATA Section */}
+                        <div className="space-y-6">
+                            <h2 className="text-xl font-bold text-black border-b-2 border-black pb-2 uppercase tracking-wide w-full mb-6">PERSONAL DATA</h2>
+                            <div className="grid grid-cols-1 md:grid-cols-[220px_auto_1fr] gap-x-2 gap-y-4 md:gap-y-6 items-start md:items-center pl-0 sm:pl-4">
+
+                                {/* Row 1 */}
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Client Full Name</div>
+                                <div className="hidden md:block font-bold text-black text-center">:</div>
+                                <div><input required type="text" value={clientFullName} onChange={e => setClientFullName(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" placeholder="Enter full name" /></div>
+
+                                {/* Row 2 */}
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Ethnic/Sex</div>
+                                <div className="hidden md:block font-bold text-black text-center">:</div>
+                                <div className="flex space-x-2 items-center w-full">
+                                    <input required type="text" value={ethnic} onChange={e => setEthnic(e.target.value)} className="w-1/2 p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" placeholder="Ethnic" />
+                                    <span className="text-black font-bold">/</span>
+                                    <input required type="text" value={sex} onChange={e => setSex(e.target.value)} className="w-1/2 p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" placeholder="Sex" />
+                                </div>
+
+                                {/* Row 3 */}
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Date of Birth</div>
+                                <div className="hidden md:block font-bold text-black text-center">:</div>
+                                <div><input required type="date" value={dateOfBirth} onChange={e => setDateOfBirth(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" /></div>
+
+                                {/* Row 4 */}
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Identification Card No</div>
+                                <div className="hidden md:block font-bold text-black text-center">:</div>
+                                <div><input required type="text" value={identificationCardNo} onChange={e => setIdentificationCardNo(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" placeholder="IC Number" /></div>
+
+                                {/* Row 5 */}
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Age</div>
+                                <div className="hidden md:block font-bold text-black text-center">:</div>
+                                <div><input required type="text" value={age} onChange={e => setAge(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" placeholder="Age" /></div>
+
+                                {/* Row 6 */}
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Designation</div>
+                                <div className="hidden md:block font-bold text-black text-center">:</div>
+                                <div><input required type="text" value={designation} onChange={e => setDesignation(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" placeholder="Role/Year/Program" /></div>
+
+                                {/* Row 7 */}
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Date of Assessment</div>
+                                <div className="hidden md:block font-bold text-black text-center">:</div>
+                                <div><input required type="date" value={dateOfAssessment} onChange={e => setDateOfAssessment(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" /></div>
+
+                                {/* Row 8 */}
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Duration (Hours)</div>
+                                <div className="hidden md:block font-bold text-black text-center">:</div>
+                                <div><input required type="number" step="0.5" min="0.5" value={duration} onChange={e => setDuration(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" placeholder="e.g. 1.0" /></div>
+
+                                {/* Row 9 */}
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Assessment Conducted By</div>
+                                <div className="hidden md:block font-bold text-black text-center">:</div>
+                                <div><input required type="text" value={assessmentConductedBy} onChange={e => setAssessmentConductedBy(e.target.value)} className="w-full p-2 border-b border-gray-200 outline-none focus:border-black text-black bg-transparent" placeholder="Assessor Name" /></div>
+                            </div>
                         </div>
-                    ))}
+
+                        {/* Narrative Assessment Matrix */}
+                        {[
+                            { label: "REASON FOR REFERRAL", value: reasonForReferral, setter: setReasonForReferral, rows: 4 },
+                            { label: "BEHAVIOUR OBSERVATION", value: behaviourObservation, setter: setBehaviourObservation, rows: 5 },
+                            { label: "PSYCHOLOGICAL TESTS ADMINISTERED", value: psychologicalTestsAdministered, setter: setPsychologicalTestsAdministered, rows: 5 },
+                            { label: "TEST RESULTS AND INTERPRETATION", value: testResultsAndInterpretation, setter: setTestResultsAndInterpretation, rows: 8 },
+                            { label: "DIAGNOSTIC IMPRESSION", value: diagnosticImpression, setter: setDiagnosticImpression, rows: 5 },
+                            {
+                                label: "SUMMARY OF FINDINGS",
+                                value: summaryOfFindings,
+                                setter: setSummaryOfFindings,
+                                rows: 8,
+                                sublabel: "(Psychological Functioning Based On Assessment Results, Relationship Between Symptoms, Test Findings, and Real-Life Concerns, Strengths, Protective Factors, and Areas Needing Support)"
+                            },
+                            { label: "RECOMMENDATIONS/TREATMENT PLAN", value: recommendationsTreatmentPlan, setter: setRecommendationsTreatmentPlan, rows: 6 },
+                            { label: "PROGNOSIS", value: prognosis, setter: setPrognosis, rows: 4 }
+                        ].map((field, idx) => (
+                            <div key={idx} className="space-y-4 pt-4">
+                                <h2 className="text-xl font-bold text-gray-900 underline uppercase tracking-wide">
+                                    {field.label}
+                                </h2>
+                                {field.sublabel && (
+                                    <p className="text-[11px] font-bold text-gray-600 italic -mt-2 leading-tight">
+                                        {field.sublabel}
+                                    </p>
+                                )}
+                                <textarea
+                                    required
+                                    rows={field.rows}
+                                    value={field.value}
+                                    onChange={e => field.setter(e.target.value)}
+                                    className="w-full p-4 border border-black outline-none text-black bg-white leading-relaxed"
+                                    placeholder={`Enter ${field.label.toLowerCase()}...`}
+                                />
+                            </div>
+                        ))}
+                    </div>
 
                     {/* Footer Section */}
                     <div className="pt-10 pb-4 border-t border-gray-300 mt-12 w-full">

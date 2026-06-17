@@ -201,18 +201,12 @@ export function Form8PFAMHPSSReportPage({ searchParams }: PageProps) {
                         effectiveClient.clientId,
                         sessionData.sessionId
                     );
-                    alert("PFA/MHPSS Report & PDF saved to Google Drive successfully!");
                 } catch (driveError: any) {
                     if (driveError.message === "UNAUTHORIZED_DRIVE_ACCESS") {
                         localStorage.removeItem("googleDriveToken");
-                        alert("Google Drive session expired. Your report was saved to the database, but the PDF upload failed. Please log out and back in to re-authorize Google Drive.");
-                    } else {
-                        console.error("Drive upload failed:", driveError);
-                        alert("Report saved to database, but Google Drive PDF upload failed: " + driveError.message);
                     }
+                    console.error("Drive upload failed:", driveError);
                 }
-            } else {
-                alert("PFA/MHPSS Report saved to database! (PDF Skipped: No Google Drive authorization. Please log out and log back in to grant permission).");
             }
             router.push(effectiveClient.clientId === "PROGRAM" ? "/dashboard/programs" : `/dashboard/clients/${effectiveClient.type.toLowerCase()}/${effectiveClient.clientId}`);
         } catch (error: any) {
@@ -256,199 +250,331 @@ export function Form8PFAMHPSSReportPage({ searchParams }: PageProps) {
 
                 <form onSubmit={handleSubmit} className="p-0 sm:p-4 md:p-8 space-y-8 bg-white">
                     <FormHeader
-                        title="PFA MHPSS REPORT"
-                        refCode="PFA/MHPSS_Report/KKMK_UPSI/08-2025"
+                        title="PSYCHOLOGICAL FIRST AID / MENTAL HEALTH & PSYCHOSOCIAL SUPPORT REPORT"
+                        refCode="PFA/MHPSS_Report/CMHC_UPSI/08-2025"
+                        subTitle="PRACTICUM & INTERNSHIP IN CLINICAL MENTAL HEALTH COUNSELING"
+                        subSubTitle="UNIVERSITI PENDIDIKAN SULTAN IDRIS"
                     />
 
-                    {/* Counselor Info */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8 mb-8">
-                        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-                            <label className="font-bold text-black sm:min-w-[80px] uppercase text-xs">Name</label>
-                            <span className="hidden sm:inline font-bold text-black">:</span>
-                            <input required type="text" value={counselorName} onChange={e => setCounselorName(e.target.value)} className="flex-1 p-2 border-b border-gray-300 focus:border-black outline-none bg-transparent text-black" placeholder="Enter name" />
+                    {/* PRINT-ONLY ORIGINAL LAYOUT TABLE & SECTIONS */}
+                    <div className="hidden print:block w-full text-black">
+                        {/* Name and Institution */}
+                        <div className="flex justify-between items-center mb-4 text-[11px] font-bold">
+                            <div>Name: {counselorName}</div>
+                            <div>Institution: {institution}</div>
                         </div>
-                        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-                            <label className="font-bold text-black sm:min-w-[100px] uppercase text-xs">Institution</label>
-                            <span className="hidden sm:inline font-bold text-black">:</span>
-                            <input required type="text" value={institution} onChange={e => setInstitution(e.target.value)} className="flex-1 p-2 border-b border-gray-300 focus:border-black outline-none bg-transparent text-black" placeholder="e.g. UPSI" />
+
+                        <table className="w-full border-collapse border border-black text-black text-[11px] font-sans">
+                            <tbody>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Program / Session</td>
+                                    <td className="border border-black p-2 w-[75%]" colSpan={3}>
+                                        <div className="flex space-x-6">
+                                            <span>[ {programSessionType === 'PFA' ? 'X' : ' '} ] PFA</span>
+                                            <span>[ {programSessionType === 'MHPSS' ? 'X' : ' '} ] MHPSS</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Name of the Program/Session</td>
+                                    <td className="border border-black p-2 w-[75%]" colSpan={3}>{programName}</td>
+                                </tr>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Date & Time</td>
+                                    <td className="border border-black p-2 w-[25%]">{dateTime}</td>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Venue</td>
+                                    <td className="border border-black p-2 w-[25%]">{venue}</td>
+                                </tr>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Number of Participants Involved</td>
+                                    <td className="border border-black p-2 w-[25%]">{participantsCount}</td>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Speaker / Provider</td>
+                                    <td className="border border-black p-2 w-[25%]">{speakerProvider}</td>
+                                </tr>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Collaborator(s) (If any)</td>
+                                    <td className="border border-black p-2 w-[75%]" colSpan={3}>{collaborators}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        {/* Plain text styled narratives */}
+                        <div className="space-y-4 mt-4">
+                            <div className="border border-black p-2">
+                                <h3 className="font-bold uppercase text-[11px] border-b border-black pb-1 mb-1">Objectives of the Program / Session</h3>
+                                <div className="min-h-[80px] whitespace-pre-wrap text-[11px] font-mono leading-relaxed">{objectives}</div>
+                            </div>
+
+                            <div className="border border-black p-2">
+                                <h3 className="font-bold uppercase text-[11px] border-b border-black pb-1 mb-1">Identified Issue(s)</h3>
+                                <div className="min-h-[80px] whitespace-pre-wrap text-[11px] font-mono leading-relaxed">{identifiedIssues}</div>
+                            </div>
+
+                            <div className="border border-black p-2">
+                                <h3 className="font-bold uppercase text-[11px] border-b border-black pb-1 mb-1">Activities / Interventions Delivered</h3>
+                                <div className="min-h-[100px] whitespace-pre-wrap text-[11px] font-mono leading-relaxed">{activitiesInterventions}</div>
+                            </div>
+
+                            <div className="border border-black p-2">
+                                <h3 className="font-bold uppercase text-[11px] border-b border-black pb-1 mb-1">Follow-Up (If needed)</h3>
+                                <div className="min-h-[60px] whitespace-pre-wrap text-[11px] font-mono leading-relaxed">{followUp}</div>
+                            </div>
+                        </div>
+
+                        {/* Referral */}
+                        <div className="border border-black p-2 mt-4 text-[11px]">
+                            <div className="flex space-x-6 mb-2">
+                                <span className="font-bold">Referral Needed:</span>
+                                <span>[ {referralNeeded === 'Yes' ? 'X' : ' '} ] Yes</span>
+                                <span>[ {referralNeeded === 'No' ? 'X' : ' '} ] No</span>
+                            </div>
+                            <div>
+                                <span className="font-bold">Referral (If necessary, please specify):</span>
+                                <div className="min-h-[40px] font-mono mt-1">{referralSpecifics}</div>
+                            </div>
+                        </div>
+
+                        {/* Signature grid */}
+                        <table className="w-full border-collapse border border-black mt-6 text-[11px]">
+                            <thead>
+                                <tr className="border-b border-black">
+                                    <th className="border-r border-black p-2 font-bold text-center w-[30%]">Action</th>
+                                    <th className="border-r border-black p-2 font-bold text-center w-[45%]">Signature</th>
+                                    <th className="p-2 font-bold text-center w-[25%]">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr className="border-b border-black">
+                                    <td className="border-r border-black p-4 font-bold text-center">Trainee Counselor's Signature</td>
+                                    <td className="border-r border-black p-4 text-center">
+                                        <div className="border-b border-black border-dotted h-6 mb-1"></div>
+                                        <div>( {traineeSignature} )</div>
+                                    </td>
+                                    <td className="p-4 text-center">
+                                        <div className="border-b border-black w-24 mx-auto h-6"></div>
+                                    </td>
+                                </tr>
+                                <tr className="border-b border-black">
+                                    <td className="border-r border-black p-4 font-bold text-center">Site Supervisor's Signature</td>
+                                    <td className="border-r border-black p-4 text-center">
+                                        <div className="border-b border-black border-dotted h-6 mb-1"></div>
+                                        <div>( {siteSupervisorSignature} )</div>
+                                    </td>
+                                    <td className="p-4 text-center">
+                                        <div className="border-b border-black w-24 mx-auto h-6"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="border-r border-black p-4 font-bold text-center">Academic Supervisor's Signature</td>
+                                    <td className="border-r border-black p-4 text-center">
+                                        <div className="border-b border-black border-dotted h-6 mb-1"></div>
+                                        <div>( {academicSupervisorSignature} )</div>
+                                    </td>
+                                    <td className="p-4 text-center">
+                                        <div className="border-b border-black w-24 mx-auto h-6"></div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        {/* Evidence text */}
+                        <div className="mt-4 text-[10px] font-bold italic">
+                            **Attached Photos and/or Certificate as evidence.
                         </div>
                     </div>
 
-                    {/* Logistics Data Section Group */}
-                    <div className="bg-white mb-8 border-2 border-black">
-                        <div className="bg-white px-4 py-3 border-b-2 border-black">
-                            <h2 className="text-lg font-bold text-black uppercase tracking-wide">Program / Session Information</h2>
+                    {/* INTERACTIVE FORM FIELDS - HIDDEN IN PRINT */}
+                    <div className="space-y-8 print:hidden">
+                        {/* Counselor Info */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8 mb-8">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                                <label className="font-bold text-black sm:min-w-[80px] uppercase text-xs">Name</label>
+                                <span className="hidden sm:inline font-bold text-black">:</span>
+                                <input required type="text" value={counselorName} onChange={e => setCounselorName(e.target.value)} className="flex-1 p-2 border-b border-gray-300 focus:border-black outline-none bg-transparent text-black" placeholder="Enter name" />
+                            </div>
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                                <label className="font-bold text-black sm:min-w-[100px] uppercase text-xs">Institution</label>
+                                <span className="hidden sm:inline font-bold text-black">:</span>
+                                <input required type="text" value={institution} onChange={e => setInstitution(e.target.value)} className="flex-1 p-2 border-b border-gray-300 focus:border-black outline-none bg-transparent text-black" placeholder="e.g. UPSI" />
+                            </div>
                         </div>
 
-                        <div className="p-4 sm:p-6 lg:p-8 space-y-6">
-                            <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-12 mb-6 border-b border-gray-100 pb-4">
-                                <span className="font-bold text-gray-800 uppercase sm:w-48 text-sm sm:text-base">Program / Session</span>
-                                <div className="flex items-center gap-8 sm:gap-12">
-                                    {["PFA", "MHPSS"].map((type) => (
-                                        <label key={type} className="flex items-center cursor-pointer group">
-                                            <input
-                                                required
-                                                type="radio"
-                                                value={type}
-                                                checked={programSessionType === type}
-                                                onChange={e => setProgramSessionType(e.target.value)}
-                                                name="programType"
-                                                className="w-5 h-5 text-black border-gray-300 focus:ring-black cursor-pointer"
-                                            />
-                                            <span className="ml-3 text-black font-bold group-hover:text-black transition-colors">{type}</span>
+                        {/* Logistics Data Section Group */}
+                        <div className="bg-white mb-8 border-2 border-black">
+                            <div className="bg-white px-4 py-3 border-b-2 border-black">
+                                <h2 className="text-lg font-bold text-black uppercase tracking-wide">Program / Session Information</h2>
+                            </div>
+
+                            <div className="p-4 sm:p-6 lg:p-8 space-y-6">
+                                <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-12 mb-6 border-b border-gray-100 pb-4">
+                                    <span className="font-bold text-gray-800 uppercase sm:w-48 text-sm sm:text-base">Program / Session</span>
+                                    <div className="flex items-center gap-8 sm:gap-12">
+                                        {["PFA", "MHPSS"].map((type) => (
+                                            <label key={type} className="flex items-center cursor-pointer group">
+                                                <input
+                                                    required
+                                                    type="radio"
+                                                    value={type}
+                                                    checked={programSessionType === type}
+                                                    onChange={e => setProgramSessionType(e.target.value)}
+                                                    name="programType"
+                                                    className="w-5 h-5 text-black border-gray-300 focus:ring-black cursor-pointer"
+                                                />
+                                                <span className="ml-3 text-black font-bold group-hover:text-black transition-colors">{type}</span>
+                                            </label>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-[220px_auto_1fr] gap-y-4 md:gap-y-6 gap-x-2 items-start md:items-center">
+                                    <div className="font-bold text-black text-sm uppercase leading-tight md:py-2">Name of the Program/Session</div>
+                                    <div className="hidden md:block font-bold text-black">:</div>
+                                    <div><input required type="text" value={programName} onChange={e => setProgramName(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="Enter program name" /></div>
+
+                                    <div className="font-bold text-black text-sm uppercase md:py-2">Date & Time</div>
+                                    <div className="hidden md:block font-bold text-black">:</div>
+                                    <div><input required type="datetime-local" value={dateTime} onChange={e => setDateTime(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" /></div>
+
+                                    <div className="font-bold text-black text-sm uppercase md:py-2">Duration (Hours)</div>
+                                    <div className="hidden md:block font-bold text-black">:</div>
+                                    <div><input required type="number" step="0.5" min="0.5" value={duration} onChange={e => setDuration(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="e.g. 1.0" /></div>
+
+                                    <div className="font-bold text-black text-sm uppercase md:py-2">Venue</div>
+                                    <div className="hidden md:block font-bold text-black">:</div>
+                                    <div><input required type="text" value={venue} onChange={e => setVenue(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="Activity location" /></div>
+
+                                    <div className="font-bold text-black text-sm uppercase leading-tight md:py-2">Number of Participants Involved</div>
+                                    <div className="hidden md:block font-bold text-black">:</div>
+                                    <div><input required type="number" min="0" value={participantsCount} onChange={e => setParticipantsCount(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="Participants count" /></div>
+
+                                    <div className="font-bold text-black text-sm uppercase md:py-2">Speaker / Provider</div>
+                                    <div className="hidden md:block font-bold text-black">:</div>
+                                    <div><input required type="text" value={speakerProvider} onChange={e => setSpeakerProvider(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="Who delivered the program?" /></div>
+
+                                    <div className="font-bold text-black text-sm uppercase md:py-2">Collaborator(s) (If any)</div>
+                                    <div className="hidden md:block font-bold text-black">:</div>
+                                    <div><input type="text" value={collaborators} onChange={e => setCollaborators(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="Optional collaborators" /></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Narrative Sections */}
+                        <div className="space-y-12">
+                            {[
+                                { label: "Objectives of the Program / Session", value: objectives, setter: setObjectives, rows: 5 },
+                                { label: "Identified Issue (s)", value: identifiedIssues, setter: setIdentifiedIssues, rows: 5 },
+                                { label: "Activities / Interventions Delivered", value: activitiesInterventions, setter: setActivitiesInterventions, rows: 6 }
+                            ].map((field, idx) => (
+                                <div key={idx} className="bg-white border-none py-4">
+                                    <div className="bg-white px-4 py-2 border-b-2 border-black">
+                                        <label className={labelClasses}>
+                                            {field.label}
                                         </label>
-                                    ))}
+                                    </div>
+                                    <div className="p-1">
+                                        <textarea
+                                            required
+                                            rows={field.rows}
+                                            value={field.value}
+                                            onChange={e => field.setter(e.target.value)}
+                                            className="w-full p-4 border border-black outline-none text-black bg-white"
+                                            placeholder={`Enter ${field.label.toLowerCase()}...`}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div className="grid grid-cols-1 md:grid-cols-[220px_auto_1fr] gap-y-4 md:gap-y-6 gap-x-2 items-start md:items-center">
-                                <div className="font-bold text-black text-sm uppercase leading-tight md:py-2">Name of the Program/Session</div>
-                                <div className="hidden md:block font-bold text-black">:</div>
-                                <div><input required type="text" value={programName} onChange={e => setProgramName(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="Enter program name" /></div>
-
-                                <div className="font-bold text-black text-sm uppercase md:py-2">Date & Time</div>
-                                <div className="hidden md:block font-bold text-black">:</div>
-                                <div><input required type="datetime-local" value={dateTime} onChange={e => setDateTime(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" /></div>
-
-                                <div className="font-bold text-black text-sm uppercase md:py-2">Duration (Hours)</div>
-                                <div className="hidden md:block font-bold text-black">:</div>
-                                <div><input required type="number" step="0.5" min="0.5" value={duration} onChange={e => setDuration(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="e.g. 1.0" /></div>
-
-                                <div className="font-bold text-black text-sm uppercase md:py-2">Venue</div>
-                                <div className="hidden md:block font-bold text-black">:</div>
-                                <div><input required type="text" value={venue} onChange={e => setVenue(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="Activity location" /></div>
-
-                                <div className="font-bold text-black text-sm uppercase leading-tight md:py-2">Number of Participants Involved</div>
-                                <div className="hidden md:block font-bold text-black">:</div>
-                                <div><input required type="number" min="0" value={participantsCount} onChange={e => setParticipantsCount(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="Participants count" /></div>
-
-                                <div className="font-bold text-black text-sm uppercase md:py-2">Speaker / Provider</div>
-                                <div className="hidden md:block font-bold text-black">:</div>
-                                <div><input required type="text" value={speakerProvider} onChange={e => setSpeakerProvider(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="Who delivered the program?" /></div>
-
-                                <div className="font-bold text-black text-sm uppercase md:py-2">Collaborator(s) (If any)</div>
-                                <div className="hidden md:block font-bold text-black">:</div>
-                                <div><input type="text" value={collaborators} onChange={e => setCollaborators(e.target.value)} className="w-full p-2 border-b border-black outline-none text-black bg-white" placeholder="Optional collaborators" /></div>
-                            </div>
+                            ))}
                         </div>
-                    </div>
 
-                    {/* Narrative Sections */}
-                    <div className="space-y-12">
-                        {[
-                            { label: "Objectives of the Program / Session", value: objectives, setter: setObjectives, rows: 5 },
-                            { label: "Identified Issue (s)", value: identifiedIssues, setter: setIdentifiedIssues, rows: 5 },
-                            { label: "Activities / Interventions Delivered", value: activitiesInterventions, setter: setActivitiesInterventions, rows: 6 }
-                        ].map((field, idx) => (
-                            <div key={idx} className="bg-white border-none py-4">
-                                <div className="bg-white px-4 py-2 border-b-2 border-black">
-                                    <label className={labelClasses}>
-                                        {field.label}
-                                    </label>
-                                </div>
-                                <div className="p-1">
+                        {/* Action Plan Section */}
+                        <div className="bg-white border-none mt-8">
+                            <div className="bg-white py-2 border-none">
+                                <h2 className={labelClasses}>Action Plan</h2>
+                            </div>
+                            <div className="p-6 space-y-6">
+                                <div className="space-y-2">
+                                    <label className="font-bold text-black uppercase block underline underline-offset-4">Follow-Up (If needed):</label>
                                     <textarea
-                                        required
-                                        rows={field.rows}
-                                        value={field.value}
-                                        onChange={e => field.setter(e.target.value)}
-                                        className="w-full p-4 border-none focus:ring-0 outline-none text-gray-700 bg-white placeholder-gray-300"
-                                        placeholder={`Enter ${field.label.toLowerCase()}...`}
+                                        rows={4}
+                                        value={followUp}
+                                        onChange={e => setFollowUp(e.target.value)}
+                                        className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none text-black bg-white"
+                                        placeholder="Enter follow-up details..."
+                                    />
+                                </div>
+
+                                <div className="flex items-center space-x-12 border-t border-gray-100 pt-6">
+                                    <span className="font-bold text-black uppercase w-48">Referral Needed</span>
+                                    <div className="flex items-center space-x-8">
+                                        {["Yes", "No"].map((opt) => (
+                                            <label key={opt} className="flex items-center cursor-pointer group">
+                                                <input required type="radio" value={opt} checked={referralNeeded === opt} onChange={e => setReferralNeeded(e.target.value)} name="referral" className="w-5 h-5 text-black border-gray-300 focus:ring-black cursor-pointer" />
+                                                <span className="ml-3 text-black font-bold group-hover:text-black transition-colors">{opt}</span>
+                                            </label>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="font-bold text-black uppercase block underline underline-offset-4">Referral (If necessary, please specify):</label>
+                                    <input
+                                        required={referralNeeded === "Yes"}
+                                        type="text"
+                                        value={referralSpecifics}
+                                        onChange={e => setReferralSpecifics(e.target.value)}
+                                        className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none text-black bg-white"
+                                        placeholder="Enter referral details..."
                                     />
                                 </div>
                             </div>
-                        ))}
-                    </div>
-
-                    {/* Action Plan Section */}
-                    <div className="bg-white border-none mt-8">
-                        <div className="bg-white py-2 border-none">
-                            <h2 className={labelClasses}>Action Plan</h2>
                         </div>
-                        <div className="p-6 space-y-6">
-                            <div className="space-y-2">
-                                <label className="font-bold text-black uppercase block underline underline-offset-4">Follow-Up (If needed):</label>
-                                <textarea
-                                    rows={4}
-                                    value={followUp}
-                                    onChange={e => setFollowUp(e.target.value)}
-                                    className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none text-black bg-white"
-                                    placeholder="Enter follow-up details..."
-                                />
-                            </div>
 
-                            <div className="flex items-center space-x-12 border-t border-gray-100 pt-6">
-                                <span className="font-bold text-black uppercase w-48">Referral Needed</span>
-                                <div className="flex items-center space-x-8">
-                                    {["Yes", "No"].map((opt) => (
-                                        <label key={opt} className="flex items-center cursor-pointer group">
-                                            <input required type="radio" value={opt} checked={referralNeeded === opt} onChange={e => setReferralNeeded(e.target.value)} name="referral" className="w-5 h-5 text-black border-gray-300 focus:ring-black cursor-pointer" />
-                                            <span className="ml-3 text-black font-bold group-hover:text-black transition-colors">{opt}</span>
-                                        </label>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <div className="space-y-2">
-                                <label className="font-bold text-black uppercase block underline underline-offset-4">Referral (If necessary, please specify):</label>
-                                <input
-                                    required={referralNeeded === "Yes"}
-                                    type="text"
-                                    value={referralSpecifics}
-                                    onChange={e => setReferralSpecifics(e.target.value)}
-                                    className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none text-black bg-white"
-                                    placeholder="Enter referral details..."
-                                />
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Signatures Table Section */}
-                    <div className="pt-10 pb-4 mt-12 w-full">
-                        <div className="overflow-x-auto border-none shadow-none">
-                            <table className="w-full text-left bg-white min-w-[700px] border-collapse">
-                                <thead className="bg-[#FFFFFF] text-black border-b border-black">
-                                    <tr>
-                                        <th className="px-6 py-4 font-bold uppercase tracking-wider border-r border-black text-center w-1/4">Action</th>
-                                        <th className="px-6 py-4 font-bold uppercase tracking-wider border-r border-black text-center w-1/2">Signature & Name</th>
-                                        <th className="px-6 py-4 font-bold uppercase tracking-wider text-center w-1/4 text-black">Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="text-gray-800">
-                                    {[
-                                        { label: "Trainee Counselor", value: traineeSignature, setter: setTraineeSignature, required: true },
-                                        { label: "Site Supervisor", value: siteSupervisorSignature, setter: setSiteSupervisorSignature },
-                                        { label: "Academic Supervisor", value: academicSupervisorSignature, setter: setAcademicSupervisorSignature }
-                                    ].map((row, idx) => (
-                                        <tr key={idx} className="border-b border-black last:border-0">
-                                            <td className="px-6 py-8 border-r border-black font-bold text-center align-middle uppercase text-sm text-black">
-                                                {row.label} Signature
-                                            </td>
-                                            <td className="px-6 py-8 border-r border-black">
-                                                <div className="flex flex-col items-center">
-                                                    <div className="border-b-2 border-dotted border-black w-full mb-3 h-8"></div>
-                                                    <div className="flex justify-center items-center w-full px-4">
-                                                        <span className="text-black font-bold text-lg">(</span>
-                                                        <input
-                                                            required={row.required}
-                                                            type="text"
-                                                            value={row.value}
-                                                            onChange={e => row.setter(e.target.value)}
-                                                            className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase"
-                                                            placeholder={`Name of ${row.label}`}
-                                                        />
-                                                        <span className="text-black font-bold text-lg">)</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-8 text-center align-middle">
-                                                <div className="border-b border-black w-32 mx-auto h-8 mb-2"></div>
-                                                <span className="text-black text-xs font-bold uppercase">DD/MM/YYYY</span>
-                                            </td>
+                        {/* Signatures Table Section */}
+                        <div className="pt-10 pb-4 mt-12 w-full">
+                            <div className="overflow-x-auto border border-black shadow-none">
+                                <table className="w-full text-left bg-white min-w-[700px] border-collapse">
+                                    <thead className="bg-[#FFFFFF] text-black border-b border-black">
+                                        <tr>
+                                            <th className="px-6 py-4 font-bold uppercase tracking-wider border-r border-black text-center w-1/4">Action</th>
+                                            <th className="px-6 py-4 font-bold uppercase tracking-wider border-r border-black text-center w-1/2">Signature & Name</th>
+                                            <th className="px-6 py-4 font-bold uppercase tracking-wider text-center w-1/4 text-black">Date</th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody className="text-gray-800">
+                                        {[
+                                            { label: "Trainee Counselor", value: traineeSignature, setter: setTraineeSignature, required: true },
+                                            { label: "Site Supervisor", value: siteSupervisorSignature, setter: setSiteSupervisorSignature },
+                                            { label: "Academic Supervisor", value: academicSupervisorSignature, setter: setAcademicSupervisorSignature }
+                                        ].map((row, idx) => (
+                                            <tr key={idx} className="border-b border-black last:border-0">
+                                                <td className="px-6 py-8 border-r border-black font-bold text-center align-middle uppercase text-sm text-black">
+                                                    {row.label} Signature
+                                                </td>
+                                                <td className="px-6 py-8 border-r border-black">
+                                                    <div className="flex flex-col items-center">
+                                                        <div className="border-b-2 border-dotted border-black w-full mb-3 h-8"></div>
+                                                        <div className="flex justify-center items-center w-full px-4">
+                                                            <span className="text-black font-bold text-lg">(</span>
+                                                            <input
+                                                                required={row.required}
+                                                                type="text"
+                                                                value={row.value}
+                                                                onChange={e => row.setter(e.target.value)}
+                                                                className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase"
+                                                                placeholder={`Name of ${row.label}`}
+                                                            />
+                                                            <span className="text-black font-bold text-lg">)</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td className="px-6 py-8 text-center align-middle">
+                                                    <div className="border-b border-black w-32 mx-auto h-8 mb-2"></div>
+                                                    <span className="text-black text-xs font-bold uppercase">DD/MM/YYYY</span>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
 
                         {/* Appendices Section (New Image Upload Feature) */}

@@ -257,18 +257,12 @@ function Form1IntakeContent() {
                         effectiveClient.clientId,
                         sessionData.sessionId
                     );
-                    alert("Intake Report & PDF saved to Google Drive successfully!");
-                } else {
-                    alert("Intake Report saved to database! (PDF Skipped: No Google Drive authorization. Please log out and back in to grant permission).");
                 }
             } catch (driveErr: any) {
                 if (driveErr.message === "UNAUTHORIZED_DRIVE_ACCESS") {
                     localStorage.removeItem("googleDriveToken");
-                    alert("Google Drive session expired. Your report was saved to the database, but the PDF upload failed. Please log out and back in to re-authorize Google Drive.");
-                } else {
-                    console.error("Drive upload failed:", driveErr);
-                    alert(`⚠️ Report saved to Database successfully, but Google Drive Upload Failed. \n\nDrive Error: ${driveErr.message || driveErr}`);
                 }
+                console.error("Drive upload failed:", driveErr);
             }
 
             router.push(`/dashboard/clients/${effectiveClient.type.toLowerCase()}/${effectiveClient.clientId}`);
@@ -319,189 +313,275 @@ function Form1IntakeContent() {
                 <form onSubmit={handleSubmit} className="p-0 sm:p-4 md:p-8 space-y-8">
                     <FormHeader
                         title="PSYCHOLOGICAL INTAKE REPORT"
-                        refCode="Psychological_Intake_Report/KKMK_UPSI/01-2025"
+                        refCode="Psychological_Intake_Report/CMHC_UPSI/01-2025"
+                        subTitle="PRACTICUM & INTERNSHIP IN CLINICAL MENTAL HEALTH COUNSELING"
+                        subSubTitle="UNIVERSITI PENDIDIKAN SULTAN IDRIS"
                     />
 
-                    {/* Personal Data Section Group */}
-                    <div className="bg-white space-y-6">
-                        <h2 className="text-xl font-bold text-black uppercase tracking-wide">PERSONAL DATA</h2>
+                    {/* PRINT-ONLY ORIGINAL LAYOUT TABLE & SECTIONS */}
+                    <div className="hidden print:block w-full text-black">
+                        <h2 className="text-sm font-bold text-black uppercase tracking-wide mb-3">PERSONAL DATA:</h2>
+                        <table className="w-full border-collapse border border-black text-black text-[11px] font-sans">
+                            <tbody>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Session Number</td>
+                                    <td className="border border-black p-2 w-[25%]">{sessionNumber}</td>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Session Date & Time</td>
+                                    <td className="border border-black p-2 w-[25%]">{sessionDate} {sessionTime}</td>
+                                </tr>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Client Full Name</td>
+                                    <td className="border border-black p-2 w-[25%] uppercase">{clientFullName}</td>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Ethnic/Sex</td>
+                                    <td className="border border-black p-2 w-[25%]">{ethnic} / {sex}</td>
+                                </tr>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Date of Birth</td>
+                                    <td className="border border-black p-2 w-[25%]">{dateOfBirth}</td>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Identification Card No</td>
+                                    <td className="border border-black p-2 w-[25%]">{icNumber}</td>
+                                </tr>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Age</td>
+                                    <td className="border border-black p-2 w-[25%]">{age}</td>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Designation</td>
+                                    <td className="border border-black p-2 w-[25%]">{designation}</td>
+                                </tr>
+                                <tr>
+                                    <td className="border border-black p-2 font-bold w-[25%]">Date of Report</td>
+                                    <td className="border border-black p-2" colSpan={3}>{dateOfReport}</td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-                        <div className="grid grid-cols-1 md:grid-cols-[220px_auto_1fr] gap-x-2 gap-y-4 md:gap-y-6 items-start md:items-center">
-
-                            {/* Session Number */}
-                            <div className="font-bold text-black text-sm uppercase md:py-2">Session Number</div>
-                            <div className="hidden md:block font-bold text-black text-center">:</div>
-                            <div><input required type="text" value={sessionNumber} onChange={e => setSessionNumber(e.target.value)} className={inputClasses} placeholder="e.g. 01" /></div>
-
-                            {/* Session Date & Time */}
-                            <div className="font-bold text-black text-sm uppercase md:py-2">Session Date & Time</div>
-                            <div className="hidden md:block font-bold text-black text-center">:</div>
-                            <div className="flex flex-col sm:flex-row gap-2">
-                                <input required type="date" value={sessionDate} onChange={e => setSessionDate(e.target.value)} className={`${inputClasses} flex-1`} />
-                                <input required type="time" value={sessionTime} onChange={e => setSessionTime(e.target.value)} className={`${inputClasses} flex-1`} />
-                            </div>
-
-                            {/* Client Full Name */}
-                            <div className="font-bold text-black text-sm uppercase md:py-2">Client Full Name</div>
-                            <div className="hidden md:block font-bold text-black text-center">:</div>
-                            <div><input required type="text" value={clientFullName} onChange={e => setClientFullName(e.target.value)} className={inputClasses} placeholder="Enter Client's Actual Name" /></div>
-
-                            {/* Ethnic/Sex */}
-                            <div className="font-bold text-black text-sm uppercase md:py-2">Ethnic/Sex</div>
-                            <div className="hidden md:block font-bold text-black text-center">:</div>
-                            <div className="flex flex-col sm:flex-row gap-2 items-center w-full">
-                                <select required value={ethnic} onChange={e => setEthnic(e.target.value)} className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white w-full sm:w-2/3 text-sm">
-                                    <option value="" disabled>Select Ethnic</option>
-                                    <option value="Malay">Malay</option>
-                                    <option value="Chinese">Chinese</option>
-                                    <option value="Indian">Indian</option>
-                                    <option value="Bumiputera - Sarawak">Bumiputera - Sarawak</option>
-                                    <option value="Bumiputera - Sabah">Bumiputera - Sabah</option>
-                                    <option value="Orang Asli">Orang Asli</option>
-                                    <option value="Others">Others</option>
-                                </select>
-                                <span className="text-gray-400 hidden sm:inline">/</span>
-                                <select required value={sex} onChange={e => setSex(e.target.value)} className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white w-full sm:w-1/3 text-center text-sm">
-                                    <option value="" disabled>Select Sex</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </select>
-                            </div>
-
-                            {/* Date of Birth */}
-                            <div className="font-bold text-black text-sm uppercase md:py-2">Date of Birth</div>
-                            <div className="hidden md:block font-bold text-black text-center">:</div>
-                            <div><input required type="date" value={dateOfBirth} onChange={e => setDateOfBirth(e.target.value)} className={inputClasses} /></div>
-
-                            {/* Identification Card No */}
-                            <div className="font-bold text-black text-sm uppercase md:py-2">Identification Card No</div>
-                            <div className="hidden md:block font-bold text-black text-center">:</div>
-                            <div><input required type="text" value={icNumber} onChange={e => setIcNumber(e.target.value)} className={inputClasses} placeholder="XXXXXX-XX-XXXX" /></div>
-
-                            {/* Age */}
-                            <div className="font-bold text-black text-sm uppercase md:py-2">Age</div>
-                            <div className="hidden md:block font-bold text-black text-center">:</div>
-                            <div><input required type="text" value={age} onChange={e => setAge(e.target.value)} className={inputClasses} placeholder="e.g. 24" /></div>
-
-                            {/* Designation */}
-                            <div className="font-bold text-black text-sm uppercase md:py-2">Designation</div>
-                            <div className="hidden md:block font-bold text-black text-center">:</div>
-                            <div><input required type="text" value={designation} onChange={e => setDesignation(e.target.value)} className={inputClasses} placeholder="Role/Year/Program" /></div>
-
-                            <div className="font-bold text-black text-sm uppercase md:py-2">Date of Intake</div>
-                            <div className="hidden md:block font-bold text-black text-center">:</div>
-                            <div><input required type="date" value={dateOfReport} onChange={e => setDateOfReport(e.target.value)} className={inputClasses} /></div>
-
+                        {/* Plain text styled narratives */}
+                        <div className="space-y-8 mt-8">
+                            {[
+                                { label: "Reason for Referral", value: reasonForReferral },
+                                { label: "Behaviour Observation", value: behaviourObservation },
+                                { label: "History of Presenting Issues", value: historyOfPresentingIssues },
+                                { label: "Psychiatric History", value: psychiatricHistory },
+                                { label: "Medical History", value: medicalHistory },
+                                { label: "Family History", value: familyHistory },
+                                { label: "Developmental History", value: developmentalHistory },
+                                { label: "Social History", value: socialHistory },
+                                { label: "Substance Use History", value: substanceUseHistory },
+                                { label: "Current Situation Functioning", value: currentSituationFunctioning },
+                                { label: "Assessment Result", value: assessmentResult },
+                                { label: "Clinical Judgement", value: clinicalJudgement },
+                                { label: "Diagnostic Impression / Provisional Diagnostic", value: diagnosticImpression },
+                                { label: "Goals of the Session", value: goalsOfSession },
+                                { label: "Treatment Planning", value: treatmentPlanning }
+                            ].map((sec, idx) => (
+                                <div key={idx} className="space-y-2 break-inside-avoid">
+                                    <h3 className="font-bold text-black text-xs uppercase">{sec.label.toUpperCase()}</h3>
+                                    <p className="text-black text-[11px] whitespace-pre-wrap leading-relaxed min-h-[40px] pl-1">
+                                        {sec.value || "N/A"}
+                                    </p>
+                                </div>
+                            ))}
                         </div>
-                    </div>
 
-                    {/* Standard Narrative Iterations */}
-                    <div className="space-y-3 bg-white py-4 border-none">
-                        <label className="text-lg font-bold text-black uppercase underline underline-offset-4 mb-2 block">REASON FOR REFERRAL</label>
-                        <textarea required rows={4} value={reasonForReferral} onChange={e => setReasonForReferral(e.target.value)} className={textareaClasses} />
-                    </div>
-
-                    <div className="space-y-3 bg-white p-2 rounded-xl border border-transparent">
-                        <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">BEHAVIOUR OBSERVATION</label>
-                        <textarea required rows={4} value={behaviourObservation} onChange={e => setBehaviourObservation(e.target.value)} className={textareaClasses} />
-                    </div>
-
-                    <div className="space-y-3 bg-white py-4 border-none">
-                        <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">HISTORY OF PRESENTING ISSUES</label>
-                        <textarea required rows={4} value={historyOfPresentingIssues} onChange={e => setHistoryOfPresentingIssues(e.target.value)} className={textareaClasses} />
-                    </div>
-
-                    <div className="space-y-3 bg-white py-4 border-none">
-                        <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">PSYCHIATRIC HISTORY</label>
-                        <textarea required rows={4} value={psychiatricHistory} onChange={e => setPsychiatricHistory(e.target.value)} className={textareaClasses} />
-                    </div>
-
-                    <div className="space-y-3 bg-white py-4 border-none">
-                        <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">MEDICAL HISTORY</label>
-                        <textarea required rows={4} value={medicalHistory} onChange={e => setMedicalHistory(e.target.value)} className={textareaClasses} />
-                    </div>
-
-                    <div className="space-y-3 bg-white py-4 border-none">
-                        <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">FAMILY HISTORY</label>
-                        <textarea required rows={4} value={familyHistory} onChange={e => setFamilyHistory(e.target.value)} className={textareaClasses} />
-                    </div>
-
-                    <div className="space-y-3 bg-white py-4 border-none">
-                        <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">DEVELOPMENTAL HISTORY</label>
-                        <textarea required rows={4} value={developmentalHistory} onChange={e => setDevelopmentalHistory(e.target.value)} className={textareaClasses} />
-                    </div>
-
-                    <div className="space-y-3 bg-white py-4 border-none">
-                        <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">SOCIAL HISTORY</label>
-                        <textarea required rows={4} value={socialHistory} onChange={e => setSocialHistory(e.target.value)} className={textareaClasses} />
-                    </div>
-
-                    <div className="space-y-3 bg-white py-4 border-none">
-                        <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">SUBSTANCE USE HISTORY</label>
-                        <textarea required rows={4} value={substanceUseHistory} onChange={e => setSubstanceUseHistory(e.target.value)} className={textareaClasses} />
-                    </div>
-
-                    <div className="space-y-3 bg-white py-4 border-none">
-                        <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">CURRENT SITUATION FUNCTIONING</label>
-                        <textarea required rows={4} value={currentSituationFunctioning} onChange={e => setCurrentSituationFunctioning(e.target.value)} className={textareaClasses} />
-                    </div>
-
-                    <div className="space-y-3 bg-white py-4 border-none">
-                        <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">ASSESSMENT RESULT</label>
-                        <textarea required rows={4} value={assessmentResult} onChange={e => setAssessmentResult(e.target.value)} className={textareaClasses} />
-                    </div>
-
-                    <div className="space-y-3 bg-white py-4 border-none">
-                        <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">CLINICAL JUDGEMENT</label>
-                        <textarea required rows={4} value={clinicalJudgement} onChange={e => setClinicalJudgement(e.target.value)} className={textareaClasses} />
-                    </div>
-
-                    <div className="space-y-3 bg-white p-2 rounded-xl border border-transparent">
-                        <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">DIAGNOSTIC IMPRESSION / PROVISIONAL DIAGNOSTIC</label>
-                        <textarea required rows={4} value={diagnosticImpression} onChange={e => setDiagnosticImpression(e.target.value)} className={textareaClasses} />
-                    </div>
-
-                    <div className="space-y-3 bg-white p-2 rounded-xl border border-transparent">
-                        <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">GOALS OF THE SESSION</label>
-                        <textarea required rows={4} value={goalsOfSession} onChange={e => setGoalsOfSession(e.target.value)} className={textareaClasses} />
-                    </div>
-
-                    <div className="space-y-3 bg-white p-2 rounded-xl border border-transparent">
-                        <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">TREATMENT PLANNING</label>
-                        <textarea required rows={4} value={treatmentPlanning} onChange={e => setTreatmentPlanning(e.target.value)} className={textareaClasses} />
-                    </div>
-
-                    {/* Footer Section */}
-                    <div className="pt-10 pb-4 mt-12 w-full">
-                        <div className="mb-6 flex flex-col items-start w-full max-w-md">
-                            <h3 className="text-black font-bold mb-4 uppercase text-sm">Report by:</h3>
-                            <div className="w-full">
-                                <div className="border-b-2 border-dotted border-black w-full mb-3 h-8"></div>
-                                <div className="flex justify-between items-center w-full px-1">
-                                    <span className="text-black font-bold text-lg">(</span>
-                                    <input
-                                        required
-                                        type="text"
-                                        value={counselorName}
-                                        onChange={e => setCounselorName(e.target.value)}
-                                        className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase text-sm"
-                                        placeholder="Enter Full Name"
-                                    />
-                                    <span className="text-black font-bold text-lg">)</span>
+                        {/* Signature section */}
+                        <div className="mt-12 w-full break-inside-avoid">
+                            <p className="text-black font-bold text-xs">Report by:</p>
+                            <div className="w-full max-w-[280px] mt-12">
+                                <div className="border-b border-black w-full mb-2"></div>
+                                <p className="font-bold text-black uppercase text-center text-xs mb-4">
+                                    ( {counselorName || "Enter Full Name"} )
+                                </p>
+                                <div className="text-black text-[10px] font-bold space-y-0.5 leading-tight">
+                                    <p className="uppercase">CMCH Counselor Trainee</p>
+                                    <p className="uppercase font-normal">Universiti Pendidikan Sultan Idris</p>
+                                    <p className="uppercase font-normal">35900 Tanjong Malim, Perak</p>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <div className="text-black text-[11px] sm:text-xs space-y-1 font-bold">
-                            <p className="uppercase">CMCH Counselor Trainee</p>
-                            <p className="uppercase font-normal tracking-tight">Universiti Pendidikan Sultan Idris</p>
-                            <p className="uppercase font-normal tracking-tight">35900 Tanjong Malim, Perak</p>
+                    {/* INTERACTIVE FORM CONTAINER (HIDDEN DURING PRINT) */}
+                    <div className="print:hidden space-y-8">
+                        {/* Personal Data Section Group */}
+                        <div className="bg-white space-y-6">
+                            <h2 className="text-xl font-bold text-black uppercase tracking-wide">PERSONAL DATA</h2>
+
+                            <div className="grid grid-cols-1 md:grid-cols-[220px_auto_1fr] gap-x-2 gap-y-4 md:gap-y-6 items-start md:items-center">
+
+                                {/* Session Number */}
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Session Number</div>
+                                <div className="hidden md:block font-bold text-black text-center">:</div>
+                                <div><input required type="text" value={sessionNumber} onChange={e => setSessionNumber(e.target.value)} className={inputClasses} placeholder="e.g. 01" /></div>
+
+                                {/* Session Date & Time */}
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Session Date & Time</div>
+                                <div className="hidden md:block font-bold text-black text-center">:</div>
+                                <div className="flex flex-col sm:flex-row gap-2">
+                                    <input required type="date" value={sessionDate} onChange={e => setSessionDate(e.target.value)} className={`${inputClasses} flex-1`} />
+                                    <input required type="time" value={sessionTime} onChange={e => setSessionTime(e.target.value)} className={`${inputClasses} flex-1`} />
+                                </div>
+
+                                {/* Client Full Name */}
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Client Full Name</div>
+                                <div className="hidden md:block font-bold text-black text-center">:</div>
+                                <div><input required type="text" value={clientFullName} onChange={e => setClientFullName(e.target.value)} className={inputClasses} placeholder="Enter Client's Actual Name" /></div>
+
+                                {/* Ethnic/Sex */}
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Ethnic/Sex</div>
+                                <div className="hidden md:block font-bold text-black text-center">:</div>
+                                <div className="flex flex-col sm:flex-row gap-2 items-center w-full">
+                                    <select required value={ethnic} onChange={e => setEthnic(e.target.value)} className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white w-full sm:w-2/3 text-sm">
+                                        <option value="" disabled>Select Ethnic</option>
+                                        <option value="Malay">Malay</option>
+                                        <option value="Chinese">Chinese</option>
+                                        <option value="Indian">Indian</option>
+                                        <option value="Bumiputera - Sarawak">Bumiputera - Sarawak</option>
+                                        <option value="Bumiputera - Sabah">Bumiputera - Sabah</option>
+                                        <option value="Orang Asli">Orang Asli</option>
+                                        <option value="Others">Others</option>
+                                    </select>
+                                    <span className="text-gray-400 hidden sm:inline">/</span>
+                                    <select required value={sex} onChange={e => setSex(e.target.value)} className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-upsi-navy outline-none text-gray-700 bg-white w-full sm:w-1/3 text-center text-sm">
+                                        <option value="" disabled>Select Sex</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+
+                                {/* Date of Birth */}
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Date of Birth</div>
+                                <div className="hidden md:block font-bold text-black text-center">:</div>
+                                <div><input required type="date" value={dateOfBirth} onChange={e => setDateOfBirth(e.target.value)} className={inputClasses} /></div>
+
+                                {/* Identification Card No */}
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Identification Card No</div>
+                                <div className="hidden md:block font-bold text-black text-center">:</div>
+                                <div><input required type="text" value={icNumber} onChange={e => setIcNumber(e.target.value)} className={inputClasses} placeholder="XXXXXX-XX-XXXX" /></div>
+
+                                {/* Age */}
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Age</div>
+                                <div className="hidden md:block font-bold text-black text-center">:</div>
+                                <div><input required type="text" value={age} onChange={e => setAge(e.target.value)} className={inputClasses} placeholder="e.g. 24" /></div>
+
+                                {/* Designation */}
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Designation</div>
+                                <div className="hidden md:block font-bold text-black text-center">:</div>
+                                <div><input required type="text" value={designation} onChange={e => setDesignation(e.target.value)} className={inputClasses} placeholder="Role/Year/Program" /></div>
+
+                                <div className="font-bold text-black text-sm uppercase md:py-2">Date of Intake</div>
+                                <div className="hidden md:block font-bold text-black text-center">:</div>
+                                <div><input required type="date" value={dateOfReport} onChange={e => setDateOfReport(e.target.value)} className={inputClasses} /></div>
+
+                            </div>
                         </div>
 
-                        <div className="mt-16 text-center w-full pt-4 border-t border-dashed border-gray-200">
-                            <p className="text-xs font-bold text-slate-500 uppercase tracking-widest pl-[0.1em]">
-                                Confidential Document (For Professional Use Only)
-                            </p>
+                        {/* Standard Narrative Iterations */}
+                        <div className="space-y-3 bg-white py-4 border-none">
+                            <label className="text-lg font-bold text-black uppercase underline underline-offset-4 mb-2 block">REASON FOR REFERRAL</label>
+                            <textarea required rows={4} value={reasonForReferral} onChange={e => setReasonForReferral(e.target.value)} className={textareaClasses} />
+                        </div>
+
+                        <div className="space-y-3 bg-white p-2 rounded-xl border border-transparent">
+                            <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">BEHAVIOUR OBSERVATION</label>
+                            <textarea required rows={4} value={behaviourObservation} onChange={e => setBehaviourObservation(e.target.value)} className={textareaClasses} />
+                        </div>
+
+                        <div className="space-y-3 bg-white py-4 border-none">
+                            <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">HISTORY OF PRESENTING ISSUES</label>
+                            <textarea required rows={4} value={historyOfPresentingIssues} onChange={e => setHistoryOfPresentingIssues(e.target.value)} className={textareaClasses} />
+                        </div>
+
+                        <div className="space-y-3 bg-white py-4 border-none">
+                            <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">PSYCHIATRIC HISTORY</label>
+                            <textarea required rows={4} value={psychiatricHistory} onChange={e => setPsychiatricHistory(e.target.value)} className={textareaClasses} />
+                        </div>
+
+                        <div className="space-y-3 bg-white py-4 border-none">
+                            <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">MEDICAL HISTORY</label>
+                            <textarea required rows={4} value={medicalHistory} onChange={e => setMedicalHistory(e.target.value)} className={textareaClasses} />
+                        </div>
+
+                        <div className="space-y-3 bg-white py-4 border-none">
+                            <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">FAMILY HISTORY</label>
+                            <textarea required rows={4} value={familyHistory} onChange={e => setFamilyHistory(e.target.value)} className={textareaClasses} />
+                        </div>
+
+                        <div className="space-y-3 bg-white py-4 border-none">
+                            <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">DEVELOPMENTAL HISTORY</label>
+                            <textarea required rows={4} value={developmentalHistory} onChange={e => setDevelopmentalHistory(e.target.value)} className={textareaClasses} />
+                        </div>
+
+                        <div className="space-y-3 bg-white py-4 border-none">
+                            <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">SOCIAL HISTORY</label>
+                            <textarea required rows={4} value={socialHistory} onChange={e => setSocialHistory(e.target.value)} className={textareaClasses} />
+                        </div>
+
+                        <div className="space-y-3 bg-white py-4 border-none">
+                            <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">SUBSTANCE USE HISTORY</label>
+                            <textarea required rows={4} value={substanceUseHistory} onChange={e => setSubstanceUseHistory(e.target.value)} className={textareaClasses} />
+                        </div>
+
+                        <div className="space-y-3 bg-white py-4 border-none">
+                            <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">CURRENT SITUATION FUNCTIONING</label>
+                            <textarea required rows={4} value={currentSituationFunctioning} onChange={e => setCurrentSituationFunctioning(e.target.value)} className={textareaClasses} />
+                        </div>
+
+                        <div className="space-y-3 bg-white py-4 border-none">
+                            <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">ASSESSMENT RESULT</label>
+                            <textarea required rows={4} value={assessmentResult} onChange={e => setAssessmentResult(e.target.value)} className={textareaClasses} />
+                        </div>
+
+                        <div className="space-y-3 bg-white py-4 border-none">
+                            <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">CLINICAL JUDGEMENT</label>
+                            <textarea required rows={4} value={clinicalJudgement} onChange={e => setClinicalJudgement(e.target.value)} className={textareaClasses} />
+                        </div>
+
+                        <div className="space-y-3 bg-white p-2 rounded-xl border border-transparent">
+                            <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">DIAGNOSTIC IMPRESSION / PROVISIONAL DIAGNOSTIC</label>
+                            <textarea required rows={4} value={diagnosticImpression} onChange={e => setDiagnosticImpression(e.target.value)} className={textareaClasses} />
+                        </div>
+
+                        <div className="space-y-3 bg-white p-2 rounded-xl border border-transparent">
+                            <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">GOALS OF THE SESSION</label>
+                            <textarea required rows={4} value={goalsOfSession} onChange={e => setGoalsOfSession(e.target.value)} className={textareaClasses} />
+                        </div>
+
+                        <div className="space-y-3 bg-white p-2 rounded-xl border border-transparent">
+                            <label className="text-lg font-bold text-gray-900 uppercase underline underline-offset-4">TREATMENT PLANNING</label>
+                            <textarea required rows={4} value={treatmentPlanning} onChange={e => setTreatmentPlanning(e.target.value)} className={textareaClasses} />
+                        </div>
+
+                        {/* Footer Section */}
+                        <div className="pt-10 pb-4 mt-12 w-full">
+                            <div className="mb-6 flex flex-col items-start w-full max-w-md">
+                                <h3 className="text-black font-bold mb-4 uppercase text-sm">Report by:</h3>
+                                <div className="w-full">
+                                    <div className="border-b-2 border-dotted border-black w-full mb-3 h-8"></div>
+                                    <div className="flex justify-between items-center w-full px-1">
+                                        <span className="text-black font-bold text-lg">(</span>
+                                        <input
+                                            required
+                                            type="text"
+                                            value={counselorName}
+                                            onChange={e => setCounselorName(e.target.value)}
+                                            className="bg-transparent outline-none flex-1 text-center font-bold text-black placeholder-gray-400 py-1 uppercase text-sm"
+                                            placeholder="Enter Full Name"
+                                        />
+                                        <span className="text-black font-bold text-lg">)</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="text-black text-[11px] sm:text-xs space-y-1 font-bold">
+                                <p className="uppercase">CMCH Counselor Trainee</p>
+                                <p className="uppercase font-normal tracking-tight">Universiti Pendidikan Sultan Idris</p>
+                                <p className="uppercase font-normal tracking-tight">35900 Tanjong Malim, Perak</p>
+                            </div>
+
+                            <div className="mt-16 text-center w-full pt-4 border-t border-dashed border-gray-200">
+                                <p className="text-xs font-bold text-slate-500 uppercase tracking-widest pl-[0.1em]">
+                                    Confidential Document (For Professional Use Only)
+                                </p>
+                            </div>
                         </div>
                     </div>
 
