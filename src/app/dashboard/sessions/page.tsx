@@ -352,14 +352,41 @@ export default function SessionHistoryPage() {
                                                     </Link>
                                                     <button
                                                         onClick={async () => {
-                                                            const { generateSessionPDF } = await import("@/lib/pdf/generatePDF");
                                                             const client = clients.find(c => c.id === session.clientId);
-                                                            if (client) {
+                                                            if (!client) {
+                                                                alert("Client data not found to generate PDF.");
+                                                                return;
+                                                            }
+                                                            
+                                                            const newWindow = window.open("", "_blank");
+                                                            if (newWindow) {
+                                                                newWindow.document.title = "Generating PDF...";
+                                                                newWindow.document.body.innerHTML = `
+                                                                    <div style="display:flex;justify-content:center;align-items:center;height:100vh;font-family:sans-serif;color:#1e293b;background-color:#f8fafc;">
+                                                                        <div style="text-align:center;">
+                                                                            <div style="width:40px;height:40px;border:4px solid #0f172a;border-top-color:transparent;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 16px;"></div>
+                                                                            <p style="font-weight:600;font-size:14px;margin:0;">Generating PDF, please wait...</p>
+                                                                        </div>
+                                                                        <style>
+                                                                            @keyframes spin { to { transform: rotate(360deg); } }
+                                                                        </style>
+                                                                    </div>
+                                                                `;
+                                                            }
+                                                            
+                                                            try {
+                                                                const { generateSessionPDF } = await import("@/lib/pdf/generatePDF");
                                                                 const pdfBlob = await generateSessionPDF(session, client);
                                                                 const url = URL.createObjectURL(pdfBlob);
-                                                                window.open(url);
-                                                            } else {
-                                                                alert("Client data not found to generate PDF.");
+                                                                if (newWindow) {
+                                                                    newWindow.location.href = url;
+                                                                } else {
+                                                                    window.open(url, "_blank");
+                                                                }
+                                                            } catch (error) {
+                                                                console.error("PDF generation failed:", error);
+                                                                if (newWindow) newWindow.close();
+                                                                alert("Failed to generate PDF.");
                                                             }
                                                         }}
                                                         className="p-1.5 hover:bg-slate-100 rounded-lg text-slate-500 hover:text-upsi-navy transition-all"
