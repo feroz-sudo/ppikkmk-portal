@@ -34,6 +34,12 @@ service cloud.firestore {
       allow create: if isSignedIn();
     }
 
+    // Trainee Profiles collection
+    match /trainee_profiles/{profileId} {
+      allow read: if isSignedIn() && (profileId == request.auth.uid || isAdmin() || isSupervisor());
+      allow write: if isSignedIn() && (profileId == request.auth.uid || isAdmin());
+    }
+
     // Clients collection
     match /clients/{clientId} {
       allow read: if isSignedIn() && (resource.data.traineeId == request.auth.uid || isAdmin() || isSupervisor());
