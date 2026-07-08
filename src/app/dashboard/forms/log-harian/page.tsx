@@ -304,58 +304,65 @@ export default function LogHarianForm() {
                     </div>
 
                     <div className="p-8 space-y-12">
-                        {/* Print-only Unified Table */}
+                        {/* Print-only Individual Daily Pages */}
                         <div className="hidden print:block w-full">
-                            <table className="w-full border-collapse border border-slate-400">
-                                <thead>
-                                    <tr style={{ backgroundColor: "#e2e8f0" }}>
-                                        <th style={{ border: "1px solid #94a3b8", padding: "10px", fontWeight: "bold", width: "20%", textTransform: "uppercase", fontSize: "10pt", color: "#1e293b" }}>Lokasi</th>
-                                        <th style={{ border: "1px solid #94a3b8", padding: "10px", fontWeight: "bold", width: "20%", textTransform: "uppercase", fontSize: "10pt", color: "#1e293b" }}>Masa</th>
-                                        <th style={{ border: "1px solid #94a3b8", padding: "10px", fontWeight: "bold", width: "40%", textTransform: "uppercase", fontSize: "10pt", color: "#1e293b" }}>Aktiviti Praktikum</th>
-                                        <th style={{ border: "1px solid #94a3b8", padding: "10px", fontWeight: "bold", width: "20%", textTransform: "uppercase", fontSize: "10pt", color: "#1e293b" }}>Catatan</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {DAYS_CONFIG.map((day) => {
-                                        const dayLogs = logsByDay[day.id] || [];
-                                        const dayDate = getDayDateString(day.id);
-                                        return (
-                                            <React.Fragment key={day.id}>
-                                                {/* Day Header Row */}
-                                                <tr>
-                                                    <td colSpan={4} style={{ border: "1px solid #94a3b8", padding: "8px 10px", fontWeight: "900", backgroundColor: "#f8fafc", fontSize: "9pt", color: "#0f172a", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                                                        {day.label} — {dayDate}
-                                                    </td>
+                            {DAYS_CONFIG.map((day) => {
+                                const dayLogs = logsByDay[day.id] || [];
+                                const dayDate = getDayDateString(day.id);
+                                return (
+                                    <div key={day.id} style={{ pageBreakAfter: "always", breakAfter: "page" }} className="w-full space-y-6">
+                                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", borderBottom: "2px solid #000000", paddingBottom: "8px", marginBottom: "16px" }}>
+                                            <div>
+                                                <h2 style={{ fontSize: "15pt", fontWeight: "900", color: "#000000", margin: 0, textTransform: "uppercase" }}>LOG HARIAN PRAKTIKUM</h2>
+                                                <p style={{ fontSize: "8pt", fontWeight: "bold", textTransform: "uppercase", color: "#475569", margin: "2px 0 0 0" }}>Buku Log Harian</p>
+                                            </div>
+                                            <div style={{ textAlign: "right" }}>
+                                                <div style={{ fontSize: "11pt", fontWeight: "900", color: "#000000" }}>
+                                                    {day.label.toUpperCase()} — {dayDate}
+                                                </div>
+                                                <div style={{ fontSize: "8pt", fontWeight: "bold", color: "#475569", marginTop: "2px" }}>MINGGU KE: {weekNumber}</div>
+                                            </div>
+                                        </div>
+
+                                        <table className="w-full border-collapse border border-slate-400">
+                                            <thead>
+                                                <tr style={{ backgroundColor: "#e2e8f0" }}>
+                                                    <th style={{ border: "1px solid #475569", padding: "8px 10px", fontWeight: "bold", width: "20%", textTransform: "uppercase", fontSize: "9pt", color: "#000000", textAlign: "center" }}>Lokasi</th>
+                                                    <th style={{ border: "1px solid #475569", padding: "8px 10px", fontWeight: "bold", width: "20%", textTransform: "uppercase", fontSize: "9pt", color: "#000000", textAlign: "center" }}>Masa</th>
+                                                    <th style={{ border: "1px solid #475569", padding: "8px 10px", fontWeight: "bold", width: "40%", textTransform: "uppercase", fontSize: "9pt", color: "#000000", textAlign: "center" }}>Aktiviti Praktikum</th>
+                                                    <th style={{ border: "1px solid #475569", padding: "8px 10px", fontWeight: "bold", width: "20%", textTransform: "uppercase", fontSize: "9pt", color: "#000000", textAlign: "center" }}>Catatan</th>
                                                 </tr>
+                                            </thead>
+                                            <tbody>
                                                 {dayLogs.length === 0 ? (
                                                     <tr>
-                                                        <td colSpan={4} style={{ border: "1px solid #94a3b8", padding: "10px", color: "#64748b", fontStyle: "italic", fontSize: "9pt" }}>
+                                                        <td style={{ border: "1px solid #475569", padding: "16px", color: "#64748b", fontStyle: "italic", fontSize: "9pt", textAlign: "center" }} colSpan={4}>
                                                             Tiada aktiviti didaftarkan untuk hari ini.
                                                         </td>
                                                     </tr>
                                                 ) : (
                                                     dayLogs.map((log) => (
                                                         <tr key={log.id}>
-                                                            <td style={{ border: "1px solid #94a3b8", padding: "10px", verticalAlign: "top", fontSize: "9pt", color: "#334155" }}>
+                                                            <td style={{ border: "1px solid #475569", padding: "8px 10px", verticalAlign: "top", fontSize: "9pt", color: "#000000" }}>
                                                                 {log.location}
                                                             </td>
-                                                            <td style={{ border: "1px solid #94a3b8", padding: "10px", verticalAlign: "top", textAlign: "center", fontSize: "9pt", color: "#334155" }}>
+                                                            <td style={{ border: "1px solid #475569", padding: "8px 10px", verticalAlign: "top", textAlign: "center", fontSize: "9pt", color: "#000000" }}>
                                                                 {log.time}
                                                             </td>
-                                                            <td style={{ border: "1px solid #94a3b8", padding: "10px", verticalAlign: "top", fontSize: "9pt", color: "#334155", whiteSpace: "pre-wrap" }}>
+                                                            <td style={{ border: "1px solid #475569", padding: "8px 10px", verticalAlign: "top", fontSize: "9pt", color: "#000000", whiteSpace: "pre-wrap" }}>
                                                                 {log.activity}
                                                             </td>
-                                                            <td style={{ border: "1px solid #94a3b8", padding: "10px", verticalAlign: "top", fontSize: "9pt", color: "#334155" }}>
+                                                            <td style={{ border: "1px solid #475569", padding: "8px 10px", verticalAlign: "top", fontSize: "9pt", color: "#000000" }}>
                                                                 {log.notes}
                                                             </td>
                                                         </tr>
                                                     ))
                                                 )}
-                                            </React.Fragment>
-                                        );
-                                    })}
-                                </tbody>
-                            </table>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                );
+                            })}
                         </div>
 
                         {/* Daily Logs Grouped by Day */}
@@ -447,7 +454,7 @@ export default function LogHarianForm() {
                         </div>
 
                         {/* Rumusan Jam Harian Table */}
-                        <div>
+                        <div className="print-page-break">
                             <h3 className="font-black text-slate-800 tracking-tight text-lg mb-4 bg-slate-100 p-4 rounded-xl text-center uppercase">RUMUSAN JAM HARIAN AKTIVITI PRAKTIKUM</h3>
                             
                             <table className="w-full border-collapse border border-slate-200 bg-white">
@@ -590,6 +597,10 @@ export default function LogHarianForm() {
                         padding: 0 !important;
                         box-shadow: none !important;
                         border: none !important;
+                    }
+                    .print-page-break {
+                        page-break-before: always !important;
+                        break-before: page !important;
                     }
                     table {
                         width: 100% !important;
