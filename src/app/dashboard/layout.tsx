@@ -39,6 +39,7 @@ import {
 import { Disclaimer } from "@/components/Disclaimer";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db, User } from "@/lib/firebase/db";
+import { AIPastePanel } from "@/components/AIPastePanel";
 
 // Sub-component to handle search-param dependent navigation
 function SidebarNavContent({
@@ -336,7 +337,7 @@ export default function DashboardLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const { user, userRole, loading, signOut } = useAuth();
+    const { user, userRole, loading, signOut, userProfile } = useAuth();
     const router = useRouter();
     const pathname = usePathname();
     const [isFormsOpen, setIsFormsOpen] = useState(false);
@@ -580,6 +581,7 @@ export default function DashboardLayout({
                         </div>
                     }>
                         {children}
+                        <AIPastePanel visible={userProfile?.matricNumber?.toLowerCase() === "m20241001148"} />
                     </Suspense>
                 </main>
 
