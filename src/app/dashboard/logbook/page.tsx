@@ -362,7 +362,7 @@ export default function LogbookPage() {
                                                     {log.hours}
                                                 </td>
                                                 <td className="px-6 py-5 text-center no-print border-l border-slate-50">
-                                                    <div className="flex items-center justify-center space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                    <div className="flex items-center justify-center space-x-1">
                                                         <button
                                                             onClick={() => {
                                                                 setSelectedLog(log);
