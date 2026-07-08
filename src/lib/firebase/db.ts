@@ -358,16 +358,27 @@ export const updateSession = async (sessionId: string, data: Partial<Session>) =
 };
 
 export const deleteSession = async (sessionId: string) => {
-    // 1. Delete associated log if exists
-    const q = query(logsRef, where("sessionId", "==", sessionId));
-    const snap = await getDocs(q);
-    if (!snap.empty) {
-        for (const logDoc of snap.docs) {
-            await deleteDoc(doc(db, "logs", logDoc.id));
+    const sessionDocRef = doc(db, "sessions", sessionId);
+    const sessionDoc = await getDoc(sessionDocRef);
+
+    if (sessionDoc.exists()) {
+        const sessionData = sessionDoc.data();
+        const traineeId = sessionData?.traineeId;
+
+        if (traineeId) {
+            // 1. Delete associated log if exists (including traineeId to satisfy Firestore security rules)
+            const q = query(logsRef, where("sessionId", "==", sessionId), where("traineeId", "==", traineeId));
+            const snap = await getDocs(q);
+            if (!snap.empty) {
+                for (const logDoc of snap.docs) {
+                    await deleteDoc(doc(db, "logs", logDoc.id));
+                }
+            }
         }
     }
+
     // 2. Delete the session document
-    await deleteDoc(doc(db, "sessions", sessionId));
+    await deleteDoc(sessionDocRef);
 };
 
 // Automation: Sync Session with Logbook
