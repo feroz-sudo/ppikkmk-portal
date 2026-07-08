@@ -346,18 +346,34 @@ export default function LogHarianForm() {
                                                     <tbody className="divide-y divide-slate-100">
                                                         {dayLogs.map((log) => (
                                                             <tr key={log.id} className="hover:bg-slate-50/50">
-                                                                <td className="p-0">
-                                                                    <textarea required value={log.location} onChange={(e) => updateRow(day.id, log.id, "location", e.target.value)} className="w-full h-full p-3 resize-none bg-transparent" placeholder="Klinik UPSI" rows={2} />
+                                                                <td className="p-0 print:hidden">
+                                                                    <textarea required value={log.location} onChange={(e) => updateRow(day.id, log.id, "location", e.target.value)} className="w-full h-full p-3 resize-none bg-transparent outline-none border-none focus:ring-0" placeholder="Klinik UPSI" rows={2} />
                                                                 </td>
-                                                                <td className="p-0">
-                                                                    <textarea required value={log.time} onChange={(e) => updateRow(day.id, log.id, "time", e.target.value)} className="w-full h-full p-3 resize-none bg-transparent" placeholder="08:00 - 10:00" rows={2} />
+                                                                <td className="hidden print:table-cell p-3 align-top whitespace-pre-wrap font-medium text-slate-800">
+                                                                    {log.location}
                                                                 </td>
-                                                                <td className="p-0">
-                                                                    <textarea required value={log.activity} onChange={(e) => updateRow(day.id, log.id, "activity", e.target.value)} className="w-full h-full p-3 resize-none bg-transparent" placeholder="Sesi Kaunseling Individu" rows={2} />
+
+                                                                <td className="p-0 print:hidden">
+                                                                    <textarea required value={log.time} onChange={(e) => updateRow(day.id, log.id, "time", e.target.value)} className="w-full h-full p-3 resize-none bg-transparent outline-none border-none focus:ring-0" placeholder="08:00 - 10:00" rows={2} />
                                                                 </td>
-                                                                <td className="p-0">
-                                                                    <textarea required value={log.notes} onChange={(e) => updateRow(day.id, log.id, "notes", e.target.value)} className="w-full h-full p-3 resize-none bg-transparent" placeholder="..." rows={2} />
+                                                                <td className="hidden print:table-cell p-3 align-top whitespace-pre-wrap font-medium text-slate-800">
+                                                                    {log.time}
                                                                 </td>
+
+                                                                <td className="p-0 print:hidden">
+                                                                    <textarea required value={log.activity} onChange={(e) => updateRow(day.id, log.id, "activity", e.target.value)} className="w-full h-full p-3 resize-none bg-transparent outline-none border-none focus:ring-0" placeholder="Sesi Kaunseling Individu" rows={2} />
+                                                                </td>
+                                                                <td className="hidden print:table-cell p-3 align-top whitespace-pre-wrap font-medium text-slate-800 font-mono">
+                                                                    {log.activity}
+                                                                </td>
+
+                                                                <td className="p-0 print:hidden">
+                                                                    <textarea required value={log.notes} onChange={(e) => updateRow(day.id, log.id, "notes", e.target.value)} className="w-full h-full p-3 resize-none bg-transparent outline-none border-none focus:ring-0" placeholder="..." rows={2} />
+                                                                </td>
+                                                                <td className="hidden print:table-cell p-3 align-top whitespace-pre-wrap font-medium text-slate-800">
+                                                                    {log.notes}
+                                                                </td>
+
                                                                 <td className="p-3 text-center no-print">
                                                                     <button type="button" onClick={() => deleteRow(day.id, log.id)} className="text-red-400 hover:text-red-600 p-2"><Trash2 size={16} /></button>
                                                                 </td>
@@ -509,6 +525,45 @@ export default function LogHarianForm() {
                 isSubmitting={isSubmitting}
                 onSave={() => handleSave({ preventDefault: () => {} } as React.FormEvent)}
             />
+            <style dangerouslySetInnerHTML={{ __html: `
+                @media print {
+                    .no-print, button, select, .form-action-bar, aside, nav, header { display: none !important; }
+                    body, html { background: white !important; padding: 0 !important; margin: 0 !important; }
+                    #logHarianForm {
+                        max-width: 100% !important;
+                        width: 100% !important;
+                        margin: 0 !important;
+                        padding: 0 !important;
+                        box-shadow: none !important;
+                        border: none !important;
+                    }
+                    table {
+                        width: 100% !important;
+                        border-collapse: collapse !important;
+                        margin-top: 10px !important;
+                        margin-bottom: 20px !important;
+                    }
+                    th, td {
+                        border: 1px solid #475569 !important;
+                        padding: 8px !important;
+                        color: #000000 !important;
+                        font-size: 10pt !important;
+                        background: transparent !important;
+                    }
+                    thead {
+                        display: table-header-group !important;
+                    }
+                    tr {
+                        page-break-inside: avoid !important;
+                    }
+                    .rounded-2xl, .rounded-xl {
+                        border-radius: 0 !important;
+                    }
+                    h2, h3, span {
+                        color: #000000 !important;
+                    }
+                }
+            `}} />
         </div>
     );
 }
