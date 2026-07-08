@@ -285,7 +285,7 @@ export default function RumusanMingguanForm() {
                                                 </td>
                                             ))}
                                             <td className="p-3 font-black text-slate-800 border border-slate-200 print:border-black print:p-2 align-middle">
-                                                {getRowTotal(cat.id) > 0 ? getRowTotal(cat.id) : "-"}
+                                                {getRowTotal(cat.id) > 0 ? getRowTotal(cat.id).toFixed(1) : "-"}
                                             </td>
                                         </tr>
                                     ))}
@@ -295,11 +295,11 @@ export default function RumusanMingguanForm() {
                                         <td className="p-4 border border-slate-200 print:border-black text-right font-black uppercase tracking-widest print:p-2">JUMLAH JAM</td>
                                         {DAYS.map(day => (
                                             <td key={day.id} className="p-4 border border-slate-200 print:border-black font-black print:p-2">
-                                                {getColTotal(day.id) > 0 ? getColTotal(day.id) : "-"}
+                                                {getColTotal(day.id) > 0 ? getColTotal(day.id).toFixed(1) : "-"}
                                             </td>
                                         ))}
                                         <td className="p-4 border border-slate-200 font-black text-xl text-upsi-gold bg-black/20 print:bg-transparent print:text-black print:border-black print:p-2">
-                                            {getGrandTotal() > 0 ? getGrandTotal() : "0"}
+                                            {getGrandTotal() > 0 ? getGrandTotal().toFixed(1) : "0"}
                                         </td>
                                     </tr>
                                 </tbody>
