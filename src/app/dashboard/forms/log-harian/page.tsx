@@ -570,7 +570,7 @@ export default function LogHarianForm() {
                                         <td colSpan={2} className="p-0 border border-slate-200">
                                             <div className="bg-upsi-navy text-white p-4 flex justify-end items-center space-x-6">
                                                 <span className="font-black text-lg tracking-widest uppercase">JUMLAH JAM</span>
-                                                <div className="bg-white/20 px-6 py-2 rounded-xl text-xl font-black print:text-black print:bg-transparent print:border print:border-black print:rounded-none">{totalJam} Jam</div>
+                                                <div className="bg-white/20 px-6 py-2 rounded-xl text-xl font-black print:text-black print:bg-transparent print:border print:border-black print:rounded-none">{totalJam.toFixed(1)} Jam</div>
                                             </div>
                                         </td>
                                     </tr>
