@@ -197,7 +197,9 @@ export default function LogbookPage() {
                             f2fIndiv: 0, f2fKelompok: 0, profAct: 0, admin: 0, profDev: 0, supervision: 0
                         };
                     }
-                    continue;
+                    if (!line.includes("BUKU LOG HARIAN")) {
+                        continue;
+                    }
                 }
 
                 const dayHeaderMatch = line.match(/BUKU LOG HARIAN.*?(MONDAY|TUESDAY|WEDNESDAY|THURSDAY|FRIDAY|SATURDAY|SUNDAY|ISNIN|SELASA|RABU|KHAMIS|JUMAAT|SABTU|AHAD).*?(\d{2}\/\d{2}\/\d{4})/i);
