@@ -53,7 +53,7 @@ export default function LogHarianForm() {
 
     const getDayDateString = (dayId: string) => {
         const weekNum = parseInt(weekNumber) || 1;
-        const startDate = new Date("2026-03-16"); // Monday of Week 1
+        const startDate = new Date("2026-03-09"); // Monday of Week 1
         const startOffset = (weekNum - 1) * 7;
         const dayOffsets: Record<string, number> = { mon: 0, tue: 1, wed: 2, thu: 3, fri: 4, sat: 5, sun: 6 };
         
@@ -114,7 +114,7 @@ export default function LogHarianForm() {
             const weekNum = parseInt(week) || 1;
             
             // Semester start date (Monday of Week 1)
-            const startDate = new Date("2026-03-16");
+            const startDate = new Date("2026-03-09");
             const startOffset = (weekNum - 1) * 7;
             const monday = new Date(startDate);
             monday.setDate(startDate.getDate() + startOffset);
