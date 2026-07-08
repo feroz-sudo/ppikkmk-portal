@@ -226,11 +226,13 @@ export default function RumusanMingguanForm() {
                                     className="w-16 font-black text-lg text-center bg-transparent border-b-2 border-upsi-gold focus:outline-none focus:border-upsi-navy"
                                 />
                             </div>
-                            <div className="flex items-center space-x-2 text-xs font-bold text-slate-600 bg-white p-2 px-4 rounded-xl shadow-sm border border-slate-200">
-                                <span>Dari</span>
-                                <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} className="border-b border-slate-300 focus:outline-none focus:border-upsi-navy bg-transparent" />
-                                <span>ke</span>
-                                <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} className="border-b border-slate-300 focus:outline-none focus:border-upsi-navy bg-transparent" />
+                            <div className="flex items-center space-x-2 text-xs font-bold text-slate-600 bg-white p-2 px-4 rounded-xl shadow-sm border border-slate-200 print:border-none print:shadow-none">
+                                <span className="print:hidden">Dari</span>
+                                <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} className="border-b border-slate-300 focus:outline-none focus:border-upsi-navy bg-transparent print:hidden" />
+                                <span className="hidden print:inline">Dari {startDate ? new Date(startDate).toLocaleDateString('en-MY', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '................'}</span>
+                                <span className="print:hidden">ke</span>
+                                <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} className="border-b border-slate-300 focus:outline-none focus:border-upsi-navy bg-transparent print:hidden" />
+                                <span className="hidden print:inline">ke {endDate ? new Date(endDate).toLocaleDateString('en-MY', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '................'}</span>
                             </div>
                         </div>
                     </div>
@@ -267,14 +269,19 @@ export default function RumusanMingguanForm() {
                                                 {cat.label}
                                             </td>
                                             {DAYS.map(day => (
-                                                <td key={day.id} className="border border-slate-200 focus-within:bg-slate-50/50 print:border-black p-0 align-middle">
-                                                    <input 
-                                                        type="number" 
-                                                        step="0.5"
-                                                        value={matrix[cat.id]?.[day.id] || ""}
-                                                        onChange={(e) => updateCell(cat.id, day.id, e.target.value)}
-                                                        className="w-full h-full bg-transparent border-none text-center outline-none focus:ring-2 focus:ring-upsi-navy/20 font-medium py-3 print:py-1 print:min-w-0"
-                                                    />
+                                                <td key={day.id} className="border border-slate-200 print:border-black p-0 align-middle">
+                                                    <div className="print:hidden">
+                                                        <input 
+                                                            type="number" 
+                                                            step="0.5"
+                                                            value={matrix[cat.id]?.[day.id] || ""}
+                                                            onChange={(e) => updateCell(cat.id, day.id, e.target.value)}
+                                                            className="w-full h-full bg-transparent border-none text-center outline-none focus:ring-2 focus:ring-upsi-navy/20 font-medium py-3 print:min-w-0"
+                                                        />
+                                                    </div>
+                                                    <div className="hidden print:block text-center font-medium py-1">
+                                                        {matrix[cat.id]?.[day.id] || "-"}
+                                                    </div>
                                                 </td>
                                             ))}
                                             <td className="p-3 font-black text-slate-800 border border-slate-200 print:border-black print:p-2 align-middle">

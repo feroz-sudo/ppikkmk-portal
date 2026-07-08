@@ -342,9 +342,17 @@ form [class*="underline"] {
   }
 
   textarea,
-  input {
+  input,
+  select {
     background: transparent !important;
     border-radius: 0 !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    resize: none !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
   }
 
   /* Reset all text to black */
