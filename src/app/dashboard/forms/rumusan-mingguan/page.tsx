@@ -65,13 +65,94 @@ export default function RumusanMingguanForm() {
                 setEndDate(data.endDate || "");
                 setDebugMsg(`Week ${week} loaded successfully.`);
             } else {
-                setMatrix({});
-                setStartDate("");
-                setEndDate("");
-                setDebugMsg("No previous saves for this week.");
+                await syncFromLogbook(week);
             }
         } catch (error: any) {
             setDebugMsg("Error: " + error.message);
+        }
+    };
+
+    const syncFromLogbook = async (week: string) => {
+        if (!user) return;
+        try {
+            setDebugMsg(`Syncing from Logbook for Week ${week}...`);
+            const weekNum = parseInt(week) || 1;
+            
+            // Semester start date (Monday of Week 1) in local timezone
+            const startSemDate = new Date(2026, 2, 9);
+            const startOffset = (weekNum - 1) * 7;
+            const monday = new Date(startSemDate);
+            monday.setDate(startSemDate.getDate() + startOffset);
+            const sunday = new Date(monday);
+            sunday.setDate(monday.getDate() + 6);
+            
+            const formatLocal = (d: Date) => {
+                const y = d.getFullYear();
+                const m = (d.getMonth() + 1).toString().padStart(2, '0');
+                const day = d.getDate().toString().padStart(2, '0');
+                return `${y}-${m}-${day}`;
+            };
+            const startStr = formatLocal(monday);
+            const endStr = formatLocal(sunday);
+            
+            setStartDate(startStr);
+            setEndDate(endStr);
+            
+            const { getTraineeLogs } = await import("@/lib/firebase/db");
+            const allLogs = await getTraineeLogs(user.uid);
+            
+            const weeklyLogs = allLogs.filter(log => log.date >= startStr && log.date <= endStr);
+            
+            // Initialize empty matrix
+            const newMatrix: Record<string, Record<string, string>> = {};
+            CATEGORIES.forEach(c => {
+                newMatrix[c.id] = {};
+                DAYS.forEach(d => {
+                    newMatrix[c.id][d.id] = "";
+                });
+            });
+            
+            const dayKeys = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+            const catMap: Record<string, string> = {
+                'Individual Counselling': 'a',
+                'Group Counselling': 'b',
+                'Crisis Intervention': 'c',
+                'PFA/MHPSS': 'd',
+                'Psychoeducation/Community': 'e',
+                'Testing & Assessment': 'f',
+                'Management & Admin': 'g',
+                'Professional Development': 'h',
+                'Supervision': 'i'
+            };
+            
+            weeklyLogs.forEach(log => {
+                const hrs = log.hours || 0;
+                if (hrs <= 0) return;
+                
+                const dateObj = new Date(log.date);
+                const dayId = dayKeys[dateObj.getDay()];
+                const catId = catMap[log.category];
+                
+                if (catId && dayId) {
+                    const currentVal = parseFloat(newMatrix[catId][dayId]) || 0;
+                    newMatrix[catId][dayId] = (currentVal + hrs).toFixed(1);
+                }
+            });
+            
+            // Clean up empty strings
+            CATEGORIES.forEach(c => {
+                DAYS.forEach(d => {
+                    if (parseFloat(newMatrix[c.id][d.id]) === 0) {
+                        newMatrix[c.id][d.id] = "";
+                    }
+                });
+            });
+            
+            setMatrix(newMatrix);
+            setDebugMsg(`Week ${week} logs synced successfully.`);
+        } catch (error: any) {
+            console.error("Sync failed:", error);
+            setDebugMsg("Sync failed: " + error.message);
         }
     };
 
@@ -122,7 +203,16 @@ export default function RumusanMingguanForm() {
                     {/* Header */}
                     <div className="p-8 border-b border-slate-200 flex justify-between items-center bg-teal-50/50 rounded-t-2xl">
                         <div>
-                            <h2 className="text-2xl font-black text-upsi-navy tracking-tight">RUMUSAN JAM MINGGUAN</h2>
+                            <div className="flex items-center space-x-3">
+                                <h2 className="text-2xl font-black text-upsi-navy tracking-tight">RUMUSAN JAM MINGGUAN</h2>
+                                <button
+                                    type="button"
+                                    onClick={() => syncFromLogbook(weekNumber)}
+                                    className="no-print text-xs font-black bg-white hover:bg-slate-100 border border-slate-300 text-upsi-navy px-3 py-1.5 rounded-lg shadow-sm transition-all"
+                                >
+                                    Sync from Logbook
+                                </button>
+                            </div>
                             <p className="text-xs text-slate-500 font-bold uppercase tracking-widest mt-1">Buku Log Praktikum</p>
                         </div>
                         <div className="flex flex-col items-end space-y-3">
