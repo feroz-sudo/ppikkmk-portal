@@ -84,7 +84,7 @@ export default function DashboardPage() {
     const currentFTF = currentIndividual + currentGroup;
 
     const currentPFA = calcHours("PFA/MHPSS");
-    const currentAdmin = calcHours("Management/Admin");
+    const currentAdmin = calcHours("Management & Admin");
     const currentPRD = calcHours("Professional Development");
     const currentNFTF = currentPFA + currentAdmin + currentPRD;
 
@@ -130,7 +130,7 @@ export default function DashboardPage() {
                     <div className="flex flex-col items-center lg:items-end space-y-4 w-full lg:w-auto">
                         <div className="flex items-center space-x-4">
                             <div className="text-right">
-                                <div className="text-upsi-gold font-black text-2xl md:text-3xl leading-none">{totalCurrent} <span className="text-lg">HRS</span></div>
+                                <div className="text-upsi-gold font-black text-2xl md:text-3xl leading-none">{totalCurrent.toFixed(1)} <span className="text-lg">HRS</span></div>
                                 <div className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/80 mt-1">Total Validated</div>
                             </div>
                             <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-white/10 flex items-center justify-center border border-white/20">

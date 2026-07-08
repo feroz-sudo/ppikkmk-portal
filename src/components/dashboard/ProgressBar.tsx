@@ -15,7 +15,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({ label, current, target
             <div className="flex justify-between items-center mb-2">
                 <span className="text-xs font-black uppercase tracking-widest text-slate-500">{label}</span>
                 <span className="text-[10px] font-bold text-slate-500 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
-                    {current} / {target} <span className="opacity-50 tracking-normal ml-1">HRS</span>
+                    {current.toFixed(1)} / {target} <span className="opacity-50 tracking-normal ml-1">HRS</span>
                 </span>
             </div>
             <div className="w-full bg-slate-100 rounded-xl h-2.5 overflow-hidden shadow-inner border border-slate-200">
@@ -52,7 +52,7 @@ export const GroupedProgress = ({
                     <div className="text-[10px] text-upsi-gold font-bold uppercase tracking-[0.2em] mt-1 opacity-80">Category Target</div>
                 </div>
                 <div className="text-right">
-                    <span className="text-3xl font-black text-slate-900 leading-none">{totalCurrent}</span>
+                    <span className="text-3xl font-black text-slate-900 leading-none">{totalCurrent.toFixed(1)}</span>
                     <span className="text-sm font-bold text-slate-400"> / {totalTarget} hrs</span>
                 </div>
             </div>
