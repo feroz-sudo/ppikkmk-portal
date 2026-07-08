@@ -246,10 +246,59 @@ export default function LogbookPage() {
             const { db } = await import("@/lib/firebase/db");
             const { collection, addDoc, getDocs, query, where, doc, setDoc, writeBatch } = await import("firebase/firestore");
             
-            // Register Clients
+            // Compute earliest date per client ID from parsed logs
+            const clientEarliestDates: Record<string, string> = {};
+            const clientDayKeys = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+            for (const [weekNumStr, weekObj] of Object.entries(weeklyData)) {
+                const weekNum = parseInt(weekNumStr);
+                for (const dayId of clientDayKeys) {
+                    const logsList = weekObj.logsByDay[dayId] || [];
+                    
+                    const startDateSem = new Date(2026, 2, 9);
+                    const startOffset = (weekNum - 1) * 7;
+                    const dayOffset = clientDayKeys.indexOf(dayId);
+                    const date = new Date(startDateSem);
+                    date.setDate(startDateSem.getDate() + startOffset + dayOffset);
+                    
+                    const formatLocal = (d: Date) => {
+                        const y = d.getFullYear();
+                        const m = (d.getMonth() + 1).toString().padStart(2, '0');
+                        const day = d.getDate().toString().padStart(2, '0');
+                        return `${y}-${m}-${day}`;
+                    };
+                    const dateStr = formatLocal(date);
+
+                    for (const log of logsList) {
+                        const kiMatch = log.activity.match(/PKIM\d+\/(\d{3})/i);
+                        if (kiMatch) {
+                            const cId = kiMatch[1];
+                            const key = `KI_${cId}`;
+                            if (!clientEarliestDates[key] || dateStr < clientEarliestDates[key]) {
+                                clientEarliestDates[key] = dateStr;
+                            }
+                        }
+                        const kkMatch = log.activity.match(/PKKM\d+\/(\d{3})/i);
+                        if (kkMatch) {
+                            const cId = kkMatch[1];
+                            const key = `KK_${cId}`;
+                            if (!clientEarliestDates[key] || dateStr < clientEarliestDates[key]) {
+                                clientEarliestDates[key] = dateStr;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Register/Update Clients with their first session date
+            const { updateDoc } = await import("firebase/firestore");
+            
             for (let i = 1; i <= 10; i++) {
                 const clientIdStr = String(i).padStart(3, '0');
                 const clientFileName = `PKIM20241001148/${clientIdStr}`;
+                const key = `KI_${clientIdStr}`;
+                const earliestDateStr = clientEarliestDates[key] || "2026-03-09";
+                const earliestDate = new Date(earliestDateStr);
+
                 const cq = query(collection(db, "clients"), where("traineeId", "==", user.uid), where("type", "==", "KI"), where("clientId", "==", clientIdStr));
                 const cSnap = await getDocs(cq);
                 if (cSnap.empty) {
@@ -265,7 +314,11 @@ export default function LogbookPage() {
                             address: "N/A"
                         },
                         status: "active",
-                        createdAt: new Date()
+                        createdAt: earliestDate
+                    });
+                } else {
+                    await updateDoc(cSnap.docs[0].ref, {
+                        createdAt: earliestDate
                     });
                 }
             }
@@ -273,6 +326,10 @@ export default function LogbookPage() {
             for (let i = 1; i <= 4; i++) {
                 const clientIdStr = String(i).padStart(3, '0');
                 const clientFileName = `PKKM20241001148/${clientIdStr}`;
+                const key = `KK_${clientIdStr}`;
+                const earliestDateStr = clientEarliestDates[key] || "2026-03-09";
+                const earliestDate = new Date(earliestDateStr);
+
                 const cq = query(collection(db, "clients"), where("traineeId", "==", user.uid), where("type", "==", "KK"), where("clientId", "==", clientIdStr));
                 const cSnap = await getDocs(cq);
                 if (cSnap.empty) {
@@ -288,7 +345,11 @@ export default function LogbookPage() {
                             address: "N/A"
                         },
                         status: "active",
-                        createdAt: new Date()
+                        createdAt: earliestDate
+                    });
+                } else {
+                    await updateDoc(cSnap.docs[0].ref, {
+                        createdAt: earliestDate
                     });
                 }
             }
