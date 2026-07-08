@@ -53,13 +53,100 @@ export default function LogHarianForm() {
                 setSupervision(data.supervision || "");
                 setDebugMsg(`Week ${week} loaded successfully.`);
             } else {
-                // reset or ignore
-                setLogs([{ id: Date.now().toString(), dateDay: "", location: "", time: "", activity: "", notes: "" }]);
-                setF2fIndiv(""); setF2fKelompok(""); setProfAct(""); setAdmin(""); setProfDev(""); setSupervision("");
-                setDebugMsg("No previous saves for this week.");
+                await syncFromLogbook(week);
             }
         } catch (error: any) {
             setDebugMsg("Error: " + error.message);
+        }
+    };
+
+    const syncFromLogbook = async (week: string) => {
+        if (!user) return;
+        try {
+            setDebugMsg(`Syncing from Logbook for Week ${week}...`);
+            const weekNum = parseInt(week) || 1;
+            
+            // Semester start date (Monday of Week 1)
+            const startDate = new Date("2026-03-16");
+            const startOffset = (weekNum - 1) * 7;
+            const monday = new Date(startDate);
+            monday.setDate(startDate.getDate() + startOffset);
+            const sunday = new Date(monday);
+            sunday.setDate(monday.getDate() + 6);
+            
+            const startStr = monday.toISOString().split('T')[0];
+            const endStr = sunday.toISOString().split('T')[0];
+            
+            const { getTraineeLogs } = await import("@/lib/firebase/db");
+            const allLogs = await getTraineeLogs(user.uid);
+            
+            const weeklyLogs = allLogs.filter(log => log.date >= startStr && log.date <= endStr);
+            
+            // Sort by date then startTime ascending (oldest first for daily progression)
+            weeklyLogs.sort((a, b) => {
+                const dateCompare = a.date.localeCompare(b.date);
+                if (dateCompare !== 0) return dateCompare;
+                return (a.startTime || "00:00").localeCompare(b.startTime || "00:00");
+            });
+            
+            const formatLogDateDay = (dateStr: string) => {
+                const date = new Date(dateStr);
+                const day = date.getDate().toString().padStart(2, '0');
+                const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+                const dayName = dayNames[date.getDay()];
+                return `${day}/${month} ${dayName}`;
+            };
+            
+            const prefilledLogs = weeklyLogs.map((log, idx) => ({
+                id: log.id || `${Date.now()}-${idx}`,
+                dateDay: formatLogDateDay(log.date),
+                location: log.location || "UPSI",
+                time: `${log.startTime || '--:--'} - ${log.endTime || '--:--'}`,
+                activity: log.description || "",
+                notes: ""
+            }));
+            
+            if (prefilledLogs.length > 0) {
+                setLogs(prefilledLogs);
+            } else {
+                setLogs([{ id: Date.now().toString(), dateDay: "", location: "", time: "", activity: "", notes: "" }]);
+            }
+            
+            let sumIndiv = 0;
+            let sumKelompok = 0;
+            let sumProfAct = 0;
+            let sumAdmin = 0;
+            let sumProfDev = 0;
+            let sumSupervision = 0;
+            
+            weeklyLogs.forEach(log => {
+                const hrs = log.hours || 0;
+                if (log.category === 'Individual Counselling') {
+                    sumIndiv += hrs;
+                } else if (log.category === 'Group Counselling') {
+                    sumKelompok += hrs;
+                } else if (['Crisis Intervention', 'PFA/MHPSS', 'Psychoeducation/Community', 'Testing & Assessment'].includes(log.category)) {
+                    sumProfAct += hrs;
+                } else if (log.category === 'Management & Admin') {
+                    sumAdmin += hrs;
+                } else if (log.category === 'Professional Development') {
+                    sumProfDev += hrs;
+                } else if (log.category === 'Supervision') {
+                    sumSupervision += hrs;
+                }
+            });
+            
+            setF2fIndiv(sumIndiv > 0 ? sumIndiv.toFixed(1) : "");
+            setF2fKelompok(sumKelompok > 0 ? sumKelompok.toFixed(1) : "");
+            setProfAct(sumProfAct > 0 ? sumProfAct.toFixed(1) : "");
+            setAdmin(sumAdmin > 0 ? sumAdmin.toFixed(1) : "");
+            setProfDev(sumProfDev > 0 ? sumProfDev.toFixed(1) : "");
+            setSupervision(sumSupervision > 0 ? sumSupervision.toFixed(1) : "");
+            setDebugMsg(`Week ${week} logs synced successfully.`);
+        } catch (error: any) {
+            console.error("Sync failed:", error);
+            setDebugMsg("Sync failed: " + error.message);
         }
     };
 
@@ -131,7 +218,16 @@ export default function LogHarianForm() {
                     <div className="p-8 space-y-12">
                         {/* Daily Log Table */}
                         <div>
-                            <h3 className="font-bold text-slate-800 uppercase tracking-widest text-sm mb-4">Senarai Log Harian</h3>
+                            <div className="flex justify-between items-center mb-4 flex-wrap gap-2">
+                                <h3 className="font-bold text-slate-800 uppercase tracking-widest text-sm">Senarai Log Harian</h3>
+                                <button
+                                    type="button"
+                                    onClick={() => syncFromLogbook(weekNumber)}
+                                    className="no-print text-xs font-black bg-slate-100 hover:bg-slate-200 border border-slate-300 text-upsi-navy px-3.5 py-1.5 rounded-lg transition-all"
+                                >
+                                    Sync from Logbook
+                                </button>
+                            </div>
                             <div className="overflow-x-auto border border-slate-200 rounded-xl">
                                 <table className="w-full text-left text-sm">
                                     <thead className="bg-slate-50 border-b border-slate-200">
