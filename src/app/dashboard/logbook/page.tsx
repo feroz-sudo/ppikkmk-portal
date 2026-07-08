@@ -551,7 +551,7 @@ export default function LogbookPage() {
                             <div className="text-right">
                                 <div className="text-[10px] uppercase font-black tracking-widest text-slate-400 mb-1">{selectedWeek === 'All' ? 'Total' : 'Weekly'} Hours</div>
                                 <div className="text-3xl font-black text-upsi-navy leading-none">
-                                    {totalHours} <span className="text-sm">HRS</span>
+                                    {totalHours.toFixed(1)} <span className="text-sm">HRS</span>
                                 </div>
                             </div>
                         </div>
@@ -570,10 +570,10 @@ export default function LogbookPage() {
                                 <thead>
                                     <tr className="bg-slate-50 border-b border-slate-200">
                                         <th className="px-6 py-5 text-[10px] font-black uppercase tracking-widest text-slate-500">Date</th>
-                                        <th className="px-6 py-5 text-center text-[10px] font-black uppercase tracking-widest text-slate-500">Masa</th>
-                                        <th className="px-6 py-5 text-[10px] font-black uppercase tracking-widest text-slate-500">Lokasi / Kategori</th>
-                                        <th className="px-6 py-5 text-[10px] font-black uppercase tracking-widest text-slate-500 w-[40%]">Catatan / Deskripsi</th>
-                                        <th className="px-6 py-5 text-center text-[10px] font-black uppercase tracking-widest text-slate-500">Jam</th>
+                                        <th className="px-6 py-5 text-center text-[10px] font-black uppercase tracking-widest text-slate-500">Time</th>
+                                        <th className="px-6 py-5 text-[10px] font-black uppercase tracking-widest text-slate-500">Location / Category</th>
+                                        <th className="px-6 py-5 text-[10px] font-black uppercase tracking-widest text-slate-500 w-[40%]">Notes / Description</th>
+                                        <th className="px-6 py-5 text-center text-[10px] font-black uppercase tracking-widest text-slate-500">Hours</th>
                                         <th className="px-6 py-5 text-center text-[10px] font-black uppercase tracking-widest text-slate-500 no-print">Actions</th>
                                     </tr>
                                 </thead>
