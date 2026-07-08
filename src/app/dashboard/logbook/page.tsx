@@ -246,6 +246,53 @@ export default function LogbookPage() {
             const { db } = await import("@/lib/firebase/db");
             const { collection, addDoc, getDocs, query, where, doc, setDoc, writeBatch } = await import("firebase/firestore");
             
+            // Register Clients
+            for (let i = 1; i <= 10; i++) {
+                const clientIdStr = String(i).padStart(3, '0');
+                const clientFileName = `PKIM20241001148/${clientIdStr}`;
+                const cq = query(collection(db, "clients"), where("traineeId", "==", user.uid), where("type", "==", "KI"), where("clientId", "==", clientIdStr));
+                const cSnap = await getDocs(cq);
+                if (cSnap.empty) {
+                    await addDoc(collection(db, "clients"), {
+                        clientId: clientIdStr,
+                        type: "KI",
+                        traineeId: user.uid,
+                        demographics: {
+                            name: clientFileName,
+                            age: 20,
+                            gender: "N/A",
+                            contactNumber: "N/A",
+                            address: "N/A"
+                        },
+                        status: "active",
+                        createdAt: new Date()
+                    });
+                }
+            }
+
+            for (let i = 1; i <= 4; i++) {
+                const clientIdStr = String(i).padStart(3, '0');
+                const clientFileName = `PKKM20241001148/${clientIdStr}`;
+                const cq = query(collection(db, "clients"), where("traineeId", "==", user.uid), where("type", "==", "KK"), where("clientId", "==", clientIdStr));
+                const cSnap = await getDocs(cq);
+                if (cSnap.empty) {
+                    await addDoc(collection(db, "clients"), {
+                        clientId: clientIdStr,
+                        type: "KK",
+                        traineeId: user.uid,
+                        demographics: {
+                            name: clientFileName,
+                            age: 20,
+                            gender: "N/A",
+                            contactNumber: "N/A",
+                            address: "N/A"
+                        },
+                        status: "active",
+                        createdAt: new Date()
+                    });
+                }
+            }
+
             // Delete old logs
             const q = query(collection(db, "logs"), where("traineeId", "==", user.uid));
             const oldLogsSnap = await getDocs(q);
