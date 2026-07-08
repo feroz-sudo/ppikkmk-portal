@@ -200,6 +200,22 @@ export function AIPastePanel({ visible }: AIPastePanelProps) {
                     const descMatch = text.match(descRegex);
                     if (descMatch) {
                         desc = descMatch[1].trim();
+                    } else {
+                        // Smart filter: Strip short metadata header lines (Date, Time, Client, Session) from the description block
+                        const lines = text.split(/\r?\n/);
+                        const filteredLines = lines.filter(line => {
+                            const trimmed = line.trim();
+                            if (!trimmed) return true; // keep spacing lines
+                            const isDateLine = /\b\d{4}-\d{2}-\d{2}\b/.test(trimmed) || /\b\d{2}\/\d{2}\/\d{4}\b/.test(trimmed) || /(?:tarikh|date)/i.test(trimmed);
+                            const isTimeLine = /\b\d{1,2}:\d{2}\b/.test(trimmed) || /(?:masa|time|pukul)/i.test(trimmed);
+                            const isClientLine = /\bPK[IK]M\d{11}\/\d{3}\/\d{2}\b/i.test(trimmed) || /(?:klien|client|fail)/i.test(trimmed);
+                            const isSesiLine = /\b(?:session|sesi)\s+\d+\b/i.test(trimmed);
+                            if (trimmed.length < 80 && (isDateLine || isTimeLine || isClientLine || isSesiLine)) {
+                                return false;
+                            }
+                            return true;
+                        });
+                        desc = filteredLines.join("\n").trim();
                     }
                     input.value = desc;
                     input.dispatchEvent(new Event("input", { bubbles: true }));
@@ -254,8 +270,7 @@ export function AIPastePanel({ visible }: AIPastePanelProps) {
                         value={text}
                         onChange={(e) => setText(e.target.value)}
                         placeholder="Contoh: PKIM20241001148/001/01 pada 30 Mar 2026 jam 9:00 AM - 10:00 AM di Bilik Kaunseling bagi Sesi 1. Klien meluahkan kegusaran..."
-                        rows={6}
-                        className="w-full border border-slate-200 rounded-2xl p-3 text-xs outline-none focus:ring-2 focus:ring-violet-600/20 focus:border-violet-600 transition-all resize-none bg-slate-50/50"
+                        className="w-full border border-slate-200 rounded-2xl p-3 text-xs outline-none focus:ring-2 focus:ring-violet-600/20 focus:border-violet-600 transition-all resize-y min-h-[150px] max-h-[400px] overflow-y-auto bg-slate-50/50"
                     />
 
                     {status !== "idle" && (
