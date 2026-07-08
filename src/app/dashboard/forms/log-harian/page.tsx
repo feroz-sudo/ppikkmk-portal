@@ -53,14 +53,17 @@ export default function LogHarianForm() {
 
     const getDayDateString = (dayId: string) => {
         const weekNum = parseInt(weekNumber) || 1;
-        const startDate = new Date("2026-03-09"); // Monday of Week 1
+        const startDate = new Date(2026, 2, 9); // Monday of Week 1 local time
         const startOffset = (weekNum - 1) * 7;
         const dayOffsets: Record<string, number> = { mon: 0, tue: 1, wed: 2, thu: 3, fri: 4, sat: 5, sun: 6 };
         
         const date = new Date(startDate);
         date.setDate(startDate.getDate() + startOffset + (dayOffsets[dayId] || 0));
         
-        return date.toLocaleDateString('en-MY', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        const dd = date.getDate().toString().padStart(2, '0');
+        const mm = (date.getMonth() + 1).toString().padStart(2, '0');
+        const yyyy = date.getFullYear();
+        return `${dd}/${mm}/${yyyy}`;
     };
 
     const loadData = async (week: string) => {
@@ -113,16 +116,22 @@ export default function LogHarianForm() {
             setDebugMsg(`Syncing from Logbook for Week ${week}...`);
             const weekNum = parseInt(week) || 1;
             
-            // Semester start date (Monday of Week 1)
-            const startDate = new Date("2026-03-09");
+            // Semester start date (Monday of Week 1) in local timezone
+            const startDate = new Date(2026, 2, 9);
             const startOffset = (weekNum - 1) * 7;
             const monday = new Date(startDate);
             monday.setDate(startDate.getDate() + startOffset);
             const sunday = new Date(monday);
             sunday.setDate(monday.getDate() + 6);
             
-            const startStr = monday.toISOString().split('T')[0];
-            const endStr = sunday.toISOString().split('T')[0];
+            const formatLocal = (d: Date) => {
+                const y = d.getFullYear();
+                const m = (d.getMonth() + 1).toString().padStart(2, '0');
+                const day = d.getDate().toString().padStart(2, '0');
+                return `${y}-${m}-${day}`;
+            };
+            const startStr = formatLocal(monday);
+            const endStr = formatLocal(sunday);
             
             const { getTraineeLogs } = await import("@/lib/firebase/db");
             const allLogs = await getTraineeLogs(user.uid);
