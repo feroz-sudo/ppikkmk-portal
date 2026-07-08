@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import { getTraineeClients, Client, deleteClient } from "@/lib/firebase/db";
+import { getTraineeClients, Client, deleteClient, getTraineeLogs } from "@/lib/firebase/db";
 import { buildClinicalId } from "@/lib/drive/saveToDrive";
 import Link from "next/link";
 import { PlusCircle, Search, Trash2 } from "lucide-react";
@@ -19,8 +19,46 @@ export default function KIClientListPage() {
         if (!user) return;
         try {
             const allClients = await getTraineeClients(user.uid);
-            // Filter only KI clients
-            setClients(allClients.filter(c => c.type === "KI").sort((a, b) => a.clientId.localeCompare(b.clientId)));
+            const allLogs = await getTraineeLogs(user.uid);
+
+            const clientEarliestDates: Record<string, string> = {};
+            for (const log of allLogs) {
+                const kiMatch = (log.description || "").match(/PKIM\d+\/(\d{3})/i);
+                if (kiMatch) {
+                    const cId = kiMatch[1];
+                    const key = `KI_${cId}`;
+                    if (!clientEarliestDates[key] || log.date < clientEarliestDates[key]) {
+                        clientEarliestDates[key] = log.date;
+                    }
+                }
+            }
+
+            const { doc, updateDoc } = await import("firebase/firestore");
+            const { db } = await import("@/lib/firebase/db");
+
+            const sortedKI = allClients.filter(c => c.type === "KI").sort((a, b) => a.clientId.localeCompare(b.clientId));
+            
+            for (const client of sortedKI) {
+                const key = `KI_${client.clientId}`;
+                if (clientEarliestDates[key]) {
+                    const targetDateStr = clientEarliestDates[key];
+                    const targetTime = new Date(targetDateStr).getTime();
+                    
+                    const clientCreated = client.createdAt instanceof Object && 'seconds' in client.createdAt 
+                        ? client.createdAt.seconds * 1000 
+                        : new Date(client.createdAt as any).getTime();
+                        
+                    if (Math.abs(clientCreated - targetTime) > 86400000) {
+                        console.log(`Auto-correcting client ${client.clientId} added date to ${targetDateStr}`);
+                        await updateDoc(doc(db, "clients", client.id!), {
+                            createdAt: new Date(targetDateStr)
+                        });
+                        client.createdAt = { seconds: Math.floor(targetTime / 1000), nanoseconds: 0 } as any;
+                    }
+                }
+            }
+
+            setClients(sortedKI);
         } catch (error) {
             console.error("Failed to fetch clients:", error);
         } finally {
