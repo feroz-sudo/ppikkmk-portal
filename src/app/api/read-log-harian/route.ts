@@ -4,7 +4,7 @@ import path from "path";
 
 export async function GET() {
     try {
-        const filePath = path.join(process.cwd(), "LOG HARIAN.md");
+        const filePath = path.join(process.cwd(), "public", "LOG HARIAN.md");
         if (!fs.existsSync(filePath)) {
             return NextResponse.json({ error: "LOG HARIAN.md not found in project root." }, { status: 404 });
         }
