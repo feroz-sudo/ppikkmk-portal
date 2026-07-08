@@ -304,8 +304,62 @@ export default function LogHarianForm() {
                     </div>
 
                     <div className="p-8 space-y-12">
+                        {/* Print-only Unified Table */}
+                        <div className="hidden print:block w-full">
+                            <table className="w-full border-collapse border border-slate-400">
+                                <thead>
+                                    <tr style={{ backgroundColor: "#e2e8f0" }}>
+                                        <th style={{ border: "1px solid #94a3b8", padding: "10px", fontWeight: "bold", width: "20%", textTransform: "uppercase", fontSize: "10pt", color: "#1e293b" }}>Lokasi</th>
+                                        <th style={{ border: "1px solid #94a3b8", padding: "10px", fontWeight: "bold", width: "20%", textTransform: "uppercase", fontSize: "10pt", color: "#1e293b" }}>Masa</th>
+                                        <th style={{ border: "1px solid #94a3b8", padding: "10px", fontWeight: "bold", width: "40%", textTransform: "uppercase", fontSize: "10pt", color: "#1e293b" }}>Aktiviti Praktikum</th>
+                                        <th style={{ border: "1px solid #94a3b8", padding: "10px", fontWeight: "bold", width: "20%", textTransform: "uppercase", fontSize: "10pt", color: "#1e293b" }}>Catatan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {DAYS_CONFIG.map((day) => {
+                                        const dayLogs = logsByDay[day.id] || [];
+                                        const dayDate = getDayDateString(day.id);
+                                        return (
+                                            <React.Fragment key={day.id}>
+                                                {/* Day Header Row */}
+                                                <tr>
+                                                    <td colSpan={4} style={{ border: "1px solid #94a3b8", padding: "8px 10px", fontWeight: "900", backgroundColor: "#f8fafc", fontSize: "9pt", color: "#0f172a", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                                                        {day.label} — {dayDate}
+                                                    </td>
+                                                </tr>
+                                                {dayLogs.length === 0 ? (
+                                                    <tr>
+                                                        <td colSpan={4} style={{ border: "1px solid #94a3b8", padding: "10px", color: "#64748b", fontStyle: "italic", fontSize: "9pt" }}>
+                                                            Tiada aktiviti didaftarkan untuk hari ini.
+                                                        </td>
+                                                    </tr>
+                                                ) : (
+                                                    dayLogs.map((log) => (
+                                                        <tr key={log.id}>
+                                                            <td style={{ border: "1px solid #94a3b8", padding: "10px", verticalAlign: "top", fontSize: "9pt", color: "#334155" }}>
+                                                                {log.location}
+                                                            </td>
+                                                            <td style={{ border: "1px solid #94a3b8", padding: "10px", verticalAlign: "top", textAlign: "center", fontSize: "9pt", color: "#334155" }}>
+                                                                {log.time}
+                                                            </td>
+                                                            <td style={{ border: "1px solid #94a3b8", padding: "10px", verticalAlign: "top", fontSize: "9pt", color: "#334155", whiteSpace: "pre-wrap" }}>
+                                                                {log.activity}
+                                                            </td>
+                                                            <td style={{ border: "1px solid #94a3b8", padding: "10px", verticalAlign: "top", fontSize: "9pt", color: "#334155" }}>
+                                                                {log.notes}
+                                                            </td>
+                                                        </tr>
+                                                    ))
+                                                )}
+                                            </React.Fragment>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+
                         {/* Daily Logs Grouped by Day */}
-                        <div className="space-y-8">
+                        <div className="space-y-8 print:hidden">
                             <div className="flex justify-between items-center mb-2 flex-wrap gap-2">
                                 <h3 className="font-black text-slate-800 uppercase tracking-widest text-sm">Senarai Log Harian (Daily Logs)</h3>
                                 <button
