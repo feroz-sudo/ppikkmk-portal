@@ -75,123 +75,365 @@ export default function LogbookPage() {
 
     const handleImportLogs = async () => {
         if (!user) return;
-        if (!confirm("Are you sure you want to import all 88 register sessions into your logbook? Existing matching logs will be skipped to prevent duplicates.")) return;
+        if (!confirm("Adakah anda pasti mahu mengimport semua log harian daripada fail LOG HARIAN.md? Ini akan memadamkan log sedia ada anda untuk mengelakkan pertindihan dan menyelaraskan semua borang mingguan.")) return;
         
         setImporting(true);
         try {
-            const { addLogEntry } = await import("@/lib/firebase/db");
-            
-            const registerLogs = [
-                // Individual Counselling (60 entries)
-                { date: "2026-03-30", category: "Individual Counselling" as const, hours: 1.0, startTime: "09:00", endTime: "10:00", description: "Individual Counselling: PKIM20241001148/001/01 (Session 1)", location: "Bilik Kaunseling" },
-                { date: "2026-03-30", category: "Individual Counselling" as const, hours: 1.0, startTime: "10:30", endTime: "11:30", description: "Individual Counselling: PKIM20241001148/002/01 (Session 1)", location: "Bilik Kaunseling" },
-                { date: "2026-03-31", category: "Individual Counselling" as const, hours: 1.0, startTime: "09:00", endTime: "10:00", description: "Individual Counselling: PKIM20241001148/005/01 (Session 1)", location: "Bilik Kaunseling" },
-                { date: "2026-04-06", category: "Individual Counselling" as const, hours: 1.0, startTime: "09:00", endTime: "10:00", description: "Individual Counselling: PKIM20241001148/001/02 (Session 2)", location: "Bilik Kaunseling" },
-                { date: "2026-04-06", category: "Individual Counselling" as const, hours: 1.0, startTime: "10:30", endTime: "11:30", description: "Individual Counselling: PKIM20241001148/002/02 (Session 2)", location: "Bilik Kaunseling" },
-                { date: "2026-04-07", category: "Individual Counselling" as const, hours: 1.0, startTime: "09:00", endTime: "10:00", description: "Individual Counselling: PKIM20241001148/005/02 (Session 2)", location: "Bilik Kaunseling" },
-                { date: "2026-04-13", category: "Individual Counselling" as const, hours: 1.0, startTime: "09:00", endTime: "10:00", description: "Individual Counselling: PKIM20241001148/001/03 (Session 3)", location: "Bilik Kaunseling" },
-                { date: "2026-04-13", category: "Individual Counselling" as const, hours: 1.0, startTime: "10:30", endTime: "11:30", description: "Individual Counselling: PKIM20241001148/002/03 (Session 3)", location: "Bilik Kaunseling" },
-                { date: "2026-04-13", category: "Individual Counselling" as const, hours: 1.0, startTime: "12:00", endTime: "13:00", description: "Individual Counselling: PKIM20241001148/003/01 (Session 1)", location: "Bilik Kaunseling" },
-                { date: "2026-04-14", category: "Individual Counselling" as const, hours: 1.0, startTime: "09:00", endTime: "10:00", description: "Individual Counselling: PKIM20241001148/005/03 (Session 3)", location: "Bilik Kaunseling" },
-                { date: "2026-04-14", category: "Individual Counselling" as const, hours: 1.0, startTime: "10:30", endTime: "11:30", description: "Individual Counselling: PKIM20241001148/006/01 (Session 1)", location: "Bilik Kaunseling" },
-                { date: "2026-04-20", category: "Individual Counselling" as const, hours: 1.0, startTime: "09:00", endTime: "10:00", description: "Individual Counselling: PKIM20241001148/001/04 (Session 4)", location: "Bilik Kaunseling" },
-                { date: "2026-04-20", category: "Individual Counselling" as const, hours: 1.0, startTime: "10:30", endTime: "11:30", description: "Individual Counselling: PKIM20241001148/002/04 (Session 4)", location: "Bilik Kaunseling" },
-                { date: "2026-04-20", category: "Individual Counselling" as const, hours: 1.0, startTime: "12:00", endTime: "13:00", description: "Individual Counselling: PKIM20241001148/003/02 (Session 2)", location: "Bilik Kaunseling" },
-                { date: "2026-04-20", category: "Individual Counselling" as const, hours: 1.0, startTime: "15:00", endTime: "16:00", description: "Individual Counselling: PKIM20241001148/004/01 (Session 1)", location: "Bilik Kaunseling" },
-                { date: "2026-04-21", category: "Individual Counselling" as const, hours: 1.0, startTime: "09:00", endTime: "10:00", description: "Individual Counselling: PKIM20241001148/005/04 (Session 4)", location: "Bilik Kaunseling" },
-                { date: "2026-04-21", category: "Individual Counselling" as const, hours: 1.0, startTime: "10:30", endTime: "11:30", description: "Individual Counselling: PKIM20241001148/006/02 (Session 2)", location: "Bilik Kaunseling" },
-                { date: "2026-04-22", category: "Individual Counselling" as const, hours: 1.0, startTime: "09:00", endTime: "10:00", description: "Individual Counselling: PKIM20241001148/008/01 (Session 1)", location: "Bilik Kaunseling" },
-                { date: "2026-04-27", category: "Individual Counselling" as const, hours: 1.0, startTime: "09:00", endTime: "10:00", description: "Individual Counselling: PKIM20241001148/001/05 (Session 5)", location: "Bilik Kaunseling" },
-                { date: "2026-04-27", category: "Individual Counselling" as const, hours: 1.0, startTime: "10:30", endTime: "11:30", description: "Individual Counselling: PKIM20241001148/002/05 (Session 5)", location: "Bilik Kaunseling" },
-                { date: "2026-04-27", category: "Individual Counselling" as const, hours: 1.0, startTime: "12:00", endTime: "13:00", description: "Individual Counselling: PKIM20241001148/003/03 (Session 3)", location: "Bilik Kaunseling" },
-                { date: "2026-04-27", category: "Individual Counselling" as const, hours: 1.0, startTime: "15:00", endTime: "16:00", description: "Individual Counselling: PKIM20241001148/004/02 (Session 2)", location: "Bilik Kaunseling" },
-                { date: "2026-04-28", category: "Individual Counselling" as const, hours: 1.0, startTime: "09:00", endTime: "10:00", description: "Individual Counselling: PKIM20241001148/005/05 (Session 5)", location: "Bilik Kaunseling" },
-                { date: "2026-04-28", category: "Individual Counselling" as const, hours: 1.0, startTime: "10:30", endTime: "11:30", description: "Individual Counselling: PKIM20241001148/006/03 (Session 3)", location: "Bilik Kaunseling" },
-                { date: "2026-04-29", category: "Individual Counselling" as const, hours: 1.0, startTime: "09:00", endTime: "10:00", description: "Individual Counselling: PKIM20241001148/008/02 (Session 2)", location: "Bilik Kaunseling" },
-                { date: "2026-05-04", category: "Individual Counselling" as const, hours: 1.0, startTime: "09:00", endTime: "10:00", description: "Individual Counselling: PKIM20241001148/001/06 (Session 6)", location: "Bilik Kaunseling" },
-                { date: "2026-05-04", category: "Individual Counselling" as const, hours: 1.0, startTime: "10:30", endTime: "11:30", description: "Individual Counselling: PKIM20241001148/002/06 (Session 6)", location: "Bilik Kaunseling" },
-                { date: "2026-05-04", category: "Individual Counselling" as const, hours: 1.0, startTime: "12:00", endTime: "13:00", description: "Individual Counselling: PKIM20241001148/003/04 (Session 4)", location: "Bilik Kaunseling" },
-                { date: "2026-05-04", category: "Individual Counselling" as const, hours: 1.0, startTime: "15:00", endTime: "16:00", description: "Individual Counselling: PKIM20241001148/004/03 (Session 3)", location: "Bilik Kaunseling" },
-                { date: "2026-05-05", category: "Individual Counselling" as const, hours: 1.0, startTime: "09:00", endTime: "10:00", description: "Individual Counselling: PKIM20241001148/005/06 (Session 6)", location: "Bilik Kaunseling" },
-                { date: "2026-05-05", category: "Individual Counselling" as const, hours: 1.0, startTime: "10:30", endTime: "11:30", description: "Individual Counselling: PKIM20241001148/006/04 (Session 4)", location: "Bilik Kaunseling" },
-                { date: "2026-05-05", category: "Individual Counselling" as const, hours: 1.0, startTime: "12:00", endTime: "13:00", description: "Individual Counselling: PKIM20241001148/007/01 (Session 1)", location: "Bilik Kaunseling" },
-                { date: "2026-05-06", category: "Individual Counselling" as const, hours: 1.0, startTime: "09:00", endTime: "10:00", description: "Individual Counselling: PKIM20241001148/008/03 (Session 3)", location: "Bilik Kaunseling" },
-                { date: "2026-05-11", category: "Individual Counselling" as const, hours: 1.0, startTime: "09:00", endTime: "10:00", description: "Individual Counselling: PKIM20241001148/001/07 (Session 7)", location: "Bilik Kaunseling" },
-                { date: "2026-05-11", category: "Individual Counselling" as const, hours: 1.0, startTime: "10:30", endTime: "11:30", description: "Individual Counselling: PKIM20241001148/002/07 (Session 7)", location: "Bilik Kaunseling" },
-                { date: "2026-05-11", category: "Individual Counselling" as const, hours: 1.0, startTime: "12:00", endTime: "13:00", description: "Individual Counselling: PKIM20241001148/003/05 (Session 5)", location: "Bilik Kaunseling" },
-                { date: "2026-05-11", category: "Individual Counselling" as const, hours: 1.0, startTime: "15:00", endTime: "16:00", description: "Individual Counselling: PKIM20241001148/004/04 (Session 4)", location: "Bilik Kaunseling" },
-                { date: "2026-05-12", category: "Individual Counselling" as const, hours: 1.0, startTime: "10:30", endTime: "11:30", description: "Individual Counselling: PKIM20241001148/006/05 (Session 5)", location: "Bilik Kaunseling" },
-                { date: "2026-05-12", category: "Individual Counselling" as const, hours: 1.0, startTime: "12:00", endTime: "13:00", description: "Individual Counselling: PKIM20241001148/007/02 (Session 2)", location: "Bilik Kaunseling" },
-                { date: "2026-05-13", category: "Individual Counselling" as const, hours: 1.0, startTime: "09:00", endTime: "10:00", description: "Individual Counselling: PKIM20241001148/008/04 (Session 4)", location: "Bilik Kaunseling" },
-                { date: "2026-05-18", category: "Individual Counselling" as const, hours: 1.0, startTime: "09:00", endTime: "10:00", description: "Individual Counselling: PKIM20241001148/001/08 (Session 8)", location: "Bilik Kaunseling" },
-                { date: "2026-05-18", category: "Individual Counselling" as const, hours: 1.0, startTime: "10:30", endTime: "11:30", description: "Individual Counselling: PKIM20241001148/002/08 (Session 8)", location: "Bilik Kaunseling" },
-                { date: "2026-05-18", category: "Individual Counselling" as const, hours: 1.0, startTime: "12:00", endTime: "13:00", description: "Individual Counselling: PKIM20241001148/003/06 (Session 6)", location: "Bilik Kaunseling" },
-                { date: "2026-05-18", category: "Individual Counselling" as const, hours: 1.0, startTime: "15:00", endTime: "16:00", description: "Individual Counselling: PKIM20241001148/004/05 (Session 5)", location: "Bilik Kaunseling" },
-                { date: "2026-05-19", category: "Individual Counselling" as const, hours: 1.0, startTime: "10:30", endTime: "11:30", description: "Individual Counselling: PKIM20241001148/006/06 (Session 6)", location: "Bilik Kaunseling" },
-                { date: "2026-05-19", category: "Individual Counselling" as const, hours: 1.0, startTime: "12:00", endTime: "13:00", description: "Individual Counselling: PKIM20241001148/007/03 (Session 3)", location: "Bilik Kaunseling" },
-                { date: "2026-05-20", category: "Individual Counselling" as const, hours: 1.0, startTime: "10:30", endTime: "11:30", description: "Individual Counselling: PKIM20241001148/009/01 (Session 1)", location: "Bilik Kaunseling" },
-                { date: "2026-05-25", category: "Individual Counselling" as const, hours: 1.0, startTime: "09:00", endTime: "10:00", description: "Individual Counselling: PKIM20241001148/001/09 (Session 9)", location: "Bilik Kaunseling" },
-                { date: "2026-05-25", category: "Individual Counselling" as const, hours: 1.0, startTime: "10:30", endTime: "11:30", description: "Individual Counselling: PKIM20241001148/002/09 (Session 9)", location: "Bilik Kaunseling" },
-                { date: "2026-05-25", category: "Individual Counselling" as const, hours: 1.0, startTime: "15:00", endTime: "16:00", description: "Individual Counselling: PKIM20241001148/004/06 (Session 6)", location: "Bilik Kaunseling" },
-                { date: "2026-05-26", category: "Individual Counselling" as const, hours: 1.0, startTime: "10:30", endTime: "11:30", description: "Individual Counselling: PKIM20241001148/006/07 (Session 7)", location: "Bilik Kaunseling" },
-                { date: "2026-05-26", category: "Individual Counselling" as const, hours: 1.0, startTime: "12:00", endTime: "13:00", description: "Individual Counselling: PKIM20241001148/007/04 (Session 4)", location: "Bilik Kaunseling" },
-                { date: "2026-06-02", category: "Individual Counselling" as const, hours: 1.0, startTime: "12:00", endTime: "13:00", description: "Individual Counselling: PKIM20241001148/007/05 (Session 5)", location: "Bilik Kaunseling" },
-                { date: "2026-06-03", category: "Individual Counselling" as const, hours: 1.0, startTime: "10:30", endTime: "11:30", description: "Individual Counselling: PKIM20241001148/009/02 (Session 2)", location: "Bilik Kaunseling" },
-                { date: "2026-06-03", category: "Individual Counselling" as const, hours: 1.0, startTime: "12:00", endTime: "13:00", description: "Individual Counselling: PKIM20241001148/010/01 (Session 1)", location: "Bilik Kaunseling" },
-                { date: "2026-06-08", category: "Individual Counselling" as const, hours: 1.0, startTime: "09:00", endTime: "10:00", description: "Individual Counselling: PKIM20241001148/001/10 (Session 10)", location: "Bilik Kaunseling" },
-                { date: "2026-06-08", category: "Individual Counselling" as const, hours: 1.0, startTime: "10:30", endTime: "11:30", description: "Individual Counselling: PKIM20241001148/002/10 (Session 10)", location: "Bilik Kaunseling" },
-                { date: "2026-06-10", category: "Individual Counselling" as const, hours: 1.0, startTime: "10:30", endTime: "11:30", description: "Individual Counselling: PKIM20241001148/009/03 (Session 3)", location: "Bilik Kaunseling" },
-                { date: "2026-06-10", category: "Individual Counselling" as const, hours: 1.0, startTime: "12:00", endTime: "13:00", description: "Individual Counselling: PKIM20241001148/010/02 (Session 2)", location: "Bilik Kaunseling" },
-                { date: "2026-06-24", category: "Individual Counselling" as const, hours: 1.0, startTime: "12:00", endTime: "13:00", description: "Individual Counselling: PKIM20241001148/010/03 (Session 3)", location: "Bilik Kaunseling" },
-                
-                // Group Counselling (28 entries)
-                { date: "2026-03-16", category: "Group Counselling" as const, hours: 1.75, startTime: "20:00", endTime: "21:45", description: "Group Counselling: PKKM20241001148/001/01 (Session 1)", location: "Bilik Kaunseling Kelompok" },
-                { date: "2026-03-17", category: "Group Counselling" as const, hours: 1.75, startTime: "20:00", endTime: "21:45", description: "Group Counselling: PKKM20241001148/002/01 (Session 1)", location: "Bilik Kaunseling Kelompok" },
-                { date: "2026-03-18", category: "Group Counselling" as const, hours: 1.75, startTime: "20:00", endTime: "21:45", description: "Group Counselling: PKKM20241001148/003/01 (Session 1)", location: "Bilik Kaunseling Kelompok" },
-                { date: "2026-03-19", category: "Group Counselling" as const, hours: 1.75, startTime: "20:00", endTime: "21:45", description: "Group Counselling: PKKM20241001148/004/01 (Session 1)", location: "Bilik Kaunseling Kelompok" },
-                { date: "2026-03-24", category: "Group Counselling" as const, hours: 1.75, startTime: "20:00", endTime: "21:45", description: "Group Counselling: PKKM20241001148/002/02 (Session 2)", location: "Bilik Kaunseling Kelompok" },
-                { date: "2026-03-25", category: "Group Counselling" as const, hours: 1.75, startTime: "20:00", endTime: "21:45", description: "Group Counselling: PKKM20241001148/003/02 (Session 2)", location: "Bilik Kaunseling Kelompok" },
-                { date: "2026-03-26", category: "Group Counselling" as const, hours: 1.75, startTime: "20:00", endTime: "21:45", description: "Group Counselling: PKKM20241001148/004/02 (Session 2)", location: "Bilik Kaunseling Kelompok" },
-                { date: "2026-03-30", category: "Group Counselling" as const, hours: 1.75, startTime: "20:00", endTime: "21:45", description: "Group Counselling: PKKM20241001148/001/02 (Session 2)", location: "Bilik Kaunseling Kelompok" },
-                { date: "2026-03-31", category: "Group Counselling" as const, hours: 1.75, startTime: "20:00", endTime: "21:45", description: "Group Counselling: PKKM20241001148/002/03 (Session 3)", location: "Bilik Kaunseling Kelompok" },
-                { date: "2026-04-01", category: "Group Counselling" as const, hours: 1.75, startTime: "20:00", endTime: "21:45", description: "Group Counselling: PKKM20241001148/003/03 (Session 3)", location: "Bilik Kaunseling Kelompok" },
-                { date: "2026-04-02", category: "Group Counselling" as const, hours: 1.75, startTime: "20:00", endTime: "21:45", description: "Group Counselling: PKKM20241001148/004/03 (Session 3)", location: "Bilik Kaunseling Kelompok" },
-                { date: "2026-04-06", category: "Group Counselling" as const, hours: 1.75, startTime: "20:00", endTime: "21:45", description: "Group Counselling: PKKM20241001148/001/03 (Session 3)", location: "Bilik Kaunseling Kelompok" },
-                { date: "2026-04-07", category: "Group Counselling" as const, hours: 1.75, startTime: "20:00", endTime: "21:45", description: "Group Counselling: PKKM20241001148/002/04 (Session 4)", location: "Bilik Kaunseling Kelompok" },
-                { date: "2026-04-08", category: "Group Counselling" as const, hours: 1.75, startTime: "20:00", endTime: "21:45", description: "Group Counselling: PKKM20241001148/003/04 (Session 4)", location: "Bilik Kaunseling Kelompok" },
-                { date: "2026-04-09", category: "Group Counselling" as const, hours: 1.75, startTime: "20:00", endTime: "21:45", description: "Group Counselling: PKKM20241001148/004/04 (Session 4)", location: "Bilik Kaunseling Kelompok" },
-                { date: "2026-04-13", category: "Group Counselling" as const, hours: 1.75, startTime: "20:00", endTime: "21:45", description: "Group Counselling: PKKM20241001148/001/04 (Session 4)", location: "Bilik Kaunseling Kelompok" },
-                { date: "2026-04-14", category: "Group Counselling" as const, hours: 1.75, startTime: "20:00", endTime: "21:45", description: "Group Counselling: PKKM20241001148/002/05 (Session 5)", location: "Bilik Kaunseling Kelompok" },
-                { date: "2026-04-15", category: "Group Counselling" as const, hours: 1.75, startTime: "20:00", endTime: "21:45", description: "Group Counselling: PKKM20241001148/003/05 (Session 5)", location: "Bilik Kaunseling Kelompok" },
-                { date: "2026-04-16", category: "Group Counselling" as const, hours: 1.75, startTime: "20:00", endTime: "21:45", description: "Group Counselling: PKKM20241001148/004/05 (Session 5)", location: "Bilik Kaunseling Kelompok" },
-                { date: "2026-04-20", category: "Group Counselling" as const, hours: 1.75, startTime: "20:00", endTime: "21:45", description: "Group Counselling: PKKM20241001148/001/05 (Session 5)", location: "Bilik Kaunseling Kelompok" },
-                { date: "2026-04-21", category: "Group Counselling" as const, hours: 1.75, startTime: "20:00", endTime: "21:45", description: "Group Counselling: PKKM20241001148/002/06 (Session 6)", location: "Bilik Kaunseling Kelompok" },
-                { date: "2026-04-22", category: "Group Counselling" as const, hours: 1.75, startTime: "20:00", endTime: "21:45", description: "Group Counselling: PKKM20241001148/003/06 (Session 6)", location: "Bilik Kaunseling Kelompok" },
-                { date: "2026-04-23", category: "Group Counselling" as const, hours: 1.75, startTime: "20:00", endTime: "21:45", description: "Group Counselling: PKKM20241001148/004/06 (Session 6)", location: "Bilik Kaunseling Kelompok" },
-                { date: "2026-04-27", category: "Group Counselling" as const, hours: 1.75, startTime: "20:00", endTime: "21:45", description: "Group Counselling: PKKM20241001148/001/06 (Session 6)", location: "Bilik Kaunseling Kelompok" },
-                { date: "2026-04-28", category: "Group Counselling" as const, hours: 1.75, startTime: "20:00", endTime: "21:45", description: "Group Counselling: PKKM20241001148/002/07 (Session 7)", location: "Bilik Kaunseling Kelompok" },
-                { date: "2026-04-29", category: "Group Counselling" as const, hours: 1.75, startTime: "20:00", endTime: "21:45", description: "Group Counselling: PKKM20241001148/003/07 (Session 7)", location: "Bilik Kaunseling Kelompok" },
-                { date: "2026-04-30", category: "Group Counselling" as const, hours: 1.75, startTime: "20:00", endTime: "21:45", description: "Group Counselling: PKKM20241001148/004/07 (Session 7)", location: "Bilik Kaunseling Kelompok" },
-                { date: "2026-05-04", category: "Group Counselling" as const, hours: 1.75, startTime: "20:00", endTime: "21:45", description: "Group Counselling: PKKM20241001148/001/07 (Session 7)", location: "Bilik Kaunseling Kelompok" }
-            ];
-
-            let addedCount = 0;
-            for (const item of registerLogs) {
-                const exists = logs.some(l => l.date === item.date && l.category === item.category && l.startTime === item.startTime);
-                if (!exists) {
-                    await addLogEntry({
-                        traineeId: user.uid,
-                        ...item
-                    });
-                    addedCount++;
-                }
+            const res = await fetch("/api/read-log-harian");
+            const data = await res.json();
+            if (data.error) {
+                alert("Gagal membaca file: " + data.error);
+                return;
             }
             
-            alert(`Import completed! Added ${addedCount} new log entries. Skipping ${registerLogs.length - addedCount} duplicates.`);
+            const content = data.content;
+            const lines = content.split("\n");
+            
+            let currentWeek = 0;
+            let currentDayId = "";
+            let currentDayLabel = "";
+            let currentDayDate = "";
+            
+            const weeklyData: Record<number, {
+                logsByDay: Record<string, any[]>;
+                f2fIndiv: number;
+                f2fKelompok: number;
+                profAct: number;
+                admin: number;
+                profDev: number;
+                supervision: number;
+            }> = {};
+            
+            const dayNameMap: Record<string, string> = {
+                monday: "mon", tuesday: "tue", wednesday: "wed", thursday: "thu", friday: "fri", saturday: "sat", sunday: "sun",
+                isnin: "mon", selasa: "tue", rabu: "wed", khamis: "thu", jumaat: "fri", sabtu: "sat", ahad: "sun"
+            };
+
+            const CATEGORIES = {
+                INDIV: "Individual Counselling" as const,
+                GROUP: "Group Counselling" as const,
+                CRISIS: "Crisis Intervention" as const,
+                PFA: "PFA/MHPSS" as const,
+                PSYCHO: "Psychoeducation/Community" as const,
+                TEST: "Testing & Assessment" as const,
+                ADMIN: "Management & Admin" as const,
+                DEV: "Professional Development" as const,
+                SUPERVISION: "Supervision" as const
+            };
+
+            const determineCategory = (activity: string, location: string) => {
+                const act = activity.toLowerCase();
+                if (act.includes("individual counselling") || act.includes("kaunseling individu") || /\bPKIM\d+/i.test(act)) {
+                    return CATEGORIES.INDIV;
+                }
+                if (act.includes("group counselling") || act.includes("kaunseling kelompok") || /\bPKKM\d+/i.test(act)) {
+                    return CATEGORIES.GROUP;
+                }
+                if (act.includes("crisis") || act.includes("krisis") || act.includes("suicide") || act.includes("self-harm")) {
+                    return CATEGORIES.CRISIS;
+                }
+                if (act.includes("pfa") || act.includes("mhpss") || act.includes("psychological first aid") || act.includes("hotline")) {
+                    return CATEGORIES.PFA;
+                }
+                if (act.includes("psychoeducation") || act.includes("psikopendidikan") || act.includes("talk") || act.includes("outreach") || act.includes("poster") || act.includes("proposal") || act.includes("broadcast")) {
+                    return CATEGORIES.PSYCHO;
+                }
+                if (act.includes("inventory") || act.includes("inventori") || act.includes("testing") || act.includes("assessment") || act.includes("ujian") || act.includes("sidek") || act.includes("saringan")) {
+                    return CATEGORIES.TEST;
+                }
+                if (act.includes("supervision") || act.includes("penyeliaan") || act.includes("meeting with supervisor") || act.includes("supervisor")) {
+                    return CATEGORIES.SUPERVISION;
+                }
+                if (act.includes("professional development") || act.includes("webinar") || act.includes("reading") || act.includes("read") || act.includes("literatur")) {
+                    return CATEGORIES.DEV;
+                }
+                return CATEGORIES.ADMIN;
+            };
+
+            const calculateHours = (timeStr: string) => {
+                if (!timeStr || timeStr.trim() === "-" || !timeStr.includes("-")) return 0;
+                try {
+                    const parts = timeStr.split("-");
+                    const parseTime = (s: string) => {
+                        s = s.trim().toLowerCase();
+                        let hours = 0, minutes = 0;
+                        const match = s.match(/^(\d{1,2}):(\d{2})\s*(am|pm)?$/);
+                        if (match) {
+                            hours = parseInt(match[1]);
+                            minutes = parseInt(match[2]);
+                            const ampm = match[3];
+                            if (ampm === "pm" && hours < 12) hours += 12;
+                            if (ampm === "am" && hours === 12) hours = 0;
+                        } else {
+                            const simpleMatch = s.match(/^(\d{1,2})(?::(\d{2}))?$/);
+                            if (simpleMatch) {
+                                hours = parseInt(simpleMatch[1]);
+                                minutes = simpleMatch[2] ? parseInt(simpleMatch[2]) : 0;
+                            }
+                        }
+                        return hours * 60 + minutes;
+                    };
+                    const startMin = parseTime(parts[0]);
+                    const endMin = parseTime(parts[1]);
+                    if (endMin > startMin) {
+                        return parseFloat(((endMin - startMin) / 60).toFixed(2));
+                    }
+                } catch (e: any) {
+                    console.error("Error calculating hours for:", timeStr, e.message);
+                }
+                return 0;
+            };
+
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (!line) continue;
+
+                const weekMatch = line.match(/\*\*MINGGU KE:\s*(\d+)\*\*/i);
+                if (weekMatch) {
+                    currentWeek = parseInt(weekMatch[1]);
+                    if (!weeklyData[currentWeek]) {
+                        weeklyData[currentWeek] = {
+                            logsByDay: { mon: [], tue: [], wed: [], thu: [], fri: [], sat: [], sun: [] },
+                            f2fIndiv: 0, f2fKelompok: 0, profAct: 0, admin: 0, profDev: 0, supervision: 0
+                        };
+                    }
+                    continue;
+                }
+
+                const dayHeaderMatch = line.match(/\*\*BUKU LOG HARIAN\*\*\s*\*\*(MONDAY|TUESDAY|WEDNESDAY|THURSDAY|FRIDAY|SATURDAY|SUNDAY)\s*[-—]+\s*(\d{2}\/\d{2}\/\d{4})\*\*/i);
+                if (dayHeaderMatch) {
+                    const dayLabel = dayHeaderMatch[1];
+                    currentDayLabel = dayLabel;
+                    currentDayId = dayNameMap[dayLabel.toLowerCase()] || "mon";
+                    const rawDate = dayHeaderMatch[2];
+                    const parts = rawDate.split("/");
+                    currentDayDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+                    continue;
+                }
+
+                if (line.startsWith("|")) {
+                    if (line.toLowerCase().includes("lokasi") || line.includes("---")) continue;
+                    const cols = line.split("|").map((s: string) => s.trim());
+                    if (cols.length >= 5) {
+                        const location = cols[1];
+                        const timeRange = cols[2];
+                        const activity = cols[3];
+                        const notes = cols[4];
+
+                        if (!location && !timeRange && !activity) continue;
+
+                        const category = determineCategory(activity, location || "");
+                        const hours = calculateHours(timeRange);
+
+                        const logEntry = {
+                            location: location || "-",
+                            time: timeRange || "-",
+                            activity: activity || "-",
+                            notes: notes || "-",
+                            category,
+                            hours
+                        };
+
+                        if (currentWeek && currentDayId) {
+                            weeklyData[currentWeek].logsByDay[currentDayId].push(logEntry);
+                        }
+                    }
+                }
+            }
+
+            const { db } = await import("@/lib/firebase/db");
+            const { collection, addDoc, getDocs, query, where, doc, setDoc, writeBatch } = await import("firebase/firestore");
+            
+            // Delete old logs
+            const q = query(collection(db, "logs"), where("traineeId", "==", user.uid));
+            const oldLogsSnap = await getDocs(q);
+            let batch = writeBatch(db);
+            let count = 0;
+            for (const d of oldLogsSnap.docs) {
+                batch.delete(d.ref);
+                count++;
+                if (count >= 400) {
+                    await batch.commit();
+                    batch = writeBatch(db);
+                    count = 0;
+                }
+            }
+            if (count > 0) {
+                await batch.commit();
+            }
+
+            let totalAdded = 0;
+            const dayKeys = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+
+            for (const [weekNumStr, weekObj] of Object.entries(weeklyData)) {
+                const weekNum = parseInt(weekNumStr);
+                let weekF2FIndiv = 0;
+                let weekF2FKelompok = 0;
+                let weekProfAct = 0;
+                let weekAdmin = 0;
+                let weekProfDev = 0;
+                let weekSupervision = 0;
+
+                const cleanLogsByDay: Record<string, any[]> = { mon: [], tue: [], wed: [], thu: [], fri: [], sat: [], sun: [] };
+                const matrix: Record<string, Record<string, string>> = {};
+                const categoriesList = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
+                categoriesList.forEach(cId => {
+                    matrix[cId] = { mon: "", tue: "", wed: "", thu: "", fri: "", sat: "", sun: "" };
+                });
+
+                for (const dayId of dayKeys) {
+                    const logsList = weekObj.logsByDay[dayId] || [];
+                    
+                    const startDateSem = new Date(2026, 2, 9);
+                    const startOffset = (weekNum - 1) * 7;
+                    const dayOffset = dayKeys.indexOf(dayId);
+                    const date = new Date(startDateSem);
+                    date.setDate(startDateSem.getDate() + startOffset + dayOffset);
+                    
+                    const formatLocal = (d: Date) => {
+                        const y = d.getFullYear();
+                        const m = (d.getMonth() + 1).toString().padStart(2, '0');
+                        const day = d.getDate().toString().padStart(2, '0');
+                        return `${y}-${m}-${day}`;
+                    };
+                    const dateStr = formatLocal(date);
+
+                    for (const log of logsList) {
+                        const logRef = await addDoc(collection(db, "logs"), {
+                            traineeId: user.uid,
+                            date: dateStr,
+                            location: log.location,
+                            startTime: log.time.split("-")[0]?.trim() || "-",
+                            endTime: log.time.split("-")[1]?.trim() || "-",
+                            hours: log.hours,
+                            category: log.category,
+                            description: log.activity,
+                            notes: log.notes,
+                            status: "pending",
+                            createdAt: new Date()
+                        });
+
+                        totalAdded++;
+
+                        const dailyLogObj = {
+                            id: logRef.id,
+                            location: log.location,
+                            time: log.time,
+                            activity: log.activity,
+                            notes: log.notes,
+                            hours: log.hours,
+                            category: log.category
+                        };
+                        cleanLogsByDay[dayId].push(dailyLogObj);
+
+                        if (log.category === CATEGORIES.INDIV) {
+                            weekF2FIndiv += log.hours;
+                            const val = parseFloat(matrix['a'][dayId]) || 0;
+                            matrix['a'][dayId] = (val + log.hours).toFixed(1);
+                        } else if (log.category === CATEGORIES.GROUP) {
+                            weekF2FKelompok += log.hours;
+                            const val = parseFloat(matrix['b'][dayId]) || 0;
+                            matrix['b'][dayId] = (val + log.hours).toFixed(1);
+                        } else if (log.category === CATEGORIES.ADMIN) {
+                            weekAdmin += log.hours;
+                            const val = parseFloat(matrix['g'][dayId]) || 0;
+                            matrix['g'][dayId] = (val + log.hours).toFixed(1);
+                        } else if (log.category === CATEGORIES.DEV) {
+                            weekProfDev += log.hours;
+                            const val = parseFloat(matrix['h'][dayId]) || 0;
+                            matrix['h'][dayId] = (val + log.hours).toFixed(1);
+                        } else if (log.category === CATEGORIES.SUPERVISION) {
+                            weekSupervision += log.hours;
+                            const val = parseFloat(matrix['i'][dayId]) || 0;
+                            matrix['i'][dayId] = (val + log.hours).toFixed(1);
+                        } else {
+                            weekProfAct += log.hours;
+                            let catKey = 'c';
+                            if (log.category === CATEGORIES.CRISIS) catKey = 'c';
+                            else if (log.category === CATEGORIES.PFA) catKey = 'd';
+                            else if (log.category === CATEGORIES.PSYCHO) catKey = 'e';
+                            else if (log.category === CATEGORIES.TEST) catKey = 'f';
+                            
+                            const val = parseFloat(matrix[catKey][dayId]) || 0;
+                            matrix[catKey][dayId] = (val + log.hours).toFixed(1);
+                        }
+                    }
+                }
+
+                categoriesList.forEach(cId => {
+                    dayKeys.forEach(dayId => {
+                        if (matrix[cId][dayId] === "" || parseFloat(matrix[cId][dayId]) === 0) {
+                            matrix[cId][dayId] = "";
+                        }
+                    });
+                });
+
+                const flatLogs: any[] = [];
+                const dayNames: Record<string, string> = { mon: "Mon", tue: "Tue", wed: "Wed", thu: "Thu", fri: "Fri", sat: "Sat", sun: "Sun" };
+                dayKeys.forEach(dayId => {
+                    const startDateSem = new Date(2026, 2, 9);
+                    const startOffset = (weekNum - 1) * 7;
+                    const dayOffset = dayKeys.indexOf(dayId);
+                    const date = new Date(startDateSem);
+                    date.setDate(startDateSem.getDate() + startOffset + dayOffset);
+                    const dd = date.getDate().toString().padStart(2, '0');
+                    const mm = (date.getMonth() + 1).toString().padStart(2, '0');
+                    const yyyy = date.getFullYear();
+                    const dateDayStr = `${dd}/${mm}/${yyyy} ${dayNames[dayId]}`;
+
+                    (cleanLogsByDay[dayId] || []).forEach(l => {
+                        flatLogs.push({
+                            ...l,
+                            dateDay: dateDayStr
+                        });
+                    });
+                });
+
+                await setDoc(doc(db, "weekly_forms", `${user.uid}_logHarian_${weekNum}`), {
+                    traineeId: user.uid,
+                    type: "logHarian",
+                    weekNumber: String(weekNum),
+                    logs: flatLogs,
+                    logsByDay: cleanLogsByDay,
+                    f2fIndiv: String(weekF2FIndiv),
+                    f2fKelompok: String(weekF2FKelompok),
+                    profAct: String(weekProfAct),
+                    admin: String(weekAdmin),
+                    profDev: String(weekProfDev),
+                    supervision: String(weekSupervision),
+                    updatedAt: new Date()
+                });
+
+                const startDateSem = new Date(2026, 2, 9);
+                const startOffset = (weekNum - 1) * 7;
+                const monday = new Date(startDateSem);
+                monday.setDate(startDateSem.getDate() + startOffset);
+                const sunday = new Date(monday);
+                sunday.setDate(monday.getDate() + 6);
+                
+                const formatLocal = (d: Date) => {
+                    const y = d.getFullYear();
+                    const m = (d.getMonth() + 1).toString().padStart(2, '0');
+                    const day = d.getDate().toString().padStart(2, '0');
+                    return `${y}-${m}-${day}`;
+                };
+
+                await setDoc(doc(db, "weekly_forms", `${user.uid}_rumusanMingguan_${weekNum}`), {
+                    traineeId: user.uid,
+                    type: "rumusanMingguan",
+                    weekNumber: String(weekNum),
+                    startDate: formatLocal(monday),
+                    endDate: formatLocal(sunday),
+                    matrix,
+                    updatedAt: new Date()
+                });
+            }
+
+            alert(`Import Berjaya! Penuhkan log harian dari file markdown selesai. ${totalAdded} entri log dimasukkan dan semua rumusan mingguan dikemaskini.`);
             fetchLogs();
         } catch (error: any) {
             console.error("Import failed:", error);
-            alert(`Failed to import logs: ${error.message || "Unknown error"}`);
+            alert(`Gagal mengimport: ${error.message || "Ralat tidak diketahui"}`);
         } finally {
             setImporting(false);
         }
