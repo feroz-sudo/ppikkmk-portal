@@ -101,6 +101,12 @@ export function Form7ConsultationReportPage({ searchParams }: PageProps) {
         fetchInitialData();
     }, [user, prefillClientId, docId]);
 
+    useEffect(() => {
+        if (selectedClient && !docId) {
+            setClientName(selectedClient.demographics.name || "");
+        }
+    }, [selectedClient, docId]);
+
     // Narrative Fields
     const [issuesDiscussed, setIssuesDiscussed] = useState("");
     const [interventionActions, setInterventionActions] = useState("");

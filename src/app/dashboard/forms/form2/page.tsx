@@ -45,6 +45,12 @@ export default function Form2ProgressiveNotesPage({ searchParams }: PageProps) {
     }, [prefillSessionId]);
 
     useEffect(() => {
+        if (selectedClient && !docId) {
+            setClientFullName(selectedClient.demographics.name || "");
+        }
+    }, [selectedClient, docId]);
+
+    useEffect(() => {
         async function fetchInitialData() {
             if (!user) return;
 

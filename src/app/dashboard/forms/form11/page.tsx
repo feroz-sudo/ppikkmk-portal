@@ -308,6 +308,11 @@ export function Form11GroupCounsellingPage({ searchParams }: PageProps) {
                         </h1>
                         <p className="text-slate-500 mt-1">Comprehensive group session dynamics and individual progress matrix.</p>
                     </div>
+                    {!prefillClientId && (
+                        <div className="bg-white p-2 rounded-lg shadow-inner border border-blue-800">
+                            <ClientPrefill onSelectClient={setSelectedClient} />
+                        </div>
+                    )}
                 </div>
 
                 <form onSubmit={handleSubmit} className="p-0 sm:p-4 md:p-8 space-y-8 bg-white overflow-x-auto">

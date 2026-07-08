@@ -108,6 +108,18 @@ export function Form13PsychologicalAssessmentPage({ searchParams }: PageProps) {
         fetchInitialData();
     }, [user, prefillClientId, docId]);
 
+    useEffect(() => {
+        if (selectedClient && !docId) {
+            setClientFullName(selectedClient.demographics.name || "");
+            setAge(selectedClient.demographics.age?.toString() || "");
+            setSex(selectedClient.demographics.gender || "");
+            setEthnic(selectedClient.demographics.religionRace || "");
+            setDateOfBirth(selectedClient.demographics.dateOfBirth || "");
+            setIdentificationCardNo(selectedClient.demographics.identityCard || "");
+            setDesignation(selectedClient.demographics.occupation || "");
+        }
+    }, [selectedClient, docId]);
+
     // Narrative Fields
     const [reasonForReferral, setReasonForReferral] = useState("");
     const [behaviourObservation, setBehaviourObservation] = useState("");

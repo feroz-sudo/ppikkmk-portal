@@ -104,6 +104,14 @@ export function Form6CrisisInterventionPage({ searchParams }: PageProps) {
         fetchInitialData();
     }, [user, prefillClientId, docId]);
 
+    useEffect(() => {
+        if (selectedClient && !docId) {
+            setClientName(selectedClient.demographics.name || "");
+            setAge(selectedClient.demographics.age?.toString() || "");
+            setGender(selectedClient.demographics.gender || "");
+        }
+    }, [selectedClient, docId]);
+
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -196,11 +204,16 @@ export function Form6CrisisInterventionPage({ searchParams }: PageProps) {
     return (
         <div className="max-w-4xl mx-auto pb-12 print:pb-0">
             <div className="bg-white overflow-hidden">
-                <div className="bg-white px-8 py-6 border-b-4 border-upsi-gold no-print">
+                <div className="bg-white px-8 py-6 border-b-4 border-upsi-gold no-print flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                     <h1 className="text-2xl font-bold text-black flex items-center space-x-3">
                         <ShieldAlert className="text-upsi-gold" size={28} />
                         <span>Form 6: CRISIS INTERVENTION REPORT</span>
                     </h1>
+                    {!prefillClientId && (
+                        <div className="bg-white p-2 rounded-lg shadow-inner border border-blue-800">
+                            <ClientPrefill onSelectClient={setSelectedClient} />
+                        </div>
+                    )}
                 </div>
 
                 <form onSubmit={handleSubmit} className="p-0 sm:p-4 md:p-8 space-y-8 bg-white">

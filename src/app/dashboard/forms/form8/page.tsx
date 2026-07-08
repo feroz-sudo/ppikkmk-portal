@@ -12,6 +12,7 @@ import { parseSafeDate } from "@/lib/date";
 import { useSearchParams } from "next/navigation";
 import { FormHeader } from "@/components/forms/FormHeader";
 import { Suspense } from "react";
+import { ClientPrefill } from "@/components/forms/ClientPrefill";
 
 interface PageProps {
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -26,6 +27,8 @@ export function Form8PFAMHPSSReportPage({ searchParams }: PageProps) {
     const searchParamsHooks = useSearchParams();
     const prefillClientId = unwrappedSearch.clientId as string | undefined;
     const docId = searchParamsHooks.get("docId") || (unwrappedSearch.docId as string | undefined);
+
+    const [selectedClient, setSelectedClient] = useState<Client | null>(null);
 
     // Logistics Data
     const [counselorName, setCounselorName] = useState("");
@@ -82,9 +85,28 @@ export function Form8PFAMHPSSReportPage({ searchParams }: PageProps) {
                 }
                 return;
             }
+            // REGULAR PREFILL FOR NEW SESSION
+            if (prefillClientId && !selectedClient) {
+                try {
+                    const clientDoc = await getDoc(doc(db, "clients", prefillClientId));
+                    if (clientDoc.exists()) {
+                        const match = { id: clientDoc.id, ...clientDoc.data() } as Client;
+                        setSelectedClient(match);
+                        setProgramName(match.demographics.name || "");
+                    }
+                } catch (error) {
+                    console.error("Failed to auto-load URL client", error);
+                }
+            }
         }
         fetchInitialData();
-    }, [user, docId]);
+    }, [user, docId, prefillClientId]);
+
+    useEffect(() => {
+        if (selectedClient && !docId) {
+            setProgramName(selectedClient.demographics.name || "");
+        }
+    }, [selectedClient, docId]);
 
     // Narrative Fields
     const [objectives, setObjectives] = useState("");
@@ -118,7 +140,7 @@ export function Form8PFAMHPSSReportPage({ searchParams }: PageProps) {
         e.preventDefault();
         if (!user) return;
 
-        const effectiveClient = ({
+        const effectiveClient = selectedClient ?? ({
             id: `manual-${Date.now()}`,
             clientId: "PROGRAM",
             type: "KI" as const,
@@ -240,12 +262,17 @@ export function Form8PFAMHPSSReportPage({ searchParams }: PageProps) {
             <div className="bg-white overflow-hidden">
                 <div className="bg-white px-8 py-6 border-b-4 border-upsi-gold flex justify-between items-center flex-wrap gap-4 no-print">
                     <div>
-                        <h1 className="text-2xl font-bold text-upsi-navy flex items-center space-x-3">
+                        <h1 className="text-2xl font-bold text-black flex items-center space-x-3">
                             <HeartPulse className="text-upsi-gold" size={28} />
                             <span>Form 8: PFA MHPSS REPORT</span>
                         </h1>
                         <p className="text-slate-500 mt-1">Mental Health & Psychosocial Support documentation.</p>
                     </div>
+                    {!prefillClientId && (
+                        <div className="bg-white p-2 rounded-lg shadow-inner border border-blue-800">
+                            <ClientPrefill onSelectClient={setSelectedClient} />
+                        </div>
+                    )}
                 </div>
 
                 <form onSubmit={handleSubmit} className="p-0 sm:p-4 md:p-8 space-y-8 bg-white">

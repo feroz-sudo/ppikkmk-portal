@@ -25,6 +25,7 @@ export const ClientPrefill: React.FC<ClientPrefillProps> = ({ onSelectClient }) 
     const [clients, setClients] = useState<Client[]>([]);
     const [isOpen, setIsOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
 
     const handleOpen = async () => {
         setIsOpen(true);
@@ -40,6 +41,13 @@ export const ClientPrefill: React.FC<ClientPrefillProps> = ({ onSelectClient }) 
             }
         }
     };
+
+    const filteredClients = clients.filter(c => {
+        const name = (c.demographics?.name || "").toLowerCase();
+        const idStr = `${c.type || ""}${c.clientId || ""}`.toLowerCase();
+        const query = searchTerm.toLowerCase();
+        return name.includes(query) || idStr.includes(query);
+    });
 
     return (
         <div className="relative inline-block">
@@ -65,6 +73,8 @@ export const ClientPrefill: React.FC<ClientPrefillProps> = ({ onSelectClient }) 
                             <input
                                 type="text"
                                 placeholder="Search..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
                                 className="w-full text-sm pl-8 pr-2 py-1.5 border border-gray-300 rounded focus:border-upsi-navy outline-none"
                             />
                         </div>
@@ -72,10 +82,10 @@ export const ClientPrefill: React.FC<ClientPrefillProps> = ({ onSelectClient }) 
                         <div className="max-h-64 overflow-y-auto space-y-1">
                             {loading ? (
                                 <div className="text-xs text-gray-500 text-center py-4">Loading...</div>
-                            ) : clients.length === 0 ? (
+                            ) : filteredClients.length === 0 ? (
                                 <div className="text-xs text-gray-500 text-center py-4">No clients found.</div>
                             ) : (
-                                clients.map(c => (
+                                filteredClients.map(c => (
                                     <button
                                         key={c.id}
                                         onClick={() => {

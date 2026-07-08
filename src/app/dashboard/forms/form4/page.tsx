@@ -36,6 +36,15 @@ export function Form4TreatmentPlanPage({ searchParams }: PageProps) {
 
     // Auto-Mount URL Parameters
     useEffect(() => {
+        if (selectedClient && !docId) {
+            setClientFullName(selectedClient.demographics.name || "");
+            setAge(selectedClient.demographics.age?.toString() || "");
+            setSex(selectedClient.demographics.gender || "");
+            setEthnic(selectedClient.demographics.religionRace || "");
+        }
+    }, [selectedClient, docId]);
+
+    useEffect(() => {
         async function fetchInitialData() {
             if (!user) return;
 

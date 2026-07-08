@@ -45,6 +45,18 @@ function Form1IntakeContent() {
     }, [prefillSessionId]);
 
     useEffect(() => {
+        if (selectedClient && !docId) {
+            setClientFullName(selectedClient.demographics.name || "");
+            setAge(selectedClient.demographics.age?.toString() || "");
+            setSex(selectedClient.demographics.gender || "");
+            setEthnic(selectedClient.demographics.religionRace || "");
+            setDateOfBirth(selectedClient.demographics.dateOfBirth || "");
+            setIcNumber(selectedClient.demographics.identityCard || "");
+            setDesignation(selectedClient.demographics.occupation || "");
+        }
+    }, [selectedClient, docId]);
+
+    useEffect(() => {
         async function fetchInitialData() {
             if (!user) {
                 setDebugMsg("Waiting for authentication state...");
