@@ -182,7 +182,7 @@ export default function DashboardPage() {
                 <div className="glass shadow-premium rounded-3xl p-6 hover-lift border-b-4 border-blue-500/50">
                     <div className="flex items-center space-x-3 text-blue-600 mb-2">
                         <Target size={18} />
-                        <span className="text-[10px] uppercase font-black tracking-[0.2em]">FTF Target</span>
+                        <span className="text-[10px] uppercase font-black tracking-[0.2em]">Counselling Sessions</span>
                     </div>
                     <div className="text-3xl font-black text-slate-800">{ftfPercentage}% <span className="text-sm text-slate-400">/ 96h</span></div>
                 </div>
@@ -190,7 +190,7 @@ export default function DashboardPage() {
                 <div className="glass shadow-premium rounded-3xl p-6 hover-lift border-b-4 border-purple-500/50">
                     <div className="flex items-center space-x-3 text-purple-600 mb-2">
                         <Clock size={18} />
-                        <span className="text-[10px] uppercase font-black tracking-[0.2em]">NFTF Target</span>
+                        <span className="text-[10px] uppercase font-black tracking-[0.2em]">Miscellaneous</span>
                     </div>
                     <div className="text-3xl font-black text-slate-800">{nftfPercentage}% <span className="text-sm text-slate-400">/ 156h</span></div>
                 </div>
@@ -199,7 +199,7 @@ export default function DashboardPage() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2 space-y-6">
                     <GroupedProgress
-                        title="Face-to-Face (FTF)"
+                        title="Counselling Sessions"
                         totalCurrent={currentFTF}
                         totalTarget={TARGETS.FTF_TOTAL}
                     >
@@ -218,7 +218,7 @@ export default function DashboardPage() {
                     </GroupedProgress>
 
                     <GroupedProgress
-                        title="Non Face-to-Face (NFTF)"
+                        title="Miscellaneous"
                         totalCurrent={currentNFTF}
                         totalTarget={TARGETS.NFTF_TOTAL}
                     >

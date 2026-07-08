@@ -100,7 +100,7 @@ export const SummarySection = ({ logs }: SummarySectionProps) => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 no-print">
-                <SummaryCard label="Face-to-Face Target" current={logs.filter(l => ["Individual Counselling", "Group Counselling", "Crisis Intervention", "PFA/MHPSS"].includes(l.category)).reduce((s, l) => s + l.hours, 0)} target={96} unit="HRS" />
+                <SummaryCard label="Counselling Sessions Target" current={logs.filter(l => ["Individual Counselling", "Group Counselling", "Crisis Intervention", "PFA/MHPSS"].includes(l.category)).reduce((s, l) => s + l.hours, 0)} target={96} unit="HRS" />
                 <SummaryCard label="Total Practicum Requirement" current={logs.reduce((s, l) => s + l.hours, 0)} target={252} unit="HRS" />
             </div>
         </div>
