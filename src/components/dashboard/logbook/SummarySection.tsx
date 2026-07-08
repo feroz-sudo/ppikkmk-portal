@@ -33,9 +33,10 @@ export const SummarySection = ({ logs }: SummarySectionProps) => {
     ];
 
     const getHours = (week: number, catKeys: LogCategory[]) => {
-        return logs
+        const val = logs
             .filter(log => getWeekNumber(log.date) === week && catKeys.includes(log.category))
             .reduce((sum, log) => sum + log.hours, 0);
+        return val;
     };
 
     return (
@@ -75,9 +76,9 @@ export const SummarySection = ({ logs }: SummarySectionProps) => {
                                         {categories.map(cat => {
                                             const h = getHours(w, cat.keys as any);
                                             weekTotal += h;
-                                            return <td key={cat.label} className={`px-4 py-3 text-center text-xs font-medium ${h > 0 ? 'text-slate-800 font-bold' : 'text-slate-300'}`}>{h || '-'}</td>
+                                            return <td key={cat.label} className={`px-4 py-3 text-center text-xs font-medium ${h > 0 ? 'text-slate-800 font-bold' : 'text-slate-300'}`}>{h > 0 ? h.toFixed(1) : '-'}</td>
                                         })}
-                                        <td className="px-4 py-3 text-center text-xs font-black text-upsi-navy bg-blue-50/20">{weekTotal || '-'}</td>
+                                        <td className="px-4 py-3 text-center text-xs font-black text-upsi-navy bg-blue-50/20">{weekTotal > 0 ? weekTotal.toFixed(1) : '-'}</td>
                                     </tr>
                                 );
                             })}
@@ -87,10 +88,10 @@ export const SummarySection = ({ logs }: SummarySectionProps) => {
                                 <td className="px-4 py-5 text-center font-black text-[10px] uppercase border-r border-white/10">Jumlah Besar</td>
                                 {categories.map(cat => {
                                     const total = logs.filter(l => cat.keys.includes(l.category)).reduce((s, l) => s + l.hours, 0);
-                                    return <td key={cat.label} className="px-4 py-5 text-center font-black text-sm text-upsi-gold">{total || 0}</td>
+                                    return <td key={cat.label} className="px-4 py-5 text-center font-black text-sm text-upsi-gold">{total > 0 ? total.toFixed(1) : 0}</td>
                                 })}
                                 <td className="px-4 py-5 text-center font-black text-lg bg-upsi-gold text-upsi-navy">
-                                    {logs.reduce((s, l) => s + l.hours, 0)}
+                                    {logs.reduce((s, l) => s + l.hours, 0).toFixed(1)}
                                 </td>
                             </tr>
                         </tfoot>
@@ -113,7 +114,7 @@ const SummaryCard = ({ label, current, target, unit }: { label: string, current:
             <div className="flex justify-between items-end mb-4">
                 <div>
                     <h3 className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">{label}</h3>
-                    <div className="text-3xl font-black text-upsi-navy">{current} <span className="text-sm text-slate-400">/ {target} {unit}</span></div>
+                    <div className="text-3xl font-black text-upsi-navy">{current.toFixed(1)} <span className="text-sm text-slate-400">/ {target} {unit}</span></div>
                 </div>
                 <div className="text-right">
                     <div className="text-2xl font-black text-upsi-gold">{Math.round(progress)}%</div>
