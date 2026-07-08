@@ -20,7 +20,7 @@ export default function KIClientListPage() {
         try {
             const allClients = await getTraineeClients(user.uid);
             // Filter only KI clients
-            setClients(allClients.filter(c => c.type === "KI"));
+            setClients(allClients.filter(c => c.type === "KI").sort((a, b) => a.clientId.localeCompare(b.clientId)));
         } catch (error) {
             console.error("Failed to fetch clients:", error);
         } finally {

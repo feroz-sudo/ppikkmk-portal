@@ -20,7 +20,7 @@ export default function KKClientListPage() {
         try {
             const allClients = await getTraineeClients(user.uid);
             // Filter only KK clients
-            setClients(allClients.filter(c => c.type === "KK"));
+            setClients(allClients.filter(c => c.type === "KK").sort((a, b) => a.clientId.localeCompare(b.clientId)));
         } catch (error) {
             console.error("Failed to fetch clients:", error);
         } finally {
