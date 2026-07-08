@@ -10,12 +10,21 @@ import { FormHeader } from "@/components/forms/FormHeader";
 
 interface DailyLog {
     id: string;
-    dateDay: string;
     location: string;
     time: string;
     activity: string;
     notes: string;
 }
+
+const DAYS_CONFIG = [
+    { id: "mon", label: "Isnin (Monday)" },
+    { id: "tue", label: "Selasa (Tuesday)" },
+    { id: "wed", label: "Rabu (Wednesday)" },
+    { id: "thu", label: "Khamis (Thursday)" },
+    { id: "fri", label: "Jumaat (Friday)" },
+    { id: "sat", label: "Sabtu (Saturday)" },
+    { id: "sun", label: "Ahad (Sunday)" }
+];
 
 export default function LogHarianForm() {
     const { user } = useAuth();
@@ -24,9 +33,15 @@ export default function LogHarianForm() {
 
     // Form State
     const [weekNumber, setWeekNumber] = useState("1");
-    const [logs, setLogs] = useState<DailyLog[]>([
-        { id: "1", dateDay: "", location: "", time: "", activity: "", notes: "" }
-    ]);
+    const [logsByDay, setLogsByDay] = useState<Record<string, DailyLog[]>>({
+        mon: [],
+        tue: [],
+        wed: [],
+        thu: [],
+        fri: [],
+        sat: [],
+        sun: []
+    });
 
     // Summary State
     const [f2fIndiv, setF2fIndiv] = useState("");
@@ -36,6 +51,18 @@ export default function LogHarianForm() {
     const [profDev, setProfDev] = useState("");
     const [supervision, setSupervision] = useState("");
 
+    const getDayDateString = (dayId: string) => {
+        const weekNum = parseInt(weekNumber) || 1;
+        const startDate = new Date("2026-03-16"); // Monday of Week 1
+        const startOffset = (weekNum - 1) * 7;
+        const dayOffsets: Record<string, number> = { mon: 0, tue: 1, wed: 2, thu: 3, fri: 4, sat: 5, sun: 6 };
+        
+        const date = new Date(startDate);
+        date.setDate(startDate.getDate() + startOffset + (dayOffsets[dayId] || 0));
+        
+        return date.toLocaleDateString('en-MY', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    };
+
     const loadData = async (week: string) => {
         if (!user) return;
         try {
@@ -44,7 +71,27 @@ export default function LogHarianForm() {
             const snapshot = await getDoc(docRef);
             if (snapshot.exists()) {
                 const data = snapshot.data();
-                setLogs(data.logs || []);
+                if (data.logsByDay) {
+                    setLogsByDay(data.logsByDay);
+                } else if (data.logs) {
+                    // Backwards compatibility: Map flat logs array to logsByDay based on dateDay/dates
+                    const initial: Record<string, DailyLog[]> = { mon: [], tue: [], wed: [], thu: [], fri: [], sat: [], sun: [] };
+                    const flatLogs = data.logs as any[];
+                    flatLogs.forEach(l => {
+                        const dateDayLower = (l.dateDay || "").toLowerCase();
+                        if (dateDayLower.includes("mon") || dateDayLower.includes("isnin") || dateDayLower.includes("16/03") || dateDayLower.includes("23/03") || dateDayLower.includes("30/03") || dateDayLower.includes("06/04") || dateDayLower.includes("13/04") || dateDayLower.includes("20/04") || dateDayLower.includes("27/04") || dateDayLower.includes("04/05") || dateDayLower.includes("11/05") || dateDayLower.includes("18/05") || dateDayLower.includes("25/05") || dateDayLower.includes("01/06") || dateDayLower.includes("08/06") || dateDayLower.includes("15/06") || dateDayLower.includes("22/06")) initial.mon.push(l);
+                        else if (dateDayLower.includes("tue") || dateDayLower.includes("selasa")) initial.tue.push(l);
+                        else if (dateDayLower.includes("wed") || dateDayLower.includes("rabu")) initial.wed.push(l);
+                        else if (dateDayLower.includes("thu") || dateDayLower.includes("khamis")) initial.thu.push(l);
+                        else if (dateDayLower.includes("fri") || dateDayLower.includes("jumaat")) initial.fri.push(l);
+                        else if (dateDayLower.includes("sat") || dateDayLower.includes("sabtu")) initial.sat.push(l);
+                        else if (dateDayLower.includes("sun") || dateDayLower.includes("ahad")) initial.sun.push(l);
+                        else initial.mon.push(l); // fallback
+                    });
+                    setLogsByDay(initial);
+                } else {
+                    setLogsByDay({ mon: [], tue: [], wed: [], thu: [], fri: [], sat: [], sun: [] });
+                }
                 setF2fIndiv(data.f2fIndiv || "");
                 setF2fKelompok(data.f2fKelompok || "");
                 setProfAct(data.profAct || "");
@@ -89,29 +136,33 @@ export default function LogHarianForm() {
                 return (a.startTime || "00:00").localeCompare(b.startTime || "00:00");
             });
             
-            const formatLogDateDay = (dateStr: string) => {
-                const date = new Date(dateStr);
-                const day = date.getDate().toString().padStart(2, '0');
-                const month = (date.getMonth() + 1).toString().padStart(2, '0');
-                const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-                const dayName = dayNames[date.getDay()];
-                return `${day}/${month} ${dayName}`;
+            const newLogsByDay: Record<string, DailyLog[]> = {
+                mon: [],
+                tue: [],
+                wed: [],
+                thu: [],
+                fri: [],
+                sat: [],
+                sun: []
             };
             
-            const prefilledLogs = weeklyLogs.map((log, idx) => ({
-                id: log.id || `${Date.now()}-${idx}`,
-                dateDay: formatLogDateDay(log.date),
-                location: log.location || "UPSI",
-                time: `${log.startTime || '--:--'} - ${log.endTime || '--:--'}`,
-                activity: log.description || "",
-                notes: ""
-            }));
+            const dayKeys = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
             
-            if (prefilledLogs.length > 0) {
-                setLogs(prefilledLogs);
-            } else {
-                setLogs([{ id: Date.now().toString(), dateDay: "", location: "", time: "", activity: "", notes: "" }]);
-            }
+            weeklyLogs.forEach((log, idx) => {
+                const date = new Date(log.date);
+                const dayKey = dayKeys[date.getDay()];
+                if (newLogsByDay[dayKey]) {
+                    newLogsByDay[dayKey].push({
+                        id: log.id || `${Date.now()}-${idx}`,
+                        location: log.location || "UPSI",
+                        time: `${log.startTime || '--:--'} - ${log.endTime || '--:--'}`,
+                        activity: log.description || "",
+                        notes: ""
+                    });
+                }
+            });
+            
+            setLogsByDay(newLogsByDay);
             
             let sumIndiv = 0;
             let sumKelompok = 0;
@@ -159,12 +210,28 @@ export default function LogHarianForm() {
         if (!user) return;
         setIsSubmitting(true);
         try {
+            // Flatten logsByDay for backwards compatibility with print/table summaries
+            const flatLogs: any[] = [];
+            const dayNames: Record<string, string> = { mon: "Mon", tue: "Tue", wed: "Wed", thu: "Thu", fri: "Fri", sat: "Sat", sun: "Sun" };
+            
+            Object.keys(logsByDay).forEach(dayId => {
+                const dayDate = getDayDateString(dayId);
+                const dayName = dayNames[dayId] || dayId;
+                (logsByDay[dayId] || []).forEach(l => {
+                    flatLogs.push({
+                        ...l,
+                        dateDay: `${dayDate} ${dayName}`
+                    });
+                });
+            });
+
             const docRef = doc(db, "weekly_forms", `${user.uid}_logHarian_${weekNumber}`);
             await setDoc(docRef, {
                 traineeId: user.uid,
                 type: "logHarian",
                 weekNumber,
-                logs,
+                logs: flatLogs,
+                logsByDay,
                 f2fIndiv, f2fKelompok, profAct, admin, profDev, supervision,
                 updatedAt: new Date()
             });
@@ -176,16 +243,28 @@ export default function LogHarianForm() {
         }
     };
 
-    const addRow = () => {
-        setLogs([...logs, { id: Date.now().toString(), dateDay: "", location: "", time: "", activity: "", notes: "" }]);
+    const addRow = (dayId: string) => {
+        setLogsByDay(prev => ({
+            ...prev,
+            [dayId]: [
+                ...(prev[dayId] || []),
+                { id: Date.now().toString() + Math.random().toString(), location: "", time: "", activity: "", notes: "" }
+            ]
+        }));
     };
 
-    const deleteRow = (id: string) => {
-        setLogs(logs.filter(l => l.id !== id));
+    const deleteRow = (dayId: string, rowId: string) => {
+        setLogsByDay(prev => ({
+            ...prev,
+            [dayId]: (prev[dayId] || []).filter(l => l.id !== rowId)
+        }));
     };
 
-    const updateRow = (id: string, field: keyof DailyLog, value: string) => {
-        setLogs(logs.map(l => l.id === id ? { ...l, [field]: value } : l));
+    const updateRow = (dayId: string, rowId: string, field: keyof DailyLog, value: string) => {
+        setLogsByDay(prev => ({
+            ...prev,
+            [dayId]: (prev[dayId] || []).map(l => l.id === rowId ? { ...l, [field]: value } : l)
+        }));
     };
 
     const totalJam = [f2fIndiv, f2fKelompok, profAct, admin, profDev, supervision]
@@ -216,10 +295,10 @@ export default function LogHarianForm() {
                     </div>
 
                     <div className="p-8 space-y-12">
-                        {/* Daily Log Table */}
-                        <div>
-                            <div className="flex justify-between items-center mb-4 flex-wrap gap-2">
-                                <h3 className="font-bold text-slate-800 uppercase tracking-widest text-sm">Senarai Log Harian</h3>
+                        {/* Daily Logs Grouped by Day */}
+                        <div className="space-y-8">
+                            <div className="flex justify-between items-center mb-2 flex-wrap gap-2">
+                                <h3 className="font-black text-slate-800 uppercase tracking-widest text-sm">Senarai Log Harian (Daily Logs)</h3>
                                 <button
                                     type="button"
                                     onClick={() => syncFromLogbook(weekNumber)}
@@ -228,47 +307,64 @@ export default function LogHarianForm() {
                                     Sync from Logbook
                                 </button>
                             </div>
-                            <div className="overflow-x-auto border border-slate-200 rounded-xl">
-                                <table className="w-full text-left text-sm">
-                                    <thead className="bg-slate-50 border-b border-slate-200">
-                                        <tr>
-                                            <th className="p-3 font-bold text-slate-600 w-1/6">Tarikh / Hari</th>
-                                            <th className="p-3 font-bold text-slate-600 w-1/6">Lokasi</th>
-                                            <th className="p-3 font-bold text-slate-600 w-1/6">Masa</th>
-                                            <th className="p-3 font-bold text-slate-600 w-1/4">Aktiviti Praktikum</th>
-                                            <th className="p-3 font-bold text-slate-600 w-1/4">Catatan</th>
-                                            <th className="p-3 text-center no-print w-12">Hapus</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="divide-y divide-slate-100">
-                                        {logs.map((log) => (
-                                            <tr key={log.id} className="hover:bg-slate-50/50">
-                                                <td className="p-0">
-                                                    <textarea required value={log.dateDay} onChange={(e) => updateRow(log.id, "dateDay", e.target.value)} className="w-full h-full p-3 resize-none bg-transparent" placeholder="01/01 Mon" rows={2} />
-                                                </td>
-                                                <td className="p-0">
-                                                    <textarea required value={log.location} onChange={(e) => updateRow(log.id, "location", e.target.value)} className="w-full h-full p-3 resize-none bg-transparent" placeholder="Klinik UPSI" rows={2} />
-                                                </td>
-                                                <td className="p-0">
-                                                    <textarea required value={log.time} onChange={(e) => updateRow(log.id, "time", e.target.value)} className="w-full h-full p-3 resize-none bg-transparent" placeholder="08:00 - 10:00" rows={2} />
-                                                </td>
-                                                <td className="p-0">
-                                                    <textarea required value={log.activity} onChange={(e) => updateRow(log.id, "activity", e.target.value)} className="w-full h-full p-3 resize-none bg-transparent" placeholder="Sesi Kaunseling Individu" rows={2} />
-                                                </td>
-                                                <td className="p-0">
-                                                    <textarea required value={log.notes} onChange={(e) => updateRow(log.id, "notes", e.target.value)} className="w-full h-full p-3 resize-none bg-transparent" placeholder="..." rows={2} />
-                                                </td>
-                                                <td className="p-3 text-center no-print">
-                                                    <button type="button" onClick={() => deleteRow(log.id)} className="text-red-400 hover:text-red-600 p-2"><Trash2 size={16} /></button>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                            <button type="button" onClick={addRow} className="no-print mt-3 flex items-center space-x-2 text-upsi-navy font-bold text-xs uppercase tracking-widest hover:text-blue-600 bg-slate-50 px-4 py-2 rounded-xl transition-all">
-                                <Plus size={14} /> <span>Tambah Baris</span>
-                            </button>
+
+                            {DAYS_CONFIG.map((day) => {
+                                const dayLogs = logsByDay[day.id] || [];
+                                const dayDate = getDayDateString(day.id);
+                                return (
+                                    <div key={day.id} className="bg-slate-50/50 p-6 rounded-2xl border border-slate-100 space-y-3">
+                                        <div className="flex justify-between items-center pb-2 border-b border-slate-200">
+                                            <span className="font-extrabold text-sm text-upsi-navy uppercase tracking-wider">
+                                                {day.label} — {dayDate}
+                                            </span>
+                                            <span className="text-[10px] text-slate-400 font-bold uppercase">{dayLogs.length} Rows</span>
+                                        </div>
+
+                                        {dayLogs.length === 0 ? (
+                                            <p className="text-xs text-slate-400 italic py-2">Tiada aktiviti didaftarkan untuk hari ini.</p>
+                                        ) : (
+                                            <div className="overflow-x-auto border border-slate-200 rounded-xl bg-white">
+                                                <table className="w-full text-left text-sm">
+                                                    <thead className="bg-slate-50 border-b border-slate-200">
+                                                        <tr>
+                                                            <th className="p-3 font-bold text-slate-600 w-1/4">Lokasi</th>
+                                                            <th className="p-3 font-bold text-slate-600 w-1/4">Masa</th>
+                                                            <th className="p-3 font-bold text-slate-600 w-1/3">Aktiviti Praktikum</th>
+                                                            <th className="p-3 font-bold text-slate-600 w-1/3">Catatan</th>
+                                                            <th className="p-3 text-center no-print w-12">Hapus</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody className="divide-y divide-slate-100">
+                                                        {dayLogs.map((log) => (
+                                                            <tr key={log.id} className="hover:bg-slate-50/50">
+                                                                <td className="p-0">
+                                                                    <textarea required value={log.location} onChange={(e) => updateRow(day.id, log.id, "location", e.target.value)} className="w-full h-full p-3 resize-none bg-transparent" placeholder="Klinik UPSI" rows={2} />
+                                                                </td>
+                                                                <td className="p-0">
+                                                                    <textarea required value={log.time} onChange={(e) => updateRow(day.id, log.id, "time", e.target.value)} className="w-full h-full p-3 resize-none bg-transparent" placeholder="08:00 - 10:00" rows={2} />
+                                                                </td>
+                                                                <td className="p-0">
+                                                                    <textarea required value={log.activity} onChange={(e) => updateRow(day.id, log.id, "activity", e.target.value)} className="w-full h-full p-3 resize-none bg-transparent" placeholder="Sesi Kaunseling Individu" rows={2} />
+                                                                </td>
+                                                                <td className="p-0">
+                                                                    <textarea required value={log.notes} onChange={(e) => updateRow(day.id, log.id, "notes", e.target.value)} className="w-full h-full p-3 resize-none bg-transparent" placeholder="..." rows={2} />
+                                                                </td>
+                                                                <td className="p-3 text-center no-print">
+                                                                    <button type="button" onClick={() => deleteRow(day.id, log.id)} className="text-red-400 hover:text-red-600 p-2"><Trash2 size={16} /></button>
+                                                                </td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        )}
+
+                                        <button type="button" onClick={() => addRow(day.id)} className="no-print flex items-center space-x-2 text-upsi-navy font-bold text-[10px] uppercase tracking-widest hover:text-blue-600 bg-white border border-slate-200 px-3 py-1.5 rounded-lg shadow-sm transition-all">
+                                            <Plus size={12} /> <span>Tambah Baris ({day.label.split(" ")[0]})</span>
+                                        </button>
+                                    </div>
+                                );
+                            })}
                         </div>
 
                         {/* Rumusan Jam Harian Table */}
