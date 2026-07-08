@@ -188,7 +188,7 @@ export default function LogbookPage() {
                 const line = lines[i].trim();
                 if (!line) continue;
 
-                const weekMatch = line.match(/\*\*MINGGU KE:\s*(\d+)\*\*/i);
+                const weekMatch = line.match(/MINGGU KE:\s*(\d+)/i);
                 if (weekMatch) {
                     currentWeek = parseInt(weekMatch[1]);
                     if (!weeklyData[currentWeek]) {
@@ -200,7 +200,7 @@ export default function LogbookPage() {
                     continue;
                 }
 
-                const dayHeaderMatch = line.match(/\*\*BUKU LOG HARIAN\*\*\s*\*\*(MONDAY|TUESDAY|WEDNESDAY|THURSDAY|FRIDAY|SATURDAY|SUNDAY)\s*[-—]+\s*(\d{2}\/\d{2}\/\d{4})\*\*/i);
+                const dayHeaderMatch = line.match(/BUKU LOG HARIAN.*?(MONDAY|TUESDAY|WEDNESDAY|THURSDAY|FRIDAY|SATURDAY|SUNDAY|ISNIN|SELASA|RABU|KHAMIS|JUMAAT|SABTU|AHAD).*?(\d{2}\/\d{2}\/\d{4})/i);
                 if (dayHeaderMatch) {
                     const dayLabel = dayHeaderMatch[1];
                     currentDayLabel = dayLabel;
