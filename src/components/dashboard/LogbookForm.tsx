@@ -70,6 +70,18 @@ export const LogbookForm = ({ onLogAdded, initialData, onClose }: LogbookFormPro
         }
     };
 
+    const calculateDuration = (start: string, end: string) => {
+        if (!start || !end) return "";
+        const [startH, startM] = start.split(':').map(Number);
+        const [endH, endM] = end.split(':').map(Number);
+        let diffMins = (endH * 60 + endM) - (startH * 60 + startM);
+        if (diffMins < 0) {
+            diffMins += 24 * 60;
+        }
+        const val = diffMins / 60;
+        return val > 0 ? val.toFixed(1) : "";
+    };
+
     const formContent = (
         <div className={`glass rounded-[2rem] shadow-premium overflow-hidden border border-white ${onClose ? 'w-full max-w-lg mx-auto animate-in fade-in zoom-in duration-300' : ''}`}>
             <div className="bg-upsi-navy px-8 py-6 relative overflow-hidden">
@@ -118,7 +130,7 @@ export const LogbookForm = ({ onLogAdded, initialData, onClose }: LogbookFormPro
                                 type="number"
                                 required
                                 min="0.5"
-                                step="0.5"
+                                step="0.1"
                                 placeholder="e.g. 1.5"
                                 value={hours}
                                 onChange={(e) => setHours(e.target.value)}
@@ -150,7 +162,14 @@ export const LogbookForm = ({ onLogAdded, initialData, onClose }: LogbookFormPro
                             type="time"
                             required
                             value={startTime}
-                            onChange={(e) => setStartTime(e.target.value)}
+                            onChange={(e) => {
+                                const newStart = e.target.value;
+                                setStartTime(newStart);
+                                if (endTime) {
+                                    const dur = calculateDuration(newStart, endTime);
+                                    if (dur) setHours(dur);
+                                }
+                            }}
                             className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-upsi-navy/5 focus:border-upsi-navy focus:bg-white outline-none transition-all font-bold text-slate-700"
                         />
                     </div>
@@ -160,7 +179,14 @@ export const LogbookForm = ({ onLogAdded, initialData, onClose }: LogbookFormPro
                             type="time"
                             required
                             value={endTime}
-                            onChange={(e) => setEndTime(e.target.value)}
+                            onChange={(e) => {
+                                const newEnd = e.target.value;
+                                setEndTime(newEnd);
+                                if (startTime) {
+                                    const dur = calculateDuration(startTime, newEnd);
+                                    if (dur) setHours(dur);
+                                }
+                            }}
                             className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-upsi-navy/5 focus:border-upsi-navy focus:bg-white outline-none transition-all font-bold text-slate-700"
                         />
                     </div>
