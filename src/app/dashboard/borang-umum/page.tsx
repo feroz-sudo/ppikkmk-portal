@@ -43,7 +43,7 @@ export default function BorangUmumPage() {
     const [settingName, setSettingName] = useState("Unit Kaunseling BHEPA USM");
     const [studentName, setStudentName] = useState("");
     const [matricNumber, setMatricNumber] = useState("");
-    const [academicSupervisor, setAcademicSupervisor] = useState("Dr. Nor Shafrin binti Ahmad");
+    const [academicSupervisor, setAcademicSupervisor] = useState("Dr. MAZITA binti AHMAD");
     const [dateOfDeclaration, setDateOfDeclaration] = useState(format(new Date(), "yyyy-MM-dd"));
 
     const [activeTab, setActiveTab] = useState<string>("lampiran-a");
