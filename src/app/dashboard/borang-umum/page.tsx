@@ -510,8 +510,9 @@ export default function BorangUmumPage() {
                                         <th className="border border-slate-900 p-2 w-20">Minggu</th>
                                         <th className="border border-slate-900 p-2 w-28">Tarikh</th>
                                         <th className="border border-slate-900 p-2 w-24">Hari</th>
-                                        <th className="border border-slate-900 p-2 w-48">Masa Bertugas</th>
-                                        <th className="border border-slate-900 p-2">Catatan</th>
+                                        <th className="border border-slate-900 p-2 w-48">Masa bertugas</th>
+                                        <th className="border border-slate-900 p-2 w-40">Tandatangan penyelia lapangan</th>
+                                        <th className="border border-slate-900 p-2 w-40">Tandatangan penyelia akademik</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -526,8 +527,15 @@ export default function BorangUmumPage() {
                                                     )}
                                                     <td className="border border-slate-900 p-2 text-center">{day.date}</td>
                                                     <td className="border border-slate-900 p-2 text-center">{day.day}</td>
-                                                    <td className="border border-slate-900 p-2 text-center">{day.time}</td>
-                                                    <td className="border border-slate-900 p-2 text-slate-500 font-medium italic">{day.catatan || "-"}</td>
+                                                    <td className="border border-slate-900 p-2 text-center font-bold">
+                                                        {day.catatan ? day.catatan : day.time}
+                                                    </td>
+                                                    {idx === 0 && (
+                                                        <>
+                                                            <td rowSpan={5} className="border border-slate-900"></td>
+                                                            <td rowSpan={5} className="border border-slate-900"></td>
+                                                        </>
+                                                    )}
                                                 </tr>
                                             ))}
                                         </React.Fragment>
