@@ -116,7 +116,7 @@ export default function BorangUmumPage() {
                 if (holidays[dateStr]) {
                     dutyTime = "-";
                     catatan = holidays[dateStr];
-                } else if (dayName === "Jumaat" && w >= 5 && w <= 16) {
+                } else if (dayName === "Jumaat" && w >= 5 && w <= 18) {
                     dutyTime = "-";
                     catatan = "Classes at UPSI";
                 }
