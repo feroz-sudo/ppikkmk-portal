@@ -94,12 +94,13 @@ export default function BorangUmumPage() {
         
         // Define public holiday date strings for easy checks
         const holidays: Record<string, string> = {
-            "20/03/2026": "PUBLIC HOLIDAY (Hari Raya Aidilfitri)",
             "23/03/2026": "PUBLIC HOLIDAY (Hari Raya Aidilfitri)",
-            "24/03/2026": "PUBLIC HOLIDAY (Hari Raya Aidilfitri)",
             "01/05/2026": "PUBLIC HOLIDAY (Labour Day)",
-            "15/06/2026": "PUBLIC HOLIDAY (Hari Raya Aidiladha)",
-            "16/06/2026": "PUBLIC HOLIDAY (Hari Raya Aidiladha)"
+            "27/05/2026": "PUBLIC HOLIDAY (Hari Raya Aidiladha)",
+            "28/05/2026": "PUBLIC HOLIDAY (Hari Raya Aidiladha)",
+            "01/06/2026": "PUBLIC HOLIDAY (Wesak Day & Agong's Birthday)",
+            "17/06/2026": "PUBLIC HOLIDAY (Awal Muharram)",
+            "07/07/2026": "PUBLIC HOLIDAY (Georgetown Heritage Day)"
         };
 
         for (let w = 1; w <= 18; w++) {
