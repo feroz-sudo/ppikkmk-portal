@@ -107,7 +107,27 @@ export default function ClientFolderPage({ params }: PageProps) {
         return acc;
     }, {} as Record<string, Session[]>);
 
-    const sortedGroupKeys = Object.keys(groupedSessions).sort();
+    const getSessionDisplayNameAndWeight = (sessId: string, forms: Session[]) => {
+        const hasForm = (type: string) => forms.some(f => f.formType === type);
+        if (hasForm("Form3")) return { name: "Case Conceptualization", weight: 1.5 };
+        if (hasForm("Form4")) return { name: "Treatment Plan", weight: 1.6 };
+        if (hasForm("Form5")) return { name: "Termination Session", weight: 999 };
+        if (hasForm("Form6")) return { name: "Crisis Intervention", weight: 501 };
+        if (hasForm("Form7")) return { name: "Consultation Report", weight: 502 };
+        if (hasForm("Form8")) return { name: "PFA / MHPSS", weight: 503 };
+        if (hasForm("Form11")) return { name: "Group Counselling", weight: 504 };
+        if (hasForm("Form13")) return { name: "Psych Assessment", weight: 505 };
+        
+        const num = parseInt(sessId);
+        return { name: `Session: ${sessId}`, weight: isNaN(num) ? 500 : num };
+    };
+
+    const sortedGroupKeys = Object.keys(groupedSessions).sort((a, b) => {
+        const weightA = getSessionDisplayNameAndWeight(a, groupedSessions[a]).weight;
+        const weightB = getSessionDisplayNameAndWeight(b, groupedSessions[b]).weight;
+        return weightA - weightB;
+    });
+
 
     return (
         <div className="max-w-5xl mx-auto pb-12">
@@ -230,13 +250,19 @@ export default function ClientFolderPage({ params }: PageProps) {
                                         <div className="absolute w-4 h-4 bg-upsi-gold rounded-full -left-[9px] top-1 border-2 border-white shadow-sm"></div>
                                         <div>
                                             <h3 className="text-md justify-between flex font-bold text-gray-800 mb-3 bg-gray-50 p-2 rounded border border-gray-100">
-                                                <span>Session: {sessId}</span>
+                                                 <span>{getSessionDisplayNameAndWeight(sessId, sessForms).name}</span>
                                                 <span className="text-sm text-gray-500 font-normal">{sessDate}</span>
                                             </h3>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                                {sessForms.map(f => {
-                                                    const mappedForm = availableForms.find(af => af.name.replace(/\s+/g, '').toLowerCase().includes(f.formType.replace('Form', '').toLowerCase()) || f.formType === af.id);
-                                                    const Icon = mappedForm ? mappedForm.icon : FileText;
+                                                {(() => {
+                                                    const getFormNumber = (formType: string) => {
+                                                        const match = formType.match(/\d+/);
+                                                        return match ? parseInt(match[0]) : 999;
+                                                    };
+                                                    const sortedForms = [...sessForms].sort((a, b) => getFormNumber(a.formType) - getFormNumber(b.formType));
+                                                    return sortedForms.map(f => {
+                                                        const mappedForm = availableForms.find(af => af.name.replace(/\s+/g, '').toLowerCase().includes(f.formType.replace('Form', '').toLowerCase()) || f.formType === af.id);
+                                                        const Icon = mappedForm ? mappedForm.icon : FileText;
                                                     return (
                                                         <div key={f.id} className="border border-gray-200 rounded-lg p-3 flex justify-between items-center hover:bg-gray-50 transition-colors">
                                                             <div className="flex items-center space-x-3">
@@ -294,7 +320,8 @@ export default function ClientFolderPage({ params }: PageProps) {
                                                             </div>
                                                         </div>
                                                     )
-                                                })}
+                                                });
+                                                })()}
                                             </div>
                                         </div>
                                     </div>
