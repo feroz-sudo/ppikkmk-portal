@@ -176,11 +176,12 @@ export default function BorangUmumPage() {
                 return dateA.getTime() - dateB.getTime();
             })
             .map((s, idx) => {
+                const clientObj = clients.find(c => c.id === s.clientId);
                 const dateObj = getJsDate(s.date);
                 return {
                     bil: idx + 1,
-                    groupName: s.formData?.groupName || "Group Name",
-                    memberCount: s.formData?.numberOfMembers || "N/A",
+                    groupName: clientObj?.demographics?.name || s.formData?.groupName || "Group Name",
+                    memberCount: s.formData?.groupMembers?.length || s.formData?.logisticsData?.numberOfClientsAttending || "N/A",
                     date: format(dateObj, "dd/MM/yyyy"),
                     time: (s as any).time || s.formData?.personalData?.sessionTime || s.formData?.personalData?.time || "20:00 - 21:45",
                     sessionNo: s.sessionId || "N/A",
@@ -224,10 +225,13 @@ export default function BorangUmumPage() {
 
     // 5. Lampiran F: Group Progress Register
     const getGroupProgress = () => {
-        const groups = Array.from(new Set(sessions.filter(s => s.formType === "Form11").map(s => s.formData?.groupName).filter(Boolean)));
-        return groups.map((gName, idx) => {
+        const uniqueGroupIds = Array.from(new Set(sessions.filter(s => s.formType === "Form11").map(s => s.clientId).filter(Boolean)));
+        return uniqueGroupIds.map((gId, idx) => {
+            const clientObj = clients.find(c => c.id === gId);
+            const gName = clientObj?.demographics?.name || "Group Name";
+            
             const groupSess = sessions
-                .filter(s => s.formType === "Form11" && s.formData?.groupName === gName)
+                .filter(s => s.formType === "Form11" && s.clientId === gId)
                 .sort((a, b) => {
                     const dateA = getJsDate(a.date);
                     const dateB = getJsDate(b.date);
@@ -246,7 +250,7 @@ export default function BorangUmumPage() {
 
             return {
                 bil: idx + 1,
-                groupName: gName as string,
+                groupName: gName,
                 sessions: sessionDates
             };
         });
