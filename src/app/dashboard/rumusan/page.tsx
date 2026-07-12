@@ -84,11 +84,11 @@ export default function RumusanPage() {
 
             weekLogs.forEach(log => {
                 if (categories[log.category] !== undefined) {
-                    categories[log.category] += log.hours;
+                    categories[log.category] = Math.round((categories[log.category] + log.hours) * 10) / 10;
                 }
             });
 
-            const total = Object.values(categories).reduce((sum, h) => sum + h, 0);
+            const total = Math.round(Object.values(categories).reduce((sum, h) => sum + h, 0) * 10) / 10;
 
             return {
                 weekStart,
@@ -116,9 +116,9 @@ export default function RumusanPage() {
 
     const grandTotals = summaries.reduce((acc, week) => {
         categories.forEach(cat => {
-            acc[cat] = (acc[cat] || 0) + week.categories[cat];
+            acc[cat] = Math.round(((acc[cat] || 0) + week.categories[cat]) * 10) / 10;
         });
-        acc.total = (acc.total || 0) + week.total;
+        acc.total = Math.round(((acc.total || 0) + week.total) * 10) / 10;
         return acc;
     }, { total: 0 } as Record<string, number>);
 

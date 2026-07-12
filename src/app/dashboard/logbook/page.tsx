@@ -176,7 +176,7 @@ export default function LogbookPage() {
                     const startMin = parseTime(parts[0]);
                     const endMin = parseTime(parts[1]);
                     if (endMin > startMin) {
-                        return parseFloat(((endMin - startMin) / 60).toFixed(2));
+                        return parseFloat(((endMin - startMin) / 60).toFixed(1));
                     }
                 } catch (e: any) {
                     console.error("Error calculating hours for:", timeStr, e.message);
