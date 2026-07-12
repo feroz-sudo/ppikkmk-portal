@@ -262,18 +262,23 @@ function Form1IntakeContent() {
 
                     const pdfBlob = await generateSessionPDF(sessionData, effectiveClient, clinicalId);
 
-                    await uploadToGoogleDrive(
+                    const uploadResult = await uploadToGoogleDrive(
                         driveToken,
                         pdfBlob,
                         clinicalId,
                         effectiveClient.clientId,
                         sessionData.sessionId
                     );
+                    if (!uploadResult.success) {
+                        if (uploadResult.error === "UNAUTHORIZED_DRIVE_ACCESS") {
+                            localStorage.removeItem("googleDriveToken");
+                            alert("Your Google Drive connection has expired. The report has been saved locally, but could not be backed up to Google Drive. Please log out and log in again to reconnect Google Drive.");
+                        } else {
+                            console.error("Drive upload failed:", uploadResult.error);
+                        }
+                    }
                 }
             } catch (driveErr: any) {
-                if (driveErr.message === "UNAUTHORIZED_DRIVE_ACCESS") {
-                    localStorage.removeItem("googleDriveToken");
-                }
                 console.error("Drive upload failed:", driveErr);
             }
 

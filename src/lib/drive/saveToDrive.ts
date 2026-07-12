@@ -121,10 +121,10 @@ export const initializeClientFolders = async (
         const mainFolderId = await getOrCreateFolder(accessToken, mainFolderName);
         const subFolderId = await getOrCreateFolder(accessToken, subFolderName, mainFolderId);
 
-        return subFolderId;
-    } catch (error) {
+        return { success: true, folderId: subFolderId };
+    } catch (error: any) {
         console.error("Folder Initialization Error:", error);
-        throw error;
+        return { success: false, error: error.message || "Unknown error" };
     }
 };
 
@@ -192,10 +192,10 @@ export const uploadToGoogleDrive = async (
 
         const data = await res.json();
         console.log(`[Drive] Upload successful! File ID: ${data.id}`);
-        return data.id;
+        return { success: true, fileId: data.id };
 
-    } catch (error) {
+    } catch (error: any) {
         console.error("Google Drive API Error:", error);
-        throw error;
+        return { success: false, error: error.message || "Unknown error" };
     }
 };
