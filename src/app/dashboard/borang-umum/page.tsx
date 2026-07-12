@@ -94,6 +94,9 @@ export default function BorangUmumPage() {
         
         // Define public holiday date strings for easy checks
         const holidays: Record<string, string> = {
+            "20/03/2026": "PUBLIC HOLIDAY (Hari Raya Aidilfitri)",
+            "23/03/2026": "PUBLIC HOLIDAY (Hari Raya Aidilfitri)",
+            "24/03/2026": "PUBLIC HOLIDAY (Hari Raya Aidilfitri)",
             "01/05/2026": "PUBLIC HOLIDAY (Labour Day)",
             "15/06/2026": "PUBLIC HOLIDAY (Hari Raya Aidiladha)",
             "16/06/2026": "PUBLIC HOLIDAY (Hari Raya Aidiladha)"
@@ -112,6 +115,9 @@ export default function BorangUmumPage() {
                 if (holidays[dateStr]) {
                     dutyTime = "-";
                     catatan = holidays[dateStr];
+                } else if (dayName === "Jumaat" && w >= 5 && w <= 16) {
+                    dutyTime = "-";
+                    catatan = "Classes at UPSI";
                 }
 
                 days.push({
