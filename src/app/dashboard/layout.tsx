@@ -34,7 +34,8 @@ import {
     ShieldCheck,
     UserCheck,
     Activity,
-    Inbox
+    Inbox,
+    FolderOpen
 } from "lucide-react";
 import { Disclaimer } from "@/components/Disclaimer";
 import { collection, query, where, getDocs } from "firebase/firestore";
@@ -209,6 +210,10 @@ function SidebarNavContent({
                     <Link href="/dashboard/rumusan" onClick={handleLinkClick} className={getLinkClass("/dashboard/rumusan")}>
                         <Calculator size={20} />
                         <span>Rumusan / Lampiran B</span>
+                    </Link>
+                    <Link href="/dashboard/borang-umum" onClick={handleLinkClick} className={getLinkClass("/dashboard/borang-umum")}>
+                        <FolderOpen size={20} />
+                        <span>Borang Umum / Lampiran A-I</span>
                     </Link>
                     <Link href="/dashboard/sessions" onClick={handleLinkClick} className={getLinkClass("/dashboard/sessions")}>
                         <HistoryIcon size={20} />
