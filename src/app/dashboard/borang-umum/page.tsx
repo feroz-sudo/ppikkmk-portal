@@ -230,8 +230,12 @@ export default function BorangUmumPage() {
             return { client, firstSessDate, clientSess };
         });
 
-        // Sort chronologically by first session date
-        mapped.sort((a, b) => a.firstSessDate.getTime() - b.firstSessDate.getTime());
+        // Sort strictly by client code (clientId) 001 until 010
+        mapped.sort((a, b) => {
+            const codeA = parseInt(a.client.clientId || "999");
+            const codeB = parseInt(b.client.clientId || "999");
+            return codeA - codeB;
+        });
 
         return mapped.map((item, idx) => {
             const client = item.client;
