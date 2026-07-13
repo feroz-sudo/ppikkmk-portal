@@ -211,7 +211,7 @@ export default function BorangUmumPage() {
         // Map clients with their first session date
         const mapped = kiClients.map(client => {
             const clientSess = sessions
-                .filter(s => s.clientId === client.id && s.formType === "Form2")
+                .filter(s => s.clientId === client.id && (s.formType === "Form2" || s.formType === "Form6"))
                 .sort((a, b) => {
                     const dateA = getJsDate(a.date);
                     const dateB = getJsDate(b.date);
