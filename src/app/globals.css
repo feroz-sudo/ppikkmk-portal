@@ -222,19 +222,22 @@ form [class*="underline"] {
 
   html,
   body,
-  #__next {
+  #__next,
+  .h-screen,
+  .h-full,
+  .flex,
+  .flex-col,
+  .overflow-hidden,
+  .overflow-y-auto,
+  main,
+  div {
     display: block !important;
     overflow: visible !important;
     height: auto !important;
-    background: white !important;
-  }
-
-  main.overflow-y-auto,
-  div.h-screen {
-    display: block !important;
-    overflow: visible !important;
-    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
     position: static !important;
+    background: white !important;
   }
 
   /* Specific Print Alignment */
