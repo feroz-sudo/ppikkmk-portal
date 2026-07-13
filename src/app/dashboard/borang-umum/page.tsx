@@ -228,7 +228,7 @@ export default function BorangUmumPage() {
             const client = item.client;
             const clientSess = item.clientSess;
             const sessionDates: Record<number, string> = {};
-            for (let sIdx = 0; sIdx < 9; sIdx++) {
+            for (let sIdx = 0; sIdx < 10; sIdx++) {
                 if (clientSess[sIdx]) {
                     const dateObj = getJsDate(clientSess[sIdx].date);
                     sessionDates[sIdx + 1] = format(dateObj, "dd/MM/yyyy");
@@ -678,10 +678,10 @@ export default function BorangUmumPage() {
                                     <tr className="bg-slate-50 text-center font-black">
                                         <th className="border border-slate-900 p-2 w-12" rowSpan={2}>Bil</th>
                                         <th className="border border-slate-900 p-2" rowSpan={2}>Nama / Kod Klien</th>
-                                        <th className="border border-slate-900 p-2" colSpan={9}>Tarikh Sesi</th>
+                                        <th className="border border-slate-900 p-2" colSpan={10}>Tarikh Sesi</th>
                                     </tr>
                                     <tr className="bg-slate-50 text-center font-bold">
-                                        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => (
+                                        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => (
                                             <th key={n} className="border border-slate-900 p-1 w-20">Sesi {n}</th>
                                         ))}
                                     </tr>
@@ -689,7 +689,7 @@ export default function BorangUmumPage() {
                                 <tbody>
                                     {getIndividualProgress().length === 0 ? (
                                         <tr>
-                                            <td colSpan={11} className="border border-slate-900 p-8 text-center text-slate-400 italic">No clients found to compile progress.</td>
+                                            <td colSpan={12} className="border border-slate-900 p-8 text-center text-slate-400 italic">No clients found to compile progress.</td>
                                         </tr>
                                     ) : (
                                         getIndividualProgress().map((p) => (
@@ -699,7 +699,7 @@ export default function BorangUmumPage() {
                                                     <div>{p.clientName}</div>
                                                     <span className="text-[9px] font-mono text-slate-400">{p.clientCode}</span>
                                                 </td>
-                                                {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => (
+                                                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => (
                                                     <td key={n} className="border border-slate-900 p-1 font-medium">{p.sessions[n]}</td>
                                                 ))}
                                             </tr>
