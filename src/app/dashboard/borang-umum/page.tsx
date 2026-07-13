@@ -192,10 +192,24 @@ export default function BorangUmumPage() {
 
     // 4. Lampiran E: Individual Progress Register
     const getIndividualProgress = () => {
-        // Find all KI clients
-        const kiClients = clients.filter(c => c.type === "KI" || c.clientId?.startsWith("0"));
-        return kiClients.map((client, idx) => {
-            // Find all sessions for this client
+        // Find all KI clients (ONLY INDIVIDUAL)
+        const officialNames = [
+            "Lee Joey Leng",
+            "Nurul Najihah binti Mohamed Shukri",
+            "Malanie a/p Shekkar",
+            "Aiman Syakirin bin Rosman Amran",
+            "Aniq Hussaini bin Hasmadi",
+            "Sharveen a/l Kopalakishanan",
+            "Sharveen a/l Kopalakrishnan",
+            "Danish Muqri bin Risby",
+            "Akmal Safwan bin Ahmad Termezy",
+            "Nurin Qistina binti Zulkifli",
+            "Tan Yin"
+        ];
+        const kiClients = clients.filter(c => c.type === "KI" && officialNames.includes(c.demographics?.name));
+        
+        // Map clients with their first session date
+        const mapped = kiClients.map(client => {
             const clientSess = sessions
                 .filter(s => s.clientId === client.id)
                 .sort((a, b) => {
@@ -203,7 +217,16 @@ export default function BorangUmumPage() {
                     const dateB = getJsDate(b.date);
                     return dateA.getTime() - dateB.getTime();
                 });
+            const firstSessDate = clientSess.length > 0 ? getJsDate(clientSess[0].date) : new Date(8640000000000000); // Max date if no sessions
+            return { client, firstSessDate, clientSess };
+        });
 
+        // Sort chronologically by first session date
+        mapped.sort((a, b) => a.firstSessDate.getTime() - b.firstSessDate.getTime());
+
+        return mapped.map((item, idx) => {
+            const client = item.client;
+            const clientSess = item.clientSess;
             const sessionDates: Record<number, string> = {};
             for (let sIdx = 0; sIdx < 9; sIdx++) {
                 if (clientSess[sIdx]) {

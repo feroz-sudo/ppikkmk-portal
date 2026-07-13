@@ -286,7 +286,7 @@ export default function LogHarianForm() {
             <div className="flex-1 overflow-y-auto p-4 sm:p-8 custom-scrollbar">
                 <form id="logHarianForm" onSubmit={handleSave} className="max-w-5xl mx-auto bg-white shadow-xl rounded-2xl print:shadow-none print:bg-transparent">
                     {/* Header */}
-                    <div className="p-8 border-b border-slate-200 flex justify-between items-center bg-blue-50/50 rounded-t-2xl">
+                    <div className="p-8 border-b border-slate-200 flex justify-between items-center bg-blue-50/50 rounded-t-2xl print:hidden">
                         <div>
                             <h2 className="text-2xl font-black text-upsi-navy tracking-tight">LOG HARIAN</h2>
                             <p className="text-xs text-slate-500 font-bold uppercase tracking-widest mt-1">Buku Log Praktikum</p>
@@ -308,9 +308,11 @@ export default function LogHarianForm() {
                         <div className="hidden print:block w-full">
                             {DAYS_CONFIG.map((day) => {
                                 const dayLogs = logsByDay[day.id] || [];
+                                // Only skip empty weekends; always print weekdays (Mon-Fri) to prevent misunderstandings about omitted days
+                                if (dayLogs.length === 0 && ["sat", "sun"].includes(day.id)) return null;
                                 const dayDate = getDayDateString(day.id);
                                 return (
-                                    <div key={day.id} style={{ pageBreakAfter: "always", breakAfter: "page" }} className="w-full space-y-6">
+                                    <div key={day.id} className="w-full space-y-6 mb-12" style={{ pageBreakInside: "avoid", breakInside: "avoid" }}>
                                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", borderBottom: "2px solid #000000", paddingBottom: "8px", marginBottom: "16px" }}>
                                             <div>
                                                 <h2 style={{ fontSize: "15pt", fontWeight: "900", color: "#000000", margin: 0, textTransform: "uppercase" }}>LOG HARIAN PRAKTIKUM</h2>
