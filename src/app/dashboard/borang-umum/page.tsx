@@ -141,6 +141,15 @@ export default function BorangUmumPage() {
         return new Date(d);
     };
 
+    const cleanSessionId = (id: string): string => {
+        if (!id) return "N/A";
+        const cleaned = id.replace(/Session\s*/i, "").trim();
+        if (/^\d+$/.test(cleaned)) {
+            return cleaned.padStart(2, "0");
+        }
+        return id;
+    };
+
     // 2. Lampiran C: Individual Sessions Register
     const getIndividualSessions = () => {
         // Individual counseling sessions are Form 2
@@ -160,7 +169,7 @@ export default function BorangUmumPage() {
                     clientCode: clientObj?.clientId || "N/A",
                     date: format(dateObj, "dd/MM/yyyy"),
                     time: (s as any).time || s.formData?.personalData?.sessionTime || s.formData?.personalData?.time || "09:00 - 10:00",
-                    sessionNo: s.sessionId || "N/A",
+                    sessionNo: cleanSessionId(s.sessionId || "N/A"),
                     duration: s.duration ? `${s.duration.toFixed(1)} jam` : "1.0 jam"
                 };
             });
@@ -184,7 +193,7 @@ export default function BorangUmumPage() {
                     memberCount: s.formData?.groupMembers?.length || s.formData?.logisticsData?.numberOfClientsAttending || "N/A",
                     date: format(dateObj, "dd/MM/yyyy"),
                     time: (s as any).time || s.formData?.personalData?.sessionTime || s.formData?.personalData?.time || "20:00 - 21:45",
-                    sessionNo: s.sessionId || "N/A",
+                    sessionNo: cleanSessionId(s.sessionId || "N/A"),
                     duration: s.duration ? `${s.duration.toFixed(1)} jam` : "1.7 jam"
                 };
             });
