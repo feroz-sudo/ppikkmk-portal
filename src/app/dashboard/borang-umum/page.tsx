@@ -213,7 +213,8 @@ export default function BorangUmumPage() {
             "Danish Muqri bin Risby",
             "Akmal Safwan bin Ahmad Termezy",
             "Nurin Qistina binti Zulkifli",
-            "Tan Yin"
+            "Tan Yin",
+            "Saniy Durrani Bin Saifulizwan"
         ];
         const kiClients = clients.filter(c => c.type === "KI" && officialNames.includes(c.demographics?.name));
         
