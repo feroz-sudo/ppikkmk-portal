@@ -1717,18 +1717,18 @@ const generateForm8PDF = async (session: Session, client: Client, clinicalId?: s
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(11);
     doc.setTextColor(0, 0, 0);
-    doc.text("PSYCHOLOGICAL FIRST AID / MENTAL HEALTH & PSYCHOSOCIAL SUPPORT REPORT", 130, 18, { align: 'center' });
+    doc.text("PSYCHOLOGICAL FIRST AID / MENTAL HEALTH & PSYCHOSOCIAL SUPPORT REPORT", 105, 36, { align: 'center' });
     doc.setFontSize(10);
-    doc.text("PRACTICUM & INTERNSHIP IN CLINICAL MENTAL HEALTH COUNSELING", 130, 24, { align: 'center' });
-    doc.text("UNIVERSITI PENDIDIKAN SULTAN IDRIS", 130, 30, { align: 'center' });
+    doc.text("PRACTICUM & INTERNSHIP IN CLINICAL MENTAL HEALTH COUNSELING", 105, 42, { align: 'center' });
+    doc.text("UNIVERSITI PENDIDIKAN SULTAN IDRIS", 105, 48, { align: 'center' });
 
     const fd = session.formData || {};
     const ld = fd.logisticsData || {};
 
     doc.setFontSize(9.5);
     doc.setFont('helvetica', 'bold');
-    doc.text(`Name: ${renderStr(ld.counselorName)}`, 15, 38);
-    doc.text(`Institution: ${renderStr(ld.institution)}`, 130, 38);
+    doc.text(`Name: ${renderStr(ld.counselorName)}`, 15, 56);
+    doc.text(`Institution: ${renderStr(ld.institution)}`, 130, 56);
 
     const tableBody = [
         [
@@ -1758,7 +1758,7 @@ const generateForm8PDF = async (session: Session, client: Client, clinicalId?: s
     ];
 
     autoTable(doc, {
-        startY: 42,
+        startY: 62,
         theme: 'grid',
         styles: { font: 'helvetica', fontSize: 9, cellPadding: 2.5, lineColor: [0, 0, 0], lineWidth: 0.2, textColor: [0, 0, 0] },
         columnStyles: {
@@ -1841,6 +1841,11 @@ const generateForm8PDF = async (session: Session, client: Client, clinicalId?: s
         startY: yPos,
         theme: 'grid',
         styles: { font: 'helvetica', fontSize: 9, cellPadding: 3, lineColor: [0, 0, 0], lineWidth: 0.2, textColor: [0, 0, 0] },
+        columnStyles: {
+            0: { cellWidth: 60 },
+            1: { cellWidth: 90 },
+            2: { cellWidth: 30 }
+        },
         head: [
             [
                 { content: 'Action', styles: { halign: 'center', fontStyle: 'bold' } },
