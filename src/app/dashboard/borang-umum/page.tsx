@@ -69,10 +69,12 @@ export default function BorangUmumPage() {
             setSessions(userSessions);
             if (userProfile) {
                 setProfile(userProfile);
-                setStudentName(userProfile.fullName || "");
-                setMatricNumber(userProfile.matricNumber || "");
+                setStudentName(userProfile.fullName || (userProfile as any).personalInfo?.name || "");
+                setMatricNumber(userProfile.matricNumber || (userProfile as any).personalInfo?.matricNumber || "");
                 if (userProfile.practicumSite) {
                     setSettingName(userProfile.practicumSite);
+                } else if ((userProfile as any).personalInfo?.practicumSite) {
+                    setSettingName((userProfile as any).personalInfo.practicumSite);
                 }
             } else {
                 setStudentName(user?.displayName || "");
