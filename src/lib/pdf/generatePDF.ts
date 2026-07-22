@@ -2081,70 +2081,91 @@ export const generateCounselorProfilePDF = async (data: any): Promise<Blob> => {
     doc.text("MAKLUMAT DIRI KAUNSELOR PELATIH", 105, 68, { align: 'center' });
 
     doc.setFontSize(10);
+    doc.setFontSize(10);
+    let currentY = 78;
+
     // Row: Nama
-    doc.text("Nama:", 15, 78);
+    doc.text("Nama:", 15, currentY);
     doc.setFont('helvetica', 'normal');
-    doc.text(renderStr(pi.name), 28, 78);
-    doc.line(28, 79, 195, 79);
+    doc.text(renderStr(pi.name), 28, currentY);
+    doc.line(28, currentY + 1, 195, currentY + 1);
+    currentY += 10;
 
     // Row: No. Matriks & No. Kad Pengenalan
     doc.setFont('helvetica', 'bold');
-    doc.text("No. Matriks:", 15, 88);
+    doc.text("No. Matriks:", 15, currentY);
     doc.setFont('helvetica', 'normal');
-    doc.text(renderStr(pi.matricNumber), 38, 88);
-    doc.line(38, 89, 95, 89);
+    doc.text(renderStr(pi.matricNumber), 38, currentY);
+    doc.line(38, currentY + 1, 95, currentY + 1);
 
     doc.setFont('helvetica', 'bold');
-    doc.text("No.Kad Pengenalan:", 102, 88);
+    doc.text("No.Kad Pengenalan:", 102, currentY);
     doc.setFont('helvetica', 'normal');
-    doc.text(renderStr(pi.icNumber), 138, 88);
-    doc.line(138, 89, 195, 89);
+    doc.text(renderStr(pi.icNumber), 138, currentY);
+    doc.line(138, currentY + 1, 195, currentY + 1);
+    currentY += 10;
 
     // Row: Alamat Tetap
     doc.setFont('helvetica', 'bold');
-    doc.text("Alamat Tetap:", 15, 98);
+    doc.text("Alamat Tetap:", 15, currentY);
     doc.setFont('helvetica', 'normal');
     const splitAddr = doc.splitTextToSize(renderStr(pi.address), 155);
-    doc.text(splitAddr, 40, 98);
-    doc.line(40, 99, 195, 99);
-    doc.line(15, 109, 195, 109);
+    for (let i = 0; i < Math.max(splitAddr.length, 1); i++) {
+        const lineText = splitAddr[i] || "";
+        doc.text(lineText, 40, currentY);
+        doc.line(40, currentY + 1, 195, currentY + 1);
+        if (i < splitAddr.length - 1) {
+            currentY += 10;
+        }
+    }
+    currentY += 10;
 
     // Row: No. Telefon
     doc.setFont('helvetica', 'bold');
-    doc.text("No. Telefon:", 15, 119);
+    doc.text("No. Telefon:", 15, currentY);
     doc.setFont('helvetica', 'normal');
-    doc.text(renderStr(pi.phone), 38, 119);
-    doc.line(38, 119, 195, 119);
+    doc.text(renderStr(pi.phone), 38, currentY);
+    doc.line(38, currentY + 1, 195, currentY + 1);
+    currentY += 10;
 
     // Row: Email
     doc.setFont('helvetica', 'bold');
-    doc.text("Email:", 15, 129);
+    doc.text("Email:", 15, currentY);
     doc.setFont('helvetica', 'normal');
-    doc.text(renderStr(pi.email), 28, 129);
-    doc.line(28, 129, 195, 129);
+    doc.text(renderStr(pi.email), 28, currentY);
+    doc.line(28, currentY + 1, 195, currentY + 1);
+    currentY += 12;
 
     // Row: Tempat Praktikum
     doc.setFont('helvetica', 'bold');
-    doc.text("Tempat Praktikum:", 15, 144);
+    doc.text("Tempat Praktikum:", 15, currentY);
     doc.setFont('helvetica', 'normal');
-    doc.text(renderStr(pi.practicumSite), 48, 144);
-    doc.line(48, 144, 195, 144);
+    doc.text(renderStr(pi.practicumSite), 48, currentY);
+    doc.line(48, currentY + 1, 195, currentY + 1);
+    currentY += 10;
 
     // Row: Alamat Tempat Praktikum
     doc.setFont('helvetica', 'bold');
-    doc.text("Alamat Tempat Praktikum:", 15, 154);
+    doc.text("Alamat Tempat Praktikum:", 15, currentY);
     doc.setFont('helvetica', 'normal');
     const splitSiteAddr = doc.splitTextToSize(renderStr(pi.practicumSiteAddress), 135);
-    doc.text(splitSiteAddr, 60, 154);
-    doc.line(60, 155, 195, 155);
-    doc.line(15, 165, 195, 165);
+    for (let i = 0; i < Math.max(splitSiteAddr.length, 1); i++) {
+        const lineText = splitSiteAddr[i] || "";
+        doc.text(lineText, 60, currentY);
+        doc.line(60, currentY + 1, 195, currentY + 1);
+        if (i < splitSiteAddr.length - 1) {
+            currentY += 10;
+        }
+    }
+    currentY += 15;
 
     // Row: Emergency Contact
     doc.setFont('helvetica', 'bold');
-    doc.text("Nama dan Nombor Telefon yang boleh dihubungi ketika kecemasan:", 15, 175);
+    doc.text("Nama dan Nombor Telefon yang boleh dihubungi ketika kecemasan:", 15, currentY);
+    currentY += 10;
     doc.setFont('helvetica', 'normal');
-    doc.text(renderStr(pi.emergencyContact), 15, 185);
-    doc.line(15, 186, 195, 186);
+    doc.text(renderStr(pi.emergencyContact), 15, currentY);
+    doc.line(15, currentY + 1, 195, currentY + 1);
 
     // -------------------------------------------------------------
     // PAGE 2: KONTRAK PRAKTIKUM KAUNSELING KESIHATAN MENTAL KLINIKAL
@@ -2205,7 +2226,7 @@ export const generateCounselorProfilePDF = async (data: any): Promise<Blob> => {
             { content: "Nama:", styles: { fontStyle: 'bold' } },
             { content: renderStr(ci.coordinatorName) },
             { content: "Email:", styles: { fontStyle: 'bold' } },
-            { content: renderStr(ci.coordinatorEmail), colSpan: 3 }
+            { content: renderStr(ci.coordinatorEmail) }
         ]
     ];
 
