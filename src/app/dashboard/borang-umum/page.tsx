@@ -318,38 +318,27 @@ export default function BorangUmumPage() {
 
     // 7. Lampiran H: Testing Register
     const getTestingRegister = () => {
-        const fromLogs = logs
-            .filter(l => l.category === "Testing & Assessment")
-            .map(l => ({
-                date: l.date,
-                name: "Testing Client",
-                time: `${l.startTime || "09:00"} - ${l.endTime || "10:00"}`,
-                hours: l.hours
-            }));
-            
-        const fromSessions = sessions
+        const form13Sessions = sessions
             .filter(s => s.formType === "Form13")
-            .map(s => {
-                const clientObj = clients.find(c => c.id === s.clientId);
-                const dateObj = getJsDate(s.date);
-                return {
-                    date: format(dateObj, "yyyy-MM-dd"),
-                    name: clientObj?.demographics?.name || s.formData?.personalData?.clientFullName || "Testing Client",
-                    time: "09:00 - 10:00",
-                    hours: s.duration || 1.0
-                };
-            });
+            .sort((a, b) => {
+                const dateA = getJsDate(a.date);
+                const dateB = getJsDate(b.date);
+                return dateA.getTime() - dateB.getTime();
+            })
+            .slice(0, 99);
 
-        return [...fromLogs, ...fromSessions]
-            .sort((a, b) => a.date.localeCompare(b.date))
-            .map((t, idx) => ({
+        return form13Sessions.map((s, idx) => {
+            const clientObj = clients.find(c => c.id === s.clientId);
+            const dateObj = getJsDate(s.date);
+            return {
                 bil: idx + 1,
-                clientName: t.name,
-                clientCode: "N/A",
-                date: format(parseISO(t.date), "dd/MM/yyyy"),
-                time: t.time,
-                duration: `${t.hours.toFixed(1)} jam`
-            }));
+                clientName: clientObj?.demographics?.name || s.formData?.personalData?.clientFullName || "Testing Client",
+                clientCode: clientObj?.clientId || "N/A",
+                date: format(dateObj, "dd/MM/yyyy"),
+                time: (s as any).time || s.formData?.personalData?.sessionTime || s.formData?.personalData?.time || "09:00 - 09:25",
+                duration: "25 minit"
+            };
+        });
     };
 
     // 8. Lampiran I: Consultation Register
@@ -386,7 +375,8 @@ export default function BorangUmumPage() {
         const indivHours = sessions.filter(s => s.formType === "Form2").reduce((sum, s) => sum + (s.duration || 1.0), 0);
         const groupHours = sessions.filter(s => s.formType === "Form11").reduce((sum, s) => sum + (s.duration || 1.7), 0);
         const pfaHours = logs.filter(l => l.category === "PFA/MHPSS").reduce((sum, l) => sum + l.hours, 0);
-        const testHours = logs.filter(l => l.category === "Testing & Assessment").reduce((sum, l) => sum + l.hours, 0) + sessions.filter(s => s.formType === "Form13").reduce((sum, s) => sum + (s.duration || 1.0), 0);
+        const testSessionsCount = sessions.filter(s => s.formType === "Form13").slice(0, 99).length;
+        const testHours = testSessionsCount * (25 / 60);
         
         const consultHours = logs.filter(l => l.category === "Management & Admin" && (l.description.toLowerCase().includes("consult") || l.description.toLowerCase().includes("rujukan"))).reduce((sum, l) => sum + l.hours, 0);
         const adminHours = logs.filter(l => l.category === "Management & Admin").reduce((sum, l) => sum + l.hours, 0);
