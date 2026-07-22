@@ -2189,12 +2189,14 @@ export const generateCounselorProfilePDF = async (data: any): Promise<Blob> => {
         [
             { content: "Nama:", styles: { fontStyle: 'bold' } },
             { content: renderStr(pi.name) },
-            { content: "Email:", styles: { fontStyle: 'bold' } },
-            { content: renderStr(pi.email) }
+            { content: "No. Matriks:", styles: { fontStyle: 'bold' } },
+            { content: renderStr(pi.matricNumber) }
         ],
         [
-            { content: "Semester/Tahun:", styles: { fontStyle: 'bold' } },
-            { content: renderStr(ci.semester), colSpan: 3 }
+            { content: "No. Telefon:", styles: { fontStyle: 'bold' } },
+            { content: renderStr(pi.phone) },
+            { content: "Email:", styles: { fontStyle: 'bold' } },
+            { content: renderStr(pi.email) }
         ],
         // Section: Maklumat Penyelia Lapangan
         [{ content: "Maklumat Penyelia Lapangan / Local Preceptor", colSpan: 4, styles: { fontStyle: 'bold', fillColor: [240, 240, 240] } }],
