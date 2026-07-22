@@ -51,7 +51,7 @@ export default function CounselorProfilePage() {
         async function loadProfile() {
             if (!user) return;
             try {
-                const docRef = doc(db, "counselorProfiles", `counselor_${user.uid}`);
+                const docRef = doc(db, "trainee_profiles", user.uid);
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
                     const data = docSnap.data();
@@ -115,7 +115,7 @@ export default function CounselorProfilePage() {
         if (!user) return;
         setIsSaving(true);
         try {
-            const docRef = doc(db, "counselorProfiles", `counselor_${user.uid}`);
+            const docRef = doc(db, "trainee_profiles", user.uid);
             await setDoc(docRef, {
                 traineeId: user.uid,
                 photoUrl: photo,
