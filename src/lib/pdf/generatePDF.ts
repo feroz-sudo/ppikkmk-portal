@@ -2045,3 +2045,337 @@ const generateForm13PDF = async (session: Session, client: Client, clinicalId?: 
 
     return doc.output('blob');
 };
+
+export const generateCounselorProfilePDF = async (data: any): Promise<Blob> => {
+    const doc = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4'
+    });
+
+    const pi = data.personalInfo || {};
+    const ci = data.contractInfo || {};
+    const sigs = data.signatures || {};
+
+    const renderStr = (val: any) => val !== undefined && val !== null && val !== "" ? String(val) : "";
+
+    // -------------------------------------------------------------
+    // PAGE 1: MAKLUMAT DIRI KAUNSELOR PELATIH
+    // -------------------------------------------------------------
+    // Passport photo box
+    doc.rect(85, 12, 40, 48);
+    if (data.photoUrl) {
+        try {
+            doc.addImage(data.photoUrl, 'PNG', 85, 12, 40, 48);
+        } catch (e) {
+            console.warn("Could not load passport photo", e);
+        }
+    } else {
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(8);
+        doc.text("Gambar Passport", 105, 36, { align: 'center' });
+    }
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(11);
+    doc.text("MAKLUMAT DIRI KAUNSELOR PELATIH", 105, 68, { align: 'center' });
+
+    doc.setFontSize(10);
+    // Row: Nama
+    doc.text("Nama:", 15, 78);
+    doc.setFont('helvetica', 'normal');
+    doc.text(renderStr(pi.name), 28, 78);
+    doc.line(28, 79, 195, 79);
+
+    // Row: No. Matriks & No. Kad Pengenalan
+    doc.setFont('helvetica', 'bold');
+    doc.text("No. Matriks:", 15, 88);
+    doc.setFont('helvetica', 'normal');
+    doc.text(renderStr(pi.matricNumber), 38, 88);
+    doc.line(38, 89, 95, 89);
+
+    doc.setFont('helvetica', 'bold');
+    doc.text("No.Kad Pengenalan:", 102, 88);
+    doc.setFont('helvetica', 'normal');
+    doc.text(renderStr(pi.icNumber), 138, 88);
+    doc.line(138, 89, 195, 89);
+
+    // Row: Alamat Tetap
+    doc.setFont('helvetica', 'bold');
+    doc.text("Alamat Tetap:", 15, 98);
+    doc.setFont('helvetica', 'normal');
+    const splitAddr = doc.splitTextToSize(renderStr(pi.address), 155);
+    doc.text(splitAddr, 40, 98);
+    doc.line(40, 99, 195, 99);
+    doc.line(15, 109, 195, 109);
+
+    // Row: No. Telefon
+    doc.setFont('helvetica', 'bold');
+    doc.text("No. Telefon:", 15, 119);
+    doc.setFont('helvetica', 'normal');
+    doc.text(renderStr(pi.phone), 38, 119);
+    doc.line(38, 119, 195, 119);
+
+    // Row: Email
+    doc.setFont('helvetica', 'bold');
+    doc.text("Email:", 15, 129);
+    doc.setFont('helvetica', 'normal');
+    doc.text(renderStr(pi.email), 28, 129);
+    doc.line(28, 129, 195, 129);
+
+    // Row: Tempat Praktikum
+    doc.setFont('helvetica', 'bold');
+    doc.text("Tempat Praktikum:", 15, 144);
+    doc.setFont('helvetica', 'normal');
+    doc.text(renderStr(pi.practicumSite), 48, 144);
+    doc.line(48, 144, 195, 144);
+
+    // Row: Alamat Tempat Praktikum
+    doc.setFont('helvetica', 'bold');
+    doc.text("Alamat Tempat Praktikum:", 15, 154);
+    doc.setFont('helvetica', 'normal');
+    const splitSiteAddr = doc.splitTextToSize(renderStr(pi.practicumSiteAddress), 135);
+    doc.text(splitSiteAddr, 60, 154);
+    doc.line(60, 155, 195, 155);
+    doc.line(15, 165, 195, 165);
+
+    // Row: Emergency Contact
+    doc.setFont('helvetica', 'bold');
+    doc.text("Nama dan Nombor Telefon yang boleh dihubungi ketika kecemasan:", 15, 175);
+    doc.setFont('helvetica', 'normal');
+    doc.text(renderStr(pi.emergencyContact), 15, 185);
+    doc.line(15, 186, 195, 186);
+
+    // -------------------------------------------------------------
+    // PAGE 2: KONTRAK PRAKTIKUM KAUNSELING KESIHATAN MENTAL KLINIKAL
+    // -------------------------------------------------------------
+    doc.addPage();
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(11);
+    doc.text("KONTRAK PRAKTIKUM KAUNSELING KESIHATAN MENTAL KLINIKAL", 105, 18, { align: 'center' });
+
+    const contractTable = [
+        // Section: Maklumat Praktikum
+        [{ content: "Maklumat Praktikum", colSpan: 4, styles: { fontStyle: 'bold', fillColor: [240, 240, 240] } }],
+        [
+            { content: "Tapak Internship:", styles: { fontStyle: 'bold' } },
+            { content: renderStr(ci.internshipSite) },
+            { content: "Semester/Tahun:", styles: { fontStyle: 'bold' } },
+            { content: renderStr(ci.semester) }
+        ],
+        // Section: Maklumat Kaunselor Pelatih
+        [{ content: "Maklumat Kaunselor Pelatih", colSpan: 4, styles: { fontStyle: 'bold', fillColor: [240, 240, 240] } }],
+        [
+            { content: "Nama:", styles: { fontStyle: 'bold' } },
+            { content: renderStr(pi.name) },
+            { content: "Email:", styles: { fontStyle: 'bold' } },
+            { content: renderStr(pi.email) }
+        ],
+        [
+            { content: "Semester/Tahun:", styles: { fontStyle: 'bold' } },
+            { content: renderStr(ci.semester), colSpan: 3 }
+        ],
+        // Section: Maklumat Penyelia Lapangan
+        [{ content: "Maklumat Penyelia Lapangan / Local Preceptor", colSpan: 4, styles: { fontStyle: 'bold', fillColor: [240, 240, 240] } }],
+        [
+            { content: "Nama:", styles: { fontStyle: 'bold' } },
+            { content: renderStr(ci.localPreceptorName) },
+            { content: "Telefon:", styles: { fontStyle: 'bold' } },
+            { content: renderStr(ci.localPreceptorPhone) }
+        ],
+        [
+            { content: "Email:", styles: { fontStyle: 'bold' } },
+            { content: renderStr(ci.localPreceptorEmail), colSpan: 3 }
+        ],
+        // Section: Maklumat Penyelia Akademik
+        [{ content: "Maklumat Penyelia Akademik", colSpan: 4, styles: { fontStyle: 'bold', fillColor: [240, 240, 240] } }],
+        [
+            { content: "Nama:", styles: { fontStyle: 'bold' } },
+            { content: renderStr(ci.academicSupervisorName) },
+            { content: "Telefon:", styles: { fontStyle: 'bold' } },
+            { content: renderStr(ci.academicSupervisorPhone) }
+        ],
+        [
+            { content: "Email:", styles: { fontStyle: 'bold' } },
+            { content: renderStr(ci.academicSupervisorEmail), colSpan: 3 }
+        ],
+        // Section: Maklumat Penyelaras Praktikum
+        [{ content: "Maklumat Penyelaras Praktikum", colSpan: 4, styles: { fontStyle: 'bold', fillColor: [240, 240, 240] } }],
+        [
+            { content: "Nama:", styles: { fontStyle: 'bold' } },
+            { content: renderStr(ci.coordinatorName) },
+            { content: "Email:", styles: { fontStyle: 'bold' } },
+            { content: renderStr(ci.coordinatorEmail), colSpan: 3 }
+        ]
+    ];
+
+    autoTable(doc, {
+        startY: 24,
+        theme: 'grid',
+        styles: { font: 'helvetica', fontSize: 8.5, cellPadding: 2, lineColor: [0, 0, 0], lineWidth: 0.2, textColor: [0, 0, 0] },
+        columnStyles: {
+            0: { cellWidth: 45 },
+            1: { cellWidth: 45 },
+            2: { cellWidth: 45 },
+            3: { cellWidth: 45 }
+        },
+        body: contractTable as any,
+    });
+
+    let yPos = (doc as any).lastAutoTable.finalY + 8;
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9.5);
+    const contractIntro = `Perjanjian ini adalah antara pelajar ${renderStr(pi.name)}, yang kemudiannya dipanggil kaunselor pelatih praktikum, Jabatan Psikologi dan Kaunseling, Fakulti Pembangunan Manusia, Universiti Pendidikan Sultan Idris (UPSI) Tanjung Malim Perak, kemudiannya dipanggil universiti, dan ${renderStr(ci.internshipSite)}, selepas ini dirujuk sebagai tapak praktikum. Kaunselor pelatih, universiti, dan tapak internship dengan ini membuat dan bersetuju dengan syarat berikut:`;
+    const splitIntro = doc.splitTextToSize(contractIntro, 180);
+    doc.text(splitIntro, 15, yPos);
+    yPos += (splitIntro.length * 4.5) + 6;
+
+    doc.setFont('helvetica', 'bold');
+    doc.text("I. Tempoh", 15, yPos);
+    yPos += 5;
+    doc.setFont('helvetica', 'normal');
+    const startDateStr = ci.startDate ? new Date(ci.startDate).toLocaleDateString() : "_______________";
+    const endDateStr = ci.endDate ? new Date(ci.endDate).toLocaleDateString() : "_______________";
+    const tempohText = `Tempoh perjanjian ini bermula pada ${startDateStr} dan berakhir pada ${endDateStr}, untuk memenuhi keperluan minimum praktikum sebanyak 252 jam. Walau bagaimanapun, perjanjian itu boleh ditamatkan, oleh mana-mana pihak dengan pemberitahuan bertulis.`;
+    const splitTempoh = doc.splitTextToSize(tempohText, 180);
+    doc.text(splitTempoh, 15, yPos);
+    yPos += (splitTempoh.length * 4.5) + 6;
+
+    doc.setFont('helvetica', 'bold');
+    doc.text("II. Tugas dan Tanggungjawab", 15, yPos);
+    yPos += 5;
+    doc.text("A. Kaunselor Pelatih.", 15, yPos);
+    doc.setFont('helvetica', 'normal');
+    const tugasText = `Kaunselor pelatih bertanggungjawab untuk melaksanakan tugas yang diberikan secara profesional dan bertindak balas terhadap penyeliaan dengan sewajarnya. Kaunselor pelatih harus mematuhi semua kod etika dan undang-undang profesion dan harus mematuhi semua peraturan dan undang-undang di tapak praktikum. Kaunselor pelatih diharap mematuhi semua polisi dan prosedur tapak internship dan diharap menjaga kerahsiaan semua rekod dan maklumat klien.`;
+    const splitTugas = doc.splitTextToSize(tugasText, 180);
+    doc.text(splitTugas, 15, yPos + 5);
+
+    // -------------------------------------------------------------
+    // PAGE 3: KONTRAK PRAKTIKUM (Sambungan & Tandatangan)
+    // -------------------------------------------------------------
+    doc.addPage();
+    yPos = 20;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9.5);
+    doc.text("B. Tapak Praktikum.", 15, yPos);
+    doc.setFont('helvetica', 'normal');
+    const tapakText = `Pihak tapak praktikum akan melantik penyelia lapangan yang mempunyai kelayakan, masa dan minat yang sesuai untuk melatih kaunselor pelatih. Penyelia lapangan perlu memastikan peluang yang mencukupi diberi kepada kaunselor pelatih untuk melibatkan diri dalam pelbagai aktiviti kaunseling di bawah pengawasan, selain menyediakan kaunselor pelatih dengan ruang kerja, telefon, peralatan pejabat dan kakitangan yang mencukupi untuk menjalankan aktiviti professional. Selain hubungan penyeliaan yang melibatkan beberapa pemeriksaan kerja kaunselor pelatih menggunakan pita audiovisual, pemerhatian, dan/atau penyeliaan langsung, penyelia lapngan juga akan melaksanakan penilaian bertulis kepada kaunselor pelatih berdasarkan kriteria yang ditetapkan oleh universiti.`;
+    const splitTapak = doc.splitTextToSize(tapakText, 180);
+    doc.text(splitTapak, 15, yPos + 5);
+    yPos += (splitTapak.length * 4.5) + 12;
+
+    doc.setFont('helvetica', 'bold');
+    doc.text("C. Universiti.", 15, yPos);
+    doc.setFont('helvetica', 'normal');
+    const uniText = `Universiti akan terlibat secara aktif dalam mengawasi pengalaman kaunselor pelatih semasa menjalani praktikum. Universiti akan mengekalkan hubungan dengan kaunselor pelatih dan tapak untuk memastikan tugas dan tanggungjawab dipatuhi. Justeru itu, pihak universiti dan penyelaras program yang ditetapkan akan terlibat dalam sebarang masalah yang timbul antara kaunselor pelatih dan tapak praktikum. Penyelaras program hendaklah dimaklumkan dengan segera apabila masalah berlaku dan hendaklah terlibat dalam sebarang keputusan yang boleh menjejaskan praktikum.`;
+    const splitUni = doc.splitTextToSize(uniText, 180);
+    doc.text(splitUni, 15, yPos + 5);
+    yPos += (splitUni.length * 4.5) + 12;
+
+    doc.setFont('helvetica', 'bold');
+    doc.text("III. Insurans.", 15, yPos);
+    doc.setFont('helvetica', 'normal');
+    const insText = `Pelajar yang mendaftar dalam program Sarjana Kaunseling Kesihatan Mental Klinikal ini diwajibkan memiliki Insurans Perubatan dan / atau insurans Indemniti dan insurans lain yang selaras dengan keperluan tapak internship dan praktikum.`;
+    const splitIns = doc.splitTextToSize(insText, 180);
+    doc.text(splitIns, 15, yPos + 5);
+    yPos += (splitIns.length * 4.5) + 12;
+
+    doc.setFont('helvetica', 'bold');
+    doc.text("IV. Penilaian.", 15, yPos);
+    doc.setFont('helvetica', 'normal');
+    const penText = `Pada pertengahan dan akhir praktikum, penyelia akademik akan melengkapkan penilaian prestasi kaunselor pelatih pada borang penilaian yang telah disediakan dalam buku log ini.`;
+    const splitPen = doc.splitTextToSize(penText, 180);
+    doc.text(splitPen, 15, yPos + 5);
+    yPos += (splitPen.length * 4.5) + 18;
+
+    doc.setFont('helvetica', 'bold');
+    doc.text("VII. Tandatangan", 15, yPos);
+    yPos += 12;
+
+    const signatureDateStr = sigs.contractDate ? new Date(sigs.contractDate).toLocaleDateString() : "__________________";
+    
+    // Trainee Signature block
+    doc.text("Kaunselor Pelatih", 15, yPos);
+    doc.text(`Tarikh: ${signatureDateStr}`, 120, yPos);
+    yPos += 18;
+
+    // Field Supervisor Signature block
+    doc.text("Penyelia Lapangan Praktikum", 15, yPos);
+    doc.text(`Tarikh: __________________`, 120, yPos);
+    yPos += 18;
+
+    // Academic Supervisor Signature block
+    doc.text("Penyelia Akademik Praktikum", 15, yPos);
+    doc.text(`Tarikh: __________________`, 120, yPos);
+
+    // -------------------------------------------------------------
+    // PAGE 4: PERJANJIAN PRAKTIKUM KAUNSELOR PELATIH
+    // -------------------------------------------------------------
+    doc.addPage();
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(11);
+    doc.text("PERJANJIAN PRAKTIKUM KAUNSELOR PELATIH", 105, 18, { align: 'center' });
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    yPos = 30;
+
+    const agreementClauses = [
+        "Saya mengaku bahawa saya telah membaca dan memahami Kod Etika Lembaga Kaunselor Malaysia dan akan mempraktikkan kaunseling seiring dengan standard yang telah ditetapkan. Sebarang perlanggaran etika atau tingkah laku tidak beretika yang dilakukan oleh saya akan mengakibatkan penamatan dan kegagalan praktikum. Dokumentasi berkaitan perlanggaran etika ini akan menjadi sebahagian daripada rekod praktikum kaunseling.",
+        "Saya faham bahawa saya juga perlu mematuhi kod etika profesion di tempat saya melaksanakan praktikum.",
+        "Saya bersetuju untuk mematuhi polisi pentadbiran, peraturan, standard dan amalan di tempat praktikum dan akan memastikan saya bertingkah laku secara professional.",
+        "Saya faham tanggungjawab saya termasuk memaklumkan perkembangan praktikum kepada pensyarah penyelia dan pegawai di penempatan praktikum.",
+        "Saya faham tidak akan diberi gred lulus dalam praktikum jika saya tidak mempamerkan kemahiran kaunseling, pengetahun, dan kecekapan yang memuaskan atau / dan jika saya tidak melengkapkan kursus da tugasan yang diperlukan."
+    ];
+
+    agreementClauses.forEach((clause) => {
+        const splitClause = doc.splitTextToSize(clause, 180);
+        doc.text(splitClause, 15, yPos);
+        yPos += (splitClause.length * 5) + 6;
+    });
+
+    yPos += 10;
+    doc.setFont('helvetica', 'bold');
+    doc.text("Tandatangan kaunselor pelatih :", 15, yPos);
+    doc.setFont('helvetica', 'normal');
+    doc.text(renderStr(sigs.traineeSignature), 75, yPos);
+    doc.line(75, yPos + 1, 195, yPos + 1);
+    yPos += 10;
+
+    doc.setFont('helvetica', 'bold');
+    doc.text("Nama kaunselor pelatih :", 15, yPos);
+    doc.setFont('helvetica', 'normal');
+    doc.text(renderStr(pi.name), 75, yPos);
+    doc.line(75, yPos + 1, 195, yPos + 1);
+    yPos += 10;
+
+    doc.setFont('helvetica', 'bold');
+    doc.text("No. Matrik :", 15, yPos);
+    doc.setFont('helvetica', 'normal');
+    doc.text(renderStr(pi.matricNumber), 75, yPos);
+    doc.line(75, yPos + 1, 195, yPos + 1);
+    yPos += 10;
+
+    doc.setFont('helvetica', 'bold');
+    doc.text("Tarikh :", 15, yPos);
+    doc.setFont('helvetica', 'normal');
+    doc.text(signatureDateStr, 75, yPos);
+    doc.line(75, yPos + 1, 195, yPos + 1);
+
+    // Header & Footer references on all pages
+    const pageCount = (doc as any).internal.getNumberOfPages();
+    for (let i = 1; i <= pageCount; i++) {
+        doc.setPage(i);
+        doc.setFont('helvetica', 'italic');
+        doc.setFontSize(9);
+        doc.text("Maklumat_Diri_Kontrak/CMHC_UPSI/01-2025", 195, 10, { align: 'right' });
+
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9.5);
+        doc.setTextColor(50, 50, 50);
+        doc.text("Confidential Document (For Professional Use Only)", 15, 285);
+    }
+
+    return doc.output('blob');
+};

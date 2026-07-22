@@ -35,7 +35,8 @@ import {
     UserCheck,
     Activity,
     Inbox,
-    FolderOpen
+    FolderOpen,
+    User as UserIcon
 } from "lucide-react";
 import { Disclaimer } from "@/components/Disclaimer";
 import { collection, query, where, getDocs } from "firebase/firestore";
@@ -214,6 +215,10 @@ function SidebarNavContent({
                     <Link href="/dashboard/borang-umum" onClick={handleLinkClick} className={getLinkClass("/dashboard/borang-umum")}>
                         <FolderOpen size={20} />
                         <span>Borang Umum / Lampiran A-I</span>
+                    </Link>
+                    <Link href="/dashboard/counselor-profile" onClick={handleLinkClick} className={getLinkClass("/dashboard/counselor-profile")}>
+                        <UserIcon size={20} />
+                        <span>Maklumat Diri / Kontrak</span>
                     </Link>
                     <Link href="/dashboard/sessions" onClick={handleLinkClick} className={getLinkClass("/dashboard/sessions")}>
                         <HistoryIcon size={20} />
