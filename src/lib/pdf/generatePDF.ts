@@ -1713,12 +1713,20 @@ const generateForm8PDF = async (session: Session, client: Client, clinicalId?: s
     }
 
     try {
-        const logoRes = await fetch('/upsi-logo.png');
-        const buffer = await logoRes.arrayBuffer();
-        let binary = '';
-        const bytes = new Uint8Array(buffer);
-        for (let i = 0; i < bytes.byteLength; i++) { binary += String.fromCharCode(bytes[i]); }
-        const base64 = typeof window !== 'undefined' ? window.btoa(binary) : Buffer.from(binary, 'binary').toString('base64');
+        let base64 = "";
+        if (typeof window !== 'undefined') {
+            const logoRes = await fetch('/upsi-logo.png');
+            const buffer = await logoRes.arrayBuffer();
+            let binary = '';
+            const bytes = new Uint8Array(buffer);
+            for (let i = 0; i < bytes.byteLength; i++) { binary += String.fromCharCode(bytes[i]); }
+            base64 = window.btoa(binary);
+        } else {
+            const fsModule = require('fs');
+            const pathModule = require('path');
+            const imgBuffer = fsModule.readFileSync(pathModule.join(process.cwd(), 'public/upsi-logo.png'));
+            base64 = imgBuffer.toString('base64');
+        }
         doc.addImage(`data:image/png;base64,${base64}`, 'PNG', 15, 12, 45, 20);
     } catch (e) {
         console.warn("Could not load logos for PDF", e);
