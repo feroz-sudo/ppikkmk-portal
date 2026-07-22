@@ -397,6 +397,14 @@ export default function BorangUmumPage() {
 
     const totals = calculatePenilaianTotals();
 
+    // Sum totals for each appendix
+    const totalIndivHours = getIndividualSessions().reduce((sum, s) => sum + parseFloat(s.duration.replace(" jam", "") || "0"), 0);
+    const totalGroupHours = getGroupSessions().reduce((sum, s) => sum + parseFloat(s.duration.replace(" jam", "") || "0"), 0);
+    const totalPFAHours = getPFARegister().reduce((sum, s) => sum + parseFloat(s.duration.replace(" jam", "") || "0"), 0);
+    const totalTestingHours = getTestingRegister().length * (25 / 60);
+    const totalConsultHours = getConsultationRegister().reduce((sum, s) => sum + parseFloat(s.duration.replace(" jam", "") || "0"), 0);
+    const totalPDHours = getPDRegister().reduce((sum, s) => sum + parseFloat(s.duration.replace(" jam", "") || "0"), 0);
+
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-[400px]">
@@ -621,6 +629,10 @@ export default function BorangUmumPage() {
                                             </tr>
                                         ))
                                     )}
+                                    <tr className="bg-slate-50 font-black text-center text-xs">
+                                        <td colSpan={6} className="border border-slate-900 p-2 text-right">JUMLAH JAM:</td>
+                                        <td className="border border-slate-900 p-2 text-upsi-navy">{totalIndivHours.toFixed(1)} jam</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -656,7 +668,7 @@ export default function BorangUmumPage() {
                                             <tr key={s.bil} className="hover:bg-slate-50/50 text-center">
                                                 <td className="border border-slate-900 p-2 font-bold">{s.bil}</td>
                                                 <td className="border border-slate-900 p-2 text-left font-bold">{s.groupName}</td>
-                                                <td className="border border-slate-900 p-2 font-bold">{s.memberCount}</td>
+                                                <td className="border border-slate-900 p-2 font-bold text-emerald-600">{s.memberCount}</td>
                                                 <td className="border border-slate-900 p-2">{s.date}</td>
                                                 <td className="border border-slate-900 p-2">{s.time}</td>
                                                 <td className="border border-slate-900 p-2 font-bold text-upsi-navy">{s.sessionNo}</td>
@@ -664,6 +676,10 @@ export default function BorangUmumPage() {
                                             </tr>
                                         ))
                                     )}
+                                    <tr className="bg-slate-50 font-black text-center text-xs">
+                                        <td colSpan={6} className="border border-slate-900 p-2 text-right">JUMLAH JAM:</td>
+                                        <td className="border border-slate-900 p-2 text-upsi-navy">{totalGroupHours.toFixed(1)} jam</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -792,6 +808,10 @@ export default function BorangUmumPage() {
                                             </tr>
                                         ))
                                     )}
+                                    <tr className="bg-slate-50 font-black text-center text-xs">
+                                        <td colSpan={5} className="border border-slate-900 p-2 text-right">JUMLAH JAM:</td>
+                                        <td className="border border-slate-900 p-2 text-upsi-navy">{totalPFAHours.toFixed(1)} jam</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -833,6 +853,10 @@ export default function BorangUmumPage() {
                                             </tr>
                                         ))
                                     )}
+                                    <tr className="bg-slate-50 font-black text-center text-xs">
+                                        <td colSpan={5} className="border border-slate-900 p-2 text-right">JUMLAH JAM:</td>
+                                        <td className="border border-slate-900 p-2 text-upsi-navy">{totalTestingHours.toFixed(2)} jam</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -874,6 +898,10 @@ export default function BorangUmumPage() {
                                             </tr>
                                         ))
                                     )}
+                                    <tr className="bg-slate-50 font-black text-center text-xs">
+                                        <td colSpan={5} className="border border-slate-900 p-2 text-right">JUMLAH JAM:</td>
+                                        <td className="border border-slate-900 p-2 text-upsi-navy">{totalConsultHours.toFixed(1)} jam</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -913,6 +941,10 @@ export default function BorangUmumPage() {
                                             </tr>
                                         ))
                                     )}
+                                    <tr className="bg-slate-50 font-black text-center text-xs">
+                                        <td colSpan={4} className="border border-slate-900 p-2 text-right">JUMLAH JAM:</td>
+                                        <td className="border border-slate-900 p-2 text-upsi-navy">{totalPDHours.toFixed(1)} jam</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
