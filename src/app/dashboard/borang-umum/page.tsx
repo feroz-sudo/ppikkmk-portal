@@ -333,12 +333,17 @@ export default function BorangUmumPage() {
 
     // 7. Lampiran H: Testing Register
     const getTestingRegister = () => {
-        const form13Sessions = sessions
+        const form13Sessions = [...sessions]
             .filter(s => s.formType === "Form13")
             .sort((a, b) => {
-                const dateA = getJsDate(a.date);
-                const dateB = getJsDate(b.date);
-                return dateA.getTime() - dateB.getTime();
+                const dateA = getJsDate(a.date).getTime();
+                const dateB = getJsDate(b.date).getTime();
+                if (dateA !== dateB) return dateA - dateB;
+
+                const timeA = (a as any).time || a.formData?.personalData?.sessionTime || a.formData?.personalData?.time || "";
+                const timeB = (b as any).time || b.formData?.personalData?.sessionTime || b.formData?.personalData?.time || "";
+                if (timeA && timeB) return timeA.localeCompare(timeB);
+                return (a.sessionId || "").localeCompare(b.sessionId || "");
             })
             .slice(0, 99);
 
