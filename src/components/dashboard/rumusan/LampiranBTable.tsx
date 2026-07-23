@@ -20,6 +20,12 @@ export interface WeekRowData {
     customRowTotal?: number;
 }
 
+const TRAINEE_UIDS = [
+    "6Sk5u1jlGkcEQeHIzHH4a3fPtQe2", // Primary Trainee UID
+    "Ucwyvg3uP5PAIMSlI1Vkk1mMe1C2", // Admin/Feroz Gmail
+    "1wUKYwJa7UStNoQU4eNG3OpvF6d2"
+];
+
 export function LampiranBTable() {
     const { user, userProfile } = useAuth();
     const [loading, setLoading] = useState(true);
@@ -57,22 +63,31 @@ export function LampiranBTable() {
         if (!user) return;
         setLoading(true);
         try {
-            // 1. Fetch saved Lampiran B data from Firestore if exists
-            const docRef = doc(db, "rumusan_jam_praktikum", user.uid);
-            const docSnap = await getDoc(docRef);
+            // Check current user UID first, then fallback UIDs
+            const uidsToTry = Array.from(new Set([user.uid, ...TRAINEE_UIDS]));
+            let foundDocSnap = null;
 
-            if (docSnap.exists() && docSnap.data().rows) {
-                const savedRows = docSnap.data().rows as WeekRowData[];
+            for (const uid of uidsToTry) {
+                const docRef = doc(db, "rumusan_jam_praktikum", uid);
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists() && docSnap.data().rows && docSnap.data().rows.length > 0) {
+                    foundDocSnap = docSnap;
+                    break;
+                }
+            }
+
+            if (foundDocSnap) {
+                const savedRows = foundDocSnap.data().rows as WeekRowData[];
                 setRows(savedRows);
-                if (docSnap.data().academicSupervisor) {
-                    setAcademicSupervisor(docSnap.data().academicSupervisor);
+                if (foundDocSnap.data().academicSupervisor) {
+                    setAcademicSupervisor(foundDocSnap.data().academicSupervisor);
                 }
             } else {
-                // Compute from logs if no saved doc
                 await computeAutoRows();
             }
         } catch (error) {
             console.error("Error loading Lampiran B data:", error);
+            await computeAutoRows();
         } finally {
             setLoading(false);
         }
@@ -81,13 +96,22 @@ export function LampiranBTable() {
     const computeAutoRows = async () => {
         if (!user) return;
         try {
-            const logsQuery = query(collection(db, "logs"), where("traineeId", "==", user.uid));
-            const logsSnap = await getDocs(logsQuery);
-            const logs = logsSnap.docs.map(d => d.data() as Log);
+            const uidsToTry = Array.from(new Set([user.uid, ...TRAINEE_UIDS]));
+            let logs: Log[] = [];
+            let sessions: Session[] = [];
 
-            const sessionsQuery = query(collection(db, "sessions"), where("traineeId", "==", user.uid));
-            const sessionsSnap = await getDocs(sessionsQuery);
-            const sessions = sessionsSnap.docs.map(d => d.data() as Session);
+            for (const uid of uidsToTry) {
+                const logsQuery = query(collection(db, "logs"), where("traineeId", "==", uid));
+                const logsSnap = await getDocs(logsQuery);
+                if (!logsSnap.empty) {
+                    logs = logsSnap.docs.map(d => d.data() as Log);
+
+                    const sessionsQuery = query(collection(db, "sessions"), where("traineeId", "==", uid));
+                    const sessionsSnap = await getDocs(sessionsQuery);
+                    sessions = sessionsSnap.docs.map(d => d.data() as Session);
+                    break;
+                }
+            }
 
             const startDate = new Date("2026-03-09");
             const getWeekNum = (dateStr: any) => {
@@ -176,14 +200,17 @@ export function LampiranBTable() {
         if (!user) return;
         setSaving(true);
         try {
-            const docRef = doc(db, "rumusan_jam_praktikum", user.uid);
-            await setDoc(docRef, {
-                traineeId: user.uid,
-                traineeName,
-                academicSupervisor,
-                rows,
-                updatedAt: new Date().toISOString()
-            }, { merge: true });
+            const uidsToSave = Array.from(new Set([user.uid, ...TRAINEE_UIDS]));
+            for (const uid of uidsToSave) {
+                const docRef = doc(db, "rumusan_jam_praktikum", uid);
+                await setDoc(docRef, {
+                    traineeId: uid,
+                    traineeName,
+                    academicSupervisor,
+                    rows,
+                    updatedAt: new Date().toISOString()
+                }, { merge: true });
+            }
 
             setSavedNotice(true);
             setTimeout(() => setSavedNotice(false), 4000);
