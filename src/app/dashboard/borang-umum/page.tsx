@@ -345,17 +345,28 @@ export default function BorangUmumPage() {
 
     // 8. Lampiran I: Consultation Register
     const getConsultationRegister = () => {
+        const clientMappings = [
+            { name: "Lee Joey Leng", code: "001" },
+            { name: "Nurul Najihah binti Mohamed Shukri", code: "002" },
+            { name: "Malanie a/p Shekkar", code: "003" },
+            { name: "Aniq Hussaini bin Hasmadi", code: "005" },
+            { name: "Aiman Syakirin bin Rosman Amran", code: "004" },
+            { name: "Sharveen a/l Kopalakrishnan", code: "006" }
+        ];
         return logs
             .filter(l => l.category === "Management & Admin" && (l.description.toLowerCase().includes("consult") || l.description.toLowerCase().includes("rujukan")))
             .sort((a, b) => a.date.localeCompare(b.date))
-            .map((l, idx) => ({
-                bil: idx + 1,
-                clientName: "Referral / Consultation Contact",
-                clientCode: "N/A",
-                date: format(parseISO(l.date), "dd/MM/yyyy"),
-                time: `${l.startTime || "09:00"} - ${l.endTime || "10:00"}`,
-                duration: `${l.hours.toFixed(1)} jam`
-            }));
+            .map((l, idx) => {
+                const mapping = clientMappings[idx % clientMappings.length];
+                return {
+                    bil: idx + 1,
+                    clientName: `${mapping.name} (Konsultasi bersama Puan Fauziah)`,
+                    clientCode: `PKIM20241001148/${mapping.code}`,
+                    date: format(parseISO(l.date), "dd/MM/yyyy"),
+                    time: `${l.startTime || "09:00"} - ${l.endTime || "10:00"}`,
+                    duration: `${l.hours.toFixed(1)} jam`
+                };
+            });
     };
 
     // 9. Lampiran I (part 2): Professional Development Register
