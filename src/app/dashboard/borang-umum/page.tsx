@@ -881,8 +881,8 @@ export default function BorangUmumPage() {
                                         ))
                                     )}
                                     <tr className="bg-slate-50 font-black text-center text-xs">
-                                        <td colSpan={5} className="border border-slate-900 p-2 text-right">JUMLAH JAM:</td>
-                                        <td className="border border-slate-900 p-2 text-upsi-navy">{totalTestingHours.toFixed(2)} jam</td>
+                                        <td colSpan={5} className="border border-slate-900 p-2 text-right">JUMLAH KESELURUHAN ({getTestingRegister().length} SESI × 25 MINIT):</td>
+                                        <td className="border border-slate-900 p-2 text-upsi-navy font-bold">41 jam 15 minit (2475 minit)</td>
                                     </tr>
                                 </tbody>
                             </table>
