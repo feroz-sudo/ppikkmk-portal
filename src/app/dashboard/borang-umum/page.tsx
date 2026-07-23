@@ -297,25 +297,38 @@ export default function BorangUmumPage() {
 
     // 6. Lampiran G: PFA Register
     const getPFARegister = () => {
-        return logs
-            .filter(l => l.category === "PFA/MHPSS")
-            .sort((a, b) => a.date.localeCompare(b.date))
-            .map((l, idx) => {
-                let clientName = "Hotline PFA Client";
-                let clientCode = "N/A";
-                const desc = l.description || "";
-                if (desc.includes("-")) {
-                    clientName = desc.split("-")[1]?.trim() || clientName;
-                }
-                return {
-                    bil: idx + 1,
-                    clientName,
-                    clientCode,
-                    date: format(parseISO(l.date), "dd/MM/yyyy"),
-                    time: `${l.startTime || "09:00"} - ${l.endTime || "09:30"}`,
-                    duration: `${l.hours.toFixed(1)} jam`
-                };
-            });
+        const pfaSessions = sessions
+            .filter(s => s.formType === "Form8" && ((s as any).pfaNumber || (s.formData?.logisticsData?.programName && s.formData.logisticsData.programName.includes("Student Disciplinary Hearing PFA"))))
+            .sort((a, b) => ((a as any).pfaNumber || 0) - ((b as any).pfaNumber || 0));
+
+        return pfaSessions.map((s, idx) => {
+            let clientName = s.formData?.logisticsData?.clientName || s.formData?.logisticsData?.programName || "PFA Client";
+            if (clientName.includes("—")) {
+                clientName = clientName.split("—")[1]?.split("(")[0]?.trim() || clientName;
+            } else if (clientName.includes("-")) {
+                clientName = clientName.split("-")[1]?.split("(")[0]?.trim() || clientName;
+            }
+
+            let dateStr = "";
+            if (s.date) {
+                const dateObj = getJsDate(s.date);
+                dateStr = format(dateObj, "dd/MM/yyyy");
+            }
+            if (!dateStr && s.formData?.logisticsData?.dateTime) {
+                dateStr = s.formData.logisticsData.dateTime.split(",")[0]?.trim();
+            }
+
+            const timeStr = (s as any).time || s.formData?.logisticsData?.dateTime?.split(",")[1]?.trim() || "14:30 - 15:05";
+
+            return {
+                bil: idx + 1,
+                clientName,
+                clientCode: "N/A",
+                date: dateStr,
+                time: timeStr,
+                duration: "35 minit"
+            };
+        });
     };
 
     // 7. Lampiran H: Testing Register
@@ -387,7 +400,8 @@ export default function BorangUmumPage() {
     const calculatePenilaianTotals = () => {
         const indivHours = sessions.filter(s => s.formType === "Form2").reduce((sum, s) => sum + (s.duration || 1.0), 0);
         const groupHours = sessions.filter(s => s.formType === "Form11").reduce((sum, s) => sum + (s.duration || 1.7), 0);
-        const pfaHours = logs.filter(l => l.category === "PFA/MHPSS").reduce((sum, l) => sum + l.hours, 0);
+        const pfaSessionsCount = sessions.filter(s => s.formType === "Form8" && ((s as any).pfaNumber || (s.formData?.logisticsData?.programName && s.formData.logisticsData.programName.includes("Student Disciplinary Hearing PFA")))).length;
+        const pfaHours = pfaSessionsCount * (35 / 60);
         const testSessionsCount = sessions.filter(s => s.formType === "Form13").slice(0, 99).length;
         const testHours = testSessionsCount * (25 / 60);
         
@@ -413,7 +427,7 @@ export default function BorangUmumPage() {
     // Sum totals for each appendix
     const totalIndivHours = getIndividualSessions().reduce((sum, s) => sum + parseFloat(s.duration.replace(" jam", "") || "0"), 0);
     const totalGroupHours = getGroupSessions().reduce((sum, s) => sum + parseFloat(s.duration.replace(" jam", "") || "0"), 0);
-    const totalPFAHours = getPFARegister().reduce((sum, s) => sum + parseFloat(s.duration.replace(" jam", "") || "0"), 0);
+    const totalPFAHours = getPFARegister().length * (35 / 60);
     const totalTestingHours = getTestingRegister().length * (25 / 60);
     const totalConsultHours = getConsultationRegister().reduce((sum, s) => sum + parseFloat(s.duration.replace(" jam", "") || "0"), 0);
     const totalPDHours = getPDRegister().reduce((sum, s) => sum + parseFloat(s.duration.replace(" jam", "") || "0"), 0);
