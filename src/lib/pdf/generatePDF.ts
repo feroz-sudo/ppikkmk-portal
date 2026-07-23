@@ -1554,17 +1554,22 @@ const generateForm7PDF = async (session: Session, client: Client, clinicalId?: s
     doc.setFontSize(13);
     doc.setTextColor(0, 0, 0);
     doc.text("CONSULTATION REPORT", 130, 18, { align: 'center' });
-    doc.setFontSize(11);
-    doc.text("PRACTICUM & INTERNSHIP IN CLINICAL MENTAL HEALTH COUNSELING", 130, 24, { align: 'center' });
-    doc.text("UNIVERSITI PENDIDIKAN SULTAN IDRIS", 130, 30, { align: 'center' });
+    doc.setFontSize(10);
+    doc.text("PRACTICUM & INTERNSHIP IN CLINICAL MENTAL HEALTH COUNSELING", 130, 25, { align: 'center' });
+    doc.text("UNIVERSITI PENDIDIKAN SULTAN IDRIS", 130, 31, { align: 'center' });
 
     const fd = session.formData || {};
     const ld = fd.logisticsData || {};
 
+    // Header info block — two rows to avoid clipping long institution name
     doc.setFontSize(9.5);
     doc.setFont('helvetica', 'bold');
-    doc.text(`Name: ${renderStr(ld.consultantName)}`, 15, 38);
-    doc.text(`Institution: ${renderStr(ld.institution)}`, 130, 38);
+    doc.text(`Name: ${renderStr(ld.consultantName)}`, 15, 39);
+    // Split institution to prevent overflow
+    const institutionLabel = `Institution: ${renderStr(ld.institution)}`;
+    const splitInstitution = doc.splitTextToSize(institutionLabel, 95);
+    doc.text(splitInstitution, 105, 39);
+    const headerInfoBottomY = 39 + (splitInstitution.length - 1) * 5 + 7;
 
     const tableBody = [
         [
@@ -1586,7 +1591,7 @@ const generateForm7PDF = async (session: Session, client: Client, clinicalId?: s
     ];
 
     autoTable(doc, {
-        startY: 42,
+        startY: headerInfoBottomY,
         theme: 'grid',
         styles: { font: 'helvetica', fontSize: 9, cellPadding: 2.5, lineColor: [0, 0, 0], lineWidth: 0.2, textColor: [0, 0, 0] },
         columnStyles: {
@@ -1643,22 +1648,22 @@ const generateForm7PDF = async (session: Session, client: Client, clinicalId?: s
 
     // Signature table
     const sigs = fd.signatures || {};
-    checkPageBreak(50);
+    checkPageBreak(55);
 
     const sigsBody = [
         [
             { content: "Trainee Counselor's Signature", styles: { fontStyle: 'bold' } },
-            { content: `( ${renderStr(sigs.traineeSignature)} )` },
+            { content: `( ${renderStr(sigs.traineeSignature)} )`, styles: { halign: 'center' as const } },
             { content: "" }
         ],
         [
             { content: "Site Supervisor's Signature", styles: { fontStyle: 'bold' } },
-            { content: `( ${renderStr(sigs.siteSupervisorSignature)} )` },
+            { content: `( ${renderStr(sigs.siteSupervisorSignature)} )`, styles: { halign: 'center' as const } },
             { content: "" }
         ],
         [
             { content: "Academic Supervisor's Signature", styles: { fontStyle: 'bold' } },
-            { content: `( ${renderStr(sigs.academicSupervisorSignature)} )` },
+            { content: `( ${renderStr(sigs.academicSupervisorSignature)} )`, styles: { halign: 'center' as const } },
             { content: "" }
         ]
     ];
@@ -1666,14 +1671,19 @@ const generateForm7PDF = async (session: Session, client: Client, clinicalId?: s
     autoTable(doc, {
         startY: yPos,
         theme: 'grid',
-        styles: { font: 'helvetica', fontSize: 9, cellPadding: 3, lineColor: [0, 0, 0], lineWidth: 0.2, textColor: [0, 0, 0] },
+        styles: { font: 'helvetica', fontSize: 9, cellPadding: 3, lineColor: [0, 0, 0], lineWidth: 0.2, textColor: [0, 0, 0], minCellHeight: 18, valign: 'middle' },
         head: [
             [
-                { content: 'Action', styles: { halign: 'center', fontStyle: 'bold' } },
-                { content: 'Signature', styles: { halign: 'center', fontStyle: 'bold' } },
-                { content: 'Date', styles: { halign: 'center', fontStyle: 'bold' } }
+                { content: 'Action', styles: { halign: 'center', fontStyle: 'bold', fillColor: [0, 128, 128], textColor: [255, 255, 255] } },
+                { content: 'Signature', styles: { halign: 'center', fontStyle: 'bold', fillColor: [0, 128, 128], textColor: [255, 255, 255] } },
+                { content: 'Date', styles: { halign: 'center', fontStyle: 'bold', fillColor: [0, 128, 128], textColor: [255, 255, 255] } }
             ]
         ],
+        columnStyles: {
+            0: { cellWidth: 60, fontStyle: 'bold' },
+            1: { cellWidth: 100, halign: 'center' },
+            2: { cellWidth: 30, halign: 'center' }
+        },
         body: sigsBody as any,
     });
 
