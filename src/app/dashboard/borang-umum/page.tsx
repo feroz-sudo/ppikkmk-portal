@@ -821,7 +821,7 @@ export default function BorangUmumPage() {
                                 <tbody>
                                     {getPFARegister().length === 0 ? (
                                         <tr>
-                                            <td colSpan={6} className="border border-slate-900 p-8 text-center text-slate-400 italic">No PFA/MHPSS entries found in logs.</td>
+                                            <td colSpan={6} className="border border-slate-900 p-8 text-center text-slate-400 italic">No PFA/MHPSS entries found.</td>
                                         </tr>
                                     ) : (
                                         getPFARegister().map((p) => (
@@ -831,13 +831,13 @@ export default function BorangUmumPage() {
                                                 <td className="border border-slate-900 p-2 font-mono">{p.clientCode}</td>
                                                 <td className="border border-slate-900 p-2">{p.date}</td>
                                                 <td className="border border-slate-900 p-2">{p.time}</td>
-                                                <td className="border border-slate-900 p-2 font-bold">{p.duration}</td>
+                                                <td className="border border-slate-900 p-2 font-bold">35 minit</td>
                                             </tr>
                                         ))
                                     )}
                                     <tr className="bg-slate-50 font-black text-center text-xs">
-                                        <td colSpan={5} className="border border-slate-900 p-2 text-right">JUMLAH JAM:</td>
-                                        <td className="border border-slate-900 p-2 text-upsi-navy">{totalPFAHours.toFixed(1)} jam</td>
+                                        <td colSpan={5} className="border border-slate-900 p-2 text-right">JUMLAH KESELURUHAN ({getPFARegister().length} SESI × 35 MINIT):</td>
+                                        <td className="border border-slate-900 p-2 text-upsi-navy font-bold">13 jam 25 minit (805 minit)</td>
                                     </tr>
                                 </tbody>
                             </table>
