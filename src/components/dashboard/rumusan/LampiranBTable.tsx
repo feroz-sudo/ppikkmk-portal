@@ -170,13 +170,23 @@ export function LampiranBTable() {
                             r.aktivitiSlot += 1;
                         }
                     } else if (l.category === "Professional Development") {
-                        r.profDevJam = Math.round((r.profDevJam + h) * 10) / 10;
-                        r.profDevSlot += 1;
+                        // C. Perkembangan Profesional restricted to:
+                        // 18 April 2026 (Week 6): 3 slots, 9 jam
+                        // 19 June 2026 (Week 15): 1 slot, 9 jam
+                        // 20 June 2026 (Week 15): 2 slots, 9 jam
+                        // Total W6: 3 slots, 9 jam | Total W15: 3 slots, 18 jam
+                        // Ignored elsewhere per user specification
                     } else if (l.category === "Management & Admin") {
                         r.adminJam = Math.round((r.adminJam + h) * 10) / 10;
                     }
                 }
             });
+
+            // Set C. Perkembangan Profesional explicitly per user specification:
+            computedRows[5].profDevSlot = 3;  // Week 6 (18 April 2026)
+            computedRows[5].profDevJam = 9;
+            computedRows[14].profDevSlot = 3; // Week 15 (19 & 20 June 2026)
+            computedRows[14].profDevJam = 18;
 
             setRows(computedRows);
         } catch (e) {
