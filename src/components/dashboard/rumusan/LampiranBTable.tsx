@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { db, Log, Session } from "@/lib/firebase/db";
 import { collection, query, where, getDocs, doc, getDoc, setDoc } from "firebase/firestore";
-import { Printer, Save, RefreshCw, Edit3, Check, Calculator, FileText, CheckCircle2 } from "lucide-react";
+import { Printer, Save, RefreshCw, Edit3, Check, Calculator, CheckCircle2 } from "lucide-react";
 
 export interface WeekRowData {
     week: number;
@@ -61,7 +61,26 @@ export function LampiranBTable() {
             const docRef = doc(db, "rumusan_jam_praktikum", user.uid);
             const docSnap = await getDoc(docRef);
 
-            // 2. Fetch logs and sessions to compute auto-calculated values
+            if (docSnap.exists() && docSnap.data().rows) {
+                const savedRows = docSnap.data().rows as WeekRowData[];
+                setRows(savedRows);
+                if (docSnap.data().academicSupervisor) {
+                    setAcademicSupervisor(docSnap.data().academicSupervisor);
+                }
+            } else {
+                // Compute from logs if no saved doc
+                await computeAutoRows();
+            }
+        } catch (error) {
+            console.error("Error loading Lampiran B data:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const computeAutoRows = async () => {
+        if (!user) return;
+        try {
             const logsQuery = query(collection(db, "logs"), where("traineeId", "==", user.uid));
             const logsSnap = await getDocs(logsQuery);
             const logs = logsSnap.docs.map(d => d.data() as Log);
@@ -70,7 +89,6 @@ export function LampiranBTable() {
             const sessionsSnap = await getDocs(sessionsQuery);
             const sessions = sessionsSnap.docs.map(d => d.data() as Session);
 
-            // Helper to get week number (Week 1 starts 09/03/2026)
             const startDate = new Date("2026-03-09");
             const getWeekNum = (dateStr: any) => {
                 if (!dateStr) return 1;
@@ -86,7 +104,6 @@ export function LampiranBTable() {
                 return Math.min(18, Math.max(1, week));
             };
 
-            // Compute auto-calculated values
             const computedRows: WeekRowData[] = Array.from({ length: 18 }, (_, i) => ({
                 week: i + 1,
                 indivSesi: 0,
@@ -100,7 +117,6 @@ export function LampiranBTable() {
                 adminJam: 0,
             }));
 
-            // Process sessions for slots
             sessions.forEach(s => {
                 const w = getWeekNum(s.date);
                 if (w >= 1 && w <= 18) {
@@ -115,7 +131,6 @@ export function LampiranBTable() {
                 }
             });
 
-            // Process logs for hours and remaining slots
             logs.forEach(l => {
                 const w = getWeekNum(l.date);
                 if (w >= 1 && w <= 18) {
@@ -139,19 +154,9 @@ export function LampiranBTable() {
                 }
             });
 
-            if (docSnap.exists() && docSnap.data().rows) {
-                const savedRows = docSnap.data().rows as WeekRowData[];
-                setRows(savedRows);
-                if (docSnap.data().academicSupervisor) {
-                    setAcademicSupervisor(docSnap.data().academicSupervisor);
-                }
-            } else {
-                setRows(computedRows);
-            }
-        } catch (error) {
-            console.error("Error loading Lampiran B data:", error);
-        } finally {
-            setLoading(false);
+            setRows(computedRows);
+        } catch (e) {
+            console.error("Error computing auto rows:", e);
         }
     };
 
@@ -190,10 +195,17 @@ export function LampiranBTable() {
         }
     };
 
+    // Helper for formatting display cell values
+    const formatCell = (val: number) => {
+        if (!val || val === 0) return "";
+        return String(val);
+    };
+
     // Calculate row total
     const getRowTotal = (r: WeekRowData) => {
         if (r.customRowTotal !== undefined) return r.customRowTotal;
-        return Math.round((r.indivJam + r.kelompokJam + r.aktivitiJam + r.profDevJam + r.adminJam) * 10) / 10;
+        const sum = (r.indivJam || 0) + (r.kelompokJam || 0) + (r.aktivitiJam || 0) + (r.profDevJam || 0) + (r.adminJam || 0);
+        return Math.round(sum * 10) / 10;
     };
 
     // Calculate column totals
@@ -234,7 +246,7 @@ export function LampiranBTable() {
     }
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 max-w-full overflow-hidden">
             {/* Toolbar (No Print) */}
             <div className="no-print bg-white p-4 md:p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
@@ -265,7 +277,7 @@ export function LampiranBTable() {
                     </button>
 
                     <button
-                        onClick={loadRumusanData}
+                        onClick={computeAutoRows}
                         title="Kira Semula Dari Log Harian"
                         className="flex items-center gap-2 px-4 py-2.5 bg-slate-100 text-slate-700 rounded-xl font-bold text-xs hover:bg-slate-200 transition-all"
                     >
@@ -300,10 +312,10 @@ export function LampiranBTable() {
             )}
 
             {/* Print & View Container - Formatted Exactly Like Official Lampiran B */}
-            <div className="lampiran-b-document bg-white p-6 md:p-10 rounded-2xl shadow-md border border-slate-200 print:shadow-none print:border-none print:p-0 print:m-0 print:w-full">
+            <div className="lampiran-b-document bg-white p-4 md:p-8 rounded-2xl shadow-md border border-slate-200 print:shadow-none print:border-none print:p-0 print:m-0 print:w-full overflow-x-auto">
 
                 {/* Page 1 (Weeks 1 to 10) */}
-                <div className="print-page print:min-h-screen flex flex-col justify-between mb-8 print:mb-0 print:pb-6">
+                <div className="print-page print:min-h-screen flex flex-col justify-between mb-8 print:mb-0 print:pb-6 min-w-[1000px] print:min-w-full">
                     <div>
                         {/* Header Document */}
                         <div className="flex justify-between items-start mb-2">
@@ -320,51 +332,51 @@ export function LampiranBTable() {
                         </div>
 
                         {/* Main Matrix Table Part 1 (Weeks 1-10) */}
-                        <div className="overflow-x-auto">
+                        <div className="w-full">
                             <table className="w-full text-center border-collapse border border-black text-[11px] font-sans">
                                 <thead>
                                     <tr className="border-b border-black font-bold">
                                         <th rowSpan={3} className="border border-black p-1 w-12 bg-slate-50 print:bg-transparent">
                                             Minggu
                                         </th>
-                                        <th colSpan={4} className="border border-black p-1 bg-slate-50 print:bg-transparent">
+                                        <th colSpan={4} className="border border-black p-1 bg-slate-50 print:bg-transparent text-center font-bold">
                                             1. Perkhidmatan Bersemuka
                                         </th>
-                                        <th colSpan={5} className="border border-black p-1 bg-slate-50 print:bg-transparent">
+                                        <th colSpan={5} className="border border-black p-1 bg-slate-50 print:bg-transparent text-center font-bold">
                                             2. Aktiviti Berkaitan Tugas Profesional Kaunselor
                                         </th>
-                                        <th rowSpan={3} className="border border-black p-1 w-24 bg-slate-50 print:bg-transparent">
+                                        <th rowSpan={3} className="border border-black p-1.5 w-28 bg-slate-50 print:bg-transparent font-bold">
                                             Jumlah jam dan minit
                                         </th>
                                     </tr>
                                     <tr className="border-b border-black font-bold">
                                         <th colSpan={2} className="border border-black p-1.5 align-top">
-                                            <div>Kaunseling Individu</div>
-                                            <div className="font-semibold text-[10px]">Anggaran 60 jam</div>
+                                            <div className="font-bold">Kaunseling Individu</div>
+                                            <div className="font-bold text-[10px] mt-0.5">Anggaran 60 jam</div>
                                         </th>
                                         <th colSpan={2} className="border border-black p-1.5 align-top">
-                                            <div>Kaunseling Kelompok</div>
-                                            <div className="font-semibold text-[10px]">Anggaran 36 jam</div>
+                                            <div className="font-bold">Kaunseling Kelompok</div>
+                                            <div className="font-bold text-[10px] mt-0.5">Anggaran 36 jam</div>
                                         </th>
                                         <th colSpan={2} className="border border-black p-1.5 align-top text-left font-normal text-[9.5px] leading-tight">
                                             <div className="font-bold text-[10.5px]">A. Aktiviti Psikopendidikan /Intervensi Psikososial</div>
-                                            <div className="font-semibold text-[10px]">Anggaran 90 jam</div>
-                                            <div className="mt-0.5">i. PFA/Mental Health Psychosocial Support</div>
-                                            <div>ii. Pengujian: Tadbir, Analisis dan Interpretasi</div>
-                                            <div>iii. Konsultasi dan Rujukan</div>
+                                            <div className="font-bold text-[10px] mt-0.5">Anggaran 90 jam</div>
+                                            <div className="mt-1 font-normal">i. PFA/Mental Health Psychosocial Support</div>
+                                            <div className="font-normal">ii. Pengujian: Tadbir, Analisis dan Interpretasi</div>
+                                            <div className="font-normal">iii. Konsultasi dan Rujukan</div>
                                         </th>
                                         <th colSpan={2} className="border border-black p-1.5 align-top text-left font-normal text-[9.5px] leading-tight">
                                             <div className="font-bold text-[10.5px]">C. Perkembangan Profesional</div>
-                                            <div className="font-semibold text-[10px]">Anggaran 14 jam</div>
-                                            <div className="mt-0.5">i. Pembentang/peserta konferens</div>
-                                            <div>ii. Bengkel berkaitan bidang</div>
+                                            <div className="font-bold text-[10px] mt-0.5">Anggaran 14 jam</div>
+                                            <div className="mt-1 font-normal">i. Pembentang/peserta konferens</div>
+                                            <div className="font-normal">ii. Bengkel berkaitan bidang</div>
                                         </th>
                                         <th colSpan={1} className="border border-black p-1.5 align-top text-left font-normal text-[9.5px] leading-tight">
                                             <div className="font-bold text-[10.5px]">B. Pengurusan dan Pentadbiran</div>
-                                            <div className="font-semibold text-[10px]">Anggaran 52 jam</div>
-                                            <div className="mt-0.5">i. Pengurusan fail, rekod dan buku log</div>
-                                            <div>ii. Laporan Akhir</div>
-                                            <div>iii. Refleksi</div>
+                                            <div className="font-bold text-[10px] mt-0.5">Anggaran 52 jam</div>
+                                            <div className="mt-1 font-normal">i. Pengurusan fail, rekod dan buku log</div>
+                                            <div className="font-normal">ii. Laporan Akhir</div>
+                                            <div className="font-normal">iii. Refleksi</div>
                                         </th>
                                     </tr>
                                     <tr className="border-b border-black font-semibold text-[10px]">
@@ -373,10 +385,10 @@ export function LampiranBTable() {
                                         <th className="border border-black p-1 w-14">Jumlah sesi</th>
                                         <th className="border border-black p-1 w-16">Jumlah jam/minit</th>
                                         <th className="border border-black p-1 w-14">Jumlah slot</th>
-                                        <th className="border border-black p-1 w-16">Jumlah jam dan minit</th>
-                                        <th className="border border-black p-1 w-14">Jumlah slot</th>
-                                        <th className="border border-black p-1 w-16">Jumlah jam dan minit</th>
                                         <th className="border border-black p-1 w-20">Jumlah jam dan minit</th>
+                                        <th className="border border-black p-1 w-14">Jumlah slot</th>
+                                        <th className="border border-black p-1 w-20">Jumlah jam dan minit</th>
+                                        <th className="border border-black p-1 w-24">Jumlah jam dan minit</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -399,7 +411,7 @@ export function LampiranBTable() {
                                                             className="w-full h-full text-center bg-amber-50 focus:bg-white focus:outline-none p-1"
                                                         />
                                                     ) : (
-                                                        r.indivSesi || ""
+                                                        formatCell(r.indivSesi)
                                                     )}
                                                 </td>
 
@@ -414,7 +426,7 @@ export function LampiranBTable() {
                                                             className="w-full h-full text-center bg-amber-50 focus:bg-white focus:outline-none p-1 font-semibold"
                                                         />
                                                     ) : (
-                                                        r.indivJam || ""
+                                                        formatCell(r.indivJam)
                                                     )}
                                                 </td>
 
@@ -429,7 +441,7 @@ export function LampiranBTable() {
                                                             className="w-full h-full text-center bg-amber-50 focus:bg-white focus:outline-none p-1"
                                                         />
                                                     ) : (
-                                                        r.kelompokSesi || ""
+                                                        formatCell(r.kelompokSesi)
                                                     )}
                                                 </td>
 
@@ -444,7 +456,7 @@ export function LampiranBTable() {
                                                             className="w-full h-full text-center bg-amber-50 focus:bg-white focus:outline-none p-1 font-semibold"
                                                         />
                                                     ) : (
-                                                        r.kelompokJam || ""
+                                                        formatCell(r.kelompokJam)
                                                     )}
                                                 </td>
 
@@ -459,7 +471,7 @@ export function LampiranBTable() {
                                                             className="w-full h-full text-center bg-amber-50 focus:bg-white focus:outline-none p-1"
                                                         />
                                                     ) : (
-                                                        r.aktivitiSlot || ""
+                                                        formatCell(r.aktivitiSlot)
                                                     )}
                                                 </td>
 
@@ -474,7 +486,7 @@ export function LampiranBTable() {
                                                             className="w-full h-full text-center bg-amber-50 focus:bg-white focus:outline-none p-1 font-semibold"
                                                         />
                                                     ) : (
-                                                        r.aktivitiJam || ""
+                                                        formatCell(r.aktivitiJam)
                                                     )}
                                                 </td>
 
@@ -489,7 +501,7 @@ export function LampiranBTable() {
                                                             className="w-full h-full text-center bg-amber-50 focus:bg-white focus:outline-none p-1"
                                                         />
                                                     ) : (
-                                                        r.profDevSlot || ""
+                                                        formatCell(r.profDevSlot)
                                                     )}
                                                 </td>
 
@@ -504,7 +516,7 @@ export function LampiranBTable() {
                                                             className="w-full h-full text-center bg-amber-50 focus:bg-white focus:outline-none p-1 font-semibold"
                                                         />
                                                     ) : (
-                                                        r.profDevJam || ""
+                                                        formatCell(r.profDevJam)
                                                     )}
                                                 </td>
 
@@ -519,13 +531,13 @@ export function LampiranBTable() {
                                                             className="w-full h-full text-center bg-amber-50 focus:bg-white focus:outline-none p-1 font-semibold"
                                                         />
                                                     ) : (
-                                                        r.adminJam || ""
+                                                        formatCell(r.adminJam)
                                                     )}
                                                 </td>
 
                                                 {/* Row Total */}
                                                 <td className="border border-black font-bold text-center bg-slate-50/50 print:bg-transparent">
-                                                    {rTotal || ""}
+                                                    {formatCell(rTotal)}
                                                 </td>
                                             </tr>
                                         );
@@ -540,9 +552,9 @@ export function LampiranBTable() {
                 <div className="print:page-break-before my-8 print:my-0"></div>
 
                 {/* Page 2 (Weeks 11 to 18 + Jumlah + Signatures) */}
-                <div className="print-page print:min-h-screen flex flex-col justify-between">
+                <div className="print-page print:min-h-screen flex flex-col justify-between min-w-[1000px] print:min-w-full">
                     <div>
-                        <div className="overflow-x-auto">
+                        <div className="w-full">
                             <table className="w-full text-center border-collapse border border-black text-[11px] font-sans">
                                 <tbody>
                                     {rows.slice(10, 18).map((r, idxOffset) => {
@@ -565,7 +577,7 @@ export function LampiranBTable() {
                                                             className="w-full h-full text-center bg-amber-50 focus:bg-white focus:outline-none p-1"
                                                         />
                                                     ) : (
-                                                        r.indivSesi || ""
+                                                        formatCell(r.indivSesi)
                                                     )}
                                                 </td>
 
@@ -580,7 +592,7 @@ export function LampiranBTable() {
                                                             className="w-full h-full text-center bg-amber-50 focus:bg-white focus:outline-none p-1 font-semibold"
                                                         />
                                                     ) : (
-                                                        r.indivJam || ""
+                                                        formatCell(r.indivJam)
                                                     )}
                                                 </td>
 
@@ -595,7 +607,7 @@ export function LampiranBTable() {
                                                             className="w-full h-full text-center bg-amber-50 focus:bg-white focus:outline-none p-1"
                                                         />
                                                     ) : (
-                                                        r.kelompokSesi || ""
+                                                        formatCell(r.kelompokSesi)
                                                     )}
                                                 </td>
 
@@ -610,7 +622,7 @@ export function LampiranBTable() {
                                                             className="w-full h-full text-center bg-amber-50 focus:bg-white focus:outline-none p-1 font-semibold"
                                                         />
                                                     ) : (
-                                                        r.kelompokJam || ""
+                                                        formatCell(r.kelompokJam)
                                                     )}
                                                 </td>
 
@@ -625,12 +637,12 @@ export function LampiranBTable() {
                                                             className="w-full h-full text-center bg-amber-50 focus:bg-white focus:outline-none p-1"
                                                         />
                                                     ) : (
-                                                        r.aktivitiSlot || ""
+                                                        formatCell(r.aktivitiSlot)
                                                     )}
                                                 </td>
 
                                                 {/* Aktiviti Jam */}
-                                                <td className="border border-black p-0 text-center w-16">
+                                                <td className="border border-black p-0 text-center w-20">
                                                     {isEditing ? (
                                                         <input
                                                             type="number"
@@ -640,7 +652,7 @@ export function LampiranBTable() {
                                                             className="w-full h-full text-center bg-amber-50 focus:bg-white focus:outline-none p-1 font-semibold"
                                                         />
                                                     ) : (
-                                                        r.aktivitiJam || ""
+                                                        formatCell(r.aktivitiJam)
                                                     )}
                                                 </td>
 
@@ -655,12 +667,12 @@ export function LampiranBTable() {
                                                             className="w-full h-full text-center bg-amber-50 focus:bg-white focus:outline-none p-1"
                                                         />
                                                     ) : (
-                                                        r.profDevSlot || ""
+                                                        formatCell(r.profDevSlot)
                                                     )}
                                                 </td>
 
                                                 {/* ProfDev Jam */}
-                                                <td className="border border-black p-0 text-center w-16">
+                                                <td className="border border-black p-0 text-center w-20">
                                                     {isEditing ? (
                                                         <input
                                                             type="number"
@@ -670,12 +682,12 @@ export function LampiranBTable() {
                                                             className="w-full h-full text-center bg-amber-50 focus:bg-white focus:outline-none p-1 font-semibold"
                                                         />
                                                     ) : (
-                                                        r.profDevJam || ""
+                                                        formatCell(r.profDevJam)
                                                     )}
                                                 </td>
 
                                                 {/* Admin Jam */}
-                                                <td className="border border-black p-0 text-center w-20">
+                                                <td className="border border-black p-0 text-center w-24">
                                                     {isEditing ? (
                                                         <input
                                                             type="number"
@@ -685,13 +697,13 @@ export function LampiranBTable() {
                                                             className="w-full h-full text-center bg-amber-50 focus:bg-white focus:outline-none p-1 font-semibold"
                                                         />
                                                     ) : (
-                                                        r.adminJam || ""
+                                                        formatCell(r.adminJam)
                                                     )}
                                                 </td>
 
                                                 {/* Row Total */}
-                                                <td className="border border-black font-bold text-center w-24 bg-slate-50/50 print:bg-transparent">
-                                                    {rTotal || ""}
+                                                <td className="border border-black font-bold text-center w-28 bg-slate-50/50 print:bg-transparent">
+                                                    {formatCell(rTotal)}
                                                 </td>
                                             </tr>
                                         );
