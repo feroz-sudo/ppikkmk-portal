@@ -4,9 +4,9 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Disclaimer } from "@/components/Disclaimer";
-import { ShieldCheck, BookOpen, UserCheck } from "lucide-react";
+import { ShieldCheck, BookOpen, UserCheck, Sparkles, ChevronRight, Lock } from "lucide-react";
 
-// Google "G" SVG icon
+// Official Google "G" SVG icon
 const GoogleIcon = () => (
   <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24">
     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -29,10 +29,10 @@ export default function LoginPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-slate-50">
+      <div className="flex items-center justify-center min-h-screen bg-slate-900">
         <div className="text-center space-y-4">
-          <div className="w-16 h-16 border-4 border-upsi-gold border-t-transparent rounded-full animate-spin mx-auto shadow-xl" />
-          <p className="text-slate-500 font-bold uppercase tracking-widest text-xs">Initializing PPIKKMK...</p>
+          <div className="w-16 h-16 border-4 border-upsi-gold border-t-transparent rounded-full animate-spin mx-auto shadow-2xl" />
+          <p className="text-slate-400 font-bold uppercase tracking-widest text-xs">Initializing Secure Clinical Session...</p>
         </div>
       </div>
     );
@@ -64,161 +64,204 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#0F172A] flex flex-col lg:flex-row overflow-x-hidden">
-      {/* LEFT PANEL: HERO BRANDING (Spans full height & 50%+ width on laptops/desktops) */}
-      <div className="w-full lg:w-1/2 xl:w-7/12 bg-gradient-to-br from-upsi-navy via-[#1010a3] to-[#0a0a75] p-6 sm:p-10 lg:p-16 text-white relative flex flex-col justify-between min-h-[420px] lg:min-h-screen">
-        {/* Dynamic Background Glow */}
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-500/20 via-transparent to-black/40 pointer-events-none" />
-        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-upsi-gold/20 rounded-full blur-3xl pointer-events-none" />
+    <div className="min-h-screen w-full bg-[#0B132B] flex flex-col lg:flex-row overflow-x-hidden font-sans">
+      {/* LEFT PANEL: HERO & INSTITUTIONAL BRANDING */}
+      <div className="w-full lg:w-7/12 xl:w-7/12 bg-gradient-to-br from-[#0B132B] via-[#1C2541] to-[#0F172A] p-8 sm:p-12 lg:p-16 text-white relative flex flex-col justify-between min-h-[480px] lg:min-h-screen border-r border-white/10">
+        {/* Ambient Glow & Grid Pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
+        <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-upsi-navy/40 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-upsi-gold/20 rounded-full blur-[140px] pointer-events-none" />
 
         {/* Content Header */}
-        <div className="relative z-10 space-y-8 my-auto lg:my-0">
+        <div className="relative z-10 space-y-10 my-auto lg:my-0">
+          {/* Top Bar with Logo & Institutional Badge */}
           <div className="flex items-center justify-between flex-wrap gap-4">
-            <div className="bg-white p-3.5 sm:p-4 rounded-2xl shadow-2xl flex items-center justify-center border border-white/20">
+            <div className="bg-white/95 backdrop-blur-md px-5 py-3 rounded-2xl shadow-2xl flex items-center space-x-3 border border-white/30">
               <img
                 src="/upsi-logo.png"
                 alt="UPSI Logo"
-                className="h-14 sm:h-16 lg:h-20 w-auto object-contain"
+                className="h-12 sm:h-14 lg:h-16 w-auto object-contain"
                 onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
               />
+              <div className="h-8 w-px bg-slate-200 hidden sm:block" />
+              <div className="hidden sm:block">
+                <p className="text-[11px] font-black text-slate-800 uppercase tracking-wider leading-none">Universiti Pendidikan Sultan Idris</p>
+                <p className="text-[9px] font-semibold text-slate-500 uppercase tracking-tight mt-0.5">Fakulti Pembangunan Manusia</p>
+              </div>
             </div>
-            <div className="inline-flex items-center space-x-2.5 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-2">
-              <span className="text-upsi-gold text-lg sm:text-xl font-black tracking-widest">PPIKKMK</span>
-              <div className="w-2.5 h-2.5 bg-upsi-gold rounded-full animate-ping" />
+
+            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-upsi-gold/20 to-upsi-gold/10 backdrop-blur-md border border-upsi-gold/30 rounded-full px-4 py-2">
+              <Sparkles className="w-4 h-4 text-upsi-gold animate-pulse" />
+              <span className="text-upsi-gold text-xs font-extrabold tracking-widest uppercase">PPIKKMK Portal</span>
             </div>
           </div>
 
+          {/* Main Title & Subtitle */}
           <div className="space-y-4 pt-2">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black uppercase tracking-tight leading-tight">
-              Portal Praktikum &amp; Internship
-            </h1>
-            <h2 className="text-base sm:text-lg lg:text-xl font-bold text-upsi-gold uppercase tracking-wider leading-snug">
-              Kaunseling (Kesihatan Mental Klinikal)
-            </h2>
-            <p className="text-blue-100/70 font-semibold text-xs sm:text-sm uppercase tracking-widest">
-              Universiti Pendidikan Sultan Idris
+            <div className="border-l-4 border-upsi-gold pl-4 sm:pl-6 space-y-2">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black uppercase tracking-tight leading-none text-white">
+                Portal Praktikum <br className="hidden sm:block" />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-upsi-gold">&amp; Internship</span>
+              </h1>
+              <h2 className="text-sm sm:text-base lg:text-lg font-bold text-upsi-gold uppercase tracking-wider">
+                Kaunseling (Kesihatan Mental Klinikal)
+              </h2>
+            </div>
+            <p className="text-slate-300 text-xs sm:text-sm max-w-xl leading-relaxed pt-2">
+              Integrated clinical administration portal for real-time supervisory tracking, standardized logbook compliance, and official competency management.
             </p>
           </div>
 
-          {/* Pillars on Desktop */}
-          <div className="hidden lg:grid gap-4 pt-6 max-w-xl">
-            <div className="flex items-start space-x-4 bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10">
-              <BookOpen className="w-6 h-6 text-upsi-gold shrink-0 mt-0.5" />
+          {/* Clinical Pillars */}
+          <div className="hidden lg:grid gap-4 pt-4 max-w-xl">
+            <div className="flex items-start space-x-4 bg-white/5 hover:bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 transition-all">
+              <div className="bg-upsi-gold/20 p-2.5 rounded-xl text-upsi-gold shrink-0">
+                <BookOpen className="w-5 h-5" />
+              </div>
               <div>
-                <h4 className="font-bold text-white text-sm uppercase tracking-wide">Standardized Clinical Logbooks</h4>
-                <p className="text-blue-100/80 text-xs mt-0.5">Automated tracking for Borang 2–6, Weekly Reflections &amp; Daily Logs</p>
+                <h4 className="font-bold text-white text-xs uppercase tracking-wide">Standardized Clinical Logbooks</h4>
+                <p className="text-slate-300 text-xs mt-0.5 leading-relaxed">Automated calculation &amp; submission for Borang 1–13, Daily Logs &amp; Weekly Reflections.</p>
               </div>
             </div>
 
-            <div className="flex items-start space-x-4 bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10">
-              <UserCheck className="w-6 h-6 text-upsi-gold shrink-0 mt-0.5" />
+            <div className="flex items-start space-x-4 bg-white/5 hover:bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 transition-all">
+              <div className="bg-upsi-gold/20 p-2.5 rounded-xl text-upsi-gold shrink-0">
+                <UserCheck className="w-5 h-5" />
+              </div>
               <div>
-                <h4 className="font-bold text-white text-xs uppercase tracking-wide">Real-Time Supervisory Evaluation</h4>
-                <p className="text-blue-100/80 text-xs mt-0.5">Instant review, attendance sign-off, and marks computation</p>
+                <h4 className="font-bold text-white text-xs uppercase tracking-wide">Faculty &amp; Site Supervisory Oversight</h4>
+                <p className="text-slate-300 text-xs mt-0.5 leading-relaxed">Real-time attendance sign-off, live portfolio review, and clinical marks entry.</p>
               </div>
             </div>
 
-            <div className="flex items-start space-x-4 bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10">
-              <ShieldCheck className="w-6 h-6 text-upsi-gold shrink-0 mt-0.5" />
+            <div className="flex items-start space-x-4 bg-white/5 hover:bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 transition-all">
+              <div className="bg-upsi-gold/20 p-2.5 rounded-xl text-upsi-gold shrink-0">
+                <ShieldCheck className="w-5 h-5" />
+              </div>
               <div>
-                <h4 className="font-bold text-white text-xs uppercase tracking-wide">Secure Institutional Data</h4>
-                <p className="text-blue-100/80 text-xs mt-0.5">Encrypted, role-based access adhering to UPSI clinical standards</p>
+                <h4 className="font-bold text-white text-xs uppercase tracking-wide">Institutional Security &amp; Compliance</h4>
+                <p className="text-slate-300 text-xs mt-0.5 leading-relaxed">Role-scoped encryption meeting UPSI clinical mental health program standards.</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="relative z-10 pt-8 mt-6 border-t border-white/10 text-xs text-blue-200/60 font-medium">
-          Official Digital Portal for UPSI Master of Counseling (Clinical Mental Health)
+        {/* Footer Note */}
+        <div className="relative z-10 pt-6 mt-6 border-t border-white/10 flex items-center justify-between text-xs text-slate-400 font-medium">
+          <span>Official UPSI Clinical Management System</span>
+          <span className="text-[10px] text-upsi-gold/80 bg-upsi-gold/10 px-3 py-1 rounded-full border border-upsi-gold/20">Version 2.4</span>
         </div>
       </div>
 
-      {/* RIGHT PANEL: AUTHENTICATION FORM (Spans full height right half on desktop) */}
-      <div className="w-full lg:w-1/2 xl:w-5/12 bg-slate-50 lg:bg-white p-6 sm:p-10 lg:p-16 flex flex-col justify-between min-h-screen lg:min-h-screen">
-        <div className="my-auto space-y-8 max-w-xl mx-auto w-full">
-          <div>
+      {/* RIGHT PANEL: AUTHENTICATION PORTAL */}
+      <div className="w-full lg:w-5/12 xl:w-5/12 bg-slate-50 p-6 sm:p-10 lg:p-12 flex flex-col justify-between min-h-screen">
+        <div className="my-auto space-y-6 max-w-md mx-auto w-full">
+          {/* Header */}
+          <div className="space-y-1">
+            <div className="inline-flex items-center space-x-2 text-xs font-extrabold text-upsi-navy uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-md border border-blue-100 mb-2">
+              <Lock className="w-3.5 h-3.5 text-upsi-navy" />
+              <span>Secure Authentication</span>
+            </div>
             <h3 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-              Authentication Portal
+              Access Dashboard
             </h3>
-            <p className="text-sm text-slate-500 font-medium mt-2">
-              Welcome to the official UPSI clinical portal. Please authenticate with your official credentials to access your dashboard.
+            <p className="text-xs sm:text-sm text-slate-500 font-medium">
+              Select your institutional portal role below to authenticate with your registered Google account.
             </p>
           </div>
 
           {/* Sign In Options */}
-          <div className="space-y-4">
+          <div className="space-y-3 pt-2">
             {/* Practicum Trainee */}
-            <button
-              id="btn-practicum-signin"
+            <div
               onClick={() => handleSignIn("practicum")}
-              disabled={!!signingIn}
-              className="w-full flex items-center space-x-4 bg-[#1e293b] text-white font-bold py-4.5 px-6 rounded-2xl hover:bg-slate-800 transition-all active:scale-[0.99] disabled:opacity-60 shadow-xl shadow-slate-200 group cursor-pointer"
+              className={`p-4 bg-white rounded-2xl border-2 border-slate-200 hover:border-slate-800 shadow-sm hover:shadow-md transition-all cursor-pointer group relative overflow-hidden ${signingIn === "practicum" ? "opacity-60 pointer-events-none" : ""}`}
             >
-              <div className="bg-white/10 p-2.5 rounded-xl group-hover:bg-white/20 transition-colors shrink-0">
-                <GoogleIcon />
+              <div className="flex items-center space-x-4">
+                <div className="bg-slate-900 p-3 rounded-xl text-white group-hover:bg-slate-800 transition-colors shrink-0">
+                  <GoogleIcon />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-xs font-black uppercase tracking-wider text-slate-900 group-hover:text-slate-800">
+                      Practicum Trainee
+                    </h4>
+                    <span className="text-[10px] font-extrabold text-white bg-slate-800 px-2 py-0.5 rounded-md">P</span>
+                  </div>
+                  <p className="text-[11px] text-slate-500 font-medium mt-0.5 truncate">
+                    {signingIn === "practicum" ? "Authenticating session..." : "Submit daily logbooks & clinical client cases"}
+                  </p>
+                </div>
+                <ChevronRight className="w-4 h-4 text-slate-400 group-hover:translate-x-1 group-hover:text-slate-900 transition-all shrink-0" />
               </div>
-              <span className="flex-1 text-left text-sm uppercase tracking-wide truncate font-bold">
-                {signingIn === "practicum" ? "Authenticating..." : "Practicum Trainee Sign In"}
-              </span>
-              <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center font-black text-xs bg-[#334155] shrink-0">P</div>
-            </button>
+            </div>
 
             {/* Internship Trainee */}
-            <button
-              id="btn-internship-signin"
+            <div
               onClick={() => handleSignIn("internship")}
-              disabled={!!signingIn}
-              className="w-full flex items-center space-x-4 bg-upsi-gold text-upsi-navy font-black py-4.5 px-6 rounded-2xl hover:bg-yellow-500 transition-all active:scale-[0.99] disabled:opacity-60 shadow-xl shadow-upsi-gold/20 group cursor-pointer"
+              className={`p-4 bg-white rounded-2xl border-2 border-upsi-gold/50 hover:border-upsi-gold shadow-sm hover:shadow-md transition-all cursor-pointer group relative overflow-hidden ${signingIn === "internship" ? "opacity-60 pointer-events-none" : ""}`}
             >
-              <div className="bg-upsi-navy/10 p-2.5 rounded-xl group-hover:bg-upsi-navy/20 transition-colors shrink-0">
-                <GoogleIcon />
+              <div className="flex items-center space-x-4">
+                <div className="bg-upsi-gold p-3 rounded-xl text-upsi-navy group-hover:bg-yellow-500 transition-colors shrink-0">
+                  <GoogleIcon />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-xs font-black uppercase tracking-wider text-slate-900 group-hover:text-upsi-navy">
+                      Internship Trainee
+                    </h4>
+                    <span className="text-[10px] font-extrabold text-upsi-navy bg-upsi-gold/40 px-2 py-0.5 rounded-md">I</span>
+                  </div>
+                  <p className="text-[11px] text-slate-500 font-medium mt-0.5 truncate">
+                    {signingIn === "internship" ? "Authenticating session..." : "Advanced clinical internship hours & reflections"}
+                  </p>
+                </div>
+                <ChevronRight className="w-4 h-4 text-slate-400 group-hover:translate-x-1 group-hover:text-upsi-navy transition-all shrink-0" />
               </div>
-              <span className="flex-1 text-left text-sm uppercase tracking-wide truncate font-bold">
-                {signingIn === "internship" ? "Authenticating..." : "Internship Trainee Sign In"}
-              </span>
-              <div className="w-8 h-8 rounded-full border border-upsi-navy/10 flex items-center justify-center font-black text-xs bg-white/30 shrink-0">I</div>
-            </button>
-          </div>
-
-          {/* Institutional Access Divider */}
-          <div className="flex items-center space-x-4 my-6 opacity-30">
-            <div className="flex-1 h-px bg-slate-300" />
-            <span className="text-xs text-slate-500 font-black uppercase tracking-[0.2em]">Institutional Access</span>
-            <div className="flex-1 h-px bg-slate-300" />
-          </div>
-
-          {/* Supervisor Sign In */}
-          <button
-            id="btn-supervisor-signin"
-            onClick={() => handleSignIn("supervisor")}
-            disabled={!!signingIn}
-            className="w-full flex items-center space-x-4 bg-white border-2 border-slate-200 text-slate-700 font-black py-4.5 px-6 rounded-2xl hover:bg-slate-50 hover:border-upsi-navy transition-all active:scale-[0.99] disabled:opacity-60 shadow-sm group cursor-pointer"
-          >
-            <div className="bg-slate-100 p-2.5 rounded-xl group-hover:bg-slate-200 transition-colors shrink-0">
-              <GoogleIcon />
             </div>
-            <span className="flex-1 text-left text-sm uppercase tracking-wide truncate font-bold">
-              {signingIn === "supervisor" ? "Authenticating..." : "Supervisor Portal Sign In"}
-            </span>
-          </button>
+
+            {/* Supervisor */}
+            <div
+              onClick={() => handleSignIn("supervisor")}
+              className={`p-4 bg-white rounded-2xl border-2 border-slate-200 hover:border-upsi-navy shadow-sm hover:shadow-md transition-all cursor-pointer group relative overflow-hidden ${signingIn === "supervisor" ? "opacity-60 pointer-events-none" : ""}`}
+            >
+              <div className="flex items-center space-x-4">
+                <div className="bg-blue-50 p-3 rounded-xl text-upsi-navy border border-blue-100 group-hover:bg-blue-100 transition-colors shrink-0">
+                  <GoogleIcon />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-xs font-black uppercase tracking-wider text-slate-900 group-hover:text-upsi-navy">
+                      Faculty / Site Supervisor
+                    </h4>
+                    <span className="text-[10px] font-extrabold text-upsi-navy bg-blue-100 px-2 py-0.5 rounded-md">S</span>
+                  </div>
+                  <p className="text-[11px] text-slate-500 font-medium mt-0.5 truncate">
+                    {signingIn === "supervisor" ? "Authenticating session..." : "Review logbooks, verify hours & submit evaluations"}
+                  </p>
+                </div>
+                <ChevronRight className="w-4 h-4 text-slate-400 group-hover:translate-x-1 group-hover:text-upsi-navy transition-all shrink-0" />
+              </div>
+            </div>
+          </div>
 
           {/* Legal Disclaimer */}
-          <div className="pt-4 border-t border-slate-100">
+          <div className="pt-2">
             <Disclaimer variant="full" />
           </div>
         </div>
 
-        {/* Footer */}
-        <footer className="pt-8 text-center text-xs font-medium text-slate-400 max-w-xl mx-auto w-full">
+        {/* Footer copyright */}
+        <footer className="pt-4 text-center text-[11px] font-medium text-slate-400 max-w-md mx-auto w-full">
           <div className="flex flex-wrap items-center justify-center gap-2">
             <span
-              className="cursor-pointer hover:text-upsi-gold transition-colors font-bold"
+              className="cursor-pointer hover:text-upsi-gold transition-colors font-bold text-slate-500"
               onClick={() => handleSignIn("admin")}
-              title="Super Admin Access"
+              title="Super Admin Access Portal"
             >
-              PPIKKMK Portal
+              PPIKKMK Management System
             </span>
-            <span className="w-1.5 h-1.5 bg-upsi-gold rounded-full" />
+            <span className="w-1 h-1 bg-upsi-gold rounded-full" />
             <span>Universiti Pendidikan Sultan Idris</span>
           </div>
         </footer>
@@ -226,5 +269,6 @@ export default function LoginPage() {
     </div>
   );
 }
+
 
 
