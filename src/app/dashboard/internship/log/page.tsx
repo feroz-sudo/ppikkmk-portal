@@ -779,19 +779,19 @@ export default function InternshipLogbookPage() {
               <thead>
                 {/* Top Green Headers */}
                 <tr className="bg-[#a2d182] text-black font-bold text-center border-b border-black">
-                  <th className="border border-black p-1.5 w-1/2" colSpan={2}>
+                  <th className="border border-black p-1.5" colSpan={2}>
                     Face-to-Face Clinical Services (F2F)
                   </th>
-                  <th className="border border-black p-1.5 w-1/2" colSpan={2}>
+                  <th className="border border-black p-1.5" colSpan={2}>
                     Professional Activities Related to Clinical Works
                   </th>
                 </tr>
                 {/* Column Headers */}
                 <tr className="bg-[#c2e2aa] text-black font-bold text-center border-b border-black">
-                  <th className="border border-black p-1 w-2/3">Clinical Counseling Session</th>
-                  <th className="border border-black p-1 w-1/3">Hours</th>
-                  <th className="border border-black p-1 w-2/3">Clinical Related Works</th>
-                  <th className="border border-black p-1 w-1/3">Hours</th>
+                  <th className="border border-black p-1 text-left pl-3">Clinical Counseling Session</th>
+                  <th className="border border-black p-1 w-16">Hours</th>
+                  <th className="border border-black p-1 text-left pl-3">Clinical Related Works</th>
+                  <th className="border border-black p-1 w-16">Hours</th>
                 </tr>
               </thead>
               <tbody className="align-top">
