@@ -14,7 +14,6 @@ import {
   Plus,
   Trash2,
   BookOpen,
-  FileCheck,
   Award
 } from 'lucide-react';
 
@@ -41,7 +40,7 @@ export default function InternshipLogbookPage() {
     { id: '1', lokasi: '', masa: '', aktiviti: '', catatan: '' }
   ]);
 
-  // Page 1: Rumusan Jam Harian Inputs
+  // Page 1: Daily Hours Summary Inputs
   const [jamIndividu, setJamIndividu] = useState<string>('');
   const [jamKelompok, setJamKelompok] = useState<string>('');
   const [jamAktivitiIntervensi, setJamAktivitiIntervensi] = useState<string>('');
@@ -49,7 +48,7 @@ export default function InternshipLogbookPage() {
   const [jamPerkembangan, setJamPerkembangan] = useState<string>('');
   const [jamPenyeliaan, setJamPenyeliaan] = useState<string>('');
 
-  // Page 2 & 3: Refleksi Kendiri Inputs
+  // Page 2 & 3: Self Reflection Inputs
   const [refleksiIndividu, setRefleksiIndividu] = useState('');
   const [refleksiKelompok, setRefleksiKelompok] = useState('');
   const [refleksiAktiviti, setRefleksiAktiviti] = useState('');
@@ -57,7 +56,7 @@ export default function InternshipLogbookPage() {
   const [refleksiPerkembangan, setRefleksiPerkembangan] = useState('');
   const [refleksiPenyeliaan, setRefleksiPenyeliaan] = useState('');
 
-  // Page 4: Rumusan Jam Mingguan Inputs
+  // Page 4: Weekly Hours Summary Inputs
   const [tarikhDari, setTarikhDari] = useState('');
   const [tarikhKe, setTarikhKe] = useState('');
   const [weeklyHours, setWeeklyHours] = useState<Record<string, Record<string, string>>>({
@@ -138,14 +137,14 @@ export default function InternshipLogbookPage() {
             className="inline-flex items-center text-xs font-bold px-4 py-2 rounded-lg border border-slate-300 hover:bg-slate-100 text-slate-800 transition"
           >
             <Printer className="h-4 w-4 mr-1.5" />
-            Cetak Log A4
+            Print Log A4
           </button>
           <button
             onClick={handleSaveLogbook}
             className="inline-flex items-center text-xs font-bold px-4 py-2 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white transition shadow-md"
           >
             <Save className="h-4 w-4 mr-1.5" />
-            Simpan Logbook
+            Save Logbook
           </button>
         </div>
       </div>
@@ -153,13 +152,13 @@ export default function InternshipLogbookPage() {
       {savedNotice && (
         <div className="p-3 rounded-lg bg-emerald-100 text-emerald-900 flex items-center space-x-2 text-xs font-bold no-print">
           <CheckCircle2 className="h-4 w-4 text-emerald-700" />
-          <span>Rekod Logbook Minggu {selectedWeek} berjaya disimpan!</span>
+          <span>Week {selectedWeek} Logbook entry saved successfully!</span>
         </div>
       )}
 
       {/* Navigation Bar for Logbook Sections */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-slate-50 p-3 rounded-xl border border-slate-200 no-print">
-        {/* Navigation Tabs */}
+        {/* Navigation Tabs (English Labels) */}
         <div className="flex items-center space-x-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
           <button
             onClick={() => setActiveSection('cover')}
@@ -168,7 +167,7 @@ export default function InternshipLogbookPage() {
             }`}
           >
             <BookOpen className="h-3.5 w-3.5" />
-            <span>Muka Hadapan (Cover)</span>
+            <span>Cover Page</span>
           </button>
           <button
             onClick={() => setActiveSection('components')}
@@ -186,7 +185,7 @@ export default function InternshipLogbookPage() {
             }`}
           >
             <ClipboardList className="h-3.5 w-3.5" />
-            <span>Log Harian</span>
+            <span>1. Daily Log</span>
           </button>
           <button
             onClick={() => setActiveSection('refleksi')}
@@ -195,7 +194,7 @@ export default function InternshipLogbookPage() {
             }`}
           >
             <BrainCircuit className="h-3.5 w-3.5" />
-            <span>Refleksi Kendiri</span>
+            <span>2. Self Reflection</span>
           </button>
           <button
             onClick={() => setActiveSection('rumusan')}
@@ -204,7 +203,7 @@ export default function InternshipLogbookPage() {
             }`}
           >
             <Calculator className="h-3.5 w-3.5" />
-            <span>Rumusan Jam Mingguan</span>
+            <span>3. Weekly Hours Summary</span>
           </button>
         </div>
 
@@ -221,7 +220,7 @@ export default function InternshipLogbookPage() {
             <div className="flex items-center space-x-1.5">
               <Calendar className="h-4 w-4 text-emerald-700" />
               <span className="text-xs font-black uppercase text-slate-800">
-                Minggu {selectedWeek} / 28
+                Week {selectedWeek} / 28
               </span>
             </div>
             <button
@@ -240,7 +239,7 @@ export default function InternshipLogbookPage() {
          =================================================================== */}
       {(activeSection === 'cover' || typeof window !== 'undefined') && (
         <div className={`relative bg-white border border-slate-300 p-8 sm:p-12 shadow-md max-w-4xl mx-auto overflow-hidden ${activeSection !== 'cover' ? 'hidden print:block' : ''}`}>
-          {/* Top Diagonal Teal Decorative Header Accent */}
+          {/* Top Diagonal Accent Graphics */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-700 transform rotate-45 translate-x-24 -translate-y-24 pointer-events-none opacity-90" />
           <div className="absolute top-0 right-0 w-56 h-56 bg-yellow-400 transform rotate-45 translate-x-20 -translate-y-28 pointer-events-none opacity-80" />
 
@@ -268,7 +267,7 @@ export default function InternshipLogbookPage() {
             </h2>
           </div>
 
-          {/* Trainee Details Inputs (Crisp Fillable) */}
+          {/* Trainee Details Inputs */}
           <div className="max-w-xl mx-auto space-y-6 my-10 text-xs sm:text-sm font-black">
             <div className="flex items-center space-x-2 border-b-2 border-slate-800 pb-1">
               <span className="w-36 text-slate-900 uppercase">NAME:</span>
@@ -315,7 +314,7 @@ export default function InternshipLogbookPage() {
       )}
 
       {/* ===================================================================
-          EXACT VECTOR REPLICA: CLINICAL HOURS & SUPERVISION COMPONENTS (TABLE 18)
+          EXACT VECTOR REPLICA: CLINICAL HOURS & SUPERVISION COMPONENTS
          =================================================================== */}
       {(activeSection === 'components' || typeof window !== 'undefined') && (
         <div className={`space-y-6 bg-white p-6 sm:p-8 border border-black shadow-sm max-w-4xl mx-auto ${activeSection !== 'components' ? 'hidden print:block' : ''}`}>
@@ -458,23 +457,23 @@ export default function InternshipLogbookPage() {
       )}
 
       {/* ===================================================================
-          PAGE 1: LOG HARIAN (EXACT REPLICA OF ORIGINAL PDF PAGE 1)
+          PAGE 1: DAILY LOG (ENGLISH TRANSLATED)
          =================================================================== */}
       {(activeSection === 'log' || typeof window !== 'undefined') && (
         <div className={`space-y-6 bg-white p-6 sm:p-8 border border-black shadow-sm ${activeSection !== 'log' ? 'hidden print:block' : ''}`}>
           {/* Header Title */}
           <div className="flex items-center justify-between border-b-2 border-black pb-2">
             <h2 className="text-base sm:text-lg font-black uppercase text-black">
-              LOG HARIAN (M{selectedWeek})
+              DAILY LOG (WEEK {selectedWeek})
             </h2>
             <div className="flex items-center space-x-2">
-              <span className="text-xs font-bold text-black uppercase">Tarikh / Hari :</span>
+              <span className="text-xs font-bold text-black uppercase">DATE / DAY :</span>
               <input
                 type="text"
-                placeholder="e.g. 03/03/2026 (ISNIN)"
+                placeholder="e.g. 03/03/2026 (MONDAY)"
                 value={tarikhHari}
                 onChange={(e) => setTarikhHari(e.target.value)}
-                className="p-1 text-xs border-b border-black font-bold focus:outline-none w-48 bg-transparent"
+                className="p-1 text-xs border-b border-black font-bold focus:outline-none w-52 bg-transparent"
               />
             </div>
           </div>
@@ -484,11 +483,11 @@ export default function InternshipLogbookPage() {
             <table className="w-full border-collapse border border-black text-xs">
               <thead>
                 <tr className="bg-slate-100 border-b border-black text-center font-bold">
-                  <th className="border border-black p-2 w-1/5">Lokasi</th>
-                  <th className="border border-black p-2 w-1/6">Masa</th>
-                  <th className="border border-black p-2 w-2/5">Aktiviti Praktikum</th>
-                  <th className="border border-black p-2 w-1/5">Catatan</th>
-                  <th className="border border-black p-1 w-10 no-print">Tindakan</th>
+                  <th className="border border-black p-2 w-1/5">Location</th>
+                  <th className="border border-black p-2 w-1/6">Time</th>
+                  <th className="border border-black p-2 w-2/5">Internship Activity</th>
+                  <th className="border border-black p-2 w-1/5">Notes</th>
+                  <th className="border border-black p-1 w-10 no-print">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -497,7 +496,7 @@ export default function InternshipLogbookPage() {
                     <td className="border border-black p-1">
                       <input
                         type="text"
-                        placeholder="e.g. Bilik Sesi 1"
+                        placeholder="e.g. Session Room 1"
                         value={entry.lokasi}
                         onChange={(e) => {
                           const updated = [...logEntries];
@@ -523,7 +522,7 @@ export default function InternshipLogbookPage() {
                     <td className="border border-black p-1">
                       <textarea
                         rows={2}
-                        placeholder="Butiran aktiviti harian..."
+                        placeholder="Daily activity details..."
                         value={entry.aktiviti}
                         onChange={(e) => {
                           const updated = [...logEntries];
@@ -536,7 +535,7 @@ export default function InternshipLogbookPage() {
                     <td className="border border-black p-1">
                       <input
                         type="text"
-                        placeholder="Catatan / rujukan"
+                        placeholder="Notes / references"
                         value={entry.catatan}
                         onChange={(e) => {
                           const updated = [...logEntries];
@@ -567,39 +566,39 @@ export default function InternshipLogbookPage() {
                 className="inline-flex items-center text-xs font-bold px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded border border-slate-300"
               >
                 <Plus className="h-3.5 w-3.5 mr-1" />
-                Tambah Baris Aktiviti
+                Add Activity Row
               </button>
             </div>
           </div>
 
-          {/* Table 2: Rumusan Jam Harian Aktiviti Praktikum */}
+          {/* Table 2: Daily Hours Summary */}
           <div className="border border-black">
             <div className="bg-slate-100 font-black text-center border-b border-black py-1.5 uppercase text-xs">
-              RUMUSAN JAM HARIAN AKTIVITI PRAKTIKUM
+              DAILY HOURS SUMMARY OF INTERNSHIP ACTIVITIES
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 text-xs">
-              {/* LEFT COLUMN: Perkhidmatan Bersemuka (F2F) */}
+              {/* LEFT COLUMN: Face to Face (F2F) Services */}
               <div className="border-r border-black p-3 space-y-3">
                 <div className="font-bold border-b border-black pb-1 uppercase">
-                  Perkhidmatan Bersemuka (F2F)
+                  Face-to-Face Services (F2F)
                 </div>
 
                 <table className="w-full text-xs">
                   <thead>
                     <tr className="border-b border-black text-left font-bold">
-                      <th className="py-1">Sesi Kaunseling KMK</th>
-                      <th className="py-1 text-right w-16">Jam</th>
+                      <th className="py-1">CMHC Counseling Sessions</th>
+                      <th className="py-1 text-right w-16">Hours</th>
                     </tr>
                   </thead>
                   <tbody className="space-y-2">
                     <tr>
                       <td className="py-1.5">
-                        <span className="font-bold">1. Kaunseling Individu KMK</span>
+                        <span className="font-bold">1. Individual Counseling CMHC</span>
                         <div className="text-[10px] text-slate-600 italic">
-                          *Temubual Pengambilan / Temubual Klinikal<br />
-                          *Penilaian / saringan status mental<br />
-                          *Wajib dalam semua jenis sesi kaunseling
+                          *Intake Interview / Clinical Interview<br />
+                          *Mental State Examination (MSE) & Assessment<br />
+                          *Mandatory in all counseling sessions
                         </div>
                       </td>
                       <td className="align-top py-1.5">
@@ -616,7 +615,7 @@ export default function InternshipLogbookPage() {
 
                     <tr>
                       <td className="py-1.5 font-bold">
-                        2. Kaunseling Kelompok KMK
+                        2. Group Counseling CMHC
                       </td>
                       <td className="align-top py-1.5">
                         <input
@@ -633,26 +632,26 @@ export default function InternshipLogbookPage() {
                 </table>
 
                 <div className="flex items-center justify-between border-t border-black pt-2 font-black text-xs">
-                  <span>JUMLAH JAM (F2F) :</span>
+                  <span>TOTAL HOURS (F2F) :</span>
                   <span className="px-3 py-1 bg-slate-100 border border-black">{sumF2F.toFixed(1)} HRS</span>
                 </div>
               </div>
 
-              {/* RIGHT COLUMN: Aktiviti Profesional Kaunselor KMK */}
+              {/* RIGHT COLUMN: Counselor Professional Activities */}
               <div className="p-3 space-y-3">
                 <div className="font-bold border-b border-black pb-1 uppercase">
-                  Aktiviti Profesional Kaunselor KMK
+                  Counselor Professional Activities
                 </div>
 
                 <div className="space-y-2 text-xs">
                   <div className="flex items-start justify-between">
                     <div>
-                      <span className="font-bold">1. Aktiviti / Intervensi</span>
+                      <span className="font-bold">1. Activities / Interventions</span>
                       <ul className="text-[10px] text-slate-700 pl-3 list-disc">
-                        <li>i. Intervensi Krisis</li>
+                        <li>i. Crisis Intervention</li>
                         <li>ii. PFA / MHPSS</li>
-                        <li>iii. Pengujian: Tadbir, Analisis, Interpretasi</li>
-                        <li>iv. Aktiviti Psikopendidikan / Komuniti (Outreach/Rujukan/Konsultasi)</li>
+                        <li>iii. Psychological Testing: Admin, Analysis, Interpretation</li>
+                        <li>iv. Psychoeducation / Community Activities (Outreach/Referral/Consultation)</li>
                       </ul>
                     </div>
                     <input
@@ -667,8 +666,8 @@ export default function InternshipLogbookPage() {
 
                   <div className="flex items-start justify-between border-t border-slate-200 pt-2">
                     <div>
-                      <span className="font-bold">2. Pengurusan dan Pentadbiran</span>
-                      <p className="text-[10px] text-slate-600">Pengurusan rekod, konseptualisasi kes, laporan refleksi</p>
+                      <span className="font-bold">2. Management and Administration</span>
+                      <p className="text-[10px] text-slate-600">Records, logbook management, case conceptualization, reflection reports</p>
                     </div>
                     <input
                       type="number"
@@ -682,8 +681,8 @@ export default function InternshipLogbookPage() {
 
                   <div className="flex items-start justify-between border-t border-slate-200 pt-2">
                     <div>
-                      <span className="font-bold">3. Perkembangan Profesional</span>
-                      <p className="text-[10px] text-slate-600">Pembentang / peserta konferens & literatur profesional</p>
+                      <span className="font-bold">3. Professional Development</span>
+                      <p className="text-[10px] text-slate-600">Presenter/participant in professional conferences, webinars, & literature</p>
                     </div>
                     <input
                       type="number"
@@ -697,8 +696,8 @@ export default function InternshipLogbookPage() {
 
                   <div className="flex items-start justify-between border-t border-slate-200 pt-2">
                     <div>
-                      <span className="font-bold">4. Penyeliaan</span>
-                      <p className="text-[10px] text-slate-600">Individu / Triadik / Kumpulan</p>
+                      <span className="font-bold">4. Supervision</span>
+                      <p className="text-[10px] text-slate-600">Individual / Triadic / Group Supervision</p>
                     </div>
                     <input
                       type="number"
@@ -712,7 +711,7 @@ export default function InternshipLogbookPage() {
                 </div>
 
                 <div className="flex items-center justify-between border-t border-black pt-2 font-black text-xs">
-                  <span>JUMLAH JAM (PROFESIONAL) :</span>
+                  <span>TOTAL HOURS (PROFESSIONAL) :</span>
                   <span className="px-3 py-1 bg-slate-100 border border-black">{sumProf.toFixed(1)} HRS</span>
                 </div>
               </div>
@@ -722,24 +721,24 @@ export default function InternshipLogbookPage() {
       )}
 
       {/* ===================================================================
-          PAGE 2 & 3: REFLEKSI KENDIRI
+          PAGE 2 & 3: SELF REFLECTION (ENGLISH TRANSLATED)
          =================================================================== */}
       {(activeSection === 'refleksi' || typeof window !== 'undefined') && (
         <div className={`space-y-6 bg-white p-6 sm:p-8 border border-black shadow-sm ${activeSection !== 'refleksi' ? 'hidden print:block' : ''}`}>
           <div className="border-b-2 border-black pb-2">
             <h2 className="text-base sm:text-lg font-black uppercase text-black">
-              REFLEKSI KENDIRI (MINGGU {selectedWeek})
+              SELF REFLECTION (WEEK {selectedWeek})
             </h2>
           </div>
 
           <div className="space-y-5 text-xs">
             <div className="space-y-1 border border-black p-3">
               <label className="font-bold block uppercase">
-                1. Kaunseling / Terapi Individu <span className="font-normal text-slate-600">(kekuatan, kelemahan dan cara mengatasi, dan lain-lain)</span>
+                1. Individual Counseling / Therapy <span className="font-normal text-slate-600">(strengths, weaknesses, ways to overcome, etc.)</span>
               </label>
               <textarea
                 rows={3}
-                placeholder="Tuliskan refleksi kaunseling individu..."
+                placeholder="Write reflection on individual counseling..."
                 value={refleksiIndividu}
                 onChange={(e) => setRefleksiIndividu(e.target.value)}
                 className="w-full p-2 border border-slate-300 focus:border-black focus:outline-none resize-none"
@@ -748,11 +747,11 @@ export default function InternshipLogbookPage() {
 
             <div className="space-y-1 border border-black p-3">
               <label className="font-bold block uppercase">
-                2. Kaunseling / Terapi Kelompok <span className="font-normal text-slate-600">(kekuatan, kelemahan dan cara mengatasi, dan lain-lain)</span>
+                2. Group Counseling / Therapy <span className="font-normal text-slate-600">(strengths, weaknesses, ways to overcome, etc.)</span>
               </label>
               <textarea
                 rows={3}
-                placeholder="Tuliskan refleksi kaunseling kelompok..."
+                placeholder="Write reflection on group counseling..."
                 value={refleksiKelompok}
                 onChange={(e) => setRefleksiKelompok(e.target.value)}
                 className="w-full p-2 border border-slate-300 focus:border-black focus:outline-none resize-none"
@@ -761,11 +760,11 @@ export default function InternshipLogbookPage() {
 
             <div className="space-y-1 border border-black p-3">
               <label className="font-bold block uppercase">
-                3. Aktiviti / Intervensi <span className="font-normal text-slate-600">(kekuatan, kelemahan dan cara mengatasi, dan lain-lain)</span>
+                3. Activities / Interventions <span className="font-normal text-slate-600">(strengths, weaknesses, ways to overcome, etc.)</span>
               </label>
               <textarea
                 rows={3}
-                placeholder="Tuliskan refleksi aktiviti & intervensi krisis/PFA..."
+                placeholder="Write reflection on crisis interventions & PFA activities..."
                 value={refleksiAktiviti}
                 onChange={(e) => setRefleksiAktiviti(e.target.value)}
                 className="w-full p-2 border border-slate-300 focus:border-black focus:outline-none resize-none"
@@ -774,11 +773,11 @@ export default function InternshipLogbookPage() {
 
             <div className="space-y-1 border border-black p-3">
               <label className="font-bold block uppercase">
-                4. Pengurusan & Pentadbiran <span className="font-normal text-slate-600">(kekuatan, kelemahan dan cara mengatasi, dan lain-lain)</span>
+                4. Management & Administration <span className="font-normal text-slate-600">(strengths, weaknesses, ways to overcome, etc.)</span>
               </label>
               <textarea
                 rows={3}
-                placeholder="Tuliskan refleksi pengurusan pentadbiran & rekod..."
+                placeholder="Write reflection on management, record keeping & case conceptualization..."
                 value={refleksiPengurusan}
                 onChange={(e) => setRefleksiPengurusan(e.target.value)}
                 className="w-full p-2 border border-slate-300 focus:border-black focus:outline-none resize-none"
@@ -787,11 +786,11 @@ export default function InternshipLogbookPage() {
 
             <div className="space-y-1 border border-black p-3">
               <label className="font-bold block uppercase">
-                5. Perkembangan Profesional <span className="font-normal text-slate-600">(kekuatan, kelemahan dan cara mengatasi, dan lain-lain)</span>
+                5. Professional Development <span className="font-normal text-slate-600">(strengths, weaknesses, ways to overcome, etc.)</span>
               </label>
               <textarea
                 rows={3}
-                placeholder="Tuliskan refleksi perkembangan profesional..."
+                placeholder="Write reflection on professional learning & workshops..."
                 value={refleksiPerkembangan}
                 onChange={(e) => setRefleksiPerkembangan(e.target.value)}
                 className="w-full p-2 border border-slate-300 focus:border-black focus:outline-none resize-none"
@@ -800,11 +799,11 @@ export default function InternshipLogbookPage() {
 
             <div className="space-y-1 border border-black p-3">
               <label className="font-bold block uppercase">
-                6. Penyeliaan <span className="font-normal text-slate-600">(pengalaman diselia oleh Penyelia Akademik dan / atau Lapangan)</span>
+                6. Supervision <span className="font-normal text-slate-600">(supervision experience by Academic and/or Site Supervisor)</span>
               </label>
               <textarea
                 rows={3}
-                placeholder="Tuliskan pengalaman & maklum balas penyeliaan..."
+                placeholder="Write experience & feedback received during supervision..."
                 value={refleksiPenyeliaan}
                 onChange={(e) => setRefleksiPenyeliaan(e.target.value)}
                 className="w-full p-2 border border-slate-300 focus:border-black focus:outline-none resize-none"
@@ -815,16 +814,16 @@ export default function InternshipLogbookPage() {
       )}
 
       {/* ===================================================================
-          PAGE 4: RUMUSAN JAM MINGGUAN
+          PAGE 4: WEEKLY HOURS SUMMARY (ENGLISH TRANSLATED)
          =================================================================== */}
       {(activeSection === 'rumusan' || typeof window !== 'undefined') && (
         <div className={`space-y-6 bg-white p-6 sm:p-8 border border-black shadow-sm ${activeSection !== 'rumusan' ? 'hidden print:block' : ''}`}>
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b-2 border-black pb-2 gap-2">
             <h2 className="text-base sm:text-lg font-black uppercase text-black">
-              RUMUSAN JAM MINGGUAN (M{selectedWeek})
+              WEEKLY HOURS SUMMARY (WEEK {selectedWeek})
             </h2>
             <div className="flex items-center space-x-2 text-xs font-bold">
-              <span>Minggu : Dari</span>
+              <span>Week : From</span>
               <input
                 type="text"
                 placeholder="YYYY-MM-DD"
@@ -832,7 +831,7 @@ export default function InternshipLogbookPage() {
                 onChange={(e) => setTarikhDari(e.target.value)}
                 className="w-24 p-0.5 border-b border-black text-center focus:outline-none"
               />
-              <span>ke</span>
+              <span>to</span>
               <input
                 type="text"
                 placeholder="YYYY-MM-DD"
@@ -847,28 +846,28 @@ export default function InternshipLogbookPage() {
             <table className="w-full border-collapse border border-black text-xs text-left">
               <thead>
                 <tr className="bg-slate-100 border-b border-black font-bold text-center">
-                  <th className="border border-black p-2 text-left w-1/3">Aktiviti</th>
-                  <th className="border border-black p-1 w-12">Isnin</th>
-                  <th className="border border-black p-1 w-12">Selasa</th>
-                  <th className="border border-black p-1 w-12">Rabu</th>
-                  <th className="border border-black p-1 w-12">Khamis</th>
-                  <th className="border border-black p-1 w-12">Jumaat</th>
-                  <th className="border border-black p-1 w-12">Sabtu</th>
-                  <th className="border border-black p-1 w-12">Ahad</th>
+                  <th className="border border-black p-2 text-left w-1/3">Activity</th>
+                  <th className="border border-black p-1 w-12">Mon</th>
+                  <th className="border border-black p-1 w-12">Tue</th>
+                  <th className="border border-black p-1 w-12">Wed</th>
+                  <th className="border border-black p-1 w-12">Thu</th>
+                  <th className="border border-black p-1 w-12">Fri</th>
+                  <th className="border border-black p-1 w-12">Sat</th>
+                  <th className="border border-black p-1 w-12">Sun</th>
                   <th className="border border-black p-2 w-16 bg-slate-200">Total</th>
                 </tr>
               </thead>
               <tbody>
                 {[
-                  { key: 'a', label: 'a. Kaunseling Individu' },
-                  { key: 'b', label: 'b. Kaunseling Kelompok' },
-                  { key: 'c', label: 'c. Intervensi Krisis' },
+                  { key: 'a', label: 'a. Individual Counseling' },
+                  { key: 'b', label: 'b. Group Counseling' },
+                  { key: 'c', label: 'c. Crisis Intervention' },
                   { key: 'd', label: 'd. Psychological First Aid (PFA) / Mental Health Psychosocial Support (MHPSS)' },
-                  { key: 'e', label: 'e. Aktiviti Psikopendidikan / Komuniti' },
-                  { key: 'f', label: 'f. Pengujian: Tadbir, Analisis, Interpretasi' },
-                  { key: 'g', label: 'g. Pengurusan dan Pentadbiran' },
-                  { key: 'h', label: 'h. Perkembangan Profesional' },
-                  { key: 'i', label: 'i. Penyeliaan' },
+                  { key: 'e', label: 'e. Psychoeducation / Community Activities' },
+                  { key: 'f', label: 'f. Psychological Assessment: Admin, Analysis, Interpretation' },
+                  { key: 'g', label: 'g. Management and Administration' },
+                  { key: 'h', label: 'h. Professional Development' },
+                  { key: 'i', label: 'i. Supervision' },
                 ].map(row => (
                   <tr key={row.key} className="border-b border-black">
                     <td className="border border-black p-2 font-bold">{row.label}</td>
@@ -890,7 +889,7 @@ export default function InternshipLogbookPage() {
                 ))}
 
                 <tr className="bg-slate-200 border-t-2 border-black font-black text-center">
-                  <td className="border border-black p-2 text-left">Jumlah Jam Minggu</td>
+                  <td className="border border-black p-2 text-left">Weekly Total Hours</td>
                   {['isnin', 'selasa', 'rabu', 'khamis', 'jumaat', 'sabtu', 'ahad'].map(day => (
                     <td key={day} className="border border-black p-1">
                       {calcDayTotal(day).toFixed(1)}
@@ -908,9 +907,9 @@ export default function InternshipLogbookPage() {
             <div className="space-y-12">
               <div className="border-b border-black w-3/4"></div>
               <div>
-                <p className="font-black">Tandatangan Kaunselor Pelatih</p>
+                <p className="font-black">Trainee Counselor Signature</p>
                 <div className="flex items-center space-x-2 mt-1">
-                  <span>Tarikh:</span>
+                  <span>Date:</span>
                   <input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-32 focus:outline-none" />
                 </div>
               </div>
@@ -919,9 +918,9 @@ export default function InternshipLogbookPage() {
             <div className="space-y-12">
               <div className="border-b border-black w-3/4"></div>
               <div>
-                <p className="font-black">Tandatangan Penyelia Akademik</p>
+                <p className="font-black">Academic Supervisor Signature</p>
                 <div className="flex items-center space-x-2 mt-1">
-                  <span>Tarikh:</span>
+                  <span>Date:</span>
                   <input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-32 focus:outline-none" />
                 </div>
               </div>
