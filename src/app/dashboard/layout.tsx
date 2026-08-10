@@ -13,6 +13,7 @@ import {
     Settings,
     LogOut,
     FileText,
+    Clock,
     ChevronDown,
     ChevronRight,
     ClipboardList,
@@ -60,6 +61,10 @@ function SidebarNavContent({
     toggleForms,
     isWeeklyFormsOpen,
     toggleWeeklyForms,
+    isInternshipFormsOpen,
+    toggleInternshipForms,
+    isInternshipLogOpen,
+    toggleInternshipLog,
     setIsSidebarOpen,
     isMobile
 }: any) {
@@ -291,6 +296,14 @@ function SidebarNavContent({
 
                         {isFormsOpen && (
                             <div className="mt-1 ml-4 pl-4 border-l border-white/20 space-y-1 py-1">
+                                <Link href="/dashboard/internship/forms" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/internship/forms")}>
+                                    <FileText size={14} className={pathname === "/dashboard/internship/forms" ? "text-upsi-gold" : "text-emerald-300"} />
+                                    <span className="text-[10px] uppercase font-bold tracking-tight text-emerald-300">INTERNSHIP FORMS (30 FORMS)</span>
+                                </Link>
+                                <Link href="/dashboard/internship/log" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/internship/log")}>
+                                    <Clock size={14} className={pathname === "/dashboard/internship/log" ? "text-upsi-gold" : "text-cyan-300"} />
+                                    <span className="text-[10px] uppercase font-bold tracking-tight text-cyan-300">INTERNSHIP LOGBOOK (28 WEEKS)</span>
+                                </Link>
                                 <Link href="/dashboard/forms/form1" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form1")}>
                                     <ClipboardList size={14} className={pathname === "/dashboard/forms/form1" ? "text-upsi-gold" : "text-blue-300"} />
                                     <span className="text-[10px] uppercase font-bold tracking-tight">FORM 1: PSYCHOLOGICAL INTAKE REPORT</span>
@@ -446,7 +459,7 @@ export default function DashboardLayout({
     useEffect(() => {
         if (pathname?.startsWith('/dashboard/forms/log-harian') || pathname?.startsWith('/dashboard/forms/refleksi-mingguan') || pathname?.startsWith('/dashboard/forms/rumusan-mingguan')) {
             setIsWeeklyFormsOpen(true);
-        } else if (pathname?.startsWith('/dashboard/forms')) {
+        } else if (pathname?.startsWith('/dashboard/forms') || pathname?.startsWith('/dashboard/internship')) {
             setIsFormsOpen(true);
         }
     }, [pathname]);
