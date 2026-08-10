@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from 'react';
-import Link from 'next/link';
 import { 
   ClipboardList, 
   BrainCircuit, 
@@ -12,12 +11,12 @@ import {
   ChevronLeft, 
   ChevronRight, 
   Calendar,
-  Clock,
   Plus,
   Trash2,
-  FileText
+  BookOpen,
+  FileCheck,
+  Award
 } from 'lucide-react';
-import { FormHeader } from '@/components/forms/FormHeader';
 
 interface DailyLogEntry {
   id: string;
@@ -28,8 +27,13 @@ interface DailyLogEntry {
 }
 
 export default function InternshipLogbookPage() {
+  const [activeSection, setActiveSection] = useState<'cover' | 'contract' | 'components' | 'log' | 'refleksi' | 'rumusan'>('cover');
   const [selectedWeek, setSelectedWeek] = useState<number>(1);
-  const [selectedTab, setSelectedTab] = useState<'log' | 'refleksi' | 'rumusan'>('log');
+
+  // Cover Page State
+  const [traineeName, setTraineeName] = useState('AHMAD FEROZ BIN ABDUL SAMAD');
+  const [matricNo, setMatricNo] = useState('M20241001148');
+  const [placementSite, setPlacementSite] = useState('');
 
   // Page 1: Daily Log Header
   const [tarikhHari, setTarikhHari] = useState('');
@@ -70,7 +74,6 @@ export default function InternshipLogbookPage() {
 
   const [savedNotice, setSavedNotice] = useState(false);
 
-  // Helper calculation for daily F2F & Professional activity sums
   const sumF2F = (Number(jamIndividu) || 0) + (Number(jamKelompok) || 0);
   const sumProf = (Number(jamAktivitiIntervensi) || 0) + (Number(jamPengurusan) || 0) + (Number(jamPerkembangan) || 0) + (Number(jamPenyeliaan) || 0);
 
@@ -114,17 +117,17 @@ export default function InternshipLogbookPage() {
   };
 
   return (
-    <div className="container mx-auto p-4 sm:p-6 space-y-6 internship-form-font text-black">
-      {/* Top Banner Navigation */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b pb-5 no-print">
+    <div className="container mx-auto p-4 sm:p-6 space-y-6 internship-form-font text-black antialiased">
+      {/* Top Banner Control Navigation */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b pb-4 no-print">
         <div>
           <div className="flex items-center space-x-2 text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">
-            <span>Internship Portal</span>
+            <span>UPSI CMHC Internship</span>
             <span>•</span>
-            <span className="text-upsi-navy font-black">28-Week Clinical Logbook</span>
+            <span className="text-emerald-700 font-black">28-Week Clinical Logbook</span>
           </div>
           <h1 className="text-2xl font-black tracking-tight text-slate-900">
-            Log Harian, Refleksi Kendiri & Rumusan Jam Mingguan
+            CMHC INTERNSHIP LOG BOOK
           </h1>
         </div>
 
@@ -139,7 +142,7 @@ export default function InternshipLogbookPage() {
           </button>
           <button
             onClick={handleSaveLogbook}
-            className="inline-flex items-center text-xs font-bold px-4 py-2 rounded-lg bg-upsi-navy hover:bg-blue-900 text-white transition shadow-md"
+            className="inline-flex items-center text-xs font-bold px-4 py-2 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white transition shadow-md"
           >
             <Save className="h-4 w-4 mr-1.5" />
             Simpan Logbook
@@ -154,69 +157,311 @@ export default function InternshipLogbookPage() {
         </div>
       )}
 
-      {/* Week Selector Bar & Tab Navigation */}
+      {/* Navigation Bar for Logbook Sections */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-slate-50 p-3 rounded-xl border border-slate-200 no-print">
-        {/* Week Stepper */}
-        <div className="flex items-center space-x-2">
+        {/* Navigation Tabs */}
+        <div className="flex items-center space-x-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
           <button
-            disabled={selectedWeek <= 1}
-            onClick={() => setSelectedWeek(prev => Math.max(1, prev - 1))}
-            className="p-1.5 rounded-lg border bg-white hover:bg-slate-100 disabled:opacity-40"
+            onClick={() => setActiveSection('cover')}
+            className={`px-3 py-1.5 text-xs font-bold rounded-md transition flex items-center space-x-1.5 whitespace-nowrap ${
+              activeSection === 'cover' ? 'bg-emerald-700 text-white shadow-sm' : 'text-slate-700 hover:bg-slate-200'
+            }`}
           >
-            <ChevronLeft className="h-4 w-4" />
+            <BookOpen className="h-3.5 w-3.5" />
+            <span>Muka Hadapan (Cover)</span>
           </button>
-          <div className="flex items-center space-x-2">
-            <Calendar className="h-4 w-4 text-upsi-navy" />
-            <span className="text-xs font-black uppercase text-slate-800">
-              Minggu {selectedWeek} / 28
-            </span>
-          </div>
           <button
-            disabled={selectedWeek >= 28}
-            onClick={() => setSelectedWeek(prev => Math.min(28, prev + 1))}
-            className="p-1.5 rounded-lg border bg-white hover:bg-slate-100 disabled:opacity-40"
+            onClick={() => setActiveSection('components')}
+            className={`px-3 py-1.5 text-xs font-bold rounded-md transition flex items-center space-x-1.5 whitespace-nowrap ${
+              activeSection === 'components' ? 'bg-emerald-700 text-white shadow-sm' : 'text-slate-700 hover:bg-slate-200'
+            }`}
           >
-            <ChevronRight className="h-4 w-4" />
+            <Award className="h-3.5 w-3.5" />
+            <span>Component & Hours</span>
           </button>
-        </div>
-
-        {/* Section Tabs */}
-        <div className="flex items-center space-x-1 bg-slate-200/70 p-1 rounded-lg">
           <button
-            onClick={() => setSelectedTab('log')}
-            className={`px-3 py-1.5 text-xs font-bold rounded-md transition flex items-center space-x-1.5 ${
-              selectedTab === 'log' ? 'bg-upsi-navy text-white shadow-sm' : 'text-slate-700 hover:text-slate-900'
+            onClick={() => setActiveSection('log')}
+            className={`px-3 py-1.5 text-xs font-bold rounded-md transition flex items-center space-x-1.5 whitespace-nowrap ${
+              activeSection === 'log' ? 'bg-emerald-700 text-white shadow-sm' : 'text-slate-700 hover:bg-slate-200'
             }`}
           >
             <ClipboardList className="h-3.5 w-3.5" />
-            <span>1. Log Harian</span>
+            <span>Log Harian</span>
           </button>
           <button
-            onClick={() => setSelectedTab('refleksi')}
-            className={`px-3 py-1.5 text-xs font-bold rounded-md transition flex items-center space-x-1.5 ${
-              selectedTab === 'refleksi' ? 'bg-upsi-navy text-white shadow-sm' : 'text-slate-700 hover:text-slate-900'
+            onClick={() => setActiveSection('refleksi')}
+            className={`px-3 py-1.5 text-xs font-bold rounded-md transition flex items-center space-x-1.5 whitespace-nowrap ${
+              activeSection === 'refleksi' ? 'bg-emerald-700 text-white shadow-sm' : 'text-slate-700 hover:bg-slate-200'
             }`}
           >
             <BrainCircuit className="h-3.5 w-3.5" />
-            <span>2. Refleksi Kendiri</span>
+            <span>Refleksi Kendiri</span>
           </button>
           <button
-            onClick={() => setSelectedTab('rumusan')}
-            className={`px-3 py-1.5 text-xs font-bold rounded-md transition flex items-center space-x-1.5 ${
-              selectedTab === 'rumusan' ? 'bg-upsi-navy text-white shadow-sm' : 'text-slate-700 hover:text-slate-900'
+            onClick={() => setActiveSection('rumusan')}
+            className={`px-3 py-1.5 text-xs font-bold rounded-md transition flex items-center space-x-1.5 whitespace-nowrap ${
+              activeSection === 'rumusan' ? 'bg-emerald-700 text-white shadow-sm' : 'text-slate-700 hover:bg-slate-200'
             }`}
           >
             <Calculator className="h-3.5 w-3.5" />
-            <span>3. Rumusan Jam</span>
+            <span>Rumusan Jam Mingguan</span>
           </button>
         </div>
+
+        {/* Week Stepper for Weekly sections */}
+        {(activeSection === 'log' || activeSection === 'refleksi' || activeSection === 'rumusan') && (
+          <div className="flex items-center space-x-2 shrink-0">
+            <button
+              disabled={selectedWeek <= 1}
+              onClick={() => setSelectedWeek(prev => Math.max(1, prev - 1))}
+              className="p-1.5 rounded-lg border bg-white hover:bg-slate-100 disabled:opacity-40"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+            <div className="flex items-center space-x-1.5">
+              <Calendar className="h-4 w-4 text-emerald-700" />
+              <span className="text-xs font-black uppercase text-slate-800">
+                Minggu {selectedWeek} / 28
+              </span>
+            </div>
+            <button
+              disabled={selectedWeek >= 28}
+              onClick={() => setSelectedWeek(prev => Math.min(28, prev + 1))}
+              className="p-1.5 rounded-lg border bg-white hover:bg-slate-100 disabled:opacity-40"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          </div>
+        )}
       </div>
+
+      {/* ===================================================================
+          EXACT VECTOR REPLICA: CMHC INTERNSHIP LOG BOOK COVER (PAGE 1)
+         =================================================================== */}
+      {(activeSection === 'cover' || typeof window !== 'undefined') && (
+        <div className={`relative bg-white border border-slate-300 p-8 sm:p-12 shadow-md max-w-4xl mx-auto overflow-hidden ${activeSection !== 'cover' ? 'hidden print:block' : ''}`}>
+          {/* Top Diagonal Teal Decorative Header Accent */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-700 transform rotate-45 translate-x-24 -translate-y-24 pointer-events-none opacity-90" />
+          <div className="absolute top-0 right-0 w-56 h-56 bg-yellow-400 transform rotate-45 translate-x-20 -translate-y-28 pointer-events-none opacity-80" />
+
+          {/* Logo & Institution Header */}
+          <div className="flex flex-col items-center text-center space-y-2 pt-4">
+            <div className="flex items-center justify-center space-x-3">
+              <img src="/upsi-logo.png" alt="UPSI Logo" className="h-20 sm:h-24 w-auto object-contain" />
+            </div>
+            <div className="text-center font-serif text-upsi-navy font-bold text-sm tracking-wide">
+              UNIVERSITI PENDIDIKAN SULTAN IDRIS
+            </div>
+            <div className="text-center text-[10px] text-red-600 font-bold uppercase tracking-wider">
+              SULTAN IDRIS EDUCATION UNIVERSITY
+            </div>
+          </div>
+
+          {/* Main Title Group */}
+          <div className="text-center space-y-3 my-12">
+            <h1 className="text-3xl sm:text-5xl font-black text-emerald-800 tracking-tight uppercase leading-none">
+              CMHC INTERNSHIP<br />LOG BOOK
+            </h1>
+            <div className="w-3/4 mx-auto border-b-2 border-emerald-800 my-4" />
+            <h2 className="text-lg sm:text-2xl font-black text-emerald-800 tracking-tight uppercase">
+              MASTER OF COUNSELING<br />(CLINICAL MENTAL HEALTH)
+            </h2>
+          </div>
+
+          {/* Trainee Details Inputs (Crisp Fillable) */}
+          <div className="max-w-xl mx-auto space-y-6 my-10 text-xs sm:text-sm font-black">
+            <div className="flex items-center space-x-2 border-b-2 border-slate-800 pb-1">
+              <span className="w-36 text-slate-900 uppercase">NAME:</span>
+              <input
+                type="text"
+                value={traineeName}
+                onChange={(e) => setTraineeName(e.target.value)}
+                className="flex-1 bg-transparent font-black text-slate-900 focus:outline-none uppercase"
+              />
+            </div>
+            <div className="flex items-center space-x-2 border-b-2 border-slate-800 pb-1">
+              <span className="w-36 text-slate-900 uppercase">MATRIC NO.:</span>
+              <input
+                type="text"
+                value={matricNo}
+                onChange={(e) => setMatricNo(e.target.value)}
+                className="flex-1 bg-transparent font-black text-slate-900 focus:outline-none uppercase"
+              />
+            </div>
+            <div className="flex items-center space-x-2 border-b-2 border-slate-800 pb-1">
+              <span className="w-36 text-slate-900 uppercase">PLACEMENT SITE:</span>
+              <input
+                type="text"
+                placeholder="e.g. PPIKKMK Counseling Center"
+                value={placementSite}
+                onChange={(e) => setPlacementSite(e.target.value)}
+                className="flex-1 bg-transparent font-bold text-slate-900 focus:outline-none"
+              />
+            </div>
+          </div>
+
+          {/* Bottom Footer Details */}
+          <div className="text-center pt-8 space-y-1 text-xs font-bold text-slate-800">
+            <p>Universiti Pendidikan Sultan Idris</p>
+            <p>Tanjung Malim, Perak</p>
+            <p className="font-black">2026</p>
+            <p className="text-[11px] text-slate-600">(Pindaan 02)</p>
+          </div>
+
+          {/* Bottom Diagonal Decorative Accent */}
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-emerald-700 via-teal-600 to-cyan-700 transform rotate-45 -translate-x-24 translate-y-24 pointer-events-none opacity-90" />
+          <div className="absolute bottom-0 left-0 w-56 h-56 bg-yellow-400 transform rotate-45 -translate-x-20 translate-y-28 pointer-events-none opacity-80" />
+        </div>
+      )}
+
+      {/* ===================================================================
+          EXACT VECTOR REPLICA: CLINICAL HOURS & SUPERVISION COMPONENTS (TABLE 18)
+         =================================================================== */}
+      {(activeSection === 'components' || typeof window !== 'undefined') && (
+        <div className={`space-y-6 bg-white p-6 sm:p-8 border border-black shadow-sm max-w-4xl mx-auto ${activeSection !== 'components' ? 'hidden print:block' : ''}`}>
+          <div className="text-center border-b-2 border-black pb-3">
+            <h2 className="text-base sm:text-lg font-black uppercase text-black">
+              SUPERVISION & CLINICAL HOURS COMPONENTS
+            </h2>
+            <p className="text-xs text-slate-600">Total Requirement: 504 Hours • Master of Counseling (CMHC)</p>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse border border-black text-xs">
+              <thead>
+                <tr className="bg-emerald-700 text-white font-bold text-center border-b border-black">
+                  <th className="border border-black p-2 text-left">Supervision Components</th>
+                  <th className="border border-black p-2 w-32">Clinical Hours</th>
+                  <th className="border border-black p-2 w-28">Percentage (%)</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-black">
+                {/* 1. Face to Face */}
+                <tr className="bg-yellow-100 font-bold border-b border-black">
+                  <td className="border border-black p-2">1. Face-to-Face Clinical Hours</td>
+                  <td className="border border-black p-2 text-center">192-200 hours</td>
+                  <td className="border border-black p-2 text-center">40</td>
+                </tr>
+                <tr>
+                  <td className="border border-black p-2 pl-4">
+                    i. Individual Counseling (CMHC) : <span className="font-bold">132 - 140 hours</span> (25%)<br />
+                    ii. Group Counseling (CMHC) : <span className="font-bold">60 - 65 hours</span> (15%)<br />
+                    <div className="mt-2 text-[10px] text-slate-700 italic">
+                      (Focus on mental disorders, psychological disorder, addiction, grief, suicide attempt, self-harm behavior, crisis, trauma, and other disorders that required clinical attention)
+                    </div>
+                    <div className="mt-2 text-[10px] text-slate-900 font-bold">
+                      ** Mandatory for all types of counseling sessions to have:
+                      <ul className="list-disc pl-4 font-normal text-slate-800">
+                        <li>Clinical Intake Interview</li>
+                        <li>Mental State Examination (MSE)</li>
+                        <li>Psychological Assessment</li>
+                        <li>Informant(s) interview (if needed)</li>
+                        <li>Case formulation/ Case Conceptualization (For each individual client)</li>
+                        <li>Clinical Treatment Plan (For each individual client)</li>
+                      </ul>
+                    </div>
+                  </td>
+                  <td className="border border-black p-2 text-center font-bold align-top">
+                    132 -140 hrs<br />60 - 65 hrs
+                  </td>
+                  <td className="border border-black p-2 text-center font-bold align-top">
+                    25<br />15
+                  </td>
+                </tr>
+
+                {/* 2. Professional Activities */}
+                <tr className="bg-emerald-300 font-bold border-b border-black">
+                  <td className="border border-black p-2">2. Professional Activities Related to Clinical Works</td>
+                  <td className="border border-black p-2 text-center">140 hours</td>
+                  <td className="border border-black p-2 text-center">25</td>
+                </tr>
+                <tr>
+                  <td className="border border-black p-2 pl-4 space-y-1">
+                    <p>i. Crisis Intervention (15 hrs / 3%)</p>
+                    <p>ii. PFA / Mental Health Psychosocial Support (MHPSS) (40 hrs / 6%)</p>
+                    <p>iii. Psychological Assessment Activities (30 hrs / 6%)</p>
+                    <p>iv. Psychoeducation/Community Activities (30 hrs / 6%)</p>
+                    <p>v. Family/Parents/Guardian Consultation (25 hrs / 4%)</p>
+                  </td>
+                  <td className="border border-black p-2 text-center align-top space-y-1">
+                    <p>15</p><p>40</p><p>30</p><p>30</p><p>25</p>
+                  </td>
+                  <td className="border border-black p-2 text-center align-top space-y-1 font-bold">
+                    <p>3</p><p>6</p><p>6</p><p>6</p><p>4</p>
+                  </td>
+                </tr>
+
+                {/* 3. Clinical Case Study */}
+                <tr className="bg-yellow-100 font-bold border-b border-black">
+                  <td className="border border-black p-2">3. Clinical Case Study</td>
+                  <td className="border border-black p-2 text-center">10 hours</td>
+                  <td className="border border-black p-2 text-center">10</td>
+                </tr>
+                <tr>
+                  <td className="border border-black p-2 pl-4">
+                    i. Clinical Case Writing (10 hours)<br />
+                    ii. Clinical Case Presentation
+                  </td>
+                  <td className="border border-black p-2 text-center font-bold">10 hours</td>
+                  <td className="border border-black p-2 text-center font-bold">10</td>
+                </tr>
+
+                {/* 4. Management and Admin */}
+                <tr className="bg-emerald-300 font-bold border-b border-black">
+                  <td className="border border-black p-2">4. Management and Administration</td>
+                  <td className="border border-black p-2 text-center">146 -150 hours</td>
+                  <td className="border border-black p-2 text-center">15</td>
+                </tr>
+                <tr>
+                  <td className="border border-black p-2 pl-4">
+                    i. Record, and Logbook Management<br />
+                    ii. Clinical Report Writing<br />
+                    iii. Reflection<br />
+                    iv. Clinical Supervision
+                  </td>
+                  <td className="border border-black p-2 text-center"></td>
+                  <td className="border border-black p-2 text-center"></td>
+                </tr>
+
+                {/* 5. Professional Development */}
+                <tr className="bg-yellow-100 font-bold border-b border-black">
+                  <td className="border border-black p-2">5. Professional Development</td>
+                  <td className="border border-black p-2 text-center">20 hours</td>
+                  <td className="border border-black p-2 text-center">5</td>
+                </tr>
+                <tr>
+                  <td className="border border-black p-2 pl-4">
+                    i. Presenter in Professional Conferences related to Mental Health<br />
+                    ii. Physically or virtually participated in webinar or conferences related to mental health
+                  </td>
+                  <td className="border border-black p-2 text-center"></td>
+                  <td className="border border-black p-2 text-center"></td>
+                </tr>
+
+                {/* 6. Professional Identity */}
+                <tr className="bg-yellow-200 font-bold border-b border-black">
+                  <td className="border border-black p-2">6. Professional Identity</td>
+                  <td className="border border-black p-2 text-center">-</td>
+                  <td className="border border-black p-2 text-center">5</td>
+                </tr>
+
+                {/* TOTAL */}
+                <tr className="bg-emerald-800 text-white font-black border-t-2 border-black text-sm">
+                  <td className="border border-black p-2 text-right">TOTAL</td>
+                  <td className="border border-black p-2 text-center">504</td>
+                  <td className="border border-black p-2 text-center">100</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
 
       {/* ===================================================================
           PAGE 1: LOG HARIAN (EXACT REPLICA OF ORIGINAL PDF PAGE 1)
          =================================================================== */}
-      {(selectedTab === 'log' || typeof window !== 'undefined') && (
-        <div className={`space-y-6 bg-white p-6 sm:p-8 border border-black shadow-sm ${selectedTab !== 'log' ? 'hidden print:block' : ''}`}>
+      {(activeSection === 'log' || typeof window !== 'undefined') && (
+        <div className={`space-y-6 bg-white p-6 sm:p-8 border border-black shadow-sm ${activeSection !== 'log' ? 'hidden print:block' : ''}`}>
           {/* Header Title */}
           <div className="flex items-center justify-between border-b-2 border-black pb-2">
             <h2 className="text-base sm:text-lg font-black uppercase text-black">
@@ -327,7 +572,7 @@ export default function InternshipLogbookPage() {
             </div>
           </div>
 
-          {/* Table 2: Rumusan Jam Harian Aktiviti Praktikum (EXACT 2-COLUMN SPLIT) */}
+          {/* Table 2: Rumusan Jam Harian Aktiviti Praktikum */}
           <div className="border border-black">
             <div className="bg-slate-100 font-black text-center border-b border-black py-1.5 uppercase text-xs">
               RUMUSAN JAM HARIAN AKTIVITI PRAKTIKUM
@@ -477,10 +722,10 @@ export default function InternshipLogbookPage() {
       )}
 
       {/* ===================================================================
-          PAGE 2 & 3: REFLEKSI KENDIRI (EXACT REPLICA OF ORIGINAL PDF PAGE 2 & 3)
+          PAGE 2 & 3: REFLEKSI KENDIRI
          =================================================================== */}
-      {(selectedTab === 'refleksi' || typeof window !== 'undefined') && (
-        <div className={`space-y-6 bg-white p-6 sm:p-8 border border-black shadow-sm ${selectedTab !== 'refleksi' ? 'hidden print:block' : ''}`}>
+      {(activeSection === 'refleksi' || typeof window !== 'undefined') && (
+        <div className={`space-y-6 bg-white p-6 sm:p-8 border border-black shadow-sm ${activeSection !== 'refleksi' ? 'hidden print:block' : ''}`}>
           <div className="border-b-2 border-black pb-2">
             <h2 className="text-base sm:text-lg font-black uppercase text-black">
               REFLEKSI KENDIRI (MINGGU {selectedWeek})
@@ -488,7 +733,6 @@ export default function InternshipLogbookPage() {
           </div>
 
           <div className="space-y-5 text-xs">
-            {/* Section 1 */}
             <div className="space-y-1 border border-black p-3">
               <label className="font-bold block uppercase">
                 1. Kaunseling / Terapi Individu <span className="font-normal text-slate-600">(kekuatan, kelemahan dan cara mengatasi, dan lain-lain)</span>
@@ -502,7 +746,6 @@ export default function InternshipLogbookPage() {
               />
             </div>
 
-            {/* Section 2 */}
             <div className="space-y-1 border border-black p-3">
               <label className="font-bold block uppercase">
                 2. Kaunseling / Terapi Kelompok <span className="font-normal text-slate-600">(kekuatan, kelemahan dan cara mengatasi, dan lain-lain)</span>
@@ -516,7 +759,6 @@ export default function InternshipLogbookPage() {
               />
             </div>
 
-            {/* Section 3 */}
             <div className="space-y-1 border border-black p-3">
               <label className="font-bold block uppercase">
                 3. Aktiviti / Intervensi <span className="font-normal text-slate-600">(kekuatan, kelemahan dan cara mengatasi, dan lain-lain)</span>
@@ -530,7 +772,6 @@ export default function InternshipLogbookPage() {
               />
             </div>
 
-            {/* Section 4 */}
             <div className="space-y-1 border border-black p-3">
               <label className="font-bold block uppercase">
                 4. Pengurusan & Pentadbiran <span className="font-normal text-slate-600">(kekuatan, kelemahan dan cara mengatasi, dan lain-lain)</span>
@@ -544,7 +785,6 @@ export default function InternshipLogbookPage() {
               />
             </div>
 
-            {/* Section 5 */}
             <div className="space-y-1 border border-black p-3">
               <label className="font-bold block uppercase">
                 5. Perkembangan Profesional <span className="font-normal text-slate-600">(kekuatan, kelemahan dan cara mengatasi, dan lain-lain)</span>
@@ -558,7 +798,6 @@ export default function InternshipLogbookPage() {
               />
             </div>
 
-            {/* Section 6 */}
             <div className="space-y-1 border border-black p-3">
               <label className="font-bold block uppercase">
                 6. Penyeliaan <span className="font-normal text-slate-600">(pengalaman diselia oleh Penyelia Akademik dan / atau Lapangan)</span>
@@ -576,10 +815,10 @@ export default function InternshipLogbookPage() {
       )}
 
       {/* ===================================================================
-          PAGE 4: RUMUSAN JAM MINGGUAN (EXACT REPLICA OF ORIGINAL PDF PAGE 4)
+          PAGE 4: RUMUSAN JAM MINGGUAN
          =================================================================== */}
-      {(selectedTab === 'rumusan' || typeof window !== 'undefined') && (
-        <div className={`space-y-6 bg-white p-6 sm:p-8 border border-black shadow-sm ${selectedTab !== 'rumusan' ? 'hidden print:block' : ''}`}>
+      {(activeSection === 'rumusan' || typeof window !== 'undefined') && (
+        <div className={`space-y-6 bg-white p-6 sm:p-8 border border-black shadow-sm ${activeSection !== 'rumusan' ? 'hidden print:block' : ''}`}>
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b-2 border-black pb-2 gap-2">
             <h2 className="text-base sm:text-lg font-black uppercase text-black">
               RUMUSAN JAM MINGGUAN (M{selectedWeek})
@@ -604,7 +843,6 @@ export default function InternshipLogbookPage() {
             </div>
           </div>
 
-          {/* Table Grid: Days & Activities */}
           <div className="overflow-x-auto">
             <table className="w-full border-collapse border border-black text-xs text-left">
               <thead>
@@ -651,7 +889,6 @@ export default function InternshipLogbookPage() {
                   </tr>
                 ))}
 
-                {/* Summary Row */}
                 <tr className="bg-slate-200 border-t-2 border-black font-black text-center">
                   <td className="border border-black p-2 text-left">Jumlah Jam Minggu</td>
                   {['isnin', 'selasa', 'rabu', 'khamis', 'jumaat', 'sabtu', 'ahad'].map(day => (
@@ -659,7 +896,7 @@ export default function InternshipLogbookPage() {
                       {calcDayTotal(day).toFixed(1)}
                     </td>
                   ))}
-                  <td className="border border-black p-2 text-center text-sm font-black bg-upsi-gold text-upsi-navy">
+                  <td className="border border-black p-2 text-center text-sm font-black bg-emerald-700 text-white">
                     {calcGrandTotal().toFixed(1)}
                   </td>
                 </tr>
@@ -667,7 +904,6 @@ export default function InternshipLogbookPage() {
             </table>
           </div>
 
-          {/* Endorsement Signature Block */}
           <div className="pt-8 border-t border-black grid grid-cols-2 gap-8 text-xs">
             <div className="space-y-12">
               <div className="border-b border-black w-3/4"></div>
