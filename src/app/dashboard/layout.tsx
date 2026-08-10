@@ -209,10 +209,6 @@ function SidebarNavContent({
                         <LayoutDashboard size={20} />
                         <span>Dashboard</span>
                     </Link>
-                    <Link href="/dashboard/internship" onClick={handleLinkClick} className={getLinkClass("/dashboard/internship")}>
-                        <FolderOpen size={20} className="text-emerald-400" />
-                        <span className="font-bold text-emerald-300">Internship Portal</span>
-                    </Link>
                     <Link href="/dashboard/logbook" onClick={handleLinkClick} className={getLinkClass("/dashboard/logbook")}>
                         <ClipboardList size={20} />
                         <span>Logbook / Lampiran A</span>
@@ -296,14 +292,6 @@ function SidebarNavContent({
 
                         {isFormsOpen && (
                             <div className="mt-1 ml-4 pl-4 border-l border-white/20 space-y-1 py-1">
-                                <Link href="/dashboard/internship/forms" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/internship/forms")}>
-                                    <FileText size={14} className={pathname === "/dashboard/internship/forms" ? "text-upsi-gold" : "text-emerald-300"} />
-                                    <span className="text-[10px] uppercase font-bold tracking-tight text-emerald-300">INTERNSHIP FORMS (30 FORMS)</span>
-                                </Link>
-                                <Link href="/dashboard/internship/log" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/internship/log")}>
-                                    <Clock size={14} className={pathname === "/dashboard/internship/log" ? "text-upsi-gold" : "text-cyan-300"} />
-                                    <span className="text-[10px] uppercase font-bold tracking-tight text-cyan-300">INTERNSHIP LOGBOOK (28 WEEKS)</span>
-                                </Link>
                                 <Link href="/dashboard/forms/form1" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form1")}>
                                     <ClipboardList size={14} className={pathname === "/dashboard/forms/form1" ? "text-upsi-gold" : "text-blue-300"} />
                                     <span className="text-[10px] uppercase font-bold tracking-tight">FORM 1: PSYCHOLOGICAL INTAKE REPORT</span>
