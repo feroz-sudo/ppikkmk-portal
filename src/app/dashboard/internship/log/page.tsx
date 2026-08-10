@@ -769,77 +769,47 @@ export default function InternshipLogbookPage() {
             </div>
           </div>
 
-          {/* Table 2: SUMMARY OF DAILY INTERNSHIP HOURS (EXACT PDF LAYOUT) */}
+          {/* Table 2: SUMMARY OF DAILY INTERNSHIP HOURS (EXACT 1:1 PDF REPLICA) */}
           <div className="border border-black pt-2">
-            <div className="font-black text-center pb-2 uppercase text-xs">
+            <div className="font-black text-center pb-2 uppercase text-xs tracking-wider">
               SUMMARY OF DAILY INTERNSHIP HOURS
             </div>
 
-            <table className="w-full border-collapse border border-black text-xs">
+            <table className="w-full border-collapse border border-black text-[11px] leading-tight">
               <thead>
                 {/* Top Green Headers */}
                 <tr className="bg-[#a2d182] text-black font-bold text-center border-b border-black">
-                  <th className="border border-black p-2 w-1/2" colSpan={2}>
+                  <th className="border border-black p-1.5 w-1/2" colSpan={2}>
                     Face-to-Face Clinical Services (F2F)
                   </th>
-                  <th className="border border-black p-2 w-1/2" colSpan={2}>
+                  <th className="border border-black p-1.5 w-1/2" colSpan={2}>
                     Professional Activities Related to Clinical Works
                   </th>
                 </tr>
                 {/* Column Headers */}
                 <tr className="bg-[#c2e2aa] text-black font-bold text-center border-b border-black">
-                  <th className="border border-black p-1">Clinical Counseling Session</th>
-                  <th className="border border-black p-1 w-16">Hours</th>
-                  <th className="border border-black p-1">Clinical Related Works</th>
-                  <th className="border border-black p-1 w-16">Hours</th>
+                  <th className="border border-black p-1 w-2/3">Clinical Counseling Session</th>
+                  <th className="border border-black p-1 w-1/3">Hours</th>
+                  <th className="border border-black p-1 w-2/3">Clinical Related Works</th>
+                  <th className="border border-black p-1 w-1/3">Hours</th>
                 </tr>
               </thead>
               <tbody className="align-top">
+                {/* Row 1: Individual Counseling & Crisis Intervention */}
                 <tr className="border-b border-black">
-                  {/* Left Side: F2F */}
-                  <td className="border border-black p-2" colSpan={2} rowSpan={10}>
-                    <div className="space-y-4">
-                      <div>
-                        <div className="font-bold">1. Individual CMH Counseling</div>
-                        <input
-                          type="number"
-                          step="0.5"
-                          placeholder=""
-                          value={jamIndividu}
-                          onChange={(e) => setJamIndividu(e.target.value)}
-                          className="w-full mt-1 p-1 border border-black text-center font-bold focus:outline-none"
-                        />
-                      </div>
-
-                      <div>
-                        <div className="font-bold">2. Group CMH Counseling</div>
-                        <input
-                          type="number"
-                          step="0.5"
-                          placeholder=""
-                          value={jamKelompok}
-                          onChange={(e) => setJamKelompok(e.target.value)}
-                          className="w-full mt-1 p-1 border border-black text-center font-bold focus:outline-none"
-                        />
-                      </div>
-
-                      <div className="text-[10px] space-y-1">
-                        <p className="font-bold">** Mandatory for all types of counseling sessions to have:</p>
-                        <ul className="list-disc pl-4 space-y-0.5 text-slate-800">
-                          <li>Clinical Intake Interview</li>
-                          <li>Mental State Examination (MSE)</li>
-                          <li>Psychological Assessment</li>
-                          <li>Informant(s) interview (if needed)</li>
-                          <li>Case formulation/ Case Conceptualization (For each individual client)</li>
-                          <li>Clinical Treatment Plan (For each individual client)</li>
-                        </ul>
-                      </div>
-                    </div>
+                  <td className="border border-black p-2 font-bold">1. Individual CMH Counseling</td>
+                  <td className="border border-black p-1 text-center align-middle">
+                    <input
+                      type="number"
+                      step="0.5"
+                      placeholder=""
+                      value={jamIndividu}
+                      onChange={(e) => setJamIndividu(e.target.value)}
+                      className="w-full p-1 text-center font-bold focus:outline-none bg-transparent"
+                    />
                   </td>
-
-                  {/* Right Side: Itemized Professional Activities */}
                   <td className="border border-black p-2">1. Crisis Intervention</td>
-                  <td className="border border-black p-1 text-center">
+                  <td className="border border-black p-1 text-center align-middle">
                     <input
                       type="number"
                       step="0.5"
@@ -851,34 +821,64 @@ export default function InternshipLogbookPage() {
                   </td>
                 </tr>
 
+                {/* Row 2: Group Counseling & PFA/MPHSS */}
                 <tr className="border-b border-black">
+                  <td className="border border-black p-2 font-bold">2. Group CMH Counseling</td>
+                  <td className="border border-black p-1 text-center align-middle">
+                    <input
+                      type="number"
+                      step="0.5"
+                      placeholder=""
+                      value={jamKelompok}
+                      onChange={(e) => setJamKelompok(e.target.value)}
+                      className="w-full p-1 text-center font-bold focus:outline-none bg-transparent"
+                    />
+                  </td>
                   <td className="border border-black p-2">2. PFA/MPHSS</td>
-                  <td className="border border-black p-1 text-center">
+                  <td className="border border-black p-1 text-center align-middle">
                     <input type="number" step="0.5" className="w-full p-1 text-center font-bold focus:outline-none bg-transparent" />
                   </td>
                 </tr>
 
+                {/* Row 3: Mandatory bullets & Psychological Assessment */}
                 <tr className="border-b border-black">
+                  <td className="border border-black p-2" rowSpan={6}>
+                    <div className="space-y-1 text-[10px]">
+                      <p className="font-bold">** Mandatory for all types of counseling sessions to have:</p>
+                      <ul className="list-disc pl-4 space-y-0.5 text-slate-800">
+                        <li>Clinical Intake Interview</li>
+                        <li>Mental State Examination (MSE)</li>
+                        <li>Psychological Assessment</li>
+                        <li>Informant(s) interview (if needed)</li>
+                        <li>Case formulation/ Case Conceptualization (For each individual client)</li>
+                        <li>Clinical Treatment Plan (For each individual client)</li>
+                      </ul>
+                    </div>
+                  </td>
+                  <td className="border border-black p-1" rowSpan={6}></td>
                   <td className="border border-black p-2">3. Psychological Assessment</td>
-                  <td className="border border-black p-1 text-center">
+                  <td className="border border-black p-1 text-center align-middle">
                     <input type="number" step="0.5" className="w-full p-1 text-center font-bold focus:outline-none bg-transparent" />
                   </td>
                 </tr>
 
+                {/* Row 4: Psychoeducation */}
                 <tr className="border-b border-black">
-                  <td className="border border-black p-2">4. Psychoeducation/Community Activities</td>
-                  <td className="border border-black p-1 text-center">
+                  <td className="border border-black p-2">4. Psychoeducation/Community Actitivities</td>
+                  <td className="border border-black p-1 text-center align-middle">
                     <input type="number" step="0.5" className="w-full p-1 text-center font-bold focus:outline-none bg-transparent" />
                   </td>
                 </tr>
 
+                {/* Row 5: Family Consultation */}
                 <tr className="border-b border-black">
                   <td className="border border-black p-2">5. Family/Parents/Guardian Consultation</td>
-                  <td className="border border-black p-1 text-center">
+                  <td className="border border-black p-1 text-center align-middle">
                     <input type="number" step="0.5" className="w-full p-1 text-center font-bold focus:outline-none bg-transparent" />
                   </td>
                 </tr>
 
+                {/* Row 6: Clinical Case Study */}
                 <tr className="border-b border-black">
                   <td className="border border-black p-2">
                     <div className="font-bold">Clinical Case Study</div>
@@ -892,6 +892,7 @@ export default function InternshipLogbookPage() {
                   </td>
                 </tr>
 
+                {/* Row 7: Management and Administration */}
                 <tr className="border-b border-black">
                   <td className="border border-black p-2">
                     <div className="font-bold">Management and Administration</div>
@@ -914,6 +915,7 @@ export default function InternshipLogbookPage() {
                   </td>
                 </tr>
 
+                {/* Row 8: Professional Development */}
                 <tr className="border-b border-black">
                   <td className="border border-black p-2">
                     <div className="font-bold">Professional Development</div>
