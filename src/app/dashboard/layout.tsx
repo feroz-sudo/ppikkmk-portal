@@ -47,6 +47,7 @@ import { AIPastePanel } from "@/components/AIPastePanel";
 // Sub-component to handle search-param dependent navigation
 function SidebarNavContent({
     userRole,
+    userProfile,
     sessionsGrouped,
     openSessions,
     toggleSession,
@@ -205,136 +206,169 @@ function SidebarNavContent({
             ) : (
                 <>
                     {/* TRAINEE NAV */}
-                    <Link href="/dashboard" onClick={handleLinkClick} className={getLinkClass("/dashboard")}>
-                        <LayoutDashboard size={20} />
-                        <span>Dashboard</span>
-                    </Link>
-                    <Link href="/dashboard/logbook" onClick={handleLinkClick} className={getLinkClass("/dashboard/logbook")}>
-                        <ClipboardList size={20} />
-                        <span>Logbook / Lampiran A</span>
-                    </Link>
-                    <Link href="/dashboard/rumusan" onClick={handleLinkClick} className={getLinkClass("/dashboard/rumusan")}>
-                        <Calculator size={20} />
-                        <span>Rumusan / Lampiran B</span>
-                    </Link>
-                    <Link href="/dashboard/borang-umum" onClick={handleLinkClick} className={getLinkClass("/dashboard/borang-umum")}>
-                        <FolderOpen size={20} />
-                        <span>Borang Umum / Lampiran A-I</span>
-                    </Link>
-                    <Link href="/dashboard/counselor-profile" onClick={handleLinkClick} className={getLinkClass("/dashboard/counselor-profile")}>
-                        <UserIcon size={20} />
-                        <span>Maklumat Diri / Kontrak</span>
-                    </Link>
-                    <Link href="/dashboard/sessions" onClick={handleLinkClick} className={getLinkClass("/dashboard/sessions")}>
-                        <HistoryIcon size={20} />
-                        <span>Session History</span>
-                    </Link>
-                    <Link href="/dashboard/clients/ki" onClick={handleLinkClick} className={getLinkClass("/dashboard/clients/ki")}>
-                        <UserPlus size={20} />
-                        <span>Individual (KI)</span>
-                    </Link>
-                    <Link href="/dashboard/clients/kk" onClick={handleLinkClick} className={getLinkClass("/dashboard/clients/kk")}>
-                        <Users size={20} />
-                        <span>Group (KK)</span>
-                    </Link>
-                    <Link href="/dashboard/calendar" onClick={handleLinkClick} className={getLinkClass("/dashboard/calendar")}>
-                        <Calendar size={20} />
-                        <span>Academic Calendar</span>
-                    </Link>
-                    <Link href="/dashboard/guidelines" onClick={handleLinkClick} className={getLinkClass("/dashboard/guidelines")}>
-                        <BookOpen size={20} />
-                        <span>Guidelines</span>
-                    </Link>
+                    {userProfile?.programType === "internship" ? (
+                        /* INTERNSHIP PORTAL SPECIFIC NAV */
+                        <>
+                            <Link href="/dashboard" onClick={handleLinkClick} className={getLinkClass("/dashboard")}>
+                                <LayoutDashboard size={20} />
+                                <span>Dashboard</span>
+                            </Link>
+                            <Link href="/dashboard/internship/forms" onClick={handleLinkClick} className={getLinkClass("/dashboard/internship/forms")}>
+                                <FileText size={20} className="text-emerald-400" />
+                                <span className="font-bold text-emerald-300">Clinical Forms (30 Forms)</span>
+                            </Link>
+                            <Link href="/dashboard/internship/log" onClick={handleLinkClick} className={getLinkClass("/dashboard/internship/log")}>
+                                <Clock size={20} className="text-cyan-400" />
+                                <span className="font-bold text-cyan-300">Internship Logbook (28 Wks)</span>
+                            </Link>
+                            <Link href="/dashboard/counselor-profile" onClick={handleLinkClick} className={getLinkClass("/dashboard/counselor-profile")}>
+                                <UserIcon size={20} />
+                                <span>Maklumat Diri / Kontrak</span>
+                            </Link>
+                            <Link href="/dashboard/calendar" onClick={handleLinkClick} className={getLinkClass("/dashboard/calendar")}>
+                                <Calendar size={20} />
+                                <span>Academic Calendar</span>
+                            </Link>
+                            <Link href="/dashboard/guidelines" onClick={handleLinkClick} className={getLinkClass("/dashboard/guidelines")}>
+                                <BookOpen size={20} />
+                                <span>Guidelines</span>
+                            </Link>
+                        </>
+                    ) : (
+                        /* PRACTICUM PORTAL SPECIFIC NAV */
+                        <>
+                            <Link href="/dashboard" onClick={handleLinkClick} className={getLinkClass("/dashboard")}>
+                                <LayoutDashboard size={20} />
+                                <span>Dashboard</span>
+                            </Link>
+                            <Link href="/dashboard/logbook" onClick={handleLinkClick} className={getLinkClass("/dashboard/logbook")}>
+                                <ClipboardList size={20} />
+                                <span>Logbook / Lampiran A</span>
+                            </Link>
+                            <Link href="/dashboard/rumusan" onClick={handleLinkClick} className={getLinkClass("/dashboard/rumusan")}>
+                                <Calculator size={20} />
+                                <span>Rumusan / Lampiran B</span>
+                            </Link>
+                            <Link href="/dashboard/borang-umum" onClick={handleLinkClick} className={getLinkClass("/dashboard/borang-umum")}>
+                                <FolderOpen size={20} />
+                                <span>Borang Umum / Lampiran A-I</span>
+                            </Link>
+                            <Link href="/dashboard/counselor-profile" onClick={handleLinkClick} className={getLinkClass("/dashboard/counselor-profile")}>
+                                <UserIcon size={20} />
+                                <span>Maklumat Diri / Kontrak</span>
+                            </Link>
+                            <Link href="/dashboard/sessions" onClick={handleLinkClick} className={getLinkClass("/dashboard/sessions")}>
+                                <HistoryIcon size={20} />
+                                <span>Session History</span>
+                            </Link>
+                            <Link href="/dashboard/clients/ki" onClick={handleLinkClick} className={getLinkClass("/dashboard/clients/ki")}>
+                                <UserPlus size={20} />
+                                <span>Individual (KI)</span>
+                            </Link>
+                            <Link href="/dashboard/clients/kk" onClick={handleLinkClick} className={getLinkClass("/dashboard/clients/kk")}>
+                                <Users size={20} />
+                                <span>Group (KK)</span>
+                            </Link>
+                            <Link href="/dashboard/calendar" onClick={handleLinkClick} className={getLinkClass("/dashboard/calendar")}>
+                                <Calendar size={20} />
+                                <span>Academic Calendar</span>
+                            </Link>
+                            <Link href="/dashboard/guidelines" onClick={handleLinkClick} className={getLinkClass("/dashboard/guidelines")}>
+                                <BookOpen size={20} />
+                                <span>Guidelines</span>
+                            </Link>
 
-                    {/* WEEKLY FORMS DROPDOWN */}
-                    <div className="mt-4">
-                        <button
-                            onClick={() => toggleWeeklyForms()}
-                            className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg transition-colors mt-2 ${isWeeklyFormsOpen ? 'bg-white/10 font-bold' : 'hover:bg-white/10'}`}
-                        >
-                            <div className="flex items-center space-x-3">
-                                <Calendar size={20} className={isWeeklyFormsOpen ? "text-white" : "text-emerald-400"} />
-                                <span className="text-[11px] uppercase tracking-widest">Weekly Reports</span>
-                            </div>
-                            {isWeeklyFormsOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
-                        </button>
+                            {/* WEEKLY FORMS DROPDOWN */}
+                            <div className="mt-4">
+                                <button
+                                    onClick={() => toggleWeeklyForms()}
+                                    className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg transition-colors mt-2 ${isWeeklyFormsOpen ? 'bg-white/10 font-bold' : 'hover:bg-white/10'}`}
+                                >
+                                    <div className="flex items-center space-x-3">
+                                        <Calendar size={20} className={isWeeklyFormsOpen ? "text-white" : "text-emerald-400"} />
+                                        <span className="text-[11px] uppercase tracking-widest">Weekly Reports</span>
+                                    </div>
+                                    {isWeeklyFormsOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+                                </button>
 
-                        {isWeeklyFormsOpen && (
-                            <div className="mt-1 ml-4 pl-4 border-l border-white/20 space-y-1 py-1">
-                                <Link href="/dashboard/forms/log-harian" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/log-harian")}>
-                                    <ClipboardList size={14} className={pathname === "/dashboard/forms/log-harian" ? "text-emerald-400" : "text-blue-300"} />
-                                    <span className="text-[10px] uppercase font-bold tracking-tight">LOG HARIAN</span>
-                                </Link>
-                                <Link href="/dashboard/forms/refleksi-mingguan" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/refleksi-mingguan")}>
-                                    <BrainCircuit size={14} className={pathname === "/dashboard/forms/refleksi-mingguan" ? "text-emerald-400" : "text-purple-300"} />
-                                    <span className="text-[10px] uppercase font-bold tracking-tight">REFLEKSI KENDIRI</span>
-                                </Link>
-                                <Link href="/dashboard/forms/rumusan-mingguan" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/rumusan-mingguan")}>
-                                    <Calculator size={14} className={pathname === "/dashboard/forms/rumusan-mingguan" ? "text-emerald-400" : "text-orange-300"} />
-                                    <span className="text-[10px] uppercase font-bold tracking-tight">RUMUSAN JAM MINGGUAN</span>
-                                </Link>
+                                {isWeeklyFormsOpen && (
+                                    <div className="mt-1 ml-4 pl-4 border-l border-white/20 space-y-1 py-1">
+                                        <Link href="/dashboard/forms/log-harian" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/log-harian")}>
+                                            <ClipboardList size={14} className={pathname === "/dashboard/forms/log-harian" ? "text-emerald-400" : "text-blue-300"} />
+                                            <span className="text-[10px] uppercase font-bold tracking-tight">LOG HARIAN</span>
+                                        </Link>
+                                        <Link href="/dashboard/forms/refleksi-mingguan" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/refleksi-mingguan")}>
+                                            <BrainCircuit size={14} className={pathname === "/dashboard/forms/refleksi-mingguan" ? "text-emerald-400" : "text-purple-300"} />
+                                            <span className="text-[10px] uppercase font-bold tracking-tight">REFLEKSI KENDIRI</span>
+                                        </Link>
+                                        <Link href="/dashboard/forms/rumusan-mingguan" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/rumusan-mingguan")}>
+                                            <Calculator size={14} className={pathname === "/dashboard/forms/rumusan-mingguan" ? "text-emerald-400" : "text-orange-300"} />
+                                            <span className="text-[10px] uppercase font-bold tracking-tight">RUMUSAN JAM MINGGUAN</span>
+                                        </Link>
+                                    </div>
+                                )}
                             </div>
-                        )}
-                    </div>
 
-                    {/* FORMS DROPDOWN */}
-                    <div className="mt-2">
-                        <button
-                            onClick={() => toggleForms()}
-                            className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg transition-colors mt-2 ${isFormsOpen ? 'bg-white/10 font-bold' : 'hover:bg-white/10'}`}
-                        >
-                            <div className="flex items-center space-x-3">
-                                <FileText size={20} className={isFormsOpen ? "text-white" : "text-upsi-gold"} />
-                                <span className="text-[11px] uppercase tracking-widest">Clinical Forms</span>
-                            </div>
-                            {isFormsOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
-                        </button>
+                            {/* FORMS DROPDOWN */}
+                            <div className="mt-2">
+                                <button
+                                    onClick={() => toggleForms()}
+                                    className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg transition-colors mt-2 ${isFormsOpen ? 'bg-white/10 font-bold' : 'hover:bg-white/10'}`}
+                                >
+                                    <div className="flex items-center space-x-3">
+                                        <FileText size={20} className={isFormsOpen ? "text-white" : "text-upsi-gold"} />
+                                        <span className="text-[11px] uppercase tracking-widest">Clinical Forms</span>
+                                    </div>
+                                    {isFormsOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+                                </button>
 
-                        {isFormsOpen && (
-                            <div className="mt-1 ml-4 pl-4 border-l border-white/20 space-y-1 py-1">
-                                <Link href="/dashboard/forms/form1" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form1")}>
-                                    <ClipboardList size={14} className={pathname === "/dashboard/forms/form1" ? "text-upsi-gold" : "text-blue-300"} />
-                                    <span className="text-[10px] uppercase font-bold tracking-tight">FORM 1: PSYCHOLOGICAL INTAKE REPORT</span>
-                                </Link>
-                                <Link href="/dashboard/forms/form2" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form2")}>
-                                    <FileText size={14} className={pathname === "/dashboard/forms/form2" ? "text-upsi-gold" : "text-green-300"} />
-                                    <span className="text-[10px] uppercase font-bold tracking-tight">FORM 2: PROGRESSIVE NOTES</span>
-                                </Link>
-                                <Link href="/dashboard/forms/form3" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form3")}>
-                                    <Lightbulb size={14} className={pathname === "/dashboard/forms/form3" ? "text-upsi-gold" : "text-yellow-300"} />
-                                    <span className="text-[10px] uppercase font-bold tracking-tight">FORM 3: CASE CONCEPTUALIZATION</span>
-                                </Link>
-                                <Link href="/dashboard/forms/form4" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form4")}>
-                                    <Target size={14} className={pathname === "/dashboard/forms/form4" ? "text-upsi-gold" : "text-red-300"} />
-                                    <span className="text-[10px] uppercase font-bold tracking-tight">FORM 4: TREATMENT PLANNING</span>
-                                </Link>
-                                <Link href="/dashboard/forms/form5" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form5")}>
-                                    <Flag size={14} className={pathname === "/dashboard/forms/form5" ? "text-upsi-gold" : "text-orange-300"} />
-                                    <span className="text-[10px] uppercase font-bold tracking-tight">FORM 5: TERMINATION SESSION</span>
-                                </Link>
-                                <Link href="/dashboard/forms/form6" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form6")}>
-                                    <AlertTriangle size={14} className={pathname === "/dashboard/forms/form6" ? "text-upsi-gold" : "text-rose-400"} />
-                                    <span className="text-[10px] uppercase font-bold tracking-tight">FORM 6: CRISIS INTERVENTION REPORT</span>
-                                </Link>
-                                <Link href="/dashboard/forms/form7" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form7")}>
-                                    <UserCheck size={14} className={pathname === "/dashboard/forms/form7" ? "text-upsi-gold" : "text-emerald-300"} />
-                                    <span className="text-[10px] uppercase font-bold tracking-tight">FORM 7: CONSULTATION REPORT</span>
-                                </Link>
-                                <Link href="/dashboard/forms/form8" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form8")}>
-                                    <Shield size={14} className={pathname === "/dashboard/forms/form8" ? "text-upsi-gold" : "text-purple-300"} />
-                                    <span className="text-[10px] uppercase font-bold tracking-tight">FORM 8: PFA MHPSS REPORT</span>
-                                </Link>
-                                <Link href="/dashboard/forms/form11" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form11")}>
-                                    <UsersRound size={14} className={pathname === "/dashboard/forms/form11" ? "text-upsi-gold" : "text-indigo-300"} />
-                                    <span className="text-[10px] uppercase font-bold tracking-tight">FORM 11: GROUP COUNSELING REPORT</span>
-                                </Link>
-                                <Link href="/dashboard/forms/form13" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form13")}>
-                                    <CheckCircle2 size={14} className={pathname === "/dashboard/forms/form13" ? "text-upsi-gold" : "text-teal-300"} />
-                                    <span className="text-[10px] uppercase font-bold tracking-tight">FORM 13: PSYCHOLOGICAL ASSESSMENT REPORT</span>
-                                </Link>
+                                {isFormsOpen && (
+                                    <div className="mt-1 ml-4 pl-4 border-l border-white/20 space-y-1 py-1">
+                                        <Link href="/dashboard/forms/form1" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form1")}>
+                                            <ClipboardList size={14} className={pathname === "/dashboard/forms/form1" ? "text-upsi-gold" : "text-blue-300"} />
+                                            <span className="text-[10px] uppercase font-bold tracking-tight">FORM 1: PSYCHOLOGICAL INTAKE REPORT</span>
+                                        </Link>
+                                        <Link href="/dashboard/forms/form2" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form2")}>
+                                            <FileText size={14} className={pathname === "/dashboard/forms/form2" ? "text-upsi-gold" : "text-green-300"} />
+                                            <span className="text-[10px] uppercase font-bold tracking-tight">FORM 2: PROGRESSIVE NOTES</span>
+                                        </Link>
+                                        <Link href="/dashboard/forms/form3" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form3")}>
+                                            <Lightbulb size={14} className={pathname === "/dashboard/forms/form3" ? "text-upsi-gold" : "text-yellow-300"} />
+                                            <span className="text-[10px] uppercase font-bold tracking-tight">FORM 3: CASE CONCEPTUALIZATION</span>
+                                        </Link>
+                                        <Link href="/dashboard/forms/form4" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form4")}>
+                                            <Target size={14} className={pathname === "/dashboard/forms/form4" ? "text-upsi-gold" : "text-red-300"} />
+                                            <span className="text-[10px] uppercase font-bold tracking-tight">FORM 4: TREATMENT PLANNING</span>
+                                        </Link>
+                                        <Link href="/dashboard/forms/form5" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form5")}>
+                                            <Flag size={14} className={pathname === "/dashboard/forms/form5" ? "text-upsi-gold" : "text-orange-300"} />
+                                            <span className="text-[10px] uppercase font-bold tracking-tight">FORM 5: TERMINATION SESSION</span>
+                                        </Link>
+                                        <Link href="/dashboard/forms/form6" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form6")}>
+                                            <AlertTriangle size={14} className={pathname === "/dashboard/forms/form6" ? "text-upsi-gold" : "text-rose-400"} />
+                                            <span className="text-[10px] uppercase font-bold tracking-tight">FORM 6: CRISIS INTERVENTION REPORT</span>
+                                        </Link>
+                                        <Link href="/dashboard/forms/form7" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form7")}>
+                                            <UserCheck size={14} className={pathname === "/dashboard/forms/form7" ? "text-upsi-gold" : "text-emerald-300"} />
+                                            <span className="text-[10px] uppercase font-bold tracking-tight">FORM 7: CONSULTATION REPORT</span>
+                                        </Link>
+                                        <Link href="/dashboard/forms/form8" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form8")}>
+                                            <Shield size={14} className={pathname === "/dashboard/forms/form8" ? "text-upsi-gold" : "text-purple-300"} />
+                                            <span className="text-[10px] uppercase font-bold tracking-tight">FORM 8: PFA MHPSS REPORT</span>
+                                        </Link>
+                                        <Link href="/dashboard/forms/form11" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form11")}>
+                                            <UsersRound size={14} className={pathname === "/dashboard/forms/form11" ? "text-upsi-gold" : "text-indigo-300"} />
+                                            <span className="text-[10px] uppercase font-bold tracking-tight">FORM 11: GROUP COUNSELING REPORT</span>
+                                        </Link>
+                                        <Link href="/dashboard/forms/form13" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form13")}>
+                                            <CheckCircle2 size={14} className={pathname === "/dashboard/forms/form13" ? "text-upsi-gold" : "text-teal-300"} />
+                                            <span className="text-[10px] uppercase font-bold tracking-tight">FORM 13: PSYCHOLOGICAL ASSESSMENT REPORT</span>
+                                        </Link>
+                                    </div>
+                                )}
                             </div>
-                        )}
-                    </div>
+                        </>
+                    )}
 
                     {/* PROGRAMS & EVENTS */}
                     <Link href="/dashboard/programs" className={getLinkClass("/dashboard/programs")}>
@@ -508,6 +542,7 @@ export default function DashboardLayout({
                 <Suspense fallback={<div className="p-4 text-xs text-white/20 uppercase tracking-widest animate-pulse">Loading Navigation...</div>}>
                     <SidebarNavContent
                         userRole={userRole}
+                        userProfile={userProfile}
                         sessionsGrouped={sessionsGrouped}
                         openSessions={openSessions}
                         toggleSession={toggleSession}

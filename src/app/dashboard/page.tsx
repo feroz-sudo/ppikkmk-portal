@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { getTraineeLogs, getTraineeSessions, Log, Session } from "@/lib/firebase/db";
 import { ProgressBar, GroupedProgress } from "@/components/dashboard/ProgressBar";
 import { LogbookForm } from "@/components/dashboard/LogbookForm";
-import { LayoutDashboard, Users, UserPlus, Clock, Target, Calendar, CheckCircle2 } from "lucide-react";
+import { LayoutDashboard, Users, UserPlus, Clock, Target, Calendar, CheckCircle2, FileText } from "lucide-react";
 import { Disclaimer } from "@/components/Disclaimer";
 
 import { SupervisionTracker } from "@/components/dashboard/supervision/SupervisionTracker";
@@ -26,7 +26,7 @@ const TARGETS = {
 };
 
 export default function DashboardPage() {
-    const { user, userRole } = useAuth();
+    const { user, userRole, userProfile } = useAuth();
     const router = useRouter();
     const [logs, setLogs] = useState<Log[]>([]);
     const [sessions, setSessions] = useState<Session[]>([]);
@@ -101,6 +101,77 @@ export default function DashboardPage() {
                     <div className="w-12 h-12 border-4 border-upsi-navy border-t-transparent rounded-full animate-spin mx-auto" />
                     <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Personalizing Experience...</p>
                 </div>
+            </div>
+        );
+    }
+
+    if (userProfile?.programType === "internship") {
+        return (
+            <div className="space-y-8 max-w-7xl mx-auto pb-12">
+                <div className="relative overflow-hidden bg-gradient-to-r from-slate-900 via-slate-800 to-upsi-navy rounded-[2rem] p-8 text-white shadow-2xl border border-upsi-gold/30">
+                    <div className="flex flex-col lg:flex-row justify-between items-center text-center lg:text-left">
+                        <div className="mb-6 lg:mb-0">
+                            <span className="text-[10px] font-extrabold uppercase tracking-widest text-upsi-gold bg-upsi-gold/20 px-3 py-1 rounded-full border border-upsi-gold/30">
+                                Internship Trainee Portal
+                            </span>
+                            <h1 className="text-3xl md:text-4xl font-black tracking-tighter mt-3 mb-2">
+                                Clinical Internship Logbook
+                            </h1>
+                            <p className="text-slate-300 font-medium flex items-center justify-center lg:justify-start text-sm md:text-base">
+                                <Calendar size={16} className="mr-2 text-upsi-gold" />
+                                28 Weeks • 3rd March 2026 until 20th February 2027
+                            </p>
+                        </div>
+                        <div className="flex flex-col items-center lg:items-end space-y-2">
+                            <div className="text-right">
+                                <div className="text-upsi-gold font-black text-3xl leading-none">0.0 <span className="text-lg">HRS</span></div>
+                                <div className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/80 mt-1">Internship Logged</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div 
+                        onClick={() => router.push("/dashboard/internship/forms")}
+                        className="bg-white p-6 rounded-2xl border-2 border-slate-200 hover:border-upsi-gold shadow-md hover:shadow-xl transition-all cursor-pointer group"
+                    >
+                        <div className="flex items-center space-x-4">
+                            <div className="p-4 bg-amber-50 text-upsi-gold rounded-xl border border-amber-200">
+                                <FileText size={32} />
+                            </div>
+                            <div>
+                                <h3 className="font-black text-slate-900 text-lg group-hover:text-upsi-navy transition-colors">
+                                    Clinical Forms (30 Forms)
+                                </h3>
+                                <p className="text-xs text-slate-500 mt-1">
+                                    Official empty clinical forms ready to fill in Arial 9pt format.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div 
+                        onClick={() => router.push("/dashboard/internship/log")}
+                        className="bg-white p-6 rounded-2xl border-2 border-slate-200 hover:border-cyan-500 shadow-md hover:shadow-xl transition-all cursor-pointer group"
+                    >
+                        <div className="flex items-center space-x-4">
+                            <div className="p-4 bg-cyan-50 text-cyan-600 rounded-xl border border-cyan-200">
+                                <Clock size={32} />
+                            </div>
+                            <div>
+                                <h3 className="font-black text-slate-900 text-lg group-hover:text-cyan-700 transition-colors">
+                                    Internship Logbook (28 Weeks)
+                                </h3>
+                                <p className="text-xs text-slate-500 mt-1">
+                                    Empty 28-week attendance and daily clinical hours tracker.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <Disclaimer variant="full" />
             </div>
         );
     }
