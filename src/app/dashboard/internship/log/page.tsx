@@ -26,7 +26,7 @@ interface DailyLogEntry {
 }
 
 export default function InternshipLogbookPage() {
-  const [activeSection, setActiveSection] = useState<'cover' | 'contract' | 'components' | 'log' | 'refleksi' | 'rumusan'>('cover');
+  const [activeSection, setActiveSection] = useState<'cover' | 'personal_info' | 'contract' | 'agreement' | 'components' | 'attendance' | 'log' | 'refleksi' | 'rumusan'>('cover');
   const [selectedWeek, setSelectedWeek] = useState<number>(1);
 
   // Cover Page State
@@ -158,7 +158,7 @@ export default function InternshipLogbookPage() {
 
       {/* Navigation Bar for Logbook Sections */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-slate-50 p-3 rounded-xl border border-slate-200 no-print">
-        {/* Navigation Tabs (English Labels) */}
+        {/* Navigation Tabs (Full Document Structure) */}
         <div className="flex items-center space-x-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
           <button
             onClick={() => setActiveSection('cover')}
@@ -167,7 +167,34 @@ export default function InternshipLogbookPage() {
             }`}
           >
             <BookOpen className="h-3.5 w-3.5" />
-            <span>Cover Page</span>
+            <span>1. Cover</span>
+          </button>
+          <button
+            onClick={() => setActiveSection('personal_info')}
+            className={`px-3 py-1.5 text-xs font-bold rounded-md transition flex items-center space-x-1.5 whitespace-nowrap ${
+              activeSection === 'personal_info' ? 'bg-emerald-700 text-white shadow-sm' : 'text-slate-700 hover:bg-slate-200'
+            }`}
+          >
+            <BookOpen className="h-3.5 w-3.5" />
+            <span>2. Personal Info</span>
+          </button>
+          <button
+            onClick={() => setActiveSection('contract')}
+            className={`px-3 py-1.5 text-xs font-bold rounded-md transition flex items-center space-x-1.5 whitespace-nowrap ${
+              activeSection === 'contract' ? 'bg-emerald-700 text-white shadow-sm' : 'text-slate-700 hover:bg-slate-200'
+            }`}
+          >
+            <Award className="h-3.5 w-3.5" />
+            <span>3. Supervisory Contract</span>
+          </button>
+          <button
+            onClick={() => setActiveSection('agreement')}
+            className={`px-3 py-1.5 text-xs font-bold rounded-md transition flex items-center space-x-1.5 whitespace-nowrap ${
+              activeSection === 'agreement' ? 'bg-emerald-700 text-white shadow-sm' : 'text-slate-700 hover:bg-slate-200'
+            }`}
+          >
+            <Award className="h-3.5 w-3.5" />
+            <span>4. Agreement</span>
           </button>
           <button
             onClick={() => setActiveSection('components')}
@@ -176,7 +203,16 @@ export default function InternshipLogbookPage() {
             }`}
           >
             <Award className="h-3.5 w-3.5" />
-            <span>Component & Hours</span>
+            <span>5. Components (504h)</span>
+          </button>
+          <button
+            onClick={() => setActiveSection('attendance')}
+            className={`px-3 py-1.5 text-xs font-bold rounded-md transition flex items-center space-x-1.5 whitespace-nowrap ${
+              activeSection === 'attendance' ? 'bg-emerald-700 text-white shadow-sm' : 'text-slate-700 hover:bg-slate-200'
+            }`}
+          >
+            <ClipboardList className="h-3.5 w-3.5" />
+            <span>6. Attendance Log</span>
           </button>
           <button
             onClick={() => setActiveSection('log')}
@@ -185,7 +221,7 @@ export default function InternshipLogbookPage() {
             }`}
           >
             <ClipboardList className="h-3.5 w-3.5" />
-            <span>1. Daily Log</span>
+            <span>7. Daily Log</span>
           </button>
           <button
             onClick={() => setActiveSection('refleksi')}
@@ -194,7 +230,7 @@ export default function InternshipLogbookPage() {
             }`}
           >
             <BrainCircuit className="h-3.5 w-3.5" />
-            <span>2. Self Reflection</span>
+            <span>8. Self Reflection</span>
           </button>
           <button
             onClick={() => setActiveSection('rumusan')}
@@ -203,7 +239,7 @@ export default function InternshipLogbookPage() {
             }`}
           >
             <Calculator className="h-3.5 w-3.5" />
-            <span>3. Weekly Hours Summary</span>
+            <span>9. Weekly Hours Summary</span>
           </button>
         </div>
 
@@ -310,6 +346,158 @@ export default function InternshipLogbookPage() {
           {/* Bottom Diagonal Decorative Accent */}
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-emerald-700 via-teal-600 to-cyan-700 transform rotate-45 -translate-x-24 translate-y-24 pointer-events-none opacity-90" />
           <div className="absolute bottom-0 left-0 w-56 h-56 bg-yellow-400 transform rotate-45 -translate-x-20 translate-y-28 pointer-events-none opacity-80" />
+        </div>
+      )}
+
+      {/* ===================================================================
+          2. CMHC COUNSELOR TRAINEE PERSONAL INFORMATION (PAGE 4 REPLICA)
+         =================================================================== */}
+      {activeSection === 'personal_info' && (
+        <div className="space-y-6 bg-white p-8 sm:p-12 border border-black shadow-sm max-w-4xl mx-auto text-black">
+          <div className="flex justify-center mb-6">
+            <div className="w-36 h-48 border-2 border-black flex items-center justify-center text-slate-400 text-xs font-bold">
+              Passport Photo Box
+            </div>
+          </div>
+
+          <h2 className="text-center text-base sm:text-lg font-black uppercase border-b-2 border-black pb-2">
+            CMHC COUNSELOR TRAINEE PERSONAL INFORMATION
+          </h2>
+
+          <div className="space-y-4 text-xs font-bold pt-4">
+            <div className="flex items-center space-x-2"><span className="w-48">Name</span><span>:</span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="flex-1 border-b border-black focus:outline-none p-1 font-bold" /></div>
+            <div className="flex items-center space-x-2"><span className="w-48">Matric Number</span><span>:</span><input type="text" value={matricNo} onChange={e => setMatricNo(e.target.value)} className="flex-1 border-b border-black focus:outline-none p-1 font-bold" /></div>
+            <div className="flex items-center space-x-2"><span className="w-48">Identification Number</span><span>:</span><input type="text" placeholder="e.g. 981012-08-5432" className="flex-1 border-b border-black focus:outline-none p-1 font-bold" /></div>
+            <div className="flex items-start space-x-2"><span className="w-48 pt-1">Permanent Address</span><span className="pt-1">:</span><textarea rows={3} placeholder="Full address..." className="flex-1 border border-slate-300 p-1 focus:outline-none resize-none" /></div>
+            <div className="flex items-center space-x-2"><span className="w-48">Phone Number</span><span>:</span><input type="text" placeholder="e.g. +60123456789" className="flex-1 border-b border-black focus:outline-none p-1 font-bold" /></div>
+            <div className="flex items-center space-x-2"><span className="w-48">Email Address</span><span>:</span><input type="text" placeholder="e.g. trainee@siswa.upsi.edu.my" className="flex-1 border-b border-black focus:outline-none p-1 font-bold" /></div>
+            <div className="flex items-center space-x-2"><span className="w-48">Internship Placement</span><span>:</span><input type="text" value={placementSite} onChange={e => setPlacementSite(e.target.value)} className="flex-1 border-b border-black focus:outline-none p-1 font-bold" /></div>
+            <div className="flex items-start space-x-2"><span className="w-48 pt-1">Internship Site Address</span><span className="pt-1">:</span><textarea rows={3} placeholder="Site address..." className="flex-1 border border-slate-300 p-1 focus:outline-none resize-none" /></div>
+            <div className="flex items-center space-x-2"><span className="w-48">Emergency Contact Number</span><span>:</span><input type="text" placeholder="Emergency contact phone..." className="flex-1 border-b border-black focus:outline-none p-1 font-bold" /></div>
+          </div>
+        </div>
+      )}
+
+      {/* ===================================================================
+          3. SUPERVISORY CONTRACT (PAGES 5-7 REPLICA)
+         =================================================================== */}
+      {activeSection === 'contract' && (
+        <div className="space-y-6 bg-white p-8 sm:p-12 border border-black shadow-sm max-w-4xl mx-auto text-black text-xs leading-relaxed">
+          <div className="flex flex-col items-center text-center space-y-1 border-b-2 border-black pb-4">
+            <img src="/upsi-logo.png" alt="UPSI Logo" className="h-16 w-auto object-contain" />
+            <p className="font-bold text-sm">UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
+            <p className="text-[10px] text-red-600 font-bold uppercase">SULTAN IDRIS EDUCATION UNIVERSITY</p>
+          </div>
+
+          <h2 className="text-center text-sm font-black uppercase tracking-wide pt-2">
+            CLINICAL MENTAL HEALTH COUNSELING INTERNSHIP CONTRACT
+          </h2>
+
+          <p className="pt-2">
+            This contract serves as a verification and description of the counseling supervision provided by <input type="text" placeholder="(Supervisor Name)" className="border-b border-black px-1 font-bold focus:outline-none w-48" /> ("Supervisor") to <input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="border-b border-black px-1 font-bold focus:outline-none w-48" /> ("Supervisee"), Clinical Mental Health Counseling intern student enrolled at Universiti Pendidikan Sultan Idris.
+          </p>
+
+          <div className="space-y-3 pt-2">
+            <h3 className="font-black uppercase text-xs">PURPOSE, GOALS AND OBJECTIVES</h3>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>Monitor and ensure welfare of clients seen by supervisee.</li>
+              <li>Promote development of supervisee's professional counselor identity and competence.</li>
+              <li>Fulfil academic requirement for supervisee's internship.</li>
+              <li>Fulfil requirements in preparation for supervisee's pursuit counselor licensure (when applicable).</li>
+            </ul>
+          </div>
+
+          <div className="space-y-3 pt-2">
+            <h3 className="font-black uppercase text-xs">CONTEXT OF SERVICE</h3>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>Two (2) clock hour of group supervision bi-weekly through online.</li>
+              <li>Two (2) supervision will be conducted face-to-face at internship site and one (1) online supervision for the purpose of internship assessment.</li>
+              <li>Supervision will resolve around counseling conducted with students seen at the internship site.</li>
+            </ul>
+          </div>
+
+          <div className="pt-8 border-t border-black grid grid-cols-2 gap-8 font-bold">
+            <div className="space-y-10">
+              <div className="border-b border-black w-full"></div>
+              <div><p>(Supervisee Signature)</p><p className="font-normal mt-1">Date: _____________</p></div>
+            </div>
+            <div className="space-y-10">
+              <div className="border-b border-black w-full"></div>
+              <div><p>(Site Supervisor Signature)</p><p className="font-normal mt-1">Date: _____________</p></div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ===================================================================
+          4. TRAINEE INTERNSHIP AGREEMENT (PAGE 8 REPLICA)
+         =================================================================== */}
+      {activeSection === 'agreement' && (
+        <div className="space-y-6 bg-white p-8 sm:p-12 border border-black shadow-sm max-w-4xl mx-auto text-black text-xs leading-relaxed">
+          <h2 className="text-center text-sm font-black uppercase border-b-2 border-black pb-3">
+            CMHC COUNSELOR TRAINEE INTERNSHIP AGREEMENT
+          </h2>
+
+          <div className="space-y-4 pt-4">
+            <p>I acknowledge that I have read and understood the Code of Ethics of the Malaysian Board of Counselors and will practice counseling in accordance with the established standards. Any ethical violations or unethical behavior committed by me will result in termination and failure of the practicum. Documentation regarding any ethical violations will be recorded as part of the counseling internship record.</p>
+            <p>I understand that I must also comply with the professional ethical code at my practicum site.</p>
+            <p>I agree to abide by the administrative policies, regulations, standards, and practices of my practicum site and will ensure professional behaviour at all times.</p>
+            <p>I understand that my responsibilities include updating my academic supervisor and site supervisor on the progress of my internship.</p>
+            <p>I understand that I will not receive a passing grade in the practicum if I do not demonstrate satisfactory counseling skills, knowledge, and competency or if I fail to complete the required coursework and assignments.</p>
+          </div>
+
+          <div className="space-y-4 pt-8 border-t border-black font-bold">
+            <div className="flex items-center space-x-2"><span className="w-60">CMHC Trainee Counselor Signature :</span><input type="text" placeholder="_______________________" className="border-b border-black focus:outline-none p-1" /></div>
+            <div className="flex items-center space-x-2"><span className="w-60">CMHC Trainee Counselor Name :</span><span className="font-black">{traineeName}</span></div>
+            <div className="flex items-center space-x-2"><span className="w-60">Matric Number :</span><span className="font-black">{matricNo}</span></div>
+            <div className="flex items-center space-x-2"><span className="w-60">Date :</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black focus:outline-none p-1" /></div>
+          </div>
+        </div>
+      )}
+
+      {/* ===================================================================
+          6. ATTENDANCE LOG (PAGES 20-24 REPLICA)
+         =================================================================== */}
+      {activeSection === 'attendance' && (
+        <div className="space-y-6 bg-white p-6 sm:p-10 border border-black shadow-sm max-w-4xl mx-auto text-black text-xs">
+          <div className="text-center font-bold border-b-2 border-black pb-3 space-y-1">
+            <h2 className="text-base font-black uppercase">ATTENDANCE RECORD</h2>
+            <p className="text-xs uppercase">INTERNSHIP FOR CLINICAL MENTAL HEALTH COUNSELING</p>
+            <p className="text-xs uppercase">UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
+          </div>
+
+          <div className="space-y-2 font-bold border border-black p-3">
+            <div className="flex"><span className="w-48">Student's Name</span><span>: {traineeName}</span></div>
+            <div className="flex"><span className="w-48">Matric Number</span><span>: {matricNo}</span></div>
+            <div className="flex"><span className="w-48">Internship Site</span><span>: {placementSite || 'PPIKKMK Counseling Center'}</span></div>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse border border-black text-xs">
+              <thead>
+                <tr className="bg-slate-200 border-b border-black text-center font-bold">
+                  <th className="border border-black p-2 w-16">Week</th>
+                  <th className="border border-black p-2 w-24">Date</th>
+                  <th className="border border-black p-2 w-20">Day</th>
+                  <th className="border border-black p-2">Time Check In & Out</th>
+                  <th className="border border-black p-2 w-32">Endorsed By Site Supervisor</th>
+                  <th className="border border-black p-2 w-36">Verified By Academic Supervisor</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Array.from({ length: 28 }, (_, i) => i + 1).map(wk => (
+                  <tr key={wk} className="border-b border-black h-10">
+                    <td className="border border-black p-1 text-center font-bold">Week {wk}</td>
+                    <td className="border border-black p-1"><input type="text" placeholder="" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                    <td className="border border-black p-1"><input type="text" placeholder="" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                    <td className="border border-black p-1"><input type="text" placeholder="" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                    <td className="border border-black p-1"></td>
+                    <td className="border border-black p-1"></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
 
