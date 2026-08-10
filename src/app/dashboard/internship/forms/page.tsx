@@ -17,10 +17,12 @@ import {
   CheckCircle2,
   Maximize2
 } from 'lucide-react';
+import { FormHeader } from '@/components/forms/FormHeader';
 
 interface FormItem {
   id: string;
   code: string;
+  refCode: string;
   name: string;
   category: 'clinical' | 'counseling' | 'group' | 'log' | 'report' | 'assessment';
   pdfPath: string;
@@ -33,6 +35,7 @@ const CLINICAL_FORMS: FormItem[] = [
   { 
     id: '1', 
     code: 'FORM 01', 
+    refCode: 'Individual_Counseling_Hours_Log/CMHC_UPSI/Pindaan03-F1-2026',
     name: 'INDIVIDUAL COUNSELING HOURS LOG', 
     category: 'counseling', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2001_INDIVIDUAL%20COUNSELING%20HOURS%20LOG.pdf', 
@@ -53,6 +56,7 @@ const CLINICAL_FORMS: FormItem[] = [
   { 
     id: '2', 
     code: 'FORM 02', 
+    refCode: 'Individual_Counseling_Record_Log/CMHC_UPSI/Pindaan03-F2-2026',
     name: 'INDIVIDUAL COUNSELING RECORD LOG', 
     category: 'counseling', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2002_INDIVIDUAL%20COUNSELING%20RECORD%20LOG.pdf', 
@@ -70,7 +74,8 @@ const CLINICAL_FORMS: FormItem[] = [
   { 
     id: '3', 
     code: 'FORM 03', 
-    name: 'INDIVIDUAL COUNSELING INFORMED CONSENT', 
+    refCode: 'Individual_Counseling_Informed_Consent/CMHC_UPSI/Pindaan03-F3-2026',
+    name: 'INFORMED CONSENT FORM FOR INDIVIDUAL COUNSELING', 
     category: 'counseling', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2003_INDIVIDUAL%20COUNSELING%20INFORMED%20CONSENT.pdf', 
     pages: 2,
@@ -78,17 +83,18 @@ const CLINICAL_FORMS: FormItem[] = [
     fields: [
       { label: 'Client Full Name', placeholder: 'Client name as per MyKad' },
       { label: 'NRIC / Passport No.', placeholder: 'IC number' },
-      { label: 'Internship Site Agency', placeholder: 'Site name' },
+      { label: 'Internship Site Agency', placeholder: 'Agency name' },
       { label: 'Internship Period', placeholder: '3rd March 2026 to 20th February 2027' },
       { label: 'Academic Supervisor Name', placeholder: 'Dr. Pau Kee' },
-      { label: 'Site Supervisor Name', placeholder: 'Supervisor name' },
+      { label: 'Site Supervisor Name', placeholder: 'Site Supervisor' },
       { label: 'Emergency Contact Person & Phone', placeholder: 'Name & Phone number' },
-      { label: 'Client Signature Acknowledgment Date', placeholder: 'Date of consent' },
+      { label: 'Client Signature Date', placeholder: 'YYYY-MM-DD', type: 'date' },
     ]
   },
   { 
     id: '4', 
     code: 'FORM 04', 
+    refCode: 'Client_Registration_Form/CMHC_UPSI/Pindaan02-04-2026',
     name: 'CLIENT REGISTRATION FORM', 
     category: 'clinical', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2004_CLIENT%20REGISTRATION%20FORM.pdf', 
@@ -102,32 +108,37 @@ const CLINICAL_FORMS: FormItem[] = [
       { label: 'Emergency Contact Person 1', placeholder: 'Name, Relation, Phone, Address' },
       { label: 'Emergency Contact Person 2', placeholder: 'Name, Relation, Phone, Address' },
       { label: 'Reason for Referral / Seeking Counseling', placeholder: 'Primary presenting concern' },
+      { label: 'Current Mental Health Service History', placeholder: 'Prior hospital / clinic visits' },
+      { label: 'Current Crisis Situation Rating (0 - 10)', placeholder: 'Self-harm risk / functioning impact rating' }
     ]
   },
   { 
     id: '5', 
     code: 'FORM 05', 
+    refCode: 'Psychological_Intake_Report/CMHC_UPSI/Pindaan03_05_2026',
     name: 'PSYCHOLOGICAL INTAKE REPORT', 
     category: 'clinical', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2005_PSYCHOLOGICAL%20INTAKE%20REPORT.pdf', 
     pages: 3,
     description: 'Comprehensive psychological intake examination, MSE, medical, social, and substance history.',
     fields: [
-      { label: 'Client Full Name & Session Info', placeholder: 'Client name, session number, date & time' },
+      { label: 'Session Number & Date', placeholder: 'Session #, Date & Time' },
+      { label: 'Client Full Name & NRIC', placeholder: 'Client name, IC No, Age, Designation' },
       { label: 'Reason for Referral', placeholder: 'Detailed referral background' },
-      { label: 'Behavioral Observation & MSE', placeholder: 'Appearance, speech, mood, affect, thought process' },
+      { label: 'Behavior Observation & MSE', placeholder: 'Appearance, speech, mood, affect, thought process' },
       { label: 'History of Presenting Issues', placeholder: 'Onset, duration, severity of symptoms' },
       { label: 'Psychiatric & Medical History', placeholder: 'Prior treatments, hospitalizations, medications' },
       { label: 'Family & Social History', placeholder: 'Family dynamics, support system, relationships' },
       { label: 'Developmental & Substance History', placeholder: 'Milestones, alcohol/drug history' },
-      { label: 'Current Situation & Functioning', placeholder: 'Occupational, academic, interpersonal functioning' },
+      { label: 'Current Situation Functioning', placeholder: 'Occupational, academic, interpersonal functioning' },
       { label: 'Assessment Result & Diagnostic Impression', placeholder: 'Provisional DSM-5 diagnosis' },
-      { label: 'Treatment Planning & Session Goals', placeholder: 'Initial treatment roadmap' },
+      { label: 'Goals of the Session & Treatment Planning', placeholder: 'Initial treatment roadmap' },
     ]
   },
   { 
     id: '6', 
     code: 'FORM 06', 
+    refCode: 'Case_Conceptualization/CMHC_UPSI/Pindaan03-06-2026',
     name: 'CASE CONCEPTUALIZATION', 
     category: 'clinical', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2006_CASE%20CONCEPTUALIZATION.pdf', 
@@ -147,6 +158,7 @@ const CLINICAL_FORMS: FormItem[] = [
   { 
     id: '7', 
     code: 'FORM 07', 
+    refCode: 'Clinical_Treatment_Plan/CMHC_UPSI/Pindaan03-07-2026',
     name: 'CLINICAL TREATMENT PLAN', 
     category: 'clinical', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2007_TREATMENT%20PLANNING.pdf', 
@@ -163,6 +175,7 @@ const CLINICAL_FORMS: FormItem[] = [
   { 
     id: '8', 
     code: 'FORM 08', 
+    refCode: 'Case_Notes/CMHC_UPSI/Pindaan03-08-2026',
     name: 'CASE NOTES (SOAP NOTE)', 
     category: 'clinical', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2008_PROGRESSIVE%20NOTES.pdf', 
@@ -180,6 +193,7 @@ const CLINICAL_FORMS: FormItem[] = [
   { 
     id: '9', 
     code: 'FORM 09', 
+    refCode: 'Termination_Individual Counseling Session/CMHC_UPSI/Pindaan03-09-2026',
     name: 'TERMINATION OF INDIVIDUAL COUNSELING SESSION', 
     category: 'clinical', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2009_TERMINATION%20SESSION.pdf', 
@@ -196,6 +210,7 @@ const CLINICAL_FORMS: FormItem[] = [
   { 
     id: '10', 
     code: 'FORM 10', 
+    refCode: 'Group_Counseling_Hours_Log/CMHC_UPSI/Pindaan03-10-2026',
     name: 'LOG OF GROUP COUNSELING HOURS', 
     category: 'group', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2010_LOG%20OF%20GROUP%20COUNSELING%20HOURS.pdf', 
@@ -211,6 +226,7 @@ const CLINICAL_FORMS: FormItem[] = [
   { 
     id: '11', 
     code: 'FORM 11', 
+    refCode: 'Group_Counseling_Record_Log/CMHC_UPSI/Pindaan03-11-2026',
     name: 'GROUP COUNSELING RECORD LOG', 
     category: 'group', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2011_GROUP%20COUNSELING%20RECORD%20LOG.pdf', 
@@ -225,6 +241,7 @@ const CLINICAL_FORMS: FormItem[] = [
   { 
     id: '12', 
     code: 'FORM 12', 
+    refCode: 'Group_Counseling_Informed_Consent/CMHC_UPSI/Pindaan03-12-2026',
     name: 'INFORMED CONSENT FORM FOR GROUP COUNSELING', 
     category: 'group', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2012_GROUP%20COUNSELING%20INFORMED%20CONSENT.pdf', 
@@ -240,6 +257,7 @@ const CLINICAL_FORMS: FormItem[] = [
   { 
     id: '13', 
     code: 'FORM 13', 
+    refCode: 'Group_Counseling_Report/CMHC_UPSI/Pindaan03-13-2026',
     name: 'GROUP COUNSELING REPORT', 
     category: 'group', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2013_GROUP%20COUNSELING%20REPORT.pdf', 
@@ -255,6 +273,7 @@ const CLINICAL_FORMS: FormItem[] = [
   { 
     id: '14', 
     code: 'FORM 14', 
+    refCode: 'Group_Termination_Session/CMHC_UPSI/Pindaan03-14-2026',
     name: 'TERMINATION SESSION FOR GROUP COUNSELING', 
     category: 'group', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2014_GROUP%20TERMINATION%20FORM.pdf', 
@@ -268,6 +287,7 @@ const CLINICAL_FORMS: FormItem[] = [
   { 
     id: '15', 
     code: 'FORM 15', 
+    refCode: 'Psychological_Assessment_Report/CMHC_UPSI/Pindaan03_15-2026',
     name: 'PSYCHOLOGICAL ASSESSMENT REPORT', 
     category: 'assessment', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2015_PSYCHOLOGICAL%20ASSESSMENT%20REPORT.pdf', 
@@ -283,6 +303,7 @@ const CLINICAL_FORMS: FormItem[] = [
   { 
     id: '16', 
     code: 'FORM 16', 
+    refCode: 'Crisis_Intervention_Report/CMHC_UPSI/Pindaan03-16-2026',
     name: 'CRISIS INTERVENTION REPORT', 
     category: 'report', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2016_CRISIS%20INTERVENTION%20REPORT.pdf', 
@@ -297,6 +318,7 @@ const CLINICAL_FORMS: FormItem[] = [
   { 
     id: '17', 
     code: 'FORM 17', 
+    refCode: 'Consultation_Report/CMHC_UPSI/Pindaan03-17-2026',
     name: 'CONSULTATION REPORT', 
     category: 'report', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2017_CONSULTATION%20REPORT.pdf', 
@@ -310,6 +332,7 @@ const CLINICAL_FORMS: FormItem[] = [
   { 
     id: '18', 
     code: 'FORM 18', 
+    refCode: 'PFA/MHPSS_Report/CMHC_UPSI/Pindaan03-18-2026',
     name: 'PFA / MHPSS REPORT', 
     category: 'report', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2018_PFA_MHPSS%20REPORT.pdf', 
@@ -323,6 +346,7 @@ const CLINICAL_FORMS: FormItem[] = [
   { 
     id: '19', 
     code: 'FORM 19', 
+    refCode: 'Psychoeducation/Community_Program/CMHC_UPSI/Pindaan03-19-2026',
     name: 'PSYCHOEDUCATION / COMMUNITY PROGRAM REPORT', 
     category: 'report', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2019_PSYCHOEDUCATION%20AND%20COMMUNITY%20PROGRAM%20REPORT.pdf', 
@@ -337,6 +361,7 @@ const CLINICAL_FORMS: FormItem[] = [
   { 
     id: '20', 
     code: 'FORM 20', 
+    refCode: 'Professional_Development_Report/CMHC_UPSI/Pindaan03-20-2026',
     name: 'PROFESSIONAL DEVELOPMENT REPORT', 
     category: 'report', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2020_PROFESSIONAL%20DEVELOPMENT%20REPORT.pdf', 
@@ -351,6 +376,7 @@ const CLINICAL_FORMS: FormItem[] = [
   { 
     id: '21', 
     code: 'FORM 21', 
+    refCode: 'Consultation_Hours_Log/CMHC_UPSI/Pindaan03-21-2026',
     name: 'CONSULTATION HOURS LOG', 
     category: 'log', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2021_CONSULTATION%20HOURS%20LOG.pdf', 
@@ -361,6 +387,7 @@ const CLINICAL_FORMS: FormItem[] = [
   { 
     id: '22', 
     code: 'FORM 22', 
+    refCode: 'Crisis Intervention_Hours_Log/CMHC_UPSI/Pindaan03-22-2026',
     name: 'CRISIS INTERVENTION HOURS LOG', 
     category: 'log', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2022_CRISIS%20INTERVENTION%20HOURS%20LOG.pdf', 
@@ -371,6 +398,7 @@ const CLINICAL_FORMS: FormItem[] = [
   { 
     id: '23', 
     code: 'FORM 23', 
+    refCode: 'PFA/MHPSS_Hours_Log/CMHC_UPSI/Pindaan03-23-2026',
     name: 'PFA / MHPSS HOURS LOG', 
     category: 'log', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2023_PFA_MHPSS%20HOURS%20LOG.pdf', 
@@ -381,6 +409,7 @@ const CLINICAL_FORMS: FormItem[] = [
   { 
     id: '24', 
     code: 'FORM 24', 
+    refCode: 'Pscyhoeducation and Community Program Log/CMHC_UPSI/Pindaan03-24-2026',
     name: 'PSYCHOEDUCATION & COMMUNITY PROGRAM LOG', 
     category: 'log', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2024_PSYCHOEDUCATION%20AND%20COMMUNITY%20PROGRAM%20HOURS%20LOG.pdf', 
@@ -391,6 +420,7 @@ const CLINICAL_FORMS: FormItem[] = [
   { 
     id: '25', 
     code: 'FORM 25', 
+    refCode: 'Professional Development Log/CMHC_UPSI/Pindaan03-25-2026',
     name: 'PROFESSIONAL DEVELOPMENT LOG', 
     category: 'log', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2025_PROFESSIONAL%20DEVELOPMENT%20HOURS%20LOG.pdf', 
@@ -401,6 +431,7 @@ const CLINICAL_FORMS: FormItem[] = [
   { 
     id: '26', 
     code: 'FORM 26', 
+    refCode: 'Psychological Assessment Log/CMHC_UPSI/Pindaan03-26-2026',
     name: 'PSYCHOLOGICAL ASSESSMENT LOG', 
     category: 'log', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2026_PSYCHOLOGICAL%20ASSESSMENT%20LOG.pdf', 
@@ -411,6 +442,7 @@ const CLINICAL_FORMS: FormItem[] = [
   { 
     id: '27', 
     code: 'FORM 27', 
+    refCode: 'Supervision Log/CMHC_UPSI/Pindaan03-27-2025',
     name: 'INTERNSHIP SUPERVISION LOG', 
     category: 'log', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2027_INTERNSHIP%20SUPERVISION%20LOG.pdf', 
@@ -425,6 +457,7 @@ const CLINICAL_FORMS: FormItem[] = [
   { 
     id: '28', 
     code: 'FORM 28', 
+    refCode: 'Total_CMHC Internship_Hours/CMHC_UPSI/Pindaan03-28-2025',
     name: 'SUMMARY OF TOTAL CMHC INTERNSHIP HOURS', 
     category: 'log', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2028_TOTAL%20CMHC%20INTENRSHIP%20HOURS.pdf', 
@@ -441,6 +474,7 @@ const CLINICAL_FORMS: FormItem[] = [
   { 
     id: '29', 
     code: 'FORM 29', 
+    refCode: 'ClinicalCaseStudyFormat_CMHC_UPSI/Pindaan03-29-2026',
     name: 'CLINICAL CASE STUDY FORMAT', 
     category: 'clinical', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2029_CLINICAL%20CASE%20STUDY%20FORMAT.pdf', 
@@ -454,6 +488,7 @@ const CLINICAL_FORMS: FormItem[] = [
   { 
     id: '30', 
     code: 'FORM 30', 
+    refCode: 'Weekly_Total_Clinical_Hours/CMHC_UPSI/Pindaan03-30-2026',
     name: 'WEEKLY TOTAL CLINICAL HOURS', 
     category: 'log', 
     pdfPath: '/PDF%20CLINICAL%20FORMS_M262%202026/FORM%2030_WEEKLY%20TOTAL%20CLINICAL%20HOURS.pdf', 
@@ -521,7 +556,7 @@ export default function InternshipFormsPage() {
         <div className="text-xs space-y-1">
           <span className="font-bold text-blue-900 dark:text-blue-300">CMHC UPSI Clinical Standard (Pindaan 2026)</span>
           <p className="text-muted-foreground">
-            Click <strong>"View & Read Original PDF"</strong> to open the full official document viewer, or <strong>"Fill & Edit Form"</strong> to submit digital responses.
+            Click <strong>"View & Read Original PDF"</strong> to open the full official document viewer, or <strong>"Fill & Edit Form"</strong> to open the exact UPSI document replica.
           </p>
         </div>
       </div>
@@ -667,39 +702,58 @@ export default function InternshipFormsPage() {
         </div>
       )}
 
-      {/* DIGITAL FILLABLE FORM MODAL */}
+      {/* DIGITAL EXACT REPLICA FILLABLE FORM MODAL */}
       {activeFillForm && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-card border rounded-2xl max-w-3xl w-full p-6 shadow-2xl space-y-6 relative max-h-[90vh] overflow-y-auto internship-form-font">
-            <div className="flex items-center justify-between border-b pb-4">
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
+          <div className="bg-white border rounded-2xl max-w-4xl w-full p-6 sm:p-8 shadow-2xl space-y-6 relative max-h-[95vh] overflow-y-auto text-black internship-form-font print:p-0 print:border-none print:shadow-none">
+            {/* Action Bar Header */}
+            <div className="flex items-center justify-between border-b pb-4 no-print">
               <div>
-                <span className="text-xs font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300">
-                  {activeFillForm.code}
+                <span className="text-xs font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-800">
+                  {activeFillForm.code} • Replica Mode
                 </span>
-                <h2 className="text-xl font-bold mt-1">{activeFillForm.name}</h2>
-                <p className="text-xs text-muted-foreground">Digital Form Entry • Arial 9pt Format</p>
+                <h2 className="text-lg font-bold text-black mt-1">{activeFillForm.name}</h2>
+                <p className="text-xs text-gray-500">Exact Replica of Original PDF • Font: Arial 9pt</p>
               </div>
-              <button
-                onClick={() => setActiveFillForm(null)}
-                className="p-1.5 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground"
-              >
-                <X className="h-5 w-5" />
-              </button>
+              <div className="flex items-center space-x-2">
+                <button
+                  type="button"
+                  onClick={() => window.print()}
+                  className="inline-flex items-center px-3 py-1.5 text-xs font-bold rounded-lg border border-gray-300 hover:bg-gray-100"
+                >
+                  <Printer className="h-4 w-4 mr-1" />
+                  Print A4
+                </button>
+                <button
+                  onClick={() => setActiveFillForm(null)}
+                  className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-600"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
             </div>
 
             {savedSuccess && (
-              <div className="p-3 rounded-lg bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 flex items-center space-x-2 text-xs font-bold">
-                <CheckCircle2 className="h-4 w-4" />
-                <span>Form saved successfully in internship records!</span>
+              <div className="p-3 rounded-lg bg-emerald-100 text-emerald-900 flex items-center space-x-2 text-xs font-bold no-print">
+                <CheckCircle2 className="h-4 w-4 text-emerald-700" />
+                <span>Form saved successfully!</span>
               </div>
             )}
 
-            <form onSubmit={handleSaveForm} className="space-y-4">
-              <div className="space-y-4 border p-4 rounded-xl bg-background">
+            <form onSubmit={handleSaveForm} className="space-y-6">
+              {/* Exact Header Replica */}
+              <FormHeader 
+                title={activeFillForm.name}
+                refCode={activeFillForm.refCode}
+                subTitle="INTERNSHIP IN CLINICAL MENTAL HEALTH COUNSELING"
+              />
+
+              {/* Exact Replica Fields Container */}
+              <div className="space-y-4 border border-black p-4 sm:p-6 bg-white">
                 {activeFillForm.fields.map((field, idx) => (
-                  <div key={idx} className="space-y-1">
-                    <label className="block text-xs font-bold text-foreground">
-                      {field.label}
+                  <div key={idx} className="space-y-1 border-b border-gray-200 pb-3 last:border-0 last:pb-0">
+                    <label className="block text-xs font-bold text-black uppercase tracking-tight">
+                      {field.label} :
                     </label>
                     {field.label.toLowerCase().includes('summary') || 
                      field.label.toLowerCase().includes('notes') || 
@@ -710,13 +764,14 @@ export default function InternshipFormsPage() {
                      field.label.toLowerCase().includes('objective') ||
                      field.label.toLowerCase().includes('assessment') ||
                      field.label.toLowerCase().includes('observation') ||
+                     field.label.toLowerCase().includes('formulation') ||
                      field.label.toLowerCase().includes('reason') ? (
                       <textarea
                         rows={3}
                         placeholder={field.placeholder}
                         value={formDataValues[field.label] || ''}
                         onChange={(e) => setFormDataValues({ ...formDataValues, [field.label]: e.target.value })}
-                        className="w-full p-2 border rounded-md bg-background focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        className="w-full p-2 border border-gray-300 rounded-none bg-white text-black focus:border-black focus:outline-none"
                       />
                     ) : (
                       <input
@@ -724,36 +779,67 @@ export default function InternshipFormsPage() {
                         placeholder={field.placeholder}
                         value={formDataValues[field.label] || ''}
                         onChange={(e) => setFormDataValues({ ...formDataValues, [field.label]: e.target.value })}
-                        className="w-full p-2 border rounded-md bg-background focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        className="w-full p-2 border border-gray-300 rounded-none bg-white text-black focus:border-black focus:outline-none"
                       />
                     )}
                   </div>
                 ))}
               </div>
 
-              <div className="flex items-center justify-between pt-4 border-t">
+              {/* Signatures & Endorsement Footer Block */}
+              <div className="pt-6 border-t border-black grid grid-cols-1 sm:grid-cols-3 gap-6 text-center text-xs">
+                <div className="space-y-8">
+                  <p className="font-bold">Reported By:</p>
+                  <div className="border-b border-black w-3/4 mx-auto"></div>
+                  <div>
+                    <p className="font-bold">( CMHC Counselor Trainee )</p>
+                    <p className="text-[10px] text-gray-600">Universiti Pendidikan Sultan Idris</p>
+                  </div>
+                </div>
+
+                <div className="space-y-8">
+                  <p className="font-bold">Endorsed By:</p>
+                  <div className="border-b border-black w-3/4 mx-auto"></div>
+                  <div>
+                    <p className="font-bold">( Site Supervisor )</p>
+                    <p className="text-[10px] text-gray-600">Placement Agency Site</p>
+                  </div>
+                </div>
+
+                <div className="space-y-8">
+                  <p className="font-bold">Verified By:</p>
+                  <div className="border-b border-black w-3/4 mx-auto"></div>
+                  <div>
+                    <p className="font-bold">( Academic Supervisor )</p>
+                    <p className="text-[10px] text-gray-600">Universiti Pendidikan Sultan Idris</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Footer Buttons */}
+              <div className="flex items-center justify-between pt-4 border-t no-print">
                 <button
                   type="button"
                   onClick={() => window.print()}
-                  className="inline-flex items-center px-4 py-2 text-xs font-bold rounded-lg border hover:bg-muted"
+                  className="inline-flex items-center px-4 py-2 text-xs font-bold rounded-lg border border-gray-300 hover:bg-gray-100"
                 >
                   <Printer className="h-4 w-4 mr-1.5" />
-                  Print Form
+                  Print A4 Form
                 </button>
                 <div className="flex items-center space-x-2">
                   <button
                     type="button"
                     onClick={() => setActiveFillForm(null)}
-                    className="px-4 py-2 text-xs font-bold rounded-lg border hover:bg-muted"
+                    className="px-4 py-2 text-xs font-bold rounded-lg border border-gray-300 hover:bg-gray-100"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="inline-flex items-center px-4 py-2 text-xs font-bold rounded-lg bg-blue-600 hover:bg-blue-700 text-white"
+                    className="inline-flex items-center px-4 py-2 text-xs font-bold rounded-lg bg-blue-600 text-white hover:bg-blue-700"
                   >
                     <Save className="h-4 w-4 mr-1.5" />
-                    Save Form Entry
+                    Save & Store Entry
                   </button>
                 </div>
               </div>
