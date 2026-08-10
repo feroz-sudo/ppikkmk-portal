@@ -204,6 +204,10 @@ function SidebarNavContent({
                         <LayoutDashboard size={20} />
                         <span>Dashboard</span>
                     </Link>
+                    <Link href="/dashboard/internship" onClick={handleLinkClick} className={getLinkClass("/dashboard/internship")}>
+                        <FolderOpen size={20} className="text-emerald-400" />
+                        <span className="font-bold text-emerald-300">Internship Portal</span>
+                    </Link>
                     <Link href="/dashboard/logbook" onClick={handleLinkClick} className={getLinkClass("/dashboard/logbook")}>
                         <ClipboardList size={20} />
                         <span>Logbook / Lampiran A</span>
