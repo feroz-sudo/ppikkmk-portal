@@ -397,15 +397,26 @@ form [class*="underline"] {
 }
 
 /* ============================================================
-   A4 PERFECT PRINT MARGIN & PAGE OUTSOURCING SPECIFICATION
+   EXACT A4 PRINT DIMENSIONS & BINDING MARGIN SPECIFICATION
+   - Paper Size: 210mm × 297mm (2480px × 3508px @ 300 DPI)
+   - Binding / Left Gutter: 28mm (accounting for hole punch / binding)
+   - Top, Bottom & Right Margins: 20mm (standard official document margins)
    ============================================================ */
 @page {
-  size: A4 portrait;
-  margin: 18mm 15mm 18mm 15mm;
+  size: 210mm 297mm;
+  margin: 20mm 20mm 20mm 28mm;
+}
+
+@page :left {
+  margin: 20mm 28mm 20mm 20mm;
+}
+
+@page :right {
+  margin: 20mm 20mm 20mm 28mm;
 }
 
 @media print {
-  body {
+  html, body {
     width: 210mm !important;
     min-height: 297mm !important;
     margin: 0 auto !important;
@@ -419,10 +430,13 @@ form [class*="underline"] {
     font-family: Arial, Helvetica, sans-serif !important;
     font-size: 9pt !important;
     line-height: 1.35 !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    text-rendering: optimizeLegibility !important;
   }
 
   /* Prevent page overflow breaks on tables & form sections */
-  table, tr, td, th, .form-section-block {
+  table, tr, td, th, .form-section-block, blockquote {
     page-break-inside: avoid !important;
     break-inside: avoid !important;
   }
