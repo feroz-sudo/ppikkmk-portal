@@ -126,9 +126,6 @@ export default function InternshipLogbookPage() {
           <h1 className="text-2xl font-black tracking-tight text-slate-900">
             Log Harian, Refleksi Kendiri & Rumusan Jam Mingguan
           </h1>
-          <p className="text-xs text-slate-500 font-medium">
-            Exact Replica of Official UPSI Clinical Logbook • Font: <strong>Arial 9pt</strong> • Margins: <strong>A4 Printable</strong>
-          </p>
         </div>
 
         {/* Action Controls */}
