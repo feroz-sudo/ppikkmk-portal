@@ -399,11 +399,11 @@ form [class*="underline"] {
 /* ============================================================
    EXACT A4 PRINT FULL-WIDTH CANVAS & BOUNDARY SPECIFICATION
    - Paper Size: 210mm × 297mm (Standard A4 Portrait)
-   - Margin: 15mm (Top, Right, Bottom, Left)
+   - Margin: 10mm (Top, Right, Bottom, Left)
    ============================================================ */
 @page {
   size: A4 portrait;
-  margin: 15mm 15mm 15mm 15mm;
+  margin: 10mm 10mm 10mm 10mm;
 }
 
 @media print {
@@ -416,19 +416,28 @@ form [class*="underline"] {
     background: white !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
+    color-adjust: exact !important;
   }
 
   /* Force print containers to expand 100% full width */
-  .container, .max-w-4xl, .max-w-xl, main {
+  .container, .max-w-4xl, .max-w-5xl, .max-w-xl, main {
     max-width: 100% !important;
     width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  /* Force background colors for table headers when printing */
+  th, td, tr, div {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
   .internship-form-font {
     font-family: Arial, Helvetica, sans-serif !important;
-    font-size: 9pt !important;
+    font-size: 9.5pt !important;
     line-height: 1.35 !important;
     -webkit-font-smoothing: antialiased !important;
     -moz-osx-font-smoothing: grayscale !important;
