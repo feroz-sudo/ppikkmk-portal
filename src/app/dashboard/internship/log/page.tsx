@@ -457,46 +457,56 @@ export default function InternshipLogbookPage() {
       )}
 
       {/* ===================================================================
-          PAGE 1: DAILY LOG (ENGLISH TRANSLATED)
+          PAGE 1: DAILY LOG (EXACT 1:1 PDF REPLICA)
          =================================================================== */}
       {activeSection === 'log' && (
-        <div className="space-y-6 bg-white p-6 sm:p-8 border border-black shadow-sm">
+        <div className="space-y-6 bg-white p-6 sm:p-10 border border-black shadow-sm max-w-4xl mx-auto text-black">
           {/* Header Title */}
-          <div className="flex items-center justify-between border-b-2 border-black pb-2">
-            <h2 className="text-base sm:text-lg font-black uppercase text-black">
+          <div className="text-center font-bold space-y-4">
+            <h2 className="text-base sm:text-lg font-black uppercase tracking-wide">
               DAILY LOG (WEEK {selectedWeek})
             </h2>
-            <div className="flex items-center space-x-2">
-              <span className="text-xs font-bold text-black uppercase">DATE / DAY :</span>
-              <input
-                type="text"
-                placeholder="e.g. 03/03/2026 (MONDAY)"
-                value={tarikhHari}
-                onChange={(e) => setTarikhHari(e.target.value)}
-                className="p-1 text-xs border-b border-black font-bold focus:outline-none w-52 bg-transparent"
-              />
+            <div className="flex items-center justify-between text-xs font-bold pt-2">
+              <div className="flex items-center space-x-2 w-1/2">
+                <span>DATE :</span>
+                <input
+                  type="text"
+                  placeholder="_____________________"
+                  value={tarikhHari}
+                  onChange={(e) => setTarikhHari(e.target.value)}
+                  className="p-1 text-xs border-b border-black font-bold focus:outline-none w-full bg-transparent"
+                />
+              </div>
+              <div className="flex items-center space-x-2 w-1/3 justify-end">
+                <span>DAY :</span>
+                <input
+                  type="text"
+                  placeholder="________________"
+                  className="p-1 text-xs border-b border-black font-bold focus:outline-none w-full bg-transparent"
+                />
+              </div>
             </div>
           </div>
 
-          {/* Table 1: Log Activity Grid */}
+          {/* Table 1: Log Activity Grid (Venue, Time, Internship Activities, Remarks) */}
           <div className="overflow-x-auto">
             <table className="w-full border-collapse border border-black text-xs">
               <thead>
-                <tr className="bg-slate-100 border-b border-black text-center font-bold">
-                  <th className="border border-black p-2 w-1/5">Location</th>
+                <tr className="bg-slate-300 border-b border-black text-center font-bold text-black">
+                  <th className="border border-black p-2 w-1/5">Venue</th>
                   <th className="border border-black p-2 w-1/6">Time</th>
-                  <th className="border border-black p-2 w-2/5">Internship Activity</th>
-                  <th className="border border-black p-2 w-1/5">Notes</th>
+                  <th className="border border-black p-2 w-2/5">Internship Activities</th>
+                  <th className="border border-black p-2 w-1/5">Remarks</th>
                   <th className="border border-black p-1 w-10 no-print">Action</th>
                 </tr>
               </thead>
               <tbody>
                 {logEntries.map((entry, idx) => (
-                  <tr key={entry.id} className="border-b border-black">
+                  <tr key={entry.id} className="border-b border-black h-12">
                     <td className="border border-black p-1">
                       <input
                         type="text"
-                        placeholder="e.g. Session Room 1"
+                        placeholder=""
                         value={entry.lokasi}
                         onChange={(e) => {
                           const updated = [...logEntries];
@@ -509,7 +519,7 @@ export default function InternshipLogbookPage() {
                     <td className="border border-black p-1">
                       <input
                         type="text"
-                        placeholder="e.g. 09:00 AM - 10:00 AM"
+                        placeholder=""
                         value={entry.masa}
                         onChange={(e) => {
                           const updated = [...logEntries];
@@ -522,7 +532,7 @@ export default function InternshipLogbookPage() {
                     <td className="border border-black p-1">
                       <textarea
                         rows={2}
-                        placeholder="Daily activity details..."
+                        placeholder=""
                         value={entry.aktiviti}
                         onChange={(e) => {
                           const updated = [...logEntries];
@@ -535,7 +545,7 @@ export default function InternshipLogbookPage() {
                     <td className="border border-black p-1">
                       <input
                         type="text"
-                        placeholder="Notes / references"
+                        placeholder=""
                         value={entry.catatan}
                         onChange={(e) => {
                           const updated = [...logEntries];
@@ -571,151 +581,180 @@ export default function InternshipLogbookPage() {
             </div>
           </div>
 
-          {/* Table 2: Daily Hours Summary */}
-          <div className="border border-black">
-            <div className="bg-slate-100 font-black text-center border-b border-black py-1.5 uppercase text-xs">
-              DAILY HOURS SUMMARY OF INTERNSHIP ACTIVITIES
+          {/* Table 2: SUMMARY OF DAILY INTERNSHIP HOURS (EXACT PDF LAYOUT) */}
+          <div className="border border-black pt-2">
+            <div className="font-black text-center pb-2 uppercase text-xs">
+              SUMMARY OF DAILY INTERNSHIP HOURS
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 text-xs">
-              {/* LEFT COLUMN: Face to Face (F2F) Services */}
-              <div className="border-r border-black p-3 space-y-3">
-                <div className="font-bold border-b border-black pb-1 uppercase">
-                  Face-to-Face Services (F2F)
-                </div>
-
-                <table className="w-full text-xs">
-                  <thead>
-                    <tr className="border-b border-black text-left font-bold">
-                      <th className="py-1">CMHC Counseling Sessions</th>
-                      <th className="py-1 text-right w-16">Hours</th>
-                    </tr>
-                  </thead>
-                  <tbody className="space-y-2">
-                    <tr>
-                      <td className="py-1.5">
-                        <span className="font-bold">1. Individual Counseling CMHC</span>
-                        <div className="text-[10px] text-slate-600 italic">
-                          *Intake Interview / Clinical Interview<br />
-                          *Mental State Examination (MSE) & Assessment<br />
-                          *Mandatory in all counseling sessions
-                        </div>
-                      </td>
-                      <td className="align-top py-1.5">
+            <table className="w-full border-collapse border border-black text-xs">
+              <thead>
+                {/* Top Green Headers */}
+                <tr className="bg-[#a2d182] text-black font-bold text-center border-b border-black">
+                  <th className="border border-black p-2 w-1/2" colSpan={2}>
+                    Face-to-Face Clinical Services (F2F)
+                  </th>
+                  <th className="border border-black p-2 w-1/2" colSpan={2}>
+                    Professional Activities Related to Clinical Works
+                  </th>
+                </tr>
+                {/* Column Headers */}
+                <tr className="bg-[#c2e2aa] text-black font-bold text-center border-b border-black">
+                  <th className="border border-black p-1">Clinical Counseling Session</th>
+                  <th className="border border-black p-1 w-16">Hours</th>
+                  <th className="border border-black p-1">Clinical Related Works</th>
+                  <th className="border border-black p-1 w-16">Hours</th>
+                </tr>
+              </thead>
+              <tbody className="align-top">
+                <tr className="border-b border-black">
+                  {/* Left Side: F2F */}
+                  <td className="border border-black p-2" colSpan={2} rowSpan={10}>
+                    <div className="space-y-4">
+                      <div>
+                        <div className="font-bold">1. Individual CMH Counseling</div>
                         <input
                           type="number"
                           step="0.5"
-                          placeholder="0.0"
+                          placeholder=""
                           value={jamIndividu}
                           onChange={(e) => setJamIndividu(e.target.value)}
-                          className="w-16 p-1 border border-black text-center font-bold focus:outline-none"
+                          className="w-full mt-1 p-1 border border-black text-center font-bold focus:outline-none"
                         />
-                      </td>
-                    </tr>
+                      </div>
 
-                    <tr>
-                      <td className="py-1.5 font-bold">
-                        2. Group Counseling CMHC
-                      </td>
-                      <td className="align-top py-1.5">
+                      <div>
+                        <div className="font-bold">2. Group CMH Counseling</div>
                         <input
                           type="number"
                           step="0.5"
-                          placeholder="0.0"
+                          placeholder=""
                           value={jamKelompok}
                           onChange={(e) => setJamKelompok(e.target.value)}
-                          className="w-16 p-1 border border-black text-center font-bold focus:outline-none"
+                          className="w-full mt-1 p-1 border border-black text-center font-bold focus:outline-none"
                         />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                      </div>
 
-                <div className="flex items-center justify-between border-t border-black pt-2 font-black text-xs">
-                  <span>TOTAL HOURS (F2F) :</span>
-                  <span className="px-3 py-1 bg-slate-100 border border-black">{sumF2F.toFixed(1)} HRS</span>
-                </div>
-              </div>
-
-              {/* RIGHT COLUMN: Counselor Professional Activities */}
-              <div className="p-3 space-y-3">
-                <div className="font-bold border-b border-black pb-1 uppercase">
-                  Counselor Professional Activities
-                </div>
-
-                <div className="space-y-2 text-xs">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <span className="font-bold">1. Activities / Interventions</span>
-                      <ul className="text-[10px] text-slate-700 pl-3 list-disc">
-                        <li>i. Crisis Intervention</li>
-                        <li>ii. PFA / MHPSS</li>
-                        <li>iii. Psychological Testing: Admin, Analysis, Interpretation</li>
-                        <li>iv. Psychoeducation / Community Activities (Outreach/Referral/Consultation)</li>
-                      </ul>
+                      <div className="text-[10px] space-y-1">
+                        <p className="font-bold">** Mandatory for all types of counseling sessions to have:</p>
+                        <ul className="list-disc pl-4 space-y-0.5 text-slate-800">
+                          <li>Clinical Intake Interview</li>
+                          <li>Mental State Examination (MSE)</li>
+                          <li>Psychological Assessment</li>
+                          <li>Informant(s) interview (if needed)</li>
+                          <li>Case formulation/ Case Conceptualization (For each individual client)</li>
+                          <li>Clinical Treatment Plan (For each individual client)</li>
+                        </ul>
+                      </div>
                     </div>
+                  </td>
+
+                  {/* Right Side: Itemized Professional Activities */}
+                  <td className="border border-black p-2">1. Crisis Intervention</td>
+                  <td className="border border-black p-1 text-center">
                     <input
                       type="number"
                       step="0.5"
-                      placeholder="0.0"
+                      placeholder=""
                       value={jamAktivitiIntervensi}
                       onChange={(e) => setJamAktivitiIntervensi(e.target.value)}
-                      className="w-16 p-1 border border-black text-center font-bold focus:outline-none"
+                      className="w-full p-1 text-center font-bold focus:outline-none bg-transparent"
                     />
-                  </div>
+                  </td>
+                </tr>
 
-                  <div className="flex items-start justify-between border-t border-slate-200 pt-2">
-                    <div>
-                      <span className="font-bold">2. Management and Administration</span>
-                      <p className="text-[10px] text-slate-600">Records, logbook management, case conceptualization, reflection reports</p>
-                    </div>
+                <tr className="border-b border-black">
+                  <td className="border border-black p-2">2. PFA/MPHSS</td>
+                  <td className="border border-black p-1 text-center">
+                    <input type="number" step="0.5" className="w-full p-1 text-center font-bold focus:outline-none bg-transparent" />
+                  </td>
+                </tr>
+
+                <tr className="border-b border-black">
+                  <td className="border border-black p-2">3. Psychological Assessment</td>
+                  <td className="border border-black p-1 text-center">
+                    <input type="number" step="0.5" className="w-full p-1 text-center font-bold focus:outline-none bg-transparent" />
+                  </td>
+                </tr>
+
+                <tr className="border-b border-black">
+                  <td className="border border-black p-2">4. Psychoeducation/Community Activities</td>
+                  <td className="border border-black p-1 text-center">
+                    <input type="number" step="0.5" className="w-full p-1 text-center font-bold focus:outline-none bg-transparent" />
+                  </td>
+                </tr>
+
+                <tr className="border-b border-black">
+                  <td className="border border-black p-2">5. Family/Parents/Guardian Consultation</td>
+                  <td className="border border-black p-1 text-center">
+                    <input type="number" step="0.5" className="w-full p-1 text-center font-bold focus:outline-none bg-transparent" />
+                  </td>
+                </tr>
+
+                <tr className="border-b border-black">
+                  <td className="border border-black p-2">
+                    <div className="font-bold">Clinical Case Study</div>
+                    <ul className="pl-4 text-[10px] space-y-0.5">
+                      <li>▪ Clinical Case Study Writing</li>
+                      <li>▪ Presentation of Clinical Case</li>
+                    </ul>
+                  </td>
+                  <td className="border border-black p-1 text-center align-middle">
+                    <input type="number" step="0.5" className="w-full p-1 text-center font-bold focus:outline-none bg-transparent" />
+                  </td>
+                </tr>
+
+                <tr className="border-b border-black">
+                  <td className="border border-black p-2">
+                    <div className="font-bold">Management and Administration</div>
+                    <ul className="pl-4 text-[10px] space-y-0.5">
+                      <li>▪ Record and Logbook Management</li>
+                      <li>▪ Clinical Report Writing</li>
+                      <li>▪ Reflection</li>
+                      <li>▪ Clinical Supervision</li>
+                    </ul>
+                  </td>
+                  <td className="border border-black p-1 text-center align-middle">
                     <input
                       type="number"
                       step="0.5"
-                      placeholder="0.0"
+                      placeholder=""
                       value={jamPengurusan}
                       onChange={(e) => setJamPengurusan(e.target.value)}
-                      className="w-16 p-1 border border-black text-center font-bold focus:outline-none"
+                      className="w-full p-1 text-center font-bold focus:outline-none bg-transparent"
                     />
-                  </div>
+                  </td>
+                </tr>
 
-                  <div className="flex items-start justify-between border-t border-slate-200 pt-2">
-                    <div>
-                      <span className="font-bold">3. Professional Development</span>
-                      <p className="text-[10px] text-slate-600">Presenter/participant in professional conferences, webinars, & literature</p>
-                    </div>
+                <tr className="border-b border-black">
+                  <td className="border border-black p-2">
+                    <div className="font-bold">Professional Development</div>
+                    <ul className="pl-4 text-[10px] space-y-0.5">
+                      <li>▪ Presenter/Participant in professional conferences related CMHC workshops</li>
+                      <li>▪ Attend physical or virtual webinar related to mental health</li>
+                    </ul>
+                  </td>
+                  <td className="border border-black p-1 text-center align-middle">
                     <input
                       type="number"
                       step="0.5"
-                      placeholder="0.0"
+                      placeholder=""
                       value={jamPerkembangan}
                       onChange={(e) => setJamPerkembangan(e.target.value)}
-                      className="w-16 p-1 border border-black text-center font-bold focus:outline-none"
+                      className="w-full p-1 text-center font-bold focus:outline-none bg-transparent"
                     />
-                  </div>
+                  </td>
+                </tr>
 
-                  <div className="flex items-start justify-between border-t border-slate-200 pt-2">
-                    <div>
-                      <span className="font-bold">4. Supervision</span>
-                      <p className="text-[10px] text-slate-600">Individual / Triadic / Group Supervision</p>
-                    </div>
-                    <input
-                      type="number"
-                      step="0.5"
-                      placeholder="0.0"
-                      value={jamPenyeliaan}
-                      onChange={(e) => setJamPenyeliaan(e.target.value)}
-                      className="w-16 p-1 border border-black text-center font-bold focus:outline-none"
-                    />
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between border-t border-black pt-2 font-black text-xs">
-                  <span>TOTAL HOURS (PROFESSIONAL) :</span>
-                  <span className="px-3 py-1 bg-slate-100 border border-black">{sumProf.toFixed(1)} HRS</span>
-                </div>
-              </div>
-            </div>
+                {/* Total Row */}
+                <tr className="font-black border-t-2 border-black bg-slate-100">
+                  <td className="border border-black p-2">TOTAL HOUR</td>
+                  <td className="border border-black p-2 text-center">{sumF2F.toFixed(1)}</td>
+                  <td className="border border-black p-2">TOTAL HOURS</td>
+                  <td className="border border-black p-2 text-center">{sumProf.toFixed(1)}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       )}
