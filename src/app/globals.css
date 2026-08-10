@@ -397,33 +397,31 @@ form [class*="underline"] {
 }
 
 /* ============================================================
-   EXACT A4 PRINT DIMENSIONS & BINDING MARGIN SPECIFICATION
-   - Paper Size: 210mm × 297mm (2480px × 3508px @ 300 DPI)
-   - Binding / Left Gutter: 28mm (accounting for hole punch / binding)
-   - Top, Bottom & Right Margins: 20mm (standard official document margins)
+   EXACT A4 PRINT FULL-WIDTH CANVAS & BOUNDARY SPECIFICATION
    ============================================================ */
 @page {
-  size: 210mm 297mm;
-  margin: 20mm 20mm 20mm 28mm;
-}
-
-@page :left {
-  margin: 20mm 28mm 20mm 20mm;
-}
-
-@page :right {
-  margin: 20mm 20mm 20mm 28mm;
+  size: A4 portrait;
+  margin: 0;
 }
 
 @media print {
   html, body {
-    width: 210mm !important;
-    min-height: 297mm !important;
-    margin: 0 auto !important;
-    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 100% !important;
+    margin: 0 !important;
+    padding: 15mm 15mm 15mm 15mm !important;
     background: white !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
+  }
+
+  /* Force print containers to expand 100% full width */
+  .container, .max-w-4xl, .max-w-xl, main {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   .internship-form-font {

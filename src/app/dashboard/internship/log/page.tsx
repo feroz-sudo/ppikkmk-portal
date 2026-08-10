@@ -460,7 +460,7 @@ export default function InternshipLogbookPage() {
           PAGE 1: DAILY LOG (EXACT 1:1 PDF REPLICA)
          =================================================================== */}
       {activeSection === 'log' && (
-        <div className="space-y-6 bg-white p-6 sm:p-10 border border-black shadow-sm max-w-4xl mx-auto text-black">
+        <div className="space-y-6 bg-white p-6 sm:p-10 border border-black shadow-sm max-w-4xl print:max-w-none print:w-full print:p-0 print:border-none mx-auto text-black">
           {/* Header Title */}
           <div className="text-center font-bold space-y-4">
             <h2 className="text-base sm:text-lg font-black uppercase tracking-wide">
