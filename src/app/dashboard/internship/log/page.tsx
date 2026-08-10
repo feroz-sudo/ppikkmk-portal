@@ -26,7 +26,7 @@ interface DailyLogEntry {
 }
 
 export default function InternshipLogbookPage() {
-  const [activeSection, setActiveSection] = useState<'cover' | 'personal_info' | 'contract' | 'agreement' | 'components' | 'attendance' | 'log' | 'refleksi' | 'rumusan'>('cover');
+  const [activeSection, setActiveSection] = useState<'cover' | 'personal_info' | 'contract' | 'agreement' | 'components' | 'individual_hours' | 'attendance' | 'log' | 'refleksi' | 'rumusan'>('cover');
   const [selectedWeek, setSelectedWeek] = useState<number>(1);
 
   // Cover Page State
@@ -206,13 +206,22 @@ export default function InternshipLogbookPage() {
             <span>5. Components (504h)</span>
           </button>
           <button
+            onClick={() => setActiveSection('individual_hours')}
+            className={`px-3 py-1.5 text-xs font-bold rounded-md transition flex items-center space-x-1.5 whitespace-nowrap ${
+              activeSection === 'individual_hours' ? 'bg-emerald-700 text-white shadow-sm' : 'text-slate-700 hover:bg-slate-200'
+            }`}
+          >
+            <ClipboardList className="h-3.5 w-3.5" />
+            <span>6. Individual Hours Log</span>
+          </button>
+          <button
             onClick={() => setActiveSection('attendance')}
             className={`px-3 py-1.5 text-xs font-bold rounded-md transition flex items-center space-x-1.5 whitespace-nowrap ${
               activeSection === 'attendance' ? 'bg-emerald-700 text-white shadow-sm' : 'text-slate-700 hover:bg-slate-200'
             }`}
           >
             <ClipboardList className="h-3.5 w-3.5" />
-            <span>6. Attendance Log</span>
+            <span>7. Attendance Log</span>
           </button>
           <button
             onClick={() => setActiveSection('log')}
@@ -497,6 +506,103 @@ export default function InternshipLogbookPage() {
                 ))}
               </tbody>
             </table>
+          </div>
+        </div>
+      )}
+
+      {/* ===================================================================
+          INDIVIDUAL COUNSELING HOURS LOG (F1 2026 REPLICA)
+         =================================================================== */}
+      {activeSection === 'individual_hours' && (
+        <div className="space-y-4 bg-white p-6 sm:p-10 border border-black shadow-sm max-w-5xl mx-auto text-black text-xs">
+          {/* Header Metadata Code & Copyright Notice */}
+          <div className="flex justify-between items-center text-[10px] italic text-slate-600 font-serif border-b pb-1">
+            <span>Individual_Counseling_Hours_Log/CMHC_UPSI/Pindaan03-F1-2026</span>
+          </div>
+
+          {/* Logo & Title Block */}
+          <div className="flex items-center space-x-4 border-b-2 border-black pb-3">
+            <img src="/upsi-logo.png" alt="UPSI Emblem" className="h-16 w-auto object-contain" />
+            <div className="flex-1 text-center font-bold space-y-0.5">
+              <h2 className="text-sm sm:text-base font-black tracking-wide">INDIVIDUAL COUNSELING HOURS LOG</h2>
+              <p className="text-xs uppercase">INTERNSHIP FOR CLINICAL MENTAL HEALTH COUNSELING</p>
+              <p className="text-xs uppercase font-black">UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
+            </div>
+          </div>
+
+          {/* 30-Row Log Table */}
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse border border-black text-xs text-left">
+              <thead>
+                <tr className="bg-slate-100 border-b border-black font-bold text-center">
+                  <th className="border border-black p-1.5 w-10">Bil.</th>
+                  <th className="border border-black p-1.5 w-24">Date</th>
+                  <th className="border border-black p-1.5">Client's Name</th>
+                  <th className="border border-black p-1.5 w-28">Client Code</th>
+                  <th className="border border-black p-1.5 w-20">Session</th>
+                  <th className="border border-black p-1.5 w-20">Time</th>
+                  <th className="border border-black p-1.5 w-20">Duration</th>
+                  <th className="border border-black p-1.5 w-16">Initial</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Array.from({ length: 30 }, (_, i) => i + 1).map(num => (
+                  <tr key={num} className="border-b border-black h-7">
+                    <td className="border border-black p-1 text-center font-bold">{num}.</td>
+                    <td className="border border-black p-0.5"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                    <td className="border border-black p-0.5"><input type="text" className="w-full bg-transparent border-0 focus:outline-none px-1" /></td>
+                    <td className="border border-black p-0.5"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                    <td className="border border-black p-0.5"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                    <td className="border border-black p-0.5"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                    <td className="border border-black p-0.5"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                    <td className="border border-black p-0.5"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Sign-off & Endorsement Footer */}
+          <div className="grid grid-cols-3 gap-6 pt-6 text-xs font-bold border-t border-slate-300">
+            <div className="space-y-8">
+              <p>Prepared By:</p>
+              <div className="border-b border-black pb-1">
+                <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
+              </div>
+              <div className="text-[11px] leading-tight font-normal">
+                <p className="font-bold">CMHC Counselor Trainee</p>
+                <p>Universiti Pendidikan Sultan Idris</p>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+              </div>
+            </div>
+
+            <div className="space-y-8">
+              <p>Endorsed By:</p>
+              <div className="border-b border-black pb-1">
+                <span>( </span><input type="text" placeholder="Site Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
+              </div>
+              <div className="text-[11px] leading-tight font-normal">
+                <p className="font-bold">Site Supervisor</p>
+                <p>Institution: <input type="text" placeholder="Site Name" className="border-b border-black w-32 focus:outline-none bg-transparent" /></p>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+              </div>
+            </div>
+
+            <div className="space-y-8">
+              <p>Verified By:</p>
+              <div className="border-b border-black pb-1">
+                <span>( </span><input type="text" placeholder="Academic Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
+              </div>
+              <div className="text-[11px] leading-tight font-normal">
+                <p className="font-bold">University Academic Supervisor</p>
+                <p>Universiti Pendidikan Sultan Idris</p>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-[9px] text-slate-500 italic text-center pt-2">
+            This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner. - Dr Pau Kee
           </div>
         </div>
       )}
