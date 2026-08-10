@@ -237,8 +237,8 @@ export default function InternshipLogbookPage() {
       {/* ===================================================================
           EXACT VECTOR REPLICA: CMHC INTERNSHIP LOG BOOK COVER (PAGE 1)
          =================================================================== */}
-      {(activeSection === 'cover' || typeof window !== 'undefined') && (
-        <div className={`relative bg-white border border-slate-300 p-8 sm:p-12 shadow-md max-w-4xl mx-auto overflow-hidden ${activeSection !== 'cover' ? 'hidden print:block' : ''}`}>
+      {activeSection === 'cover' && (
+        <div className="relative bg-white border border-slate-300 p-8 sm:p-12 shadow-md max-w-4xl mx-auto overflow-hidden">
           {/* Top Diagonal Accent Graphics */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-700 transform rotate-45 translate-x-24 -translate-y-24 pointer-events-none opacity-90" />
           <div className="absolute top-0 right-0 w-56 h-56 bg-yellow-400 transform rotate-45 translate-x-20 -translate-y-28 pointer-events-none opacity-80" />
@@ -316,8 +316,8 @@ export default function InternshipLogbookPage() {
       {/* ===================================================================
           EXACT VECTOR REPLICA: CLINICAL HOURS & SUPERVISION COMPONENTS
          =================================================================== */}
-      {(activeSection === 'components' || typeof window !== 'undefined') && (
-        <div className={`space-y-6 bg-white p-6 sm:p-8 border border-black shadow-sm max-w-4xl mx-auto ${activeSection !== 'components' ? 'hidden print:block' : ''}`}>
+      {activeSection === 'components' && (
+        <div className="space-y-6 bg-white p-6 sm:p-8 border border-black shadow-sm max-w-4xl mx-auto">
           <div className="text-center border-b-2 border-black pb-3">
             <h2 className="text-base sm:text-lg font-black uppercase text-black">
               SUPERVISION & CLINICAL HOURS COMPONENTS
@@ -459,8 +459,8 @@ export default function InternshipLogbookPage() {
       {/* ===================================================================
           PAGE 1: DAILY LOG (ENGLISH TRANSLATED)
          =================================================================== */}
-      {(activeSection === 'log' || typeof window !== 'undefined') && (
-        <div className={`space-y-6 bg-white p-6 sm:p-8 border border-black shadow-sm ${activeSection !== 'log' ? 'hidden print:block' : ''}`}>
+      {activeSection === 'log' && (
+        <div className="space-y-6 bg-white p-6 sm:p-8 border border-black shadow-sm">
           {/* Header Title */}
           <div className="flex items-center justify-between border-b-2 border-black pb-2">
             <h2 className="text-base sm:text-lg font-black uppercase text-black">
@@ -723,8 +723,8 @@ export default function InternshipLogbookPage() {
       {/* ===================================================================
           PAGE 2 & 3: SELF REFLECTION (ENGLISH TRANSLATED)
          =================================================================== */}
-      {(activeSection === 'refleksi' || typeof window !== 'undefined') && (
-        <div className={`space-y-6 bg-white p-6 sm:p-8 border border-black shadow-sm ${activeSection !== 'refleksi' ? 'hidden print:block' : ''}`}>
+      {activeSection === 'refleksi' && (
+        <div className="space-y-6 bg-white p-6 sm:p-8 border border-black shadow-sm">
           <div className="border-b-2 border-black pb-2">
             <h2 className="text-base sm:text-lg font-black uppercase text-black">
               SELF REFLECTION (WEEK {selectedWeek})
@@ -816,8 +816,8 @@ export default function InternshipLogbookPage() {
       {/* ===================================================================
           PAGE 4: WEEKLY HOURS SUMMARY (ENGLISH TRANSLATED)
          =================================================================== */}
-      {(activeSection === 'rumusan' || typeof window !== 'undefined') && (
-        <div className={`space-y-6 bg-white p-6 sm:p-8 border border-black shadow-sm ${activeSection !== 'rumusan' ? 'hidden print:block' : ''}`}>
+      {activeSection === 'rumusan' && (
+        <div className="space-y-6 bg-white p-6 sm:p-8 border border-black shadow-sm">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b-2 border-black pb-2 gap-2">
             <h2 className="text-base sm:text-lg font-black uppercase text-black">
               WEEKLY HOURS SUMMARY (WEEK {selectedWeek})
