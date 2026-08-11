@@ -194,6 +194,13 @@ const FORM_SUB_TABS: ClinicalFormSubTab[] = [
     title: "PSYCHOLOGICAL ASSESSMENT LOG",
     pdfRef: "Psychological Assessment Log/CMHC_UPSI/Pindaan03-26-2026",
     status: "1:1 Exact Replica Complete"
+  },
+  {
+    id: "form27",
+    code: "Form 27",
+    title: "INTERNSHIP SUPERVISION LOG",
+    pdfRef: "Supervision Log/CMHC_UPSI/Pindaan03-27-2025",
+    status: "1:1 Exact Replica Complete"
   }
 ];
 
@@ -4351,8 +4358,138 @@ export default function ClinicalFormsHubPage() {
             This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner - Dr Pau Kee
           </div>
         </div>
+      ) : activeTab === "form27" ? (
+        /* ===================================================================
+            FORM 27: INTERNSHIP SUPERVISION LOG (2-PAGE 1:1 VECTOR REPLICA)
+           =================================================================== */
+        <div className="space-y-6 max-w-5xl mx-auto text-black">
+          {/* PAGE 1 OF FORM 27 */}
+          <div className="space-y-4 bg-white p-6 sm:p-10 border border-black shadow-sm text-xs leading-relaxed">
+            {/* Header Metadata Code (Right Aligned Top) */}
+            <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+              Supervision Log/CMHC_UPSI/Pindaan03-27-2025
+            </div>
+
+            {/* Title Block */}
+            <div className="text-center font-bold pb-2 space-y-1">
+              <h2 className="text-base sm:text-xl font-black tracking-wide leading-tight">
+                Internship Supervision Log
+              </h2>
+            </div>
+
+            {/* Top Metadata Block: Name of Supervisee & Supervision Start Date */}
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center font-bold gap-4 pb-2">
+              <div className="flex items-center space-x-2 flex-1 w-full">
+                <span className="whitespace-nowrap">Name of Supervisee:</span>
+                <input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+              </div>
+              <div className="flex items-center space-x-2 w-full sm:w-auto">
+                <span className="whitespace-nowrap">Supervision Start Date:</span>
+                <input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-36 font-bold focus:outline-none bg-transparent p-0.5 text-center" />
+              </div>
+            </div>
+
+            {/* Table Block (Page 1 Grid) */}
+            <div className="overflow-x-auto pt-2">
+              <table className="w-full border-collapse border border-black text-xs text-left">
+                <thead>
+                  <tr className="bg-slate-100 border-b border-black font-bold text-center">
+                    <th className="border border-black p-2 w-24">Date</th>
+                    <th className="border border-black p-2 w-20 leading-tight">Contact<br />Hours</th>
+                    <th className="border border-black p-2 w-48 text-left leading-snug">
+                      <p className="font-bold border-b border-slate-300 pb-1 mb-1 text-center underline">Supervision Task(s)</p>
+                      <p>1 - Tape Review</p>
+                      <p>2 - Case Staffing</p>
+                      <p>3 - Role Play</p>
+                      <p>4 - Record Review</p>
+                      <p>5 - Other (Specify)</p>
+                    </th>
+                    <th className="border border-black p-2">Critical Issues and/or New Goals Identified</th>
+                    <th className="border border-black p-2 w-40">Supervisee Signature/Date</th>
+                    <th className="border border-black p-2 w-40">Supervisor Signature/Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {Array.from({ length: 7 }, (_, i) => i + 1).map(num => (
+                    <tr key={num} className="border-b border-black h-16">
+                      <td className="border border-black p-1 text-center"><input type="text" placeholder="YYYY-MM-DD" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                      <td className="border border-black p-1 text-center"><input type="text" placeholder="Hrs" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                      <td className="border border-black p-1"><input type="text" placeholder="e.g. 1, 2" className="w-full bg-transparent border-0 focus:outline-none px-1 font-bold" /></td>
+                      <td className="border border-black p-1"><textarea rows={2} className="w-full bg-transparent border-0 focus:outline-none resize-none" /></td>
+                      <td className="border border-black p-1 text-center"><input type="text" placeholder="Sig / Date" className="w-full text-center bg-transparent border-0 focus:outline-none text-[11px]" /></td>
+                      <td className="border border-black p-1 text-center"><input type="text" placeholder="Sig / Date" className="w-full text-center bg-transparent border-0 focus:outline-none text-[11px]" /></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Footer Copyright Notice */}
+            <div className="text-[9px] text-slate-500 italic text-center pt-4">
+              This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner - Dr Pau Kee
+            </div>
+          </div>
+
+          {/* PAGE 2 OF FORM 27 */}
+          <div className="space-y-4 bg-white p-6 sm:p-10 border border-black shadow-sm text-xs leading-relaxed">
+            {/* Header Metadata Code (Right Aligned Top) */}
+            <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+              Supervision Log/CMHC_UPSI/Pindaan03-27-2025
+            </div>
+
+            {/* Table Block (Page 2 Continuation Grid) */}
+            <div className="overflow-x-auto pt-2">
+              <table className="w-full border-collapse border border-black text-xs text-left">
+                <tbody>
+                  {Array.from({ length: 6 }, (_, i) => i + 8).map(num => (
+                    <tr key={num} className="border-b border-black h-16">
+                      <td className="border border-black p-1 text-center w-24"><input type="text" placeholder="YYYY-MM-DD" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                      <td className="border border-black p-1 text-center w-20"><input type="text" placeholder="Hrs" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                      <td className="border border-black p-1 w-48"><input type="text" placeholder="e.g. 1, 2" className="w-full bg-transparent border-0 focus:outline-none px-1 font-bold" /></td>
+                      <td className="border border-black p-1"><textarea rows={2} className="w-full bg-transparent border-0 focus:outline-none resize-none" /></td>
+                      <td className="border border-black p-1 text-center w-40"><input type="text" placeholder="Sig / Date" className="w-full text-center bg-transparent border-0 focus:outline-none text-[11px]" /></td>
+                      <td className="border border-black p-1 text-center w-40"><input type="text" placeholder="Sig / Date" className="w-full text-center bg-transparent border-0 focus:outline-none text-[11px]" /></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Sign-off & Endorsement Footer Block */}
+            <div className="grid grid-cols-3 gap-6 pt-12 text-xs font-bold">
+              <div className="space-y-6">
+                <p>Supervisee Signature:</p>
+                <div className="border-b border-black pb-1">
+                  <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
+                </div>
+                <div className="flex items-center space-x-1"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-28 focus:outline-none bg-transparent font-bold" /></div>
+              </div>
+
+              <div className="space-y-6">
+                <p>Field Supervision Signature</p>
+                <div className="border-b border-black pb-1">
+                  <span>( </span><input type="text" placeholder="Field Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
+                </div>
+                <div className="flex items-center space-x-1"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-28 focus:outline-none bg-transparent font-bold" /></div>
+              </div>
+
+              <div className="space-y-6">
+                <p>University Academic Supervisor Signature</p>
+                <div className="border-b border-black pb-1">
+                  <span>( </span><input type="text" placeholder="Academic Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
+                </div>
+                <div className="flex items-center space-x-1"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-28 focus:outline-none bg-transparent font-bold" /></div>
+              </div>
+            </div>
+
+            {/* Footer Copyright Notice */}
+            <div className="text-[9px] text-slate-500 italic text-center pt-8">
+              This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner - Dr Pau Kee
+            </div>
+          </div>
+        </div>
       ) : (
-        /* Placeholder for Form 27, etc. pending 1:1 PDF Upload */
+        /* Placeholder for Form 28, etc. pending 1:1 PDF Upload */
         <div className="bg-white p-12 border border-slate-300 rounded-2xl shadow-sm text-center max-w-3xl mx-auto space-y-4">
           <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-700 font-black text-xl">
             {currentForm.code}
