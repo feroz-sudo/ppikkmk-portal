@@ -579,7 +579,7 @@ export default function DashboardLayout({
 
             {/* Sidebar Navigation */}
             <aside className={`
-                fixed md:relative z-[100] w-64 bg-upsi-navy text-white flex flex-col h-full 
+                fixed md:relative z-[100] w-[80%] sm:w-[60%] md:w-[30%] lg:w-[20%] max-w-[18rem] bg-upsi-navy text-white flex flex-col h-full 
                 transition-transform duration-300 ease-in-out shrink-0 no-print print:hidden
                 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
                 ${isMobile && !isSidebarOpen ? 'pointer-events-none' : 'pointer-events-auto'}
@@ -642,7 +642,7 @@ export default function DashboardLayout({
             {/* Main Content Area */}
             <div className="flex-1 flex flex-col overflow-hidden bg-white">
                 {/* Header */}
-                <header className="glass border-b border-slate-200 h-20 flex items-center justify-between px-8 shrink-0 z-30 no-print print:hidden">
+                <header className="glass border-b border-slate-200 min-h-[8vh] sm:min-h-[10vh] lg:min-h-[5rem] flex items-center justify-between px-4 sm:px-6 md:px-8 shrink-0 z-30 no-print print:hidden">
                     {/* Toggle and Brand */}
                     <div className="flex items-center space-x-4">
                         <button

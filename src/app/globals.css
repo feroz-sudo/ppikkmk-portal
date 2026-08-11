@@ -148,19 +148,8 @@ form textarea {
 /* Fluid Typography */
 @layer base {
   html {
-    font-size: 14px;
-  }
-
-  @media (min-width: 640px) {
-    html {
-      font-size: 15px;
-    }
-  }
-
-  @media (min-width: 768px) {
-    html {
-      font-size: 16px;
-    }
+    /* Fluidly scales between 14px on 320px screens to 16px on 768px+ screens */
+    font-size: clamp(0.875rem, 0.7768rem + 0.4464vw, 1rem);
   }
 }
 

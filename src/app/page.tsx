@@ -64,9 +64,9 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#0B132B] flex flex-col lg:flex-row overflow-x-hidden font-sans">
+    <div className="min-h-screen w-full bg-[#0B132B] flex flex-col md:flex-row overflow-x-hidden font-sans">
       {/* LEFT PANEL: HERO & INSTITUTIONAL BRANDING */}
-      <div className="w-full lg:w-7/12 xl:w-7/12 bg-gradient-to-br from-[#0B132B] via-[#1C2541] to-[#0F172A] p-8 sm:p-12 lg:p-16 text-white relative flex flex-col justify-between min-h-[480px] lg:min-h-screen border-r border-white/10">
+      <div className="w-full md:w-[50%] lg:w-[60%] bg-gradient-to-br from-[#0B132B] via-[#1C2541] to-[#0F172A] p-6 sm:p-10 md:p-12 lg:p-16 text-white relative flex flex-col justify-between min-h-[40vh] md:min-h-[100vh] border-b md:border-b-0 md:border-r border-white/10">
         {/* Ambient Glow & Grid Pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
         <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-upsi-navy/40 rounded-full blur-[140px] pointer-events-none" />
@@ -154,7 +154,7 @@ export default function LoginPage() {
       </div>
 
       {/* RIGHT PANEL: AUTHENTICATION PORTAL */}
-      <div className="w-full lg:w-5/12 xl:w-5/12 bg-slate-50 p-6 sm:p-10 lg:p-12 flex flex-col justify-between min-h-screen">
+      <div className="w-full md:w-[50%] lg:w-[40%] bg-slate-50 p-6 sm:p-10 lg:p-12 flex flex-col justify-between min-h-[60vh] md:min-h-[100vh]">
         <div className="my-auto space-y-6 max-w-md mx-auto w-full">
           {/* Header */}
           <div className="space-y-1">
