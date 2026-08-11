@@ -103,6 +103,13 @@ const FORM_SUB_TABS: ClinicalFormSubTab[] = [
     title: "GROUP COUNSELING REPORT",
     pdfRef: "Group_Counseling_Report/CMHC_UPSI/Pindaan03-13-2026",
     status: "1:1 Exact Replica Complete"
+  },
+  {
+    id: "form14",
+    code: "Form 14",
+    title: "TERMINATION SESSION FOR GROUP COUNSELING",
+    pdfRef: "Group_Termination_Session/CMHC_UPSI/Pindaan03-14-2026",
+    status: "1:1 Exact Replica Complete"
   }
 ];
 
@@ -2404,8 +2411,156 @@ export default function ClinicalFormsHubPage() {
             </div>
           </div>
         </div>
+      ) : activeTab === "form14" ? (
+        /* ===================================================================
+            FORM 14: TERMINATION SESSION FOR GROUP COUNSELING (2-PAGE 1:1 REPLICA)
+           =================================================================== */
+        <div className="space-y-6 max-w-4xl mx-auto text-black">
+          {/* PAGE 1 OF FORM 14 */}
+          <div className="space-y-4 bg-white p-6 sm:p-10 border border-black shadow-sm text-xs leading-relaxed">
+            {/* Header Metadata Code (Right Aligned Top) */}
+            <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+              Group_Termination_Session/CMHC_UPSI/Pindaan03-14-2026
+            </div>
+
+            {/* Logo & Center Title Block */}
+            <div className="relative flex items-center justify-center pb-4 mb-4 border-b border-black">
+              <img src="/upsi-logo.png" alt="UPSI Emblem" className="absolute left-0 top-0 h-16 w-auto object-contain" />
+              <div className="text-center font-bold">
+                <h2 className="text-base sm:text-lg font-black tracking-wide leading-tight uppercase">
+                  TERMINATION SESSION FOR GROUP COUNSELING
+                </h2>
+                <p className="text-xs uppercase tracking-tight">INTERNSHIP IN CLINICAL MENTAL HEALTH COUNSELING</p>
+                <p className="text-xs uppercase font-black tracking-wider">UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
+              </div>
+            </div>
+
+            {/* Client Information Table Block */}
+            <div className="overflow-x-auto pt-2">
+              <table className="w-full border-collapse border border-black text-xs text-left">
+                <tbody>
+                  <tr className="border-b border-black">
+                    <td className="border border-black p-2 font-bold w-48">Group Code</td>
+                    <td className="border border-black p-1">
+                      <input type="text" className="w-full bg-transparent border-0 focus:outline-none font-bold p-1" />
+                    </td>
+                  </tr>
+                  <tr className="border-b border-black">
+                    <td className="border border-black p-2 font-bold align-top">
+                      Name of the Group<br />Members
+                    </td>
+                    <td className="border border-black p-2">
+                      <textarea rows={4} placeholder="List all group members..." className="w-full bg-transparent border-0 focus:outline-none resize-y text-xs font-normal" />
+                    </td>
+                  </tr>
+                  <tr className="border-b border-black">
+                    <td className="border border-black p-2 font-bold">
+                      Number of the<br />sessions and Date
+                    </td>
+                    <td className="border border-black p-1">
+                      <input type="text" placeholder="e.g. 8 Sessions (2026-01-10 to 2026-03-15)" className="w-full bg-transparent border-0 focus:outline-none font-bold p-1" />
+                    </td>
+                  </tr>
+                  <tr className="border-b border-black">
+                    <td className="border border-black p-2 font-bold">
+                      Diagnosis / Primary<br />Concern
+                    </td>
+                    <td className="border border-black p-1">
+                      <input type="text" className="w-full bg-transparent border-0 focus:outline-none font-bold p-1" />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* Section: Synopsis */}
+            <div className="space-y-1.5 pt-2">
+              <div className="bg-[#fce5cd] border border-black p-1.5 font-bold text-xs">
+                Synopsis
+              </div>
+              <textarea rows={5} placeholder="Brief clinical summary of group counseling case..." className="w-full border border-black p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section: Evaluation of Each Group Member's Current Functioning Level */}
+            <div className="space-y-1.5 pt-2">
+              <div className="bg-[#fce5cd] border border-black p-1.5 font-bold text-xs">
+                Evaluation of Each Group Member’s Current Functioning Level
+              </div>
+              <textarea rows={5} placeholder="Assessment of current cognitive, emotional, and behavioral functioning for each group member..." className="w-full border border-black p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section: Justification for Termination */}
+            <div className="space-y-1.5 pt-2">
+              <div className="bg-[#fce5cd] border border-black p-1.5 font-bold text-xs">
+                Justification for Termination
+              </div>
+              <textarea rows={5} placeholder="Clinical justification for terminating group counseling..." className="w-full border border-black p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Footer Confidential Notice */}
+            <div className="pt-4 border-t border-slate-300 text-center">
+              <p className="font-bold text-xs">Confidential Document (For Professional Use Only)</p>
+              <p className="text-[9px] text-slate-500 italic mt-0.5">
+                This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner - Dr Pau Kee
+              </p>
+            </div>
+          </div>
+
+          {/* PAGE 2 OF FORM 14 */}
+          <div className="space-y-6 bg-white p-6 sm:p-10 border border-black shadow-sm text-xs leading-relaxed">
+            {/* Header Metadata Code (Right Aligned Top) */}
+            <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+              Group_Termination_Session/CMHC_UPSI/Pindaan03-14-2026
+            </div>
+
+            {/* Section: Summary of progress towards goals */}
+            <div className="space-y-1.5 pt-2">
+              <div className="bg-[#fce5cd] border border-black p-1.5 font-bold text-xs">
+                Summary of progress towards goals (including final diagnostic impression)
+              </div>
+              <textarea rows={7} placeholder="Summary of group goal achievements and final diagnostic impression..." className="w-full border border-black p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section: Clinical Evaluation */}
+            <div className="space-y-1.5 pt-4">
+              <div className="bg-[#fce5cd] border border-black p-1.5 font-bold text-xs">
+                Clinical Evaluation
+              </div>
+              <textarea rows={7} placeholder="Overall clinical evaluation of group treatment outcomes..." className="w-full border border-black p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section: Follow Up Plan */}
+            <div className="space-y-1.5 pt-4">
+              <div className="bg-[#fce5cd] border border-black p-1.5 font-bold text-xs">
+                Follow Up Plan
+              </div>
+              <textarea rows={7} placeholder="Group relapse prevention, maintenance plan, or individual referral details..." className="w-full border border-black p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Sign-off Trainee Block */}
+            <div className="space-y-4 pt-10 text-xs font-bold border-t border-slate-300">
+              <p>Report by:</p>
+              <div className="w-72 border-b border-black pb-1">
+                <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
+              </div>
+              <div className="text-[11px] leading-tight font-normal">
+                <p className="font-bold">CMHC Counselor Trainee</p>
+                <p>Universiti Pendidikan Sultan Idris</p>
+                <p>35900 Tanjong Malim, Perak</p>
+              </div>
+            </div>
+
+            {/* Footer Confidential Notice */}
+            <div className="pt-10 border-t border-slate-300 text-center">
+              <p className="font-bold text-xs">Confidential Document (For Professional Use Only)</p>
+              <p className="text-[9px] text-slate-500 italic mt-0.5">
+                This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner - Dr Pau Kee
+              </p>
+            </div>
+          </div>
+        </div>
       ) : (
-        /* Placeholder for Form 14, etc. pending 1:1 PDF Upload */
+        /* Placeholder for Form 15, etc. pending 1:1 PDF Upload */
         <div className="bg-white p-12 border border-slate-300 rounded-2xl shadow-sm text-center max-w-3xl mx-auto space-y-4">
           <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-700 font-black text-xl">
             {currentForm.code}
