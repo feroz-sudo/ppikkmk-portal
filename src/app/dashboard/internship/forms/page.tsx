@@ -131,6 +131,13 @@ const FORM_SUB_TABS: ClinicalFormSubTab[] = [
     title: "CONSULTATION REPORT",
     pdfRef: "Consultation_Report/CMHC_UPSI/Pindaan03-17-2026",
     status: "1:1 Exact Replica Complete"
+  },
+  {
+    id: "form18",
+    code: "Form 18",
+    title: "PSYCHOLOGICAL FIRST AID / MHPSS REPORT",
+    pdfRef: "PFA/MHPSS_Report/CMHC_UPSI/Pindaan03-18-2026",
+    status: "1:1 Exact Replica Complete"
   }
 ];
 
@@ -3090,8 +3097,242 @@ export default function ClinicalFormsHubPage() {
             This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner - Dr Pau Kee
           </div>
         </div>
+      ) : activeTab === "form18" ? (
+        /* ===================================================================
+            FORM 18: PSYCHOLOGICAL FIRST AID / MHPSS REPORT (2-PAGE 1:1 REPLICA)
+           =================================================================== */
+        <div className="space-y-6 max-w-4xl mx-auto text-black">
+          {/* PAGE 1 OF FORM 18 */}
+          <div className="space-y-4 bg-white p-6 sm:p-10 border border-black shadow-sm text-xs leading-relaxed">
+            {/* Header Metadata Code (Right Aligned Top) */}
+            <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+              PFA/MHPSS_Report/CMHC_UPSI/Pindaan03-18-2026
+            </div>
+
+            {/* Logo & Center Title Block */}
+            <div className="relative flex items-center justify-center pb-4 mb-2 border-b border-black">
+              <img src="/upsi-logo.png" alt="UPSI Emblem" className="absolute left-0 top-0 h-16 w-auto object-contain" />
+              <div className="text-center font-bold">
+                <h2 className="text-base sm:text-lg font-black tracking-wide leading-tight uppercase">
+                  PSYCHOLOGICAL FIRST AID/<br />MENTAL HEALTH & PSYCHOSOCIAL SUPPORT REPORT
+                </h2>
+                <p className="text-xs uppercase tracking-tight">INTERNSHIP IN CLINICAL MENTAL HEALTH COUNSELING</p>
+                <p className="text-xs uppercase font-black tracking-wider">UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
+              </div>
+            </div>
+
+            {/* Name & Institution Metadata */}
+            <div className="space-y-2 pt-1 font-bold">
+              <div className="flex items-center space-x-2">
+                <span className="w-24">Name</span>
+                <span>:</span>
+                <input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="w-24">Institution</span>
+                <span>:</span>
+                <input type="text" placeholder="e.g. UPSI / Placement Site" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+              </div>
+            </div>
+
+            {/* Table Block with Orange Header Banners */}
+            <div className="overflow-x-auto pt-2">
+              <table className="w-full border-collapse border border-black text-xs text-left">
+                <tbody>
+                  {/* Orange Banner Header 1 */}
+                  <tr className="bg-[#fce5cd] border-b border-black font-bold">
+                    <td className="border border-black p-1.5" colSpan={4}>&nbsp;</td>
+                  </tr>
+                  <tr className="border-b border-black">
+                    <td className="border border-black p-2 font-bold w-44">Program / Session</td>
+                    <td className="border border-black p-2" colSpan={3}>
+                      <div className="flex items-center space-x-12 font-bold">
+                        <label className="flex items-center space-x-2 cursor-pointer">
+                          <input type="checkbox" className="w-4 h-4 rounded border-black text-emerald-700" />
+                          <span>PFA</span>
+                        </label>
+                        <label className="flex items-center space-x-2 cursor-pointer">
+                          <input type="checkbox" className="w-4 h-4 rounded border-black text-emerald-700" />
+                          <span>MHPSS</span>
+                        </label>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr className="border-b border-black">
+                    <td className="border border-black p-2 font-bold w-44">Name of the Program/Session</td>
+                    <td className="border border-black p-1" colSpan={3}>
+                      <input type="text" className="w-full bg-transparent border-0 focus:outline-none font-bold p-1" />
+                    </td>
+                  </tr>
+                  <tr className="border-b border-black">
+                    <td className="border border-black p-2 font-bold w-44">Date</td>
+                    <td className="border border-black p-1">
+                      <input type="text" placeholder="YYYY-MM-DD" className="w-full bg-transparent border-0 focus:outline-none font-bold p-1" />
+                    </td>
+                    <td className="border border-black p-2 font-bold w-20 text-center">Time</td>
+                    <td className="border border-black p-1">
+                      <input type="text" placeholder="HH:MM" className="w-full bg-transparent border-0 focus:outline-none font-bold p-1 text-center" />
+                    </td>
+                  </tr>
+                  <tr className="border-b border-black">
+                    <td className="border border-black p-2 font-bold">Venue</td>
+                    <td className="border border-black p-1" colSpan={3}>
+                      <input type="text" className="w-full bg-transparent border-0 focus:outline-none font-bold p-1" />
+                    </td>
+                  </tr>
+                  <tr className="border-b border-black">
+                    <td className="border border-black p-2 font-bold">Number of Participants Involved</td>
+                    <td className="border border-black p-1" colSpan={3}>
+                      <input type="text" className="w-full bg-transparent border-0 focus:outline-none font-bold p-1" />
+                    </td>
+                  </tr>
+                  <tr className="border-b border-black">
+                    <td className="border border-black p-2 font-bold">Speaker / Provider</td>
+                    <td className="border border-black p-1" colSpan={3}>
+                      <input type="text" className="w-full bg-transparent border-0 focus:outline-none font-bold p-1" />
+                    </td>
+                  </tr>
+                  <tr className="border-b border-black">
+                    <td className="border border-black p-2 font-bold">Collaborator(s) (If any)</td>
+                    <td className="border border-black p-1" colSpan={3}>
+                      <input type="text" className="w-full bg-transparent border-0 focus:outline-none font-bold p-1" />
+                    </td>
+                  </tr>
+                  <tr className="border-b border-black">
+                    <td className="border border-black p-2 font-bold align-top">Objectives of the Program / Session</td>
+                    <td className="border border-black p-2" colSpan={3}>
+                      <textarea rows={3} placeholder="Detail objectives..." className="w-full bg-transparent border-0 focus:outline-none resize-y text-xs font-normal" />
+                    </td>
+                  </tr>
+
+                  {/* Orange Banner Header 2 */}
+                  <tr className="bg-[#fce5cd] border-b border-black font-bold">
+                    <td className="border border-black p-1.5" colSpan={4}>&nbsp;</td>
+                  </tr>
+                  <tr className="border-b border-black">
+                    <td className="border border-black p-2 font-bold align-top">Identified Issue(s)</td>
+                    <td className="border border-black p-2" colSpan={3}>
+                      <textarea rows={4} placeholder="Detail identified psychological issues or trauma triggers..." className="w-full bg-transparent border-0 focus:outline-none resize-y text-xs font-normal" />
+                    </td>
+                  </tr>
+
+                  <tr className="border-b border-black">
+                    <td className="border border-black p-2 font-bold align-top">Activities / Interventions Delivered</td>
+                    <td className="border border-black p-2" colSpan={3}>
+                      <textarea rows={4} placeholder="Detail PFA/MHPSS activities and interventions delivered..." className="w-full bg-transparent border-0 focus:outline-none resize-y text-xs font-normal" />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* Footer Copyright Notice */}
+            <div className="text-[9px] text-slate-500 italic text-center pt-2">
+              This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner - Dr Pau Kee
+            </div>
+          </div>
+
+          {/* PAGE 2 OF FORM 18 */}
+          <div className="space-y-4 bg-white p-6 sm:p-10 border border-black shadow-sm text-xs leading-relaxed">
+            {/* Header Metadata Code (Right Aligned Top) */}
+            <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+              PFA/MHPSS_Report/CMHC_UPSI/Pindaan03-18-2026
+            </div>
+
+            <div className="overflow-x-auto pt-2">
+              <table className="w-full border-collapse border border-black text-xs text-left">
+                <tbody>
+                  {/* Orange Banner Header 3 */}
+                  <tr className="bg-[#fce5cd] border-b border-black font-bold">
+                    <td className="border border-black p-1.5" colSpan={4}>&nbsp;</td>
+                  </tr>
+                  <tr className="border-b border-black">
+                    <td className="border border-black p-2 font-bold w-44 align-top">Follow-Up (If needed)</td>
+                    <td className="border border-black p-2" colSpan={3}>
+                      <textarea rows={4} placeholder="Detail follow-up plan or monitoring..." className="w-full bg-transparent border-0 focus:outline-none resize-y text-xs font-normal" />
+                    </td>
+                  </tr>
+                  <tr className="border-b border-black">
+                    <td className="border border-black p-2 font-bold">Referral Needed</td>
+                    <td className="border border-black p-2" colSpan={3}>
+                      <div className="flex items-center space-x-8 font-bold">
+                        <label className="flex items-center space-x-2 cursor-pointer">
+                          <input type="checkbox" className="w-4 h-4 rounded border-black text-emerald-700" />
+                          <span>Yes</span>
+                        </label>
+                        <label className="flex items-center space-x-2 cursor-pointer">
+                          <input type="checkbox" className="w-4 h-4 rounded border-black text-emerald-700" />
+                          <span>No</span>
+                        </label>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr className="border-b border-black">
+                    <td className="border border-black p-2 font-bold align-top">
+                      Referral (If necessary, please specify):
+                    </td>
+                    <td className="border border-black p-2" colSpan={3}>
+                      <textarea rows={3} placeholder="Specify referral details..." className="w-full bg-transparent border-0 focus:outline-none resize-y text-xs font-normal" />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* Action / Signature / Date Endorsement Table Block */}
+            <div className="overflow-x-auto pt-2">
+              <table className="w-full border-collapse border border-black text-xs text-left">
+                <thead>
+                  <tr className="bg-[#fce5cd] border-b border-black font-bold text-center">
+                    <th className="border border-black p-2 w-1/3">Action</th>
+                    <th className="border border-black p-2 w-1/3">Signature</th>
+                    <th className="border border-black p-2 w-1/3">Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b border-black">
+                    <td className="border border-black p-2 font-bold">Trainee Counselor’s Signature</td>
+                    <td className="border border-black p-1 text-center font-bold">
+                      <input type="text" placeholder="[ Trainee Signature ]" className="w-full text-center bg-transparent border-0 focus:outline-none text-xs" />
+                    </td>
+                    <td className="border border-black p-1 text-center">
+                      <input type="text" placeholder="YYYY-MM-DD" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold text-xs" />
+                    </td>
+                  </tr>
+                  <tr className="border-b border-black">
+                    <td className="border border-black p-2 font-bold">Site Supervisor’s Signature</td>
+                    <td className="border border-black p-1 text-center font-bold">
+                      <input type="text" placeholder="[ Site Supervisor Signature ]" className="w-full text-center bg-transparent border-0 focus:outline-none text-xs" />
+                    </td>
+                    <td className="border border-black p-1 text-center">
+                      <input type="text" placeholder="YYYY-MM-DD" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold text-xs" />
+                    </td>
+                  </tr>
+                  <tr className="border-b border-black">
+                    <td className="border border-black p-2 font-bold">Academic Supervisor’s Signature</td>
+                    <td className="border border-black p-1 text-center font-bold">
+                      <input type="text" placeholder="[ Academic Supervisor Signature ]" className="w-full text-center bg-transparent border-0 focus:outline-none text-xs" />
+                    </td>
+                    <td className="border border-black p-1 text-center">
+                      <input type="text" placeholder="YYYY-MM-DD" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold text-xs" />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p className="font-bold text-xs pt-2">
+              **Attached Photos and/or Certificate as evidence.
+            </p>
+
+            {/* Footer Copyright Notice */}
+            <div className="text-[9px] text-slate-500 italic text-center pt-8">
+              This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner - Dr Pau Kee
+            </div>
+          </div>
+        </div>
       ) : (
-        /* Placeholder for Form 18, etc. pending 1:1 PDF Upload */
+        /* Placeholder for Form 19, etc. pending 1:1 PDF Upload */
         <div className="bg-white p-12 border border-slate-300 rounded-2xl shadow-sm text-center max-w-3xl mx-auto space-y-4">
           <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-700 font-black text-xl">
             {currentForm.code}
