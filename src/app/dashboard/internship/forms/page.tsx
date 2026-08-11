@@ -51,9 +51,9 @@ const FORM_SUB_TABS: ClinicalFormSubTab[] = [
   {
     id: "form6",
     code: "Form 6",
-    title: "CLINICAL PROGRESS NOTES (SOAP)",
-    pdfRef: "Progress_Notes_SOAP/CMHC_UPSI/Pindaan03-F6-2026",
-    status: "Ready for 1:1 Build"
+    title: "CASE CONCEPTUALIZATION",
+    pdfRef: "Case_Conceptualization/CMHC_UPSI/Pindaan03-06-2026",
+    status: "1:1 Exact Replica Complete"
   },
   {
     id: "form7",
@@ -1098,8 +1098,153 @@ export default function ClinicalFormsHubPage() {
             </div>
           </div>
         </div>
+      ) : activeTab === "form6" ? (
+        /* ===================================================================
+            FORM 6: CASE CONCEPTUALIZATION (2-PAGE 1:1 VECTOR REPLICA)
+           =================================================================== */
+        <div className="space-y-6 max-w-4xl mx-auto text-black">
+          {/* PAGE 1 OF FORM 6 */}
+          <div className="space-y-4 bg-white p-6 sm:p-10 border border-black shadow-sm text-xs leading-relaxed">
+            {/* Header Metadata Code (Right Aligned Top) */}
+            <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+              Case_Conceptualization/CMHC_UPSI/Pindaan03-06-2026
+            </div>
+
+            {/* Logo & Center Title Block */}
+            <div className="relative flex items-center justify-center pb-4 mb-4 border-b border-black">
+              <img src="/upsi-logo.png" alt="UPSI Emblem" className="absolute left-0 top-0 h-16 w-auto object-contain" />
+              <div className="text-center font-bold">
+                <h2 className="text-base sm:text-lg font-black tracking-wide leading-tight uppercase">
+                  CASE CONCEPTUALIZATION
+                </h2>
+                <p className="text-xs uppercase tracking-tight">INTERNSHIP IN CLINICAL MENTAL HEALTH COUNSELING</p>
+                <p className="text-xs uppercase font-black tracking-wider">UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
+              </div>
+            </div>
+
+            {/* Client Demographics Block */}
+            <div className="space-y-2 pt-2">
+              <div className="space-y-2 pt-1 font-bold">
+                <div className="flex items-center space-x-2">
+                  <span className="w-36">Client Full Name</span>
+                  <span>:</span>
+                  <input type="text" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="w-36">Ethnic/Sex</span>
+                  <span>:</span>
+                  <input type="text" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="w-36">Age</span>
+                  <span>:</span>
+                  <input type="text" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="w-36">Diagnosis</span>
+                  <span>:</span>
+                  <input type="text" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+                </div>
+              </div>
+            </div>
+
+            {/* Section 1: CASE CONCEPTUALIZATION / Client's Profile */}
+            <div className="space-y-2 pt-4">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                CASE CONCEPTUALIZATION
+              </h3>
+              <p className="font-bold underline text-xs">Client's Profile</p>
+              <textarea rows={4} placeholder="Detail client's profile..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section 2: Presenting Problem */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                Presenting Problem
+              </h3>
+              <textarea rows={4} placeholder="Detail presenting problem..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section 3: Predisposing Factors */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                Predisposing Factors
+              </h3>
+              <textarea rows={4} placeholder="Detail predisposing factors..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section 4: Precipitating Factors */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                Precipitating Factors
+              </h3>
+              <textarea rows={4} placeholder="Detail precipitating factors..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section 5: Perpetuating Factors */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                Perpetuating Factors
+              </h3>
+              <textarea rows={4} placeholder="Detail perpetuating factors..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Footer Confidential Notice */}
+            <div className="pt-4 border-t border-slate-300 text-center">
+              <p className="font-bold text-xs">Confidential Document (For Professional Use Only)</p>
+              <p className="text-[9px] text-slate-500 italic mt-0.5">
+                This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner. - Dr Pau Kee
+              </p>
+            </div>
+          </div>
+
+          {/* PAGE 2 OF FORM 6 */}
+          <div className="space-y-4 bg-white p-6 sm:p-10 border border-black shadow-sm text-xs leading-relaxed">
+            {/* Header Metadata Code (Right Aligned Top) */}
+            <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+              Case_Conceptualization/CMHC_UPSI/Pindaan03-06-2026
+            </div>
+
+            {/* Section 6: Protective Factors */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                Protective Factors
+              </h3>
+              <textarea rows={6} placeholder="Detail protective factors..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section 7: Overall Summary */}
+            <div className="space-y-2 pt-4">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                Overall Summary
+              </h3>
+              <textarea rows={8} placeholder="Detail overall summary & case synthesis..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Sign-off Trainee Block */}
+            <div className="space-y-4 pt-8 text-xs font-bold border-t border-slate-300">
+              <p>Report by:</p>
+              <div className="w-72 border-b border-black pb-1">
+                <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
+              </div>
+              <div className="text-[11px] leading-tight font-normal">
+                <p className="font-bold">CMHC Counselor Trainee</p>
+                <p>Universiti Pendidikan Sultan Idris</p>
+                <p>35900 Tanjong Malim, Perak</p>
+              </div>
+            </div>
+
+            {/* Footer Confidential Notice */}
+            <div className="pt-8 border-t border-slate-300 text-center">
+              <p className="font-bold text-xs">Confidential Document (For Professional Use Only)</p>
+              <p className="text-[9px] text-slate-500 italic mt-0.5">
+                This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner. - Dr Pau Kee
+              </p>
+            </div>
+          </div>
+        </div>
       ) : (
-        /* Placeholder for Form 6, Form 7, etc. pending 1:1 PDF Upload */
+        /* Placeholder for Form 7, Form 8, etc. pending 1:1 PDF Upload */
         <div className="bg-white p-12 border border-slate-300 rounded-2xl shadow-sm text-center max-w-3xl mx-auto space-y-4">
           <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-700 font-black text-xl">
             {currentForm.code}
