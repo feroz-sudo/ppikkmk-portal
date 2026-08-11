@@ -187,7 +187,7 @@ export default function ClientFolderPage({ params }: PageProps) {
 
                     <div className="flex justify-end">
                         <Link
-                            href={selectedForms.length > 0 && newSessionId ? `/dashboard/forms/${selectedForms[0]}?clientId=${client?.id}&sessionId=${encodeURIComponent(newSessionId)}&manifest=${selectedForms.join(',')}` : '#'}
+                            href={selectedForms.length > 0 && newSessionId ? `/dashboard/internship/forms?tab=${selectedForms[0]}&clientId=${client?.id}&sessionId=${encodeURIComponent(newSessionId)}&manifest=${selectedForms.join(',')}` : '#'}
                             className={`flex items-center space-x-2 font-bold py-2.5 px-6 rounded-lg transition-colors shadow-sm ${selectedForms.length > 0 && newSessionId ? 'bg-upsi-navy text-white hover:bg-blue-900' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`}
                         >
                             <Play size={18} />
