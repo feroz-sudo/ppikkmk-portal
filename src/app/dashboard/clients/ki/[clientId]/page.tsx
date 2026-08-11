@@ -293,7 +293,7 @@ export default function KIClientFolderPage({ params }: PageProps) {
                                                             </div>
                                                             <div className="flex space-x-2">
                                                                 <Link
-                                                                    href={`/dashboard/forms/${f.formType.toLowerCase()}?clientId=${client?.id}&sessionId=${encodeURIComponent(f.sessionId)}&docId=${f.id}`}
+                                                                    href={`/dashboard/internship/forms?tab=${f.formType.toLowerCase()}&clientId=${client?.id}&sessionId=${encodeURIComponent(f.sessionId)}&docId=${f.id}`}
                                                                     className="text-xs text-upsi-navy hover:underline font-semibold bg-blue-50 px-2 py-1 rounded flex items-center"
                                                                 >
                                                                     Edit

@@ -5,8 +5,8 @@ import { HeartPulse, ArrowRight } from "lucide-react";
 
 const programs = [
     {
-        id: "form8",
-        name: "Form 8: PFA / MHPSS Report",
+        id: "form18",
+        name: "Form 18: PFA / MHPSS Report",
         description: "Psychological First Aid & Mental Health Psychosocial Support — for community programs and disaster/crisis intervention events.",
         icon: HeartPulse,
         color: "text-pink-600",
@@ -42,7 +42,7 @@ export default function ProgramsEventsPage() {
                     return (
                         <Link
                             key={program.id}
-                            href={`/dashboard/forms/${program.id}`}
+                            href={`/dashboard/internship/forms?tab=${program.id}`}
                             className={`group bg-white rounded-xl border ${program.border} shadow-sm hover:shadow-md transition-all p-6 flex flex-col space-y-4`}
                         >
                             <div className="flex items-start justify-between">
