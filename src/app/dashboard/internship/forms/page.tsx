@@ -117,6 +117,13 @@ const FORM_SUB_TABS: ClinicalFormSubTab[] = [
     title: "PSYCHOLOGICAL ASSESSMENT REPORT",
     pdfRef: "Psychological_Assessment_Report/CMHC_UPSI/Pindaan03_15-2026",
     status: "1:1 Exact Replica Complete"
+  },
+  {
+    id: "form16",
+    code: "Form 16",
+    title: "CRISIS INTERVENTION REPORT",
+    pdfRef: "Crisis_Intervention_Report/CMHC_UPSI/Pindaan03-16-2026",
+    status: "1:1 Exact Replica Complete"
   }
 ];
 
@@ -2566,7 +2573,7 @@ export default function ClinicalFormsHubPage() {
             </div>
           </div>
         </div>
-      ) : (
+      ) : activeTab === "form15" ? (
         /* ===================================================================
             FORM 15: PSYCHOLOGICAL ASSESSMENT REPORT (2-PAGE 1:1 VECTOR REPLICA)
            =================================================================== */
@@ -2739,6 +2746,159 @@ export default function ClinicalFormsHubPage() {
                 This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner - Dr Pau Kee
               </p>
             </div>
+          </div>
+        </div>
+      ) : activeTab === "form16" ? (
+        /* ===================================================================
+            FORM 16: CRISIS INTERVENTION REPORT (1:1 VECTOR REPLICA)
+           =================================================================== */
+        <div className="space-y-4 bg-white p-6 sm:p-10 border border-black shadow-sm max-w-4xl mx-auto text-black text-xs leading-relaxed">
+          {/* Header Metadata Code (Right Aligned Top) */}
+          <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+            Crisis_Intervention_Report/CMHC_UPSI/Pindaan03-16-2026
+          </div>
+
+          {/* Logo & Center Title Block */}
+          <div className="relative flex items-center justify-center pb-4 mb-4 border-b border-black">
+            <img src="/upsi-logo.png" alt="UPSI Emblem" className="absolute left-0 top-0 h-16 w-auto object-contain" />
+            <div className="text-center font-bold">
+              <h2 className="text-base sm:text-lg font-black tracking-wide leading-tight uppercase">
+                CRISIS INTERVENTION REPORT
+              </h2>
+              <p className="text-xs uppercase tracking-tight">INTERNSHIP IN CLINICAL MENTAL HEALTH COUNSELING</p>
+              <p className="text-xs uppercase font-black tracking-wider">UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
+            </div>
+          </div>
+
+          {/* Table Block with Orange Headers */}
+          <div className="overflow-x-auto pt-2">
+            <table className="w-full border-collapse border border-black text-xs text-left">
+              <tbody>
+                {/* Orange Banner Header 1 */}
+                <tr className="bg-[#fce5cd] border-b border-black font-bold">
+                  <td className="border border-black p-1.5" colSpan={4}>&nbsp;</td>
+                </tr>
+                <tr className="border-b border-black">
+                  <td className="border border-black p-2 font-bold w-44">Client Name</td>
+                  <td className="border border-black p-1" colSpan={3}>
+                    <input type="text" className="w-full bg-transparent border-0 focus:outline-none font-bold p-1" />
+                  </td>
+                </tr>
+                <tr className="border-b border-black">
+                  <td className="border border-black p-2 font-bold w-44">Date</td>
+                  <td className="border border-black p-1">
+                    <input type="text" placeholder="YYYY-MM-DD" className="w-full bg-transparent border-0 focus:outline-none font-bold p-1" />
+                  </td>
+                  <td className="border border-black p-2 font-bold w-20 text-center">Time</td>
+                  <td className="border border-black p-1">
+                    <input type="text" placeholder="HH:MM" className="w-full bg-transparent border-0 focus:outline-none font-bold p-1 text-center" />
+                  </td>
+                </tr>
+                <tr className="border-b border-black">
+                  <td className="border border-black p-2 font-bold">Gender</td>
+                  <td className="border border-black p-1" colSpan={3}>
+                    <input type="text" className="w-full bg-transparent border-0 focus:outline-none font-bold p-1" />
+                  </td>
+                </tr>
+                <tr className="border-b border-black">
+                  <td className="border border-black p-2 font-bold">Age</td>
+                  <td className="border border-black p-1" colSpan={3}>
+                    <input type="text" className="w-full bg-transparent border-0 focus:outline-none font-bold p-1" />
+                  </td>
+                </tr>
+                <tr className="border-b border-black">
+                  <td className="border border-black p-2 font-bold">Location</td>
+                  <td className="border border-black p-1" colSpan={3}>
+                    <input type="text" className="w-full bg-transparent border-0 focus:outline-none font-bold p-1" />
+                  </td>
+                </tr>
+                <tr className="border-b border-black">
+                  <td className="border border-black p-2 font-bold">Type of Crisis</td>
+                  <td className="border border-black p-1" colSpan={3}>
+                    <input type="text" placeholder="e.g. Suicidal ideation, Panic, Acute Trauma..." className="w-full bg-transparent border-0 focus:outline-none font-bold p-1" />
+                  </td>
+                </tr>
+
+                {/* Orange Banner Header 2 */}
+                <tr className="bg-[#fce5cd] border-b border-black font-bold">
+                  <td className="border border-black p-1.5" colSpan={4}>&nbsp;</td>
+                </tr>
+                <tr className="border-b border-black">
+                  <td className="border border-black p-2 font-bold align-top">Crisis Description</td>
+                  <td className="border border-black p-2" colSpan={3}>
+                    <textarea rows={4} placeholder="Detail nature and triggering circumstances of the crisis..." className="w-full bg-transparent border-0 focus:outline-none resize-y text-xs font-normal" />
+                  </td>
+                </tr>
+
+                {/* Orange Banner Header 3 */}
+                <tr className="bg-[#fce5cd] border-b border-black font-bold">
+                  <td className="border border-black p-1.5" colSpan={4}>&nbsp;</td>
+                </tr>
+                <tr className="border-b border-black">
+                  <td className="border border-black p-2 font-bold align-top">Crisis Intervention Provided</td>
+                  <td className="border border-black p-2" colSpan={3}>
+                    <textarea rows={4} placeholder="Detail immediate clinical stabilization techniques, safety contracts, and de-escalation..." className="w-full bg-transparent border-0 focus:outline-none resize-y text-xs font-normal" />
+                  </td>
+                </tr>
+
+                {/* Orange Banner Header 4 */}
+                <tr className="bg-[#fce5cd] border-b border-black font-bold">
+                  <td className="border border-black p-1.5" colSpan={4}>&nbsp;</td>
+                </tr>
+                <tr className="border-b border-black">
+                  <td className="border border-black p-2 font-bold align-top">Need for Referral</td>
+                  <td className="border border-black p-2" colSpan={3}>
+                    <textarea rows={3} placeholder="Detail emergency psychiatric or medical referrals required..." className="w-full bg-transparent border-0 focus:outline-none resize-y text-xs font-normal" />
+                  </td>
+                </tr>
+
+                {/* Orange Banner Header 5 */}
+                <tr className="bg-[#fce5cd] border-b border-black font-bold">
+                  <td className="border border-black p-1.5" colSpan={4}>&nbsp;</td>
+                </tr>
+                <tr className="border-b border-black">
+                  <td className="border border-black p-2 font-bold align-top">Follow-Up Plan (If Needed)</td>
+                  <td className="border border-black p-2" colSpan={3}>
+                    <textarea rows={3} placeholder="Detail scheduled follow-up monitoring timeline..." className="w-full bg-transparent border-0 focus:outline-none resize-y text-xs font-normal" />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          {/* Sign-off Trainee Block */}
+          <div className="space-y-4 pt-6 text-xs font-bold border-t border-slate-300">
+            <p>Report by:</p>
+            <div className="w-72 border-b border-black pb-1">
+              <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
+            </div>
+            <div className="text-[11px] leading-tight font-normal">
+              <p className="font-bold">CMHC Counselor Trainee</p>
+              <p>Universiti Pendidikan Sultan Idris</p>
+              <p>35900 Tanjong Malim, Perak</p>
+            </div>
+          </div>
+
+          {/* Footer Confidential Notice */}
+          <div className="pt-4 border-t border-slate-300 text-center">
+            <p className="font-bold text-xs">Confidential Document (For Professional Use Only)</p>
+            <p className="text-[9px] text-slate-500 italic mt-0.5">
+              This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner - Dr Pau Kee
+            </p>
+          </div>
+        </div>
+      ) : (
+        /* Placeholder for Form 17, etc. pending 1:1 PDF Upload */
+        <div className="bg-white p-12 border border-slate-300 rounded-2xl shadow-sm text-center max-w-3xl mx-auto space-y-4">
+          <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-700 font-black text-xl">
+            {currentForm.code}
+          </div>
+          <h2 className="text-xl font-black text-slate-900">{currentForm.title}</h2>
+          <p className="text-xs text-slate-500 font-serif italic">
+            Ref: {currentForm.pdfRef}
+          </p>
+          <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-600 max-w-lg mx-auto leading-relaxed">
+            Ready to be built into an exact 1:1 fillable vector replica. Upload the original PDF for {currentForm.code} to execute point-by-point coordinate extraction!
           </div>
         </div>
       )}
