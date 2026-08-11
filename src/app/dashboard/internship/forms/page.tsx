@@ -75,6 +75,13 @@ const FORM_SUB_TABS: ClinicalFormSubTab[] = [
     title: "TERMINATION OF INDIVIDUAL COUNSELING SESSION",
     pdfRef: "Termination_Individual Counseling Session/CMHC_UPSI/Pindaan03-09-2026",
     status: "1:1 Exact Replica Complete"
+  },
+  {
+    id: "form10",
+    code: "Form 10",
+    title: "GROUP COUNSELING HOURS LOG",
+    pdfRef: "Group_Counseling_Hours_Log/CMHC_UPSI/Pindaan03-10-2026",
+    status: "1:1 Exact Replica Complete"
   }
 ];
 
@@ -1662,8 +1669,105 @@ export default function ClinicalFormsHubPage() {
             </div>
           </div>
         </div>
+      ) : activeTab === "form10" ? (
+        /* ===================================================================
+            FORM 10: GROUP COUNSELING HOURS LOG (1:1 VECTOR REPLICA)
+           =================================================================== */
+        <div className="space-y-4 bg-white p-6 sm:p-10 border border-black shadow-sm max-w-5xl mx-auto text-black text-xs">
+          {/* Header Metadata Code (Right Aligned Top) */}
+          <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+            Group_Counseling_Hours_Log/CMHC_UPSI/Pindaan03-10-2026
+          </div>
+
+          {/* Logo & Center Title Block */}
+          <div className="relative flex items-center justify-center pb-4 mb-2 border-b border-black">
+            <img src="/upsi-logo.png" alt="UPSI Emblem" className="absolute left-0 top-0 h-16 w-auto object-contain" />
+            <div className="text-center font-bold space-y-1">
+              <h2 className="text-base sm:text-lg font-black tracking-wide leading-tight uppercase">GROUP COUNSELING HOURS LOG</h2>
+              <p className="text-xs uppercase tracking-tight">INTERNSHIP FOR CLINICAL MENTAL HEALTH COUNSELING</p>
+              <p className="text-xs uppercase font-black tracking-wider">UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
+            </div>
+          </div>
+
+          {/* 30-Row Log Table */}
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse border border-black text-xs text-left">
+              <thead>
+                <tr className="bg-slate-100 border-b border-black font-bold text-center">
+                  <th className="border border-black p-1.5 w-10">Bil.</th>
+                  <th className="border border-black p-1.5 w-24">Date</th>
+                  <th className="border border-black p-1.5">Name of the Group</th>
+                  <th className="border border-black p-1.5 w-32 leading-tight">
+                    Number of Group<br />Members
+                  </th>
+                  <th className="border border-black p-1.5 w-20">Session</th>
+                  <th className="border border-black p-1.5 w-20">Time</th>
+                  <th className="border border-black p-1.5 w-20">Duration</th>
+                  <th className="border border-black p-1.5 w-16">Initial</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Array.from({ length: 30 }, (_, i) => i + 1).map(num => (
+                  <tr key={num} className="border-b border-black h-7">
+                    <td className="border border-black p-1 text-center font-bold">{num}.</td>
+                    <td className="border border-black p-0.5"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                    <td className="border border-black p-0.5"><input type="text" className="w-full bg-transparent border-0 focus:outline-none px-1" /></td>
+                    <td className="border border-black p-0.5"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                    <td className="border border-black p-0.5"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                    <td className="border border-black p-0.5"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                    <td className="border border-black p-0.5"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                    <td className="border border-black p-0.5"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Sign-off & Endorsement Footer */}
+          <div className="grid grid-cols-3 gap-6 pt-6 text-xs font-bold border-t border-slate-300">
+            <div className="space-y-8">
+              <p>Prepared By:</p>
+              <div className="border-b border-black pb-1">
+                <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
+              </div>
+              <div className="text-[11px] leading-tight font-normal">
+                <p className="font-bold">CMHC Counselor Trainee</p>
+                <p>Universiti Pendidikan Sultan Idris</p>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+              </div>
+            </div>
+
+            <div className="space-y-8">
+              <p>Endorsed By:</p>
+              <div className="border-b border-black pb-1">
+                <span>( </span><input type="text" placeholder="Site Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
+              </div>
+              <div className="text-[11px] leading-tight font-normal">
+                <p className="font-bold">Site Supervisor</p>
+                <p>Institution: <input type="text" placeholder="Site Name" className="border-b border-black w-32 focus:outline-none bg-transparent" /></p>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+              </div>
+            </div>
+
+            <div className="space-y-8">
+              <p>Verified By:</p>
+              <div className="border-b border-black pb-1">
+                <span>( </span><input type="text" placeholder="Academic Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
+              </div>
+              <div className="text-[11px] leading-tight font-normal">
+                <p className="font-bold">University Academic Supervisor</p>
+                <p>Universiti Pendidikan Sultan Idris</p>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-[9px] text-slate-500 italic text-center pt-2">
+            This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner. - Dr Pau Kee
+          </div>
+        </div>
       ) : (
-        /* Placeholder for Form 10, Form 11, etc. pending 1:1 PDF Upload */
+        /* Placeholder for Form 11, etc. pending 1:1 PDF Upload */
         <div className="bg-white p-12 border border-slate-300 rounded-2xl shadow-sm text-center max-w-3xl mx-auto space-y-4">
           <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-700 font-black text-xl">
             {currentForm.code}
