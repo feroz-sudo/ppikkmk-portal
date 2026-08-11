@@ -68,6 +68,13 @@ const FORM_SUB_TABS: ClinicalFormSubTab[] = [
     title: "CASE NOTES (SOAP FORMAT)",
     pdfRef: "Case_Notes/CMHC_UPSI/Pindaan03-08-2026",
     status: "1:1 Exact Replica Complete"
+  },
+  {
+    id: "form9",
+    code: "Form 9",
+    title: "TERMINATION OF INDIVIDUAL COUNSELING SESSION",
+    pdfRef: "Termination_Individual Counseling Session/CMHC_UPSI/Pindaan03-09-2026",
+    status: "1:1 Exact Replica Complete"
   }
 ];
 
@@ -1355,7 +1362,7 @@ export default function ClinicalFormsHubPage() {
             </p>
           </div>
         </div>
-      ) : (
+      ) : activeTab === "form8" ? (
         /* ===================================================================
             FORM 8: CASE NOTES - SOAP FORMAT (2-PAGE 1:1 VECTOR REPLICA)
            =================================================================== */
@@ -1520,6 +1527,153 @@ export default function ClinicalFormsHubPage() {
                 This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner. - Dr Pau Kee
               </p>
             </div>
+          </div>
+        </div>
+      ) : activeTab === "form9" ? (
+        /* ===================================================================
+            FORM 9: TERMINATION OF INDIVIDUAL COUNSELING SESSION (2-PAGE 1:1 REPLICA)
+           =================================================================== */
+        <div className="space-y-6 max-w-4xl mx-auto text-black">
+          {/* PAGE 1 OF FORM 9 */}
+          <div className="space-y-4 bg-white p-6 sm:p-10 border border-black shadow-sm text-xs leading-relaxed">
+            {/* Header Metadata Code (Right Aligned Top) */}
+            <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+              Termination_Individual Counseling Session/CMHC_UPSI/Pindaan03-09-2026
+            </div>
+
+            {/* Logo & Center Title Block */}
+            <div className="relative flex items-center justify-center pb-4 mb-4 border-b border-black">
+              <img src="/upsi-logo.png" alt="UPSI Emblem" className="absolute left-0 top-0 h-16 w-auto object-contain" />
+              <div className="text-center font-bold">
+                <h2 className="text-base sm:text-lg font-black tracking-wide leading-tight uppercase">
+                  TERMINATION OF INDIVIDUAL COUNSELING SESSION
+                </h2>
+                <p className="text-xs uppercase tracking-tight">INTERNSHIP IN CLINICAL MENTAL HEALTH COUNSELING</p>
+                <p className="text-xs uppercase font-black tracking-wider">UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
+              </div>
+            </div>
+
+            {/* Client Information Table Block */}
+            <div className="overflow-x-auto pt-2">
+              <table className="w-full border-collapse border border-black text-xs text-left">
+                <tbody>
+                  {[
+                    { label: "Client Name", key: "name" },
+                    { label: "Gender", key: "gender" },
+                    { label: "Age", key: "age" },
+                    { label: "Ethnic", key: "ethnic" },
+                    { label: "Position", key: "position" },
+                    { label: "Diagnosis", key: "diagnosis" }
+                  ].map((field) => (
+                    <tr key={field.key} className="border-b border-black">
+                      <td className="border border-black p-2 font-bold w-44">{field.label}</td>
+                      <td className="border border-black p-1">
+                        <input type="text" className="w-full bg-transparent border-0 focus:outline-none font-bold p-1" />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Section: Synopsis */}
+            <div className="space-y-1.5 pt-2">
+              <div className="bg-[#fce5cd] border border-black p-1.5 font-bold text-xs">
+                Synopsis
+              </div>
+              <textarea rows={5} placeholder="Brief clinical summary of case background..." className="w-full border border-black p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section: Evaluation of The Client's Current Functioning Level */}
+            <div className="space-y-1.5 pt-2">
+              <div className="bg-[#fce5cd] border border-black p-1.5 font-bold text-xs">
+                Evaluation of The Client’s Current Functioning Level
+              </div>
+              <textarea rows={5} placeholder="Assessment of current cognitive, emotional, and behavioral functioning..." className="w-full border border-black p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section: Justification for Termination */}
+            <div className="space-y-1.5 pt-2">
+              <div className="bg-[#fce5cd] border border-black p-1.5 font-bold text-xs">
+                Justification for Termination
+              </div>
+              <textarea rows={5} placeholder="Clinical justification for terminating individual counseling..." className="w-full border border-black p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section: Summary of progress towards goals */}
+            <div className="space-y-1.5 pt-2">
+              <div className="bg-[#fce5cd] border border-black p-1.5 font-bold text-xs">
+                Summary of progress towards goals (including final diagnostic impression)
+              </div>
+              <textarea rows={5} placeholder="Summary of treatment goal progress and final diagnostic impression..." className="w-full border border-black p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Footer Confidential Notice */}
+            <div className="pt-4 border-t border-slate-300 text-center">
+              <p className="font-bold text-xs">Confidential Document (For Professional Use Only)</p>
+              <p className="text-[9px] text-slate-500 italic mt-0.5">
+                This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner - Dr Pau Kee
+              </p>
+            </div>
+          </div>
+
+          {/* PAGE 2 OF FORM 9 */}
+          <div className="space-y-6 bg-white p-6 sm:p-10 border border-black shadow-sm text-xs leading-relaxed">
+            {/* Header Metadata Code (Right Aligned Top) */}
+            <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+              Termination_Individual Counseling Session/CMHC_UPSI/Pindaan03-09-2026
+            </div>
+
+            {/* Section: Clinical Evaluation */}
+            <div className="space-y-1.5 pt-2">
+              <div className="bg-[#fce5cd] border border-black p-1.5 font-bold text-xs">
+                Clinical Evaluation
+              </div>
+              <textarea rows={8} placeholder="Overall clinical evaluation of treatment outcomes..." className="w-full border border-black p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section: Follow Up Plan */}
+            <div className="space-y-1.5 pt-4">
+              <div className="bg-[#fce5cd] border border-black p-1.5 font-bold text-xs">
+                Follow Up Plan
+              </div>
+              <textarea rows={8} placeholder="Relapse prevention, maintenance plan, or referral details..." className="w-full border border-black p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Sign-off Trainee Block */}
+            <div className="space-y-4 pt-12 text-xs font-bold border-t border-slate-300">
+              <p>Report by:</p>
+              <div className="w-72 border-b border-black pb-1">
+                <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
+              </div>
+              <div className="text-[11px] leading-tight font-normal">
+                <p className="font-bold">CMHC Counselor Trainee</p>
+                <p>Universiti Pendidikan Sultan Idris</p>
+                <p>35900 Tanjong Malim, Perak</p>
+              </div>
+            </div>
+
+            {/* Footer Confidential Notice */}
+            <div className="pt-12 border-t border-slate-300 text-center">
+              <p className="font-bold text-xs">Confidential Document (For Professional Use Only)</p>
+              <p className="text-[9px] text-slate-500 italic mt-0.5">
+                This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner - Dr Pau Kee
+              </p>
+            </div>
+          </div>
+        </div>
+      ) : (
+        /* Placeholder for Form 10, Form 11, etc. pending 1:1 PDF Upload */
+        <div className="bg-white p-12 border border-slate-300 rounded-2xl shadow-sm text-center max-w-3xl mx-auto space-y-4">
+          <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-700 font-black text-xl">
+            {currentForm.code}
+          </div>
+          <h2 className="text-xl font-black text-slate-900">{currentForm.title}</h2>
+          <p className="text-xs text-slate-500 font-serif italic">
+            Ref: {currentForm.pdfRef}
+          </p>
+          <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-600 max-w-lg mx-auto leading-relaxed">
+            Ready to be built into an exact 1:1 fillable vector replica. Upload the original PDF for {currentForm.code} to execute point-by-point coordinate extraction!
           </div>
         </div>
       )}
