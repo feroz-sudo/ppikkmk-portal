@@ -44,9 +44,9 @@ const FORM_SUB_TABS: ClinicalFormSubTab[] = [
   {
     id: "form5",
     code: "Form 5",
-    title: "CASE CONCEPTUALIZATION & TREATMENT PLAN",
-    pdfRef: "Case_Conceptualization/CMHC_UPSI/Pindaan03-F5-2026",
-    status: "Ready for 1:1 Build"
+    title: "PSYCHOLOGICAL INTAKE REPORT",
+    pdfRef: "Psychological_Intake_Report/CMHC_UPSI/Pindaan03_05_2026",
+    status: "1:1 Exact Replica Complete"
   },
   {
     id: "form6",
@@ -874,8 +874,232 @@ export default function ClinicalFormsHubPage() {
             This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner. - Dr Pau Kee
           </div>
         </div>
+      ) : activeTab === "form5" ? (
+        /* ===================================================================
+            FORM 5: PSYCHOLOGICAL INTAKE REPORT (3-PAGE 1:1 VECTOR REPLICA)
+           =================================================================== */
+        <div className="space-y-6 max-w-4xl mx-auto text-black">
+          {/* PAGE 1 OF FORM 5 */}
+          <div className="space-y-4 bg-white p-6 sm:p-10 border border-black shadow-sm text-xs leading-relaxed">
+            {/* Header Metadata Code (Right Aligned Top) */}
+            <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+              Psychological_Intake_Report/CMHC_UPSI/Pindaan03_05_2026
+            </div>
+
+            {/* Logo & Center Title Block */}
+            <div className="relative flex items-center justify-center pb-4 mb-4 border-b border-black">
+              <img src="/upsi-logo.png" alt="UPSI Emblem" className="absolute left-0 top-0 h-16 w-auto object-contain" />
+              <div className="text-center font-bold">
+                <h2 className="text-base sm:text-lg font-black tracking-wide leading-tight uppercase">
+                  PSYCHOLOGICAL INTAKE REPORT
+                </h2>
+                <p className="text-xs uppercase tracking-tight">INTERNSHIP IN CLINICAL MENTAL HEALTH COUNSELING</p>
+                <p className="text-xs uppercase font-black tracking-wider">UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
+              </div>
+            </div>
+
+            {/* PERSONAL DATA Block */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-slate-300 pb-1">
+                PERSONAL DATA:
+              </h3>
+              <div className="space-y-2 pt-1 font-bold">
+                {[
+                  { label: "Session Number", key: "sessionNo" },
+                  { label: "Session Date & Time", key: "sessionDateTime" },
+                  { label: "Client Full Name", key: "clientName" },
+                  { label: "Ethnic/Sex", key: "ethnicSex" },
+                  { label: "Date of Birth", key: "dob" },
+                  { label: "Identification Card No", key: "icNo" },
+                  { label: "Age", key: "age" },
+                  { label: "Designation", key: "designation" },
+                  { label: "Date of Report", key: "dateOfReport" }
+                ].map((field) => (
+                  <div key={field.key} className="flex items-center space-x-2">
+                    <span className="w-48">{field.label}</span>
+                    <span>:</span>
+                    <input type="text" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Section: REASON FOR REFERRAL */}
+            <div className="space-y-2 pt-4">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                REASON FOR REFFERAL
+              </h3>
+              <textarea rows={4} placeholder="Detail reason for referral..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section: BEHAVIOUR OBSERVATION */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                BEHAVIOUR OBSERVATION
+              </h3>
+              <textarea rows={4} placeholder="Detail behaviour observation..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section: HISTORY OF PRESENTING ISSUES */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                HISTORY OF PRESENTING ISSUES
+              </h3>
+              <textarea rows={4} placeholder="Detail history of presenting issues..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section: PSYCHIATRIC HISTORY */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                PSYCHIATRIC HISTORY
+              </h3>
+              <textarea rows={4} placeholder="Detail psychiatric history..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Footer Confidential Notice */}
+            <div className="pt-4 border-t border-slate-300 text-center">
+              <p className="font-bold text-xs">Confidential Document (For Professional Use Only)</p>
+              <p className="text-[9px] text-slate-500 italic mt-0.5">
+                This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner. - Dr Pau Kee
+              </p>
+            </div>
+          </div>
+
+          {/* PAGE 2 OF FORM 5 */}
+          <div className="space-y-4 bg-white p-6 sm:p-10 border border-black shadow-sm text-xs leading-relaxed">
+            {/* Header Metadata Code (Right Aligned Top) */}
+            <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+              Psychological_Intake_Report/CMHC_UPSI/Pindaan03_05_2026
+            </div>
+
+            {/* Section: MEDICAL HISTORY */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                MEDICAL HISTORY
+              </h3>
+              <textarea rows={4} placeholder="Detail medical history..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section: FAMILY HISTORY */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                FAMILY HISTORY
+              </h3>
+              <textarea rows={4} placeholder="Detail family history..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section: DEVELOPMENTAL HISTORY */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                DEVELOPMENTAL HISTORY
+              </h3>
+              <textarea rows={4} placeholder="Detail developmental history..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section: SOCIAL HISTORY */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                SOCIAL HISTORY
+              </h3>
+              <textarea rows={4} placeholder="Detail social history..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section: SUBSTANCE USE HISTORY */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                SUBSTANCE USE HISTORY
+              </h3>
+              <textarea rows={4} placeholder="Detail substance use history..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section: CURRENT SITUATION FUNCTIONING */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                CURRENT SITUATION FUNCTIONING
+              </h3>
+              <textarea rows={4} placeholder="Detail current situation functioning..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Footer Confidential Notice */}
+            <div className="pt-4 border-t border-slate-300 text-center">
+              <p className="font-bold text-xs">Confidential Document (For Professional Use Only)</p>
+              <p className="text-[9px] text-slate-500 italic mt-0.5">
+                This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner. - Dr Pau Kee
+              </p>
+            </div>
+          </div>
+
+          {/* PAGE 3 OF FORM 5 */}
+          <div className="space-y-4 bg-white p-6 sm:p-10 border border-black shadow-sm text-xs leading-relaxed">
+            {/* Header Metadata Code (Right Aligned Top) */}
+            <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+              Psychological_Intake_Report/CMHC_UPSI/Pindaan03_05_2026
+            </div>
+
+            {/* Section: ASSESSMENT RESULT */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                ASSESSMENT RESULT
+              </h3>
+              <textarea rows={4} placeholder="Detail assessment results..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section: CLINICAL JUDGEMENT */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                CLINICAL JUDGEMENT
+              </h3>
+              <textarea rows={4} placeholder="Detail clinical judgement..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section: DIAGNOSTIC IMPRESSION / PROVISIONAL DIAGNOSTIC */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                DIAGNOSTIC IMPRESSION / PROVISIONAL DIAGNOSTIC
+              </h3>
+              <textarea rows={4} placeholder="Detail diagnostic impression and DSM-5 codes..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section: GOALS OF THE SESSION */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                GOALS OF THE SESSION
+              </h3>
+              <textarea rows={4} placeholder="Detail goals of the session..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section: TREATMENT PLANNING */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                TREATMENT PLANNING
+              </h3>
+              <textarea rows={4} placeholder="Detail treatment plan & interventions..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Sign-off Trainee Block */}
+            <div className="space-y-4 pt-6 text-xs font-bold border-t border-slate-300">
+              <p>Report by:</p>
+              <div className="w-72 border-b border-black pb-1">
+                <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
+              </div>
+              <div className="text-[11px] leading-tight font-normal">
+                <p className="font-bold">CMHC Counselor Trainee</p>
+                <p>Universiti Pendidikan Sultan Idris</p>
+                <p>35900 Tanjong Malim, Perak</p>
+              </div>
+            </div>
+
+            {/* Footer Confidential Notice */}
+            <div className="pt-4 border-t border-slate-300 text-center">
+              <p className="font-bold text-xs">Confidential Document (For Professional Use Only)</p>
+              <p className="text-[9px] text-slate-500 italic mt-0.5">
+                This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner. - Dr Pau Kee
+              </p>
+            </div>
+          </div>
+        </div>
       ) : (
-        /* Placeholder for Form 5, Form 6, etc. pending 1:1 PDF Upload */
+        /* Placeholder for Form 6, Form 7, etc. pending 1:1 PDF Upload */
         <div className="bg-white p-12 border border-slate-300 rounded-2xl shadow-sm text-center max-w-3xl mx-auto space-y-4">
           <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-700 font-black text-xl">
             {currentForm.code}
