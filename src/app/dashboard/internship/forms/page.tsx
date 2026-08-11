@@ -23,9 +23,9 @@ const FORM_SUB_TABS: ClinicalFormSubTab[] = [
   {
     id: "form2",
     code: "Form 2",
-    title: "GROUP COUNSELING HOURS LOG",
-    pdfRef: "Group_Counseling_Hours_Log/CMHC_UPSI/Pindaan03-F2-2026",
-    status: "Ready for 1:1 Build"
+    title: "INDIVIDUAL COUNSELING RECORD LOG",
+    pdfRef: "Individual_Counseling_Record_Log/CMHC_UPSI/Pindaan03-F2-2026",
+    status: "1:1 Exact Replica Complete"
   },
   {
     id: "form3",
@@ -229,8 +229,177 @@ export default function ClinicalFormsHubPage() {
             This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner. - Dr Pau Kee
           </div>
         </div>
+      ) : activeTab === "form2" ? (
+        /* ===================================================================
+            FORM 2: INDIVIDUAL COUNSELING RECORD LOG (1:1 VECTOR REPLICA)
+           =================================================================== */
+        <div className="space-y-4 bg-white p-6 sm:p-10 border border-black shadow-sm max-w-5xl mx-auto text-black text-xs">
+          {/* Header Metadata Code (Right Aligned Top) */}
+          <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+            Individual_Counseling_Record_Log/CMHC_UPSI/Pindaan03-F2-2026
+          </div>
+
+          {/* Logo & Center Title Block */}
+          <div className="relative flex items-center justify-center pb-4 mb-2 border-b border-black">
+            <img src="/upsi-logo.png" alt="UPSI Emblem" className="absolute left-0 top-0 h-16 w-auto object-contain" />
+            <div className="text-center font-bold space-y-1">
+              <h2 className="text-base sm:text-lg font-black tracking-wide leading-tight">INDIVIDUAL COUNSELING RECORD LOG</h2>
+              <p className="text-xs uppercase tracking-tight">INTERNSHIP FOR CLINICAL MENTAL HEALTH COUNSELING</p>
+              <p className="text-xs uppercase font-black tracking-wider">UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
+            </div>
+          </div>
+
+          {/* 4 Client Entry Blocks Table Grid */}
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse border border-black text-[11px] leading-tight text-left">
+              <thead>
+                <tr className="bg-slate-100 border-b border-black font-bold text-center">
+                  <th className="border border-black p-1.5 w-32">Client Name</th>
+                  <th className="border border-black p-1.5">Component Information</th>
+                  <th className="border border-black p-1.5" colSpan={9}>
+                    Date & Time
+                  </th>
+                </tr>
+                <tr className="bg-slate-50 border-b border-black font-bold text-center text-[10px]">
+                  <th className="border border-black p-1" colSpan={2}></th>
+                  <th className="border border-black p-1 w-12">S.1</th>
+                  <th className="border border-black p-1 w-12">S.2</th>
+                  <th className="border border-black p-1 w-12">S.3</th>
+                  <th className="border border-black p-1 w-12">S.4</th>
+                  <th className="border border-black p-1 w-12">S.5</th>
+                  <th className="border border-black p-1 w-12">S.6</th>
+                  <th className="border border-black p-1 w-12">S.7</th>
+                  <th className="border border-black p-1 w-12">S.8</th>
+                  <th className="border border-black p-1 w-12">S.9</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[1, 2, 3, 4].map((clientNum) => (
+                  <React.Fragment key={clientNum}>
+                    {/* Row 1: Intake Session */}
+                    <tr className="border-b border-black">
+                      <td className="border border-black p-2 font-bold align-top" rowSpan={6}>
+                        <input
+                          type="text"
+                          placeholder={`Client Name #${clientNum}`}
+                          className="w-full h-full bg-transparent border-0 focus:outline-none font-bold"
+                        />
+                      </td>
+                      <td className="border border-black p-1.5">
+                        <span className="font-semibold">Intake Session</span>
+                        <br />
+                        <span className="text-[10px] text-slate-600">(History Taking & Assessment)</span>
+                      </td>
+                      {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((s) => (
+                        <td key={s} className="border border-black p-0.5 text-center">
+                          <input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none text-[10px]" />
+                        </td>
+                      ))}
+                    </tr>
+                    {/* Row 2: Case Conceptualization */}
+                    <tr className="border-b border-black">
+                      <td className="border border-black p-1.5">
+                        <span className="font-semibold">Case Conceptualization &</span>
+                        <br />
+                        <span className="font-semibold">Provisional Diagnosis</span>
+                      </td>
+                      {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((s) => (
+                        <td key={s} className="border border-black p-0.5 text-center">
+                          <input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none text-[10px]" />
+                        </td>
+                      ))}
+                    </tr>
+                    {/* Row 3: Treatment Planning */}
+                    <tr className="border-b border-black">
+                      <td className="border border-black p-1.5">Treatment Planning</td>
+                      {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((s) => (
+                        <td key={s} className="border border-black p-0.5 text-center">
+                          <input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none text-[10px]" />
+                        </td>
+                      ))}
+                    </tr>
+                    {/* Row 4: Application of Intervention */}
+                    <tr className="border-b border-black">
+                      <td className="border border-black p-1.5">Application of Intervention</td>
+                      {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((s) => (
+                        <td key={s} className="border border-black p-0.5 text-center">
+                          <input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none text-[10px]" />
+                        </td>
+                      ))}
+                    </tr>
+                    {/* Row 5: Summary Progression */}
+                    <tr className="border-b border-black">
+                      <td className="border border-black p-1.5">
+                        <span>Summary of the Client</span>
+                        <br />
+                        <span>Progression</span>
+                      </td>
+                      {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((s) => (
+                        <td key={s} className="border border-black p-0.5 text-center">
+                          <input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none text-[10px]" />
+                        </td>
+                      ))}
+                    </tr>
+                    {/* Row 6: Termination */}
+                    <tr className="border-b-2 border-black">
+                      <td className="border border-black p-1.5">Termination</td>
+                      {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((s) => (
+                        <td key={s} className="border border-black p-0.5 text-center">
+                          <input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none text-[10px]" />
+                        </td>
+                      ))}
+                    </tr>
+                  </React.Fragment>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Sign-off & Endorsement Footer */}
+          <div className="grid grid-cols-3 gap-6 pt-6 text-xs font-bold border-t border-slate-300">
+            <div className="space-y-8">
+              <p>Prepared By:</p>
+              <div className="border-b border-black pb-1">
+                <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
+              </div>
+              <div className="text-[11px] leading-tight font-normal">
+                <p className="font-bold">CMHC Counselor Trainee</p>
+                <p>UPSI</p>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+              </div>
+            </div>
+
+            <div className="space-y-8">
+              <p>Endorsed By:</p>
+              <div className="border-b border-black pb-1">
+                <span>( </span><input type="text" placeholder="Site Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
+              </div>
+              <div className="text-[11px] leading-tight font-normal">
+                <p className="font-bold">Site Supervisor</p>
+                <p>Institution: <input type="text" placeholder="Site Name" className="border-b border-black w-32 focus:outline-none bg-transparent" /></p>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+              </div>
+            </div>
+
+            <div className="space-y-8">
+              <p>Verified By:</p>
+              <div className="border-b border-black pb-1">
+                <span>( </span><input type="text" placeholder="Academic Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
+              </div>
+              <div className="text-[11px] leading-tight font-normal">
+                <p className="font-bold">University Academic Supervisor</p>
+                <p>UPSI</p>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-[9px] text-slate-500 italic text-center pt-2">
+            This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner. - Dr Pau Kee
+          </div>
+        </div>
       ) : (
-        /* Placeholder for Form 2, Form 3, etc. pending 1:1 PDF Upload */
+        /* Placeholder for Form 3, Form 4, etc. pending 1:1 PDF Upload */
         <div className="bg-white p-12 border border-slate-300 rounded-2xl shadow-sm text-center max-w-3xl mx-auto space-y-4">
           <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-700 font-black text-xl">
             {currentForm.code}
