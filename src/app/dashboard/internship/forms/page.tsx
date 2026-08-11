@@ -65,9 +65,9 @@ const FORM_SUB_TABS: ClinicalFormSubTab[] = [
   {
     id: "form8",
     code: "Form 8",
-    title: "MHPSS & PSYCHOEDUCATION REPORT",
-    pdfRef: "MHPSS_Report/CMHC_UPSI/Pindaan03-F8-2026",
-    status: "Ready for 1:1 Build"
+    title: "CASE NOTES (SOAP FORMAT)",
+    pdfRef: "Case_Notes/CMHC_UPSI/Pindaan03-08-2026",
+    status: "1:1 Exact Replica Complete"
   }
 ];
 
@@ -1356,17 +1356,170 @@ export default function ClinicalFormsHubPage() {
           </div>
         </div>
       ) : (
-        /* Placeholder for Form 8, etc. pending 1:1 PDF Upload */
-        <div className="bg-white p-12 border border-slate-300 rounded-2xl shadow-sm text-center max-w-3xl mx-auto space-y-4">
-          <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-700 font-black text-xl">
-            {currentForm.code}
+        /* ===================================================================
+            FORM 8: CASE NOTES - SOAP FORMAT (2-PAGE 1:1 VECTOR REPLICA)
+           =================================================================== */
+        <div className="space-y-6 max-w-4xl mx-auto text-black">
+          {/* PAGE 1 OF FORM 8 */}
+          <div className="space-y-4 bg-white p-6 sm:p-10 border border-black shadow-sm text-xs leading-relaxed">
+            {/* Header Metadata Code (Right Aligned Top) */}
+            <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+              Case_Notes/CMHC_UPSI/Pindaan03-08-2026
+            </div>
+
+            {/* Logo & Center Title Block */}
+            <div className="relative flex items-center justify-center pb-4 mb-4 border-b border-black">
+              <img src="/upsi-logo.png" alt="UPSI Emblem" className="absolute left-0 top-0 h-16 w-auto object-contain" />
+              <div className="text-center font-bold">
+                <h2 className="text-base sm:text-lg font-black tracking-wide leading-tight uppercase">
+                  CASE NOTES
+                </h2>
+                <p className="text-xs uppercase tracking-tight">INTERNSHIP IN CLINICAL MENTAL HEALTH COUNSELING</p>
+                <p className="text-xs uppercase font-black tracking-wider">UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
+              </div>
+            </div>
+
+            {/* PERSONAL DATA Block */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-slate-300 pb-1">
+                PERSONAL DATA:
+              </h3>
+              <div className="space-y-2 pt-1 font-bold">
+                <div className="flex items-center space-x-2">
+                  <span className="w-44">Session Number</span>
+                  <span>:</span>
+                  <input type="text" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="w-44">Session Date & Time</span>
+                  <span>:</span>
+                  <input type="text" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="w-44">Client Full Name</span>
+                  <span>:</span>
+                  <input type="text" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="w-44">Date of Report</span>
+                  <span>:</span>
+                  <input type="text" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="w-44">Diagnosis</span>
+                  <span>:</span>
+                  <input type="text" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+                </div>
+              </div>
+            </div>
+
+            {/* Section: SUBJECTIVE (S) */}
+            <div className="space-y-2 pt-4">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                SUBJECTIVE (S)
+              </h3>
+              <textarea rows={4} placeholder="Patient's personal experiences, feelings, concerns, chief complaint, and history of present illness..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section: OBJECTIVE (O) */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                OBJECTIVE (O)
+              </h3>
+              <textarea rows={4} placeholder="Observable data, appearance, behavior, speech patterns, vital signs, and diagnostic findings..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section: ASSESSMENT (A) */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                ASSESSMENT (A)
+              </h3>
+              <textarea rows={4} placeholder="Clinical evaluation of S & O, diagnosis, symptom severity, intervention effectiveness..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section: PLAN (P) */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                PLAN (P)
+              </h3>
+              <textarea rows={4} placeholder="Next treatment steps, intervention changes, coping strategies, and referrals..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Sign-off Trainee Block */}
+            <div className="space-y-4 pt-6 text-xs font-bold border-t border-slate-300">
+              <p>Report by:</p>
+              <div className="w-72 border-b border-black pb-1">
+                <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
+              </div>
+              <div className="text-[11px] leading-tight font-normal">
+                <p className="font-bold">CMHC Counselor Trainee</p>
+                <p>Universiti Pendidikan Sultan Idris</p>
+                <p>35900 Tanjong Malim, Perak</p>
+              </div>
+            </div>
+
+            {/* Footer Confidential Notice */}
+            <div className="pt-4 border-t border-slate-300 text-center">
+              <p className="font-bold text-xs">Confidential Document (For Professional Use Only)</p>
+              <p className="text-[9px] text-slate-500 italic mt-0.5">
+                This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner. - Dr Pau Kee
+              </p>
+            </div>
           </div>
-          <h2 className="text-xl font-black text-slate-900">{currentForm.title}</h2>
-          <p className="text-xs text-slate-500 font-serif italic">
-            Ref: {currentForm.pdfRef}
-          </p>
-          <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-600 max-w-lg mx-auto leading-relaxed">
-            Ready to be built into an exact 1:1 fillable vector replica. Upload the original PDF for {currentForm.code} to execute point-by-point coordinate extraction!
+
+          {/* PAGE 2 OF FORM 8: GUIDING NOTES FOR WRITING SOAP NOTE */}
+          <div className="space-y-6 bg-white p-6 sm:p-10 border border-black shadow-sm text-xs leading-relaxed">
+            {/* Header Metadata Code (Right Aligned Top) */}
+            <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+              Case_Notes/CMHC_UPSI/Pindaan03-08-2026
+            </div>
+
+            <div className="space-y-2 border-b border-black pb-3">
+              <h2 className="text-sm font-black uppercase tracking-wider text-black">
+                GUIDING NOTES FOR WRITING SOAP NOTE
+              </h2>
+              <p className="font-bold text-slate-800 text-xs">The Four Parts of a SOAP Note</p>
+            </div>
+
+            {/* Part 1: Subjective */}
+            <div className="space-y-1.5 pt-2">
+              <h3 className="font-bold text-xs text-black">1. Subjective</h3>
+              <p className="text-slate-800 leading-relaxed text-xs">
+                The subjective component of a SOAP note focuses on the patient's personal experiences, feelings, and concerns. This section should include details about the patient's chief complaint, history of present illness, medical and family history, and any relevant social or environmental factors. When writing the subjective portion, it's essential to use the patient's words as much as possible to accurately convey their perspective.
+              </p>
+            </div>
+
+            {/* Part 2: Objective */}
+            <div className="space-y-1.5 pt-4">
+              <h3 className="font-bold text-xs text-black">2. Objective</h3>
+              <p className="text-slate-800 leading-relaxed text-xs">
+                The objective section of a SOAP note records observable data and factual information about the patient. This can include vital signs, physical examination findings, laboratory results, and any additional diagnostic data. In the context of mental health treatment, the objective section may also include details about the patient's appearance, behavior, and speech patterns.
+              </p>
+            </div>
+
+            {/* Part 3: Assessment */}
+            <div className="space-y-1.5 pt-4">
+              <h3 className="font-bold text-xs text-black">3. Assessment</h3>
+              <p className="text-slate-800 leading-relaxed text-xs">
+                The assessment portion of a SOAP note is where the healthcare provider evaluates the information gathered during the subjective and objective sections. This section may include a diagnosis, a summary of the patient's progress, and any potential risk factors or complications. In the case of anxiety and depression, the assessment might focus on the severity of symptoms, the effectiveness of current interventions, and any co-occurring conditions.
+              </p>
+            </div>
+
+            {/* Part 4: Plan */}
+            <div className="space-y-1.5 pt-4">
+              <h3 className="font-bold text-xs text-black">4. Plan</h3>
+              <p className="text-slate-800 leading-relaxed text-xs">
+                The plan section outlines the next steps in the patient's treatment, including any changes to their current interventions or the addition of new therapies. For anxiety and depression, this might involve adjustments to medications, the introduction of new coping strategies, or referrals to additional support services.
+              </p>
+            </div>
+
+            {/* Footer Confidential Notice */}
+            <div className="pt-12 border-t border-slate-300 text-center">
+              <p className="font-bold text-xs">Confidential Document (For Professional Use Only)</p>
+              <p className="text-[9px] text-slate-500 italic mt-0.5">
+                This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner. - Dr Pau Kee
+              </p>
+            </div>
           </div>
         </div>
       )}
