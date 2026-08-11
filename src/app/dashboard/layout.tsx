@@ -215,7 +215,7 @@ function SidebarNavContent({
                             </Link>
                             <Link href="/dashboard/internship/forms" onClick={handleLinkClick} className={getLinkClass("/dashboard/internship/forms")}>
                                 <FileText size={20} className="text-emerald-400" />
-                                <span className="font-bold text-emerald-300">Clinical Forms (30 Forms)</span>
+                                <span className="font-bold text-emerald-300">Clinical Forms</span>
                             </Link>
                             <Link href="/dashboard/internship/log" onClick={handleLinkClick} className={getLinkClass("/dashboard/internship/log")}>
                                 <Clock size={20} className="text-cyan-400" />

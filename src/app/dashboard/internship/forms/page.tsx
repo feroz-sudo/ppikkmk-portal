@@ -88,7 +88,7 @@ export default function ClinicalFormsHubPage() {
             <span className="text-emerald-700 font-black">Official Clinical Forms Hub</span>
           </div>
           <h1 className="text-2xl font-black tracking-tight text-slate-900">
-            CLINICAL FORMS (1:1 EXACT REPLICAS)
+            CLINICAL FORMS
           </h1>
         </div>
 
