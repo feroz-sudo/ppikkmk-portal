@@ -511,7 +511,7 @@ export default function InternshipLogbookPage() {
             <div className="flex items-center space-x-2"><span className="w-60">CMHC Trainee Counselor Signature :</span><input type="text" placeholder="_______________________" className="border-b border-black focus:outline-none p-1" /></div>
             <div className="flex items-center space-x-2"><span className="w-60">CMHC Trainee Counselor Name :</span><span className="font-black">{traineeName}</span></div>
             <div className="flex items-center space-x-2"><span className="w-60">Matric Number :</span><span className="font-black">{matricNo}</span></div>
-            <div className="flex items-center space-x-2"><span className="w-60">Date :</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black focus:outline-none p-1" /></div>
+            <div className="flex items-center space-x-2"><span className="w-60">Date :</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black focus:outline-none p-1" /></div>
           </div>
         </div>
       )}
@@ -624,7 +624,7 @@ export default function InternshipLogbookPage() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">CMHC Counselor Trainee</p>
                 <p>Universiti Pendidikan Sultan Idris</p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
 
@@ -636,7 +636,7 @@ export default function InternshipLogbookPage() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">Site Supervisor</p>
                 <p>Institution: <input type="text" placeholder="Site Name" className="border-b border-black w-32 focus:outline-none bg-transparent" /></p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
 
@@ -648,7 +648,7 @@ export default function InternshipLogbookPage() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">University Academic Supervisor</p>
                 <p>Universiti Pendidikan Sultan Idris</p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
           </div>
@@ -1213,7 +1213,7 @@ export default function InternshipLogbookPage() {
               <span>Week : From</span>
               <input
                 type="text"
-                placeholder="YYYY-MM-DD"
+                placeholder="DD-MM-YYYY"
                 value={tarikhDari}
                 onChange={(e) => setTarikhDari(e.target.value)}
                 className="w-24 p-0.5 border-b border-black text-center focus:outline-none"
@@ -1221,7 +1221,7 @@ export default function InternshipLogbookPage() {
               <span>to</span>
               <input
                 type="text"
-                placeholder="YYYY-MM-DD"
+                placeholder="DD-MM-YYYY"
                 value={tarikhKe}
                 onChange={(e) => setTarikhKe(e.target.value)}
                 className="w-24 p-0.5 border-b border-black text-center focus:outline-none"
@@ -1297,7 +1297,7 @@ export default function InternshipLogbookPage() {
                 <p className="font-black">Trainee Counselor Signature</p>
                 <div className="flex items-center space-x-2 mt-1">
                   <span>Date:</span>
-                  <input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-32 focus:outline-none" />
+                  <input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-32 focus:outline-none" />
                 </div>
               </div>
             </div>
@@ -1308,7 +1308,7 @@ export default function InternshipLogbookPage() {
                 <p className="font-black">Academic Supervisor Signature</p>
                 <div className="flex items-center space-x-2 mt-1">
                   <span>Date:</span>
-                  <input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-32 focus:outline-none" />
+                  <input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-32 focus:outline-none" />
                 </div>
               </div>
             </div>

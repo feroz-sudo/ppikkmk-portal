@@ -359,7 +359,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">CMHC Counselor Trainee</p>
                 <p>Universiti Pendidikan Sultan Idris</p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
 
@@ -371,7 +371,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">Site Supervisor</p>
                 <p>Institution: <input type="text" placeholder="Site Name" className="border-b border-black w-32 focus:outline-none bg-transparent" /></p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
 
@@ -383,7 +383,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">University Academic Supervisor</p>
                 <p>Universiti Pendidikan Sultan Idris</p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
           </div>
@@ -528,7 +528,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">CMHC Counselor Trainee</p>
                 <p>UPSI</p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
 
@@ -540,7 +540,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">Site Supervisor</p>
                 <p>Institution: <input type="text" placeholder="Site Name" className="border-b border-black w-32 focus:outline-none bg-transparent" /></p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
 
@@ -552,7 +552,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">University Academic Supervisor</p>
                 <p>UPSI</p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
           </div>
@@ -589,9 +589,9 @@ function ClinicalFormsContent() {
                 I am a student currently undergoing an internship at{" "}
                 <input type="text" placeholder="________________________________________________________" className="border-b border-black px-1 font-bold focus:outline-none bg-transparent w-full sm:w-auto" />
                 {" "}from{" "}
-                <input type="text" placeholder="DD/MM/YYYY" className="border-b border-black w-28 text-center font-bold focus:outline-none bg-transparent" />
+                <input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-28 text-center font-bold focus:outline-none bg-transparent" />
                 {" "}to{" "}
-                <input type="text" placeholder="DD/MM/YYYY" className="border-b border-black w-28 text-center font-bold focus:outline-none bg-transparent" />.
+                <input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-28 text-center font-bold focus:outline-none bg-transparent" />.
                 During this period, I will be supervised by{" "}
                 <input type="text" placeholder="Academic Supervisor Name" className="border-b border-black px-1 font-bold focus:outline-none bg-transparent w-64" />
                 {" "}(academic supervisor's name) and{" "}
@@ -722,7 +722,7 @@ function ClinicalFormsContent() {
               <div className="flex items-center space-x-2">
                 <span className="w-56">Date</span>
                 <span>:</span>
-                <input type="text" placeholder="YYYY-MM-DD" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-1" />
+                <input type="text" placeholder="DD-MM-YYYY" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-1" />
               </div>
 
               <div className="pt-6 space-y-4">
@@ -739,7 +739,7 @@ function ClinicalFormsContent() {
                 <div className="flex items-center space-x-2">
                   <span className="w-56">Date</span>
                   <span>:</span>
-                  <input type="text" placeholder="YYYY-MM-DD" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-1" />
+                  <input type="text" placeholder="DD-MM-YYYY" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-1" />
                 </div>
               </div>
             </div>
@@ -776,7 +776,7 @@ function ClinicalFormsContent() {
               <span>CLIENT'S INFORMATION: (Please include other relevant information)</span>
               <div className="flex items-center space-x-1">
                 <span>Date of Referral:</span>
-                <input type="text" placeholder="DD/MM/YYYY" className="border-b border-black w-32 text-center font-bold focus:outline-none bg-transparent" />
+                <input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-32 text-center font-bold focus:outline-none bg-transparent" />
               </div>
             </div>
 
@@ -789,7 +789,7 @@ function ClinicalFormsContent() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div className="flex items-center space-x-2">
                   <span className="w-16 font-bold">D.O.B:</span>
-                  <input type="text" placeholder="DD/MM/YYYY" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5 text-center" />
+                  <input type="text" placeholder="DD-MM-YYYY" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5 text-center" />
                 </div>
                 <div className="flex items-center space-x-2">
                   <span className="w-16 font-bold">I/C No:</span>
@@ -1882,7 +1882,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">CMHC Counselor Trainee</p>
                 <p>Universiti Pendidikan Sultan Idris</p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
 
@@ -1894,7 +1894,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">Site Supervisor</p>
                 <p>Institution: <input type="text" placeholder="Site Name" className="border-b border-black w-32 focus:outline-none bg-transparent" /></p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
 
@@ -1906,7 +1906,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">University Academic Supervisor</p>
                 <p>Universiti Pendidikan Sultan Idris</p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
           </div>
@@ -2069,7 +2069,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">CMHC Counselor Trainee</p>
                 <p>UPSI</p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
 
@@ -2081,7 +2081,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">Site Supervisor</p>
                 <p>Institution: <input type="text" placeholder="Site Name" className="border-b border-black w-32 focus:outline-none bg-transparent" /></p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
 
@@ -2093,7 +2093,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">University Academic Supervisor</p>
                 <p>UPSI</p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
           </div>
@@ -2130,9 +2130,9 @@ function ClinicalFormsContent() {
                 I am a student currently undergoing an internship at{" "}
                 <input type="text" placeholder="________________________________________________________" className="border-b border-black px-1 font-bold focus:outline-none bg-transparent w-full sm:w-auto" />
                 {" "}from{" "}
-                <input type="text" placeholder="DD/MM/YYYY" className="border-b border-black w-28 text-center font-bold focus:outline-none bg-transparent" />
+                <input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-28 text-center font-bold focus:outline-none bg-transparent" />
                 {" "}to{" "}
-                <input type="text" placeholder="DD/MM/YYYY" className="border-b border-black w-28 text-center font-bold focus:outline-none bg-transparent" />.
+                <input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-28 text-center font-bold focus:outline-none bg-transparent" />.
                 During this period, I will be supervised by{" "}
                 <input type="text" placeholder="Academic Supervisor Name" className="border-b border-black px-1 font-bold focus:outline-none bg-transparent w-64" />
                 {" "}(academic supervisor's name) and{" "}
@@ -2315,7 +2315,7 @@ function ClinicalFormsContent() {
                   </tr>
                   <tr className="border-b border-black">
                     <td className="border border-black p-1.5 font-bold w-32">Date</td>
-                    <td className="border border-black p-1"><input type="text" placeholder="YYYY-MM-DD" className="w-full bg-transparent border-0 focus:outline-none p-0.5 font-bold" /></td>
+                    <td className="border border-black p-1"><input type="text" placeholder="DD-MM-YYYY" className="w-full bg-transparent border-0 focus:outline-none p-0.5 font-bold" /></td>
                     <td className="border border-black p-1.5 font-bold w-20 text-center">Time</td>
                     <td className="border border-black p-1"><input type="text" placeholder="HH:MM" className="w-full bg-transparent border-0 focus:outline-none p-0.5 font-bold text-center" /></td>
                   </tr>
@@ -2723,7 +2723,7 @@ function ClinicalFormsContent() {
                 <div className="flex items-center space-x-2">
                   <span className="w-44">Date of Birth</span>
                   <span>:</span>
-                  <input type="text" placeholder="YYYY-MM-DD" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+                  <input type="text" placeholder="DD-MM-YYYY" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
                 </div>
                 <div className="flex items-center space-x-2">
                   <span className="w-44">Identification Card No</span>
@@ -2743,7 +2743,7 @@ function ClinicalFormsContent() {
                 <div className="flex items-center space-x-2">
                   <span className="w-44">Date of Assessment</span>
                   <span>:</span>
-                  <input type="text" placeholder="YYYY-MM-DD" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+                  <input type="text" placeholder="DD-MM-YYYY" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
                 </div>
                 <div className="flex items-center space-x-2">
                   <span className="w-44">Assessment Conducted By</span>
@@ -2894,7 +2894,7 @@ function ClinicalFormsContent() {
                 <tr className="border-b border-black">
                   <td className="border border-black p-2 font-bold w-44">Date</td>
                   <td className="border border-black p-1">
-                    <input type="text" placeholder="YYYY-MM-DD" className="w-full bg-transparent border-0 focus:outline-none font-bold p-1" />
+                    <input type="text" placeholder="DD-MM-YYYY" className="w-full bg-transparent border-0 focus:outline-none font-bold p-1" />
                   </td>
                   <td className="border border-black p-2 font-bold w-20 text-center">Time</td>
                   <td className="border border-black p-1">
@@ -3053,7 +3053,7 @@ function ClinicalFormsContent() {
                 <tr className="border-b border-black">
                   <td className="border border-black p-2 font-bold w-44">Date</td>
                   <td className="border border-black p-1">
-                    <input type="text" placeholder="YYYY-MM-DD" className="w-full bg-transparent border-0 focus:outline-none font-bold p-1" />
+                    <input type="text" placeholder="DD-MM-YYYY" className="w-full bg-transparent border-0 focus:outline-none font-bold p-1" />
                   </td>
                   <td className="border border-black p-2 font-bold w-20 text-center">Time</td>
                   <td className="border border-black p-1">
@@ -3160,7 +3160,7 @@ function ClinicalFormsContent() {
                     <input type="text" placeholder="[ Trainee Signature ]" className="w-full text-center bg-transparent border-0 focus:outline-none text-xs" />
                   </td>
                   <td className="border border-black p-1 text-center">
-                    <input type="text" placeholder="YYYY-MM-DD" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold text-xs" />
+                    <input type="text" placeholder="DD-MM-YYYY" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold text-xs" />
                   </td>
                 </tr>
                 <tr className="border-b border-black">
@@ -3169,7 +3169,7 @@ function ClinicalFormsContent() {
                     <input type="text" placeholder="[ Site Supervisor Signature ]" className="w-full text-center bg-transparent border-0 focus:outline-none text-xs" />
                   </td>
                   <td className="border border-black p-1 text-center">
-                    <input type="text" placeholder="YYYY-MM-DD" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold text-xs" />
+                    <input type="text" placeholder="DD-MM-YYYY" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold text-xs" />
                   </td>
                 </tr>
                 <tr className="border-b border-black">
@@ -3178,7 +3178,7 @@ function ClinicalFormsContent() {
                     <input type="text" placeholder="[ Academic Supervisor Signature ]" className="w-full text-center bg-transparent border-0 focus:outline-none text-xs" />
                   </td>
                   <td className="border border-black p-1 text-center">
-                    <input type="text" placeholder="YYYY-MM-DD" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold text-xs" />
+                    <input type="text" placeholder="DD-MM-YYYY" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold text-xs" />
                   </td>
                 </tr>
               </tbody>
@@ -3260,7 +3260,7 @@ function ClinicalFormsContent() {
                   <tr className="border-b border-black">
                     <td className="border border-black p-2 font-bold w-44">Date</td>
                     <td className="border border-black p-1">
-                      <input type="text" placeholder="YYYY-MM-DD" className="w-full bg-transparent border-0 focus:outline-none font-bold p-1" />
+                      <input type="text" placeholder="DD-MM-YYYY" className="w-full bg-transparent border-0 focus:outline-none font-bold p-1" />
                     </td>
                     <td className="border border-black p-2 font-bold w-20 text-center">Time</td>
                     <td className="border border-black p-1">
@@ -3389,7 +3389,7 @@ function ClinicalFormsContent() {
                       <input type="text" placeholder="[ Trainee Signature ]" className="w-full text-center bg-transparent border-0 focus:outline-none text-xs" />
                     </td>
                     <td className="border border-black p-1 text-center">
-                      <input type="text" placeholder="YYYY-MM-DD" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold text-xs" />
+                      <input type="text" placeholder="DD-MM-YYYY" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold text-xs" />
                     </td>
                   </tr>
                   <tr className="border-b border-black">
@@ -3398,7 +3398,7 @@ function ClinicalFormsContent() {
                       <input type="text" placeholder="[ Site Supervisor Signature ]" className="w-full text-center bg-transparent border-0 focus:outline-none text-xs" />
                     </td>
                     <td className="border border-black p-1 text-center">
-                      <input type="text" placeholder="YYYY-MM-DD" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold text-xs" />
+                      <input type="text" placeholder="DD-MM-YYYY" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold text-xs" />
                     </td>
                   </tr>
                   <tr className="border-b border-black">
@@ -3407,7 +3407,7 @@ function ClinicalFormsContent() {
                       <input type="text" placeholder="[ Academic Supervisor Signature ]" className="w-full text-center bg-transparent border-0 focus:outline-none text-xs" />
                     </td>
                     <td className="border border-black p-1 text-center">
-                      <input type="text" placeholder="YYYY-MM-DD" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold text-xs" />
+                      <input type="text" placeholder="DD-MM-YYYY" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold text-xs" />
                     </td>
                   </tr>
                 </tbody>
@@ -3479,7 +3479,7 @@ function ClinicalFormsContent() {
                   <tr className="border-b border-black">
                     <td className="border border-black p-2 font-bold w-44">Date</td>
                     <td className="border border-black p-1">
-                      <input type="text" placeholder="YYYY-MM-DD" className="w-full bg-transparent border-0 focus:outline-none font-bold p-1" />
+                      <input type="text" placeholder="DD-MM-YYYY" className="w-full bg-transparent border-0 focus:outline-none font-bold p-1" />
                     </td>
                     <td className="border border-black p-2 font-bold w-20 text-center">Time</td>
                     <td className="border border-black p-1">
@@ -3597,7 +3597,7 @@ function ClinicalFormsContent() {
                       <input type="text" placeholder="[ Trainee Signature ]" className="w-full text-center bg-transparent border-0 focus:outline-none text-xs" />
                     </td>
                     <td className="border border-black p-1 text-center">
-                      <input type="text" placeholder="YYYY-MM-DD" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold text-xs" />
+                      <input type="text" placeholder="DD-MM-YYYY" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold text-xs" />
                     </td>
                   </tr>
                   <tr className="border-b border-black">
@@ -3606,7 +3606,7 @@ function ClinicalFormsContent() {
                       <input type="text" placeholder="[ Site Supervisor Signature ]" className="w-full text-center bg-transparent border-0 focus:outline-none text-xs" />
                     </td>
                     <td className="border border-black p-1 text-center">
-                      <input type="text" placeholder="YYYY-MM-DD" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold text-xs" />
+                      <input type="text" placeholder="DD-MM-YYYY" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold text-xs" />
                     </td>
                   </tr>
                   <tr className="border-b border-black">
@@ -3615,7 +3615,7 @@ function ClinicalFormsContent() {
                       <input type="text" placeholder="[ Academic Supervisor Signature ]" className="w-full text-center bg-transparent border-0 focus:outline-none text-xs" />
                     </td>
                     <td className="border border-black p-1 text-center">
-                      <input type="text" placeholder="YYYY-MM-DD" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold text-xs" />
+                      <input type="text" placeholder="DD-MM-YYYY" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold text-xs" />
                     </td>
                   </tr>
                 </tbody>
@@ -3687,7 +3687,7 @@ function ClinicalFormsContent() {
                   <tr className="border-b border-black">
                     <td className="border border-black p-2 font-bold w-48">Date</td>
                     <td className="border border-black p-1">
-                      <input type="text" placeholder="YYYY-MM-DD" className="w-full bg-transparent border-0 focus:outline-none font-bold p-1" />
+                      <input type="text" placeholder="DD-MM-YYYY" className="w-full bg-transparent border-0 focus:outline-none font-bold p-1" />
                     </td>
                     <td className="border border-black p-2 font-bold w-20 text-center">Time</td>
                     <td className="border border-black p-1">
@@ -3789,7 +3789,7 @@ function ClinicalFormsContent() {
                       <input type="text" placeholder="[ Trainee Signature ]" className="w-full text-center bg-transparent border-0 focus:outline-none text-xs" />
                     </td>
                     <td className="border border-black p-1 text-center">
-                      <input type="text" placeholder="YYYY-MM-DD" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold text-xs" />
+                      <input type="text" placeholder="DD-MM-YYYY" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold text-xs" />
                     </td>
                   </tr>
                   <tr className="border-b border-black">
@@ -3798,7 +3798,7 @@ function ClinicalFormsContent() {
                       <input type="text" placeholder="[ Site Supervisor Signature ]" className="w-full text-center bg-transparent border-0 focus:outline-none text-xs" />
                     </td>
                     <td className="border border-black p-1 text-center">
-                      <input type="text" placeholder="YYYY-MM-DD" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold text-xs" />
+                      <input type="text" placeholder="DD-MM-YYYY" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold text-xs" />
                     </td>
                   </tr>
                   <tr className="border-b border-black">
@@ -3807,7 +3807,7 @@ function ClinicalFormsContent() {
                       <input type="text" placeholder="[ Academic Supervisor Signature ]" className="w-full text-center bg-transparent border-0 focus:outline-none text-xs" />
                     </td>
                     <td className="border border-black p-1 text-center">
-                      <input type="text" placeholder="YYYY-MM-DD" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold text-xs" />
+                      <input type="text" placeholder="DD-MM-YYYY" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold text-xs" />
                     </td>
                   </tr>
                 </tbody>
@@ -3884,7 +3884,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">CMHC Counselor Trainee</p>
                 <p>Universiti Pendidikan Sultan Idris</p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
 
@@ -3896,7 +3896,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">Site Supervisor</p>
                 <p>Institution: <input type="text" placeholder="Site Name" className="border-b border-black w-32 focus:outline-none bg-transparent" /></p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
 
@@ -3908,7 +3908,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">University Academic Supervisor</p>
                 <p>Universiti Pendidikan Sultan Idris</p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
           </div>
@@ -3977,7 +3977,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">CMHC Counselor Trainee</p>
                 <p>Universiti Pendidikan Sultan Idris</p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
 
@@ -3989,7 +3989,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">Site Supervisor</p>
                 <p>Institution: <input type="text" placeholder="Site Name" className="border-b border-black w-32 focus:outline-none bg-transparent" /></p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
 
@@ -4001,7 +4001,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">University Academic Supervisor</p>
                 <p>Universiti Pendidikan Sultan Idris</p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
           </div>
@@ -4072,7 +4072,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">CMHC Counselor Trainee</p>
                 <p>Universiti Pendidikan Sultan Idris</p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
 
@@ -4084,7 +4084,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">Site Supervisor</p>
                 <p>Institution: <input type="text" placeholder="Site Name" className="border-b border-black w-32 focus:outline-none bg-transparent" /></p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
 
@@ -4096,7 +4096,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">University Academic Supervisor</p>
                 <p>Universiti Pendidikan Sultan Idris</p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
           </div>
@@ -4167,7 +4167,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">CMHC Counselor Trainee</p>
                 <p>Universiti Pendidikan Sultan Idris</p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
 
@@ -4179,7 +4179,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">Site Supervisor</p>
                 <p>Institution: <input type="text" placeholder="Site Name" className="border-b border-black w-32 focus:outline-none bg-transparent" /></p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
 
@@ -4191,7 +4191,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">University Academic Supervisor</p>
                 <p>Universiti Pendidikan Sultan Idris</p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
           </div>
@@ -4262,7 +4262,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">CMHC Counselor Trainee</p>
                 <p>Universiti Pendidikan Sultan Idris</p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
 
@@ -4274,7 +4274,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">Site Supervisor</p>
                 <p>Institution: <input type="text" placeholder="Site Name" className="border-b border-black w-32 focus:outline-none bg-transparent" /></p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
 
@@ -4286,7 +4286,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">University Academic Supervisor</p>
                 <p>Universiti Pendidikan Sultan Idris</p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
           </div>
@@ -4355,7 +4355,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">CMHC Counselor Trainee</p>
                 <p>Universiti Pendidikan Sultan Idris</p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
 
@@ -4367,7 +4367,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">Site Supervisor</p>
                 <p>Institution: <input type="text" placeholder="Site Name" className="border-b border-black w-32 focus:outline-none bg-transparent" /></p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
 
@@ -4379,7 +4379,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">University Academic Supervisor</p>
                 <p>Universiti Pendidikan Sultan Idris</p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
           </div>
@@ -4415,7 +4415,7 @@ function ClinicalFormsContent() {
               </div>
               <div className="flex items-center space-x-2 w-full sm:w-auto">
                 <span className="whitespace-nowrap">Supervision Start Date:</span>
-                <input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-36 font-bold focus:outline-none bg-transparent p-0.5 text-center" />
+                <input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-36 font-bold focus:outline-none bg-transparent p-0.5 text-center" />
               </div>
             </div>
 
@@ -4442,7 +4442,7 @@ function ClinicalFormsContent() {
                 <tbody>
                   {Array.from({ length: 7 }, (_, i) => i + 1).map(num => (
                     <tr key={num} className="border-b border-black h-16">
-                      <td className="border border-black p-1 text-center"><input type="text" placeholder="YYYY-MM-DD" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                      <td className="border border-black p-1 text-center"><input type="text" placeholder="DD-MM-YYYY" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
                       <td className="border border-black p-1 text-center"><input type="text" placeholder="Hrs" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
                       <td className="border border-black p-1"><input type="text" placeholder="e.g. 1, 2" className="w-full bg-transparent border-0 focus:outline-none px-1 font-bold" /></td>
                       <td className="border border-black p-1"><textarea rows={2} className="w-full bg-transparent border-0 focus:outline-none resize-none" /></td>
@@ -4473,7 +4473,7 @@ function ClinicalFormsContent() {
                 <tbody>
                   {Array.from({ length: 6 }, (_, i) => i + 8).map(num => (
                     <tr key={num} className="border-b border-black h-16">
-                      <td className="border border-black p-1 text-center w-24"><input type="text" placeholder="YYYY-MM-DD" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                      <td className="border border-black p-1 text-center w-24"><input type="text" placeholder="DD-MM-YYYY" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
                       <td className="border border-black p-1 text-center w-20"><input type="text" placeholder="Hrs" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
                       <td className="border border-black p-1 w-48"><input type="text" placeholder="e.g. 1, 2" className="w-full bg-transparent border-0 focus:outline-none px-1 font-bold" /></td>
                       <td className="border border-black p-1"><textarea rows={2} className="w-full bg-transparent border-0 focus:outline-none resize-none" /></td>
@@ -4492,7 +4492,7 @@ function ClinicalFormsContent() {
                 <div className="border-b border-black pb-1">
                   <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
                 </div>
-                <div className="flex items-center space-x-1"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-28 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-28 focus:outline-none bg-transparent font-bold" /></div>
               </div>
 
               <div className="space-y-6">
@@ -4500,7 +4500,7 @@ function ClinicalFormsContent() {
                 <div className="border-b border-black pb-1">
                   <span>( </span><input type="text" placeholder="Field Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
                 </div>
-                <div className="flex items-center space-x-1"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-28 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-28 focus:outline-none bg-transparent font-bold" /></div>
               </div>
 
               <div className="space-y-6">
@@ -4508,7 +4508,7 @@ function ClinicalFormsContent() {
                 <div className="border-b border-black pb-1">
                   <span>( </span><input type="text" placeholder="Academic Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
                 </div>
-                <div className="flex items-center space-x-1"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-28 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-28 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
 
@@ -4558,11 +4558,11 @@ function ClinicalFormsContent() {
                 </div>
                 <div className="flex items-center space-x-2">
                   <span className="w-40">5. Internship Start Date:</span>
-                  <input type="text" placeholder="YYYY-MM-DD" className="flex-1 border-b border-black focus:outline-none bg-transparent" />
+                  <input type="text" placeholder="DD-MM-YYYY" className="flex-1 border-b border-black focus:outline-none bg-transparent" />
                 </div>
                 <div className="flex items-center space-x-2">
                   <span className="w-40">6. Internship End Date:</span>
-                  <input type="text" placeholder="YYYY-MM-DD" className="flex-1 border-b border-black focus:outline-none bg-transparent" />
+                  <input type="text" placeholder="DD-MM-YYYY" className="flex-1 border-b border-black focus:outline-none bg-transparent" />
                 </div>
               </div>
 
@@ -4581,7 +4581,7 @@ function ClinicalFormsContent() {
                 </div>
                 <div className="flex items-center space-x-2 pl-4">
                   <span className="w-28">Expired Date:</span>
-                  <input type="text" placeholder="YYYY-MM-DD" className="flex-1 border-b border-black focus:outline-none bg-transparent" />
+                  <input type="text" placeholder="DD-MM-YYYY" className="flex-1 border-b border-black focus:outline-none bg-transparent" />
                 </div>
 
                 <div className="flex items-center space-x-2 pt-1">
@@ -4598,7 +4598,7 @@ function ClinicalFormsContent() {
                 </div>
                 <div className="flex items-center space-x-2 pl-4">
                   <span className="w-28">Expired Date:</span>
-                  <input type="text" placeholder="YYYY-MM-DD" className="flex-1 border-b border-black focus:outline-none bg-transparent" />
+                  <input type="text" placeholder="DD-MM-YYYY" className="flex-1 border-b border-black focus:outline-none bg-transparent" />
                 </div>
               </div>
             </div>
@@ -4700,7 +4700,7 @@ function ClinicalFormsContent() {
                 <div className="text-[11px] leading-tight font-normal">
                   <p className="font-bold">CMHC Counselor Trainee</p>
                   <p>Universiti Pendidikan Sultan Idris</p>
-                  <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-28 focus:outline-none bg-transparent font-bold" /></div>
+                  <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-28 focus:outline-none bg-transparent font-bold" /></div>
                 </div>
               </div>
 
@@ -4712,7 +4712,7 @@ function ClinicalFormsContent() {
                 <div className="text-[11px] leading-tight font-normal">
                   <p className="font-bold">Site Supervisor</p>
                   <p>Institution: <input type="text" placeholder="Site Name" className="border-b border-black w-32 focus:outline-none bg-transparent" /></p>
-                  <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-28 focus:outline-none bg-transparent font-bold" /></div>
+                  <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-28 focus:outline-none bg-transparent font-bold" /></div>
                 </div>
               </div>
 
@@ -4724,7 +4724,7 @@ function ClinicalFormsContent() {
                 <div className="text-[11px] leading-tight font-normal">
                   <p className="font-bold">University Academic Supervisor</p>
                   <p>Universiti Pendidikan Sultan Idris</p>
-                  <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-28 focus:outline-none bg-transparent font-bold" /></div>
+                  <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-28 focus:outline-none bg-transparent font-bold" /></div>
                 </div>
               </div>
             </div>
@@ -4765,7 +4765,7 @@ function ClinicalFormsContent() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1">
                 <div className="space-y-1">
                   <div className="flex items-center space-x-2"><span className="w-28">Client ID</span><span>:</span><input type="text" placeholder="e.g. C-104" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" /></div>
-                  <div className="flex items-center space-x-2"><span className="w-28">Date of Birth</span><span>:</span><input type="text" placeholder="YYYY-MM-DD" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" /></div>
+                  <div className="flex items-center space-x-2"><span className="w-28">Date of Birth</span><span>:</span><input type="text" placeholder="DD-MM-YYYY" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" /></div>
                   <div className="flex items-center space-x-2"><span className="w-28">Age</span><span>:</span><input type="text" placeholder="Years" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" /></div>
                   <div className="flex items-center space-x-2"><span className="w-28">Gender</span><span>:</span><input type="text" placeholder="Gender" className="flex-1 border-b border-black focus:outline-none bg-transparent p-0.5" /></div>
                   <div className="flex items-center space-x-2"><span className="w-28">Race</span><span>:</span><input type="text" placeholder="Ethnicity" className="flex-1 border-b border-black focus:outline-none bg-transparent p-0.5" /></div>
@@ -4773,7 +4773,7 @@ function ClinicalFormsContent() {
                   <div className="flex items-center space-x-2"><span className="w-28">Occupation</span><span>:</span><input type="text" placeholder="Job Title" className="flex-1 border-b border-black focus:outline-none bg-transparent p-0.5" /></div>
                 </div>
                 <div className="space-y-1">
-                  <div className="flex items-center space-x-2"><span className="w-36">Date of Referral</span><span>:</span><input type="text" placeholder="YYYY-MM-DD" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" /></div>
+                  <div className="flex items-center space-x-2"><span className="w-36">Date of Referral</span><span>:</span><input type="text" placeholder="DD-MM-YYYY" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" /></div>
                   <div className="flex items-center space-x-2"><span className="w-36">Referred By</span><span>:</span><input type="text" placeholder="Referrer Name/Org" className="flex-1 border-b border-black focus:outline-none bg-transparent p-0.5" /></div>
                   <div className="flex items-center space-x-2"><span className="w-36">History of Diagnosis</span><span>:</span><input type="text" placeholder="Diagnoses" className="flex-1 border-b border-black focus:outline-none bg-transparent p-0.5" /></div>
                   <div className="flex items-center space-x-2"><span className="w-36">Setting</span><span>:</span><input type="text" placeholder="Inpatient / Outpatient / Clinic" className="flex-1 border-b border-black focus:outline-none bg-transparent p-0.5" /></div>
@@ -5057,7 +5057,7 @@ function ClinicalFormsContent() {
             </div>
             <div className="flex items-center space-x-2 flex-1 w-full">
               <span className="whitespace-nowrap">DATE:</span>
-              <input type="text" placeholder="YYYY-MM-DD" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+              <input type="text" placeholder="DD-MM-YYYY" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
             </div>
           </div>
 
@@ -5195,7 +5195,7 @@ function ClinicalFormsContent() {
               <div className="text-[11px] leading-tight font-normal">
                 <p className="font-bold">CMHC Counselor Trainee</p>
                 <p>Universiti Pendidikan Sultan Idris</p>
-                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
               </div>
             </div>
 
