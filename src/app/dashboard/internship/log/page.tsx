@@ -14,7 +14,10 @@ import {
   Plus,
   Trash2,
   BookOpen,
-  Award
+  Award,
+  Upload,
+  Camera,
+  X
 } from 'lucide-react';
 
 interface DailyLogEntry {
@@ -29,10 +32,22 @@ export default function InternshipLogbookPage() {
   const [activeSection, setActiveSection] = useState<'cover' | 'personal_info' | 'contract' | 'agreement' | 'components' | 'individual_hours' | 'attendance' | 'log' | 'refleksi' | 'rumusan'>('cover');
   const [selectedWeek, setSelectedWeek] = useState<number>(1);
 
-  // Cover Page State
+  // Cover & Personal Info State
   const [traineeName, setTraineeName] = useState('AHMAD FEROZ BIN ABDUL SAMAD');
   const [matricNo, setMatricNo] = useState('M20241001148');
   const [placementSite, setPlacementSite] = useState('');
+  const [passportPhoto, setPassportPhoto] = useState<string | null>(null);
+
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPassportPhoto(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   // Page 1: Daily Log Header
   const [tarikhHari, setTarikhHari] = useState('');
@@ -364,8 +379,45 @@ export default function InternshipLogbookPage() {
       {activeSection === 'personal_info' && (
         <div className="space-y-6 bg-white p-8 sm:p-12 border border-black shadow-sm max-w-4xl mx-auto text-black">
           <div className="flex justify-center mb-6">
-            <div className="w-36 h-48 border-2 border-black flex items-center justify-center text-slate-400 text-xs font-bold">
-              Passport Photo Box
+            <div className="relative w-36 h-48 border-2 border-black border-dashed rounded-md bg-slate-50 flex flex-col items-center justify-center overflow-hidden group hover:border-emerald-600 transition">
+              {passportPhoto ? (
+                <>
+                  <img
+                    src={passportPhoto}
+                    alt="Trainee Passport Photo"
+                    className="w-full h-full object-cover"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setPassportPhoto(null)}
+                    className="absolute top-1 right-1 p-1 bg-red-600 text-white rounded-full opacity-0 group-hover:opacity-100 transition no-print shadow-md"
+                    title="Remove Photo"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                  </button>
+                </>
+              ) : (
+                <label className="cursor-pointer flex flex-col items-center justify-center p-2 text-center w-full h-full no-print">
+                  <Camera className="h-6 w-6 text-slate-500 mb-1 group-hover:text-emerald-700 transition" />
+                  <span className="text-[10px] font-bold text-slate-600 group-hover:text-emerald-800">
+                    Upload Passport Photo
+                  </span>
+                  <span className="text-[8px] text-slate-400 mt-0.5">JPG / PNG</span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handlePhotoUpload}
+                    className="hidden"
+                  />
+                </label>
+              )}
+
+              {/* Print View Fallback if no photo uploaded */}
+              {!passportPhoto && (
+                <div className="hidden print:flex flex-col items-center justify-center text-slate-400 text-[10px] font-bold text-center">
+                  Passport Photo Box
+                </div>
+              )}
             </div>
           </div>
 
