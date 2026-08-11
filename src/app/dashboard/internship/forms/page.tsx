@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { FileText, Plus, BookOpen, CheckCircle2, Clock, ShieldCheck, Printer, Save } from "lucide-react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 interface ClinicalFormSubTab {
   id: string;
@@ -225,9 +226,17 @@ const FORM_SUB_TABS: ClinicalFormSubTab[] = [
   }
 ];
 
-export default function ClinicalFormsHubPage() {
+function ClinicalFormsContent() {
+  const searchParams = useSearchParams();
+  const tabParam = searchParams.get("tab");
   const [activeTab, setActiveTab] = useState<string>("form1");
   const [traineeName, setTraineeName] = useState("AHMAD FEROZ BIN ABDUL SAMAD");
+
+  useEffect(() => {
+    if (tabParam && FORM_SUB_TABS.some(f => f.id === tabParam)) {
+      setActiveTab(tabParam);
+    }
+  }, [tabParam]);
 
   const currentForm = FORM_SUB_TABS.find(f => f.id === activeTab) || FORM_SUB_TABS[0];
 
@@ -5215,7 +5224,6 @@ export default function ClinicalFormsHubPage() {
             </div>
           </div>
 
-          {/* Footer Copyright Notice */}
           <div className="text-[9px] text-slate-500 italic text-center pt-2">
             This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner - Dr Pau Kee
           </div>
@@ -5236,5 +5244,13 @@ export default function ClinicalFormsHubPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function ClinicalFormsHubPage() {
+  return (
+    <Suspense fallback={<div className="p-8 text-center text-slate-500 font-bold">Loading Clinical Forms...</div>}>
+      <ClinicalFormsContent />
+    </Suspense>
   );
 }
