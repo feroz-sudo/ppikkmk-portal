@@ -110,6 +110,13 @@ const FORM_SUB_TABS: ClinicalFormSubTab[] = [
     title: "TERMINATION SESSION FOR GROUP COUNSELING",
     pdfRef: "Group_Termination_Session/CMHC_UPSI/Pindaan03-14-2026",
     status: "1:1 Exact Replica Complete"
+  },
+  {
+    id: "form15",
+    code: "Form 15",
+    title: "PSYCHOLOGICAL ASSESSMENT REPORT",
+    pdfRef: "Psychological_Assessment_Report/CMHC_UPSI/Pindaan03_15-2026",
+    status: "1:1 Exact Replica Complete"
   }
 ];
 
@@ -2560,17 +2567,178 @@ export default function ClinicalFormsHubPage() {
           </div>
         </div>
       ) : (
-        /* Placeholder for Form 15, etc. pending 1:1 PDF Upload */
-        <div className="bg-white p-12 border border-slate-300 rounded-2xl shadow-sm text-center max-w-3xl mx-auto space-y-4">
-          <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-700 font-black text-xl">
-            {currentForm.code}
+        /* ===================================================================
+            FORM 15: PSYCHOLOGICAL ASSESSMENT REPORT (2-PAGE 1:1 VECTOR REPLICA)
+           =================================================================== */
+        <div className="space-y-6 max-w-4xl mx-auto text-black">
+          {/* PAGE 1 OF FORM 15 */}
+          <div className="space-y-4 bg-white p-6 sm:p-10 border border-black shadow-sm text-xs leading-relaxed">
+            {/* Header Metadata Code (Right Aligned Top) */}
+            <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+              Psychological_Assessment_Report/CMHC_UPSI/Pindaan03_15-2026
+            </div>
+
+            {/* Logo & Center Title Block */}
+            <div className="relative flex items-center justify-center pb-4 mb-4 border-b border-black">
+              <img src="/upsi-logo.png" alt="UPSI Emblem" className="absolute left-0 top-0 h-16 w-auto object-contain" />
+              <div className="text-center font-bold">
+                <h2 className="text-base sm:text-lg font-black tracking-wide leading-tight uppercase">
+                  PSYCHOLOGICAL ASSESSMENT REPORT
+                </h2>
+                <p className="text-xs uppercase tracking-tight">INTERNSHIP IN CLINICAL MENTAL HEALTH COUNSELING</p>
+                <p className="text-xs uppercase font-black tracking-wider">UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
+              </div>
+            </div>
+
+            {/* PERSONAL DATA Block */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-slate-300 pb-1">
+                PERSONAL DATA:
+              </h3>
+              <div className="space-y-2 pt-1 font-bold">
+                <div className="flex items-center space-x-2">
+                  <span className="w-44">Client Full Name</span>
+                  <span>:</span>
+                  <input type="text" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="w-44">Ethnic/Sex</span>
+                  <span>:</span>
+                  <input type="text" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="w-44">Date of Birth</span>
+                  <span>:</span>
+                  <input type="text" placeholder="YYYY-MM-DD" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="w-44">Identification Card No</span>
+                  <span>:</span>
+                  <input type="text" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="w-44">Age</span>
+                  <span>:</span>
+                  <input type="text" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="w-44">Designation</span>
+                  <span>:</span>
+                  <input type="text" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="w-44">Date of Assessment</span>
+                  <span>:</span>
+                  <input type="text" placeholder="YYYY-MM-DD" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="w-44">Assessment Conducted By</span>
+                  <span>:</span>
+                  <input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+                </div>
+              </div>
+            </div>
+
+            {/* Section 1: REASON FOR REFERRAL */}
+            <div className="space-y-2 pt-4">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                REASON FOR REFFERAL
+              </h3>
+              <textarea rows={4} placeholder="Detail referral sources and primary concerns..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section 2: BEHAVIOUR OBSERVATION */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                BEHAVIOUR OBSERVATION
+              </h3>
+              <textarea rows={4} placeholder="Detail behavioral and mental status observations..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section 3: PSYCHOLOGICAL TESTS ADMINISTERED */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                PSYCHOLOGICAL TESTS ADMINISTERED:
+              </h3>
+              <textarea rows={4} placeholder="List psychological test batteries administered..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Footer Confidential Notice */}
+            <div className="pt-4 border-t border-slate-300 text-center">
+              <p className="font-bold text-xs">Confidential Document (For Professional Use Only)</p>
+              <p className="text-[9px] text-slate-500 italic mt-0.5">
+                This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner - Dr Pau Kee
+              </p>
+            </div>
           </div>
-          <h2 className="text-xl font-black text-slate-900">{currentForm.title}</h2>
-          <p className="text-xs text-slate-500 font-serif italic">
-            Ref: {currentForm.pdfRef}
-          </p>
-          <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-600 max-w-lg mx-auto leading-relaxed">
-            Ready to be built into an exact 1:1 fillable vector replica. Upload the original PDF for {currentForm.code} to execute point-by-point coordinate extraction!
+
+          {/* PAGE 2 OF FORM 15 */}
+          <div className="space-y-4 bg-white p-6 sm:p-10 border border-black shadow-sm text-xs leading-relaxed">
+            {/* Header Metadata Code (Right Aligned Top) */}
+            <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+              Psychological_Assessment_Report/CMHC_UPSI/Pindaan03_15-2026
+            </div>
+
+            {/* Section 4: TEST RESULTS AND INTERPRETATION */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                TEST RESULTS AND INTERPRETATION
+              </h3>
+              <textarea rows={5} placeholder="Detail test scores, percentile ranks, and clinical interpretations..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section 5: DIAGNOSTIC IMPRESSION */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                DIAGNOSTIC IMPRESSION
+              </h3>
+              <textarea rows={4} placeholder="Detail DSM-5 / ICD-11 diagnostic impressions..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section 6: SUMMARY OF FINDINGS */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                SUMMARY OF FINDINGS <span className="font-normal text-[11px] uppercase">(Psychological Functioning Based On Assessment Results, Relationship Between Symptoms, Test Findings, and Real-Life Concerns, Strengths, Protective Factors, and Areas Needing Support)</span>
+              </h3>
+              <textarea rows={5} placeholder="Synthesize assessment findings, strengths, protective factors, and areas needing support..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section 7: RECOMMENDATIONS/TREATMENT PLAN */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                RECOMMENDATIONS/TREATMENT PLAN
+              </h3>
+              <textarea rows={4} placeholder="Detail treatment recommendations and intervention planning..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Section 8: PROGNOSIS */}
+            <div className="space-y-2 pt-2">
+              <h3 className="font-black uppercase tracking-wider text-xs border-b border-black pb-0.5">
+                PROGNOSIS
+              </h3>
+              <textarea rows={3} placeholder="Detail clinical prognosis..." className="w-full border border-slate-300 p-2 focus:outline-none resize-y text-xs font-normal" />
+            </div>
+
+            {/* Sign-off Trainee Block */}
+            <div className="space-y-4 pt-6 text-xs font-bold border-t border-slate-300">
+              <p>Report by:</p>
+              <div className="w-72 border-b border-black pb-1">
+                <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
+              </div>
+              <div className="text-[11px] leading-tight font-normal">
+                <p className="font-bold">CMHC Counselor Trainee</p>
+                <p>Universiti Pendidikan Sultan Idris</p>
+                <p>35900 Tanjong Malim, Perak</p>
+              </div>
+            </div>
+
+            {/* Footer Confidential Notice */}
+            <div className="pt-4 border-t border-slate-300 text-center">
+              <p className="font-bold text-xs">Confidential Document (For Professional Use Only)</p>
+              <p className="text-[9px] text-slate-500 italic mt-0.5">
+                This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner - Dr Pau Kee
+              </p>
+            </div>
           </div>
         </div>
       )}
