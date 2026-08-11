@@ -37,9 +37,9 @@ const FORM_SUB_TABS: ClinicalFormSubTab[] = [
   {
     id: "form4",
     code: "Form 4",
-    title: "INFORMED CONSENT & CONFIDENTIALITY AGREEMENT",
-    pdfRef: "Informed_Consent/CMHC_UPSI/Pindaan03-F4-2026",
-    status: "Ready for 1:1 Build"
+    title: "CLIENT REGISTRATION FORM",
+    pdfRef: "Client_Registration_Form/CMHC_UPSI/Pindaan02-04-2026",
+    status: "1:1 Exact Replica Complete"
   },
   {
     id: "form5",
@@ -587,8 +587,295 @@ export default function ClinicalFormsHubPage() {
             </div>
           </div>
         </div>
+      ) : activeTab === "form4" ? (
+        /* ===================================================================
+            FORM 4: CLIENT REGISTRATION FORM (1:1 VECTOR REPLICA)
+           =================================================================== */
+        <div className="space-y-6 bg-white p-6 sm:p-10 border border-black shadow-sm max-w-4xl mx-auto text-black text-xs leading-relaxed">
+          {/* Header Metadata Code (Right Aligned Top) */}
+          <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+            Client_Registration_Form/CMHC_UPSI/Pindaan02-04-2026
+          </div>
+
+          {/* Logo & Center Title Block */}
+          <div className="relative flex items-center justify-center pb-4 mb-4 border-b border-black">
+            <img src="/upsi-logo.png" alt="UPSI Emblem" className="absolute left-0 top-0 h-16 w-auto object-contain" />
+            <div className="text-center font-bold">
+              <h2 className="text-base sm:text-lg font-black tracking-wide leading-tight uppercase">
+                CLIENT REGISTRATION FORM
+              </h2>
+            </div>
+          </div>
+
+          {/* Section 1: CLIENT'S INFORMATION */}
+          <div className="space-y-3 pt-2">
+            <div className="flex items-center justify-between font-bold">
+              <span>CLIENT'S INFORMATION: (Please include other relevant information)</span>
+              <div className="flex items-center space-x-1">
+                <span>Date of Referral:</span>
+                <input type="text" placeholder="DD/MM/YYYY" className="border-b border-black w-32 text-center font-bold focus:outline-none bg-transparent" />
+              </div>
+            </div>
+
+            <div className="space-y-2.5 pt-1">
+              <div className="flex items-center space-x-2">
+                <span className="w-24 font-bold">Name:</span>
+                <input type="text" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="flex items-center space-x-2">
+                  <span className="w-16 font-bold">D.O.B:</span>
+                  <input type="text" placeholder="DD/MM/YYYY" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5 text-center" />
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="w-16 font-bold">I/C No:</span>
+                  <input type="text" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="w-12 font-bold">Age:</span>
+                  <input type="text" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5 text-center" />
+                  <span className="font-bold ml-2">Sex:</span>
+                  <label className="inline-flex items-center space-x-1 ml-1 cursor-pointer">
+                    <input type="radio" name="sex" className="accent-black" />
+                    <span>Male</span>
+                  </label>
+                  <label className="inline-flex items-center space-x-1 ml-1 cursor-pointer">
+                    <input type="radio" name="sex" className="accent-black" />
+                    <span>Female</span>
+                  </label>
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-4 flex-wrap gap-y-2">
+                <span className="font-bold">Ethnicity:</span>
+                {["Malay", "Chinese", "Indian"].map((eth) => (
+                  <label key={eth} className="inline-flex items-center space-x-1 cursor-pointer">
+                    <input type="radio" name="ethnicity" className="accent-black" />
+                    <span>{eth}</span>
+                  </label>
+                ))}
+                <div className="flex items-center space-x-1">
+                  <label className="inline-flex items-center space-x-1 cursor-pointer">
+                    <input type="radio" name="ethnicity" className="accent-black" />
+                    <span>Others:</span>
+                  </label>
+                  <input type="text" className="border-b border-black w-32 focus:outline-none bg-transparent p-0.5 font-bold" />
+                </div>
+
+                <span className="font-bold ml-4">Marital Status:</span>
+                {["Single", "Married"].map((ms) => (
+                  <label key={ms} className="inline-flex items-center space-x-1 cursor-pointer">
+                    <input type="radio" name="maritalStatus" className="accent-black" />
+                    <span>{ms}</span>
+                  </label>
+                ))}
+              </div>
+
+              <div className="space-y-1">
+                <div className="flex items-center space-x-2">
+                  <span className="w-24 font-bold">Full Address:</span>
+                  <input type="text" className="flex-1 border-b border-black focus:outline-none bg-transparent p-0.5 font-bold" />
+                </div>
+                <input type="text" className="w-full border-b border-black focus:outline-none bg-transparent p-0.5 font-bold pl-26" />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+                <div className="flex items-center space-x-1">
+                  <span className="font-bold">Telephone: (Home)</span>
+                  <input type="text" className="flex-1 border-b border-black focus:outline-none bg-transparent p-0.5 font-bold" />
+                </div>
+                <div className="flex items-center space-x-1">
+                  <span className="font-bold">(Work):</span>
+                  <input type="text" className="flex-1 border-b border-black focus:outline-none bg-transparent p-0.5 font-bold" />
+                </div>
+                <div className="flex items-center space-x-1">
+                  <span className="font-bold">(H/P):</span>
+                  <input type="text" className="flex-1 border-b border-black focus:outline-none bg-transparent p-0.5 font-bold" />
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <span className="w-28 font-bold">Email Address:</span>
+                <input type="text" className="flex-1 border-b border-black focus:outline-none bg-transparent p-0.5 font-bold" />
+              </div>
+
+              <div className="space-y-1">
+                <div className="flex items-start space-x-2">
+                  <span className="w-48 font-bold">School/Office Address (if relevant):</span>
+                  <input type="text" className="flex-1 border-b border-black focus:outline-none bg-transparent p-0.5 font-bold" />
+                </div>
+                <input type="text" className="w-full border-b border-black focus:outline-none bg-transparent p-0.5 font-bold" />
+              </div>
+            </div>
+          </div>
+
+          <hr className="border-black border-t-2 my-4" />
+
+          {/* Section 2: EMERGENCY CONTACT PERSON */}
+          <div className="space-y-3">
+            <h3 className="font-bold uppercase tracking-wider text-xs">
+              EMERGENCY CONTACT PERSON
+            </h3>
+            <p className="text-[11px] text-slate-700 italic">
+              (Spouse/Parents/Guardian/Next of Kin Contact Information):
+            </p>
+
+            {[1, 2].map((personNum) => (
+              <div key={personNum} className="space-y-2 pt-1 border-b border-slate-200 pb-3">
+                <div className="flex items-center space-x-3 flex-wrap gap-y-1">
+                  <span className="font-bold">Please tick:</span>
+                  {["Mother", "Father", "Spouse", "Siblings", "Cousins"].map((rel) => (
+                    <label key={rel} className="inline-flex items-center space-x-1 cursor-pointer">
+                      <input type="radio" name={`emContact_${personNum}`} className="accent-black" />
+                      <span>{rel}</span>
+                    </label>
+                  ))}
+                  <div className="flex items-center space-x-1">
+                    <label className="inline-flex items-center space-x-1 cursor-pointer">
+                      <input type="radio" name={`emContact_${personNum}`} className="accent-black" />
+                      <span>Other:</span>
+                    </label>
+                    <input type="text" className="border-b border-black w-36 focus:outline-none bg-transparent p-0.5 font-bold" />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div className="sm:col-span-2 flex items-center space-x-2">
+                    <span className="w-16 font-bold">Name:</span>
+                    <input type="text" className="flex-1 border-b border-black focus:outline-none bg-transparent p-0.5 font-bold" />
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span className="w-20 font-bold">Phone No:</span>
+                    <input type="text" className="flex-1 border-b border-black focus:outline-none bg-transparent p-0.5 font-bold" />
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <div className="flex items-center space-x-2">
+                    <span className="w-16 font-bold">Address:</span>
+                    <input type="text" className="flex-1 border-b border-black focus:outline-none bg-transparent p-0.5 font-bold" />
+                  </div>
+                  <input type="text" className="w-full border-b border-black focus:outline-none bg-transparent p-0.5 font-bold" />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <hr className="border-black border-t-2 my-4" />
+
+          {/* Section 3: PREVIOUS/CURRENT CONTACT WITH MENTAL HEALTH SERVICES */}
+          <div className="space-y-3">
+            <div className="flex items-center space-x-4 font-bold">
+              <span>PREVIOUS/CURRENT CONTACT WITH MENTAL HEALTH SERVICES:</span>
+              <label className="inline-flex items-center space-x-1 cursor-pointer">
+                <input type="radio" name="mentalHealthServices" className="accent-black" />
+                <span>No</span>
+              </label>
+              <label className="inline-flex items-center space-x-1 cursor-pointer">
+                <input type="radio" name="mentalHealthServices" className="accent-black" />
+                <span>Yes (Please specify):</span>
+              </label>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="sm:col-span-2 flex items-center space-x-2">
+                <span className="w-16 font-bold">Hospital:</span>
+                <input type="text" className="flex-1 border-b border-black focus:outline-none bg-transparent p-0.5 font-bold" />
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="w-12 font-bold">Year:</span>
+                <input type="text" className="flex-1 border-b border-black focus:outline-none bg-transparent p-0.5 font-bold text-center" />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="flex items-center space-x-2">
+                <span className="w-20 font-bold">Diagnosis:</span>
+                <input type="text" className="flex-1 border-b border-black focus:outline-none bg-transparent p-0.5 font-bold" />
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="w-20 font-bold">Medication:</span>
+                <input type="text" className="flex-1 border-b border-black focus:outline-none bg-transparent p-0.5 font-bold" />
+              </div>
+            </div>
+
+            <div className="space-y-1 pt-2">
+              <div className="flex items-center space-x-4 font-bold">
+                <span>CURRENT MEDICATIONS TAKEN:</span>
+                <label className="inline-flex items-center space-x-1 cursor-pointer">
+                  <input type="radio" name="medicationsTaken" className="accent-black" />
+                  <span>No</span>
+                </label>
+                <label className="inline-flex items-center space-x-1 cursor-pointer">
+                  <input type="radio" name="medicationsTaken" className="accent-black" />
+                  <span>Yes (Please list):</span>
+                </label>
+                <input type="text" className="flex-1 border-b border-black focus:outline-none bg-transparent p-0.5 font-bold" />
+              </div>
+              <input type="text" className="w-full border-b border-black focus:outline-none bg-transparent p-0.5 font-bold" />
+            </div>
+          </div>
+
+          <hr className="border-black border-t-2 my-4" />
+
+          {/* Section 4: CRISIS SITUATION ASSESSMENT */}
+          <div className="space-y-3">
+            <h3 className="font-bold uppercase tracking-wider text-xs">
+              ARE YOU CURRENTLY EXPERIENCED ANY CRISIS SITUATION AS BELOW:
+            </h3>
+
+            <div className="space-y-2 font-semibold">
+              {[
+                { num: 1, text: "Are you having thoughts about ending your life?" },
+                { num: 2, text: "Do you have a plan to end your life?" },
+                { num: 3, text: "Have you attempted to harm yourself or others?" },
+                { num: 4, text: "Do you feel like there is no way out of your current situation?" }
+              ].map((item) => (
+                <div key={item.num} className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-1.5">
+                  <span>{item.num}. {item.text}</span>
+                  <div className="flex items-center space-x-4 shrink-0">
+                    <label className="inline-flex items-center space-x-1 cursor-pointer">
+                      <input type="radio" name={`crisis_${item.num}`} className="accent-black" />
+                      <span>No</span>
+                    </label>
+                    <div className="flex items-center space-x-1">
+                      <label className="inline-flex items-center space-x-1 cursor-pointer">
+                        <input type="radio" name={`crisis_${item.num}`} className="accent-black" />
+                        <span>Yes (Please specify):</span>
+                      </label>
+                      <input type="text" className="border-b border-black w-36 focus:outline-none bg-transparent p-0.5 font-bold" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <hr className="border-black border-t-2 my-4" />
+
+          {/* Section 5: DAILY FUNCTIONING SCALE (0 to 10) */}
+          <div className="space-y-4 pt-1">
+            <p className="font-bold text-xs">
+              On a scale from 0 to 10, how much has your current situation affected your daily functioning?
+            </p>
+            <div className="flex items-center justify-between font-black text-sm px-4 pt-2">
+              <span>0</span>
+              <span>5</span>
+              <span>10</span>
+            </div>
+            <div className="flex items-center space-x-2 px-2">
+              <input type="range" min="0" max="10" step="1" className="w-full accent-black cursor-pointer" />
+            </div>
+          </div>
+
+          {/* Copyright Footer */}
+          <div className="text-[9px] text-slate-500 italic text-center pt-8 border-t my-4">
+            This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner. - Dr Pau Kee
+          </div>
+        </div>
       ) : (
-        /* Placeholder for Form 4, Form 5, etc. pending 1:1 PDF Upload */
+        /* Placeholder for Form 5, Form 6, etc. pending 1:1 PDF Upload */
         <div className="bg-white p-12 border border-slate-300 rounded-2xl shadow-sm text-center max-w-3xl mx-auto space-y-4">
           <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-700 font-black text-xl">
             {currentForm.code}
