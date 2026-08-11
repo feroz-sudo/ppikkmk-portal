@@ -301,7 +301,7 @@ export default function ClinicalFormsHubPage() {
           {/* Logo & Center Title Block */}
           <div className="relative flex items-center justify-center pb-4 mb-2 border-b border-black">
             <img src="/upsi-logo.png" alt="UPSI Emblem" className="absolute left-0 top-0 h-16 w-auto object-contain" />
-            <div className="text-center font-bold space-y-1">
+            <div className="text-center font-bold space-y-1 px-16 sm:px-24">
               <h2 className="text-base sm:text-lg font-black tracking-wide leading-tight">INDIVIDUAL COUNSELING HOURS LOG</h2>
               <p className="text-xs uppercase tracking-tight">INTERNSHIP FOR CLINICAL MENTAL HEALTH COUNSELING</p>
               <p className="text-xs uppercase font-black tracking-wider">UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
@@ -396,7 +396,7 @@ export default function ClinicalFormsHubPage() {
           {/* Logo & Center Title Block */}
           <div className="relative flex items-center justify-center pb-4 mb-2 border-b border-black">
             <img src="/upsi-logo.png" alt="UPSI Emblem" className="absolute left-0 top-0 h-16 w-auto object-contain" />
-            <div className="text-center font-bold space-y-1">
+            <div className="text-center font-bold space-y-1 px-16 sm:px-24">
               <h2 className="text-base sm:text-lg font-black tracking-wide leading-tight">INDIVIDUAL COUNSELING RECORD LOG</h2>
               <p className="text-xs uppercase tracking-tight">INTERNSHIP FOR CLINICAL MENTAL HEALTH COUNSELING</p>
               <p className="text-xs uppercase font-black tracking-wider">UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
@@ -565,9 +565,9 @@ export default function ClinicalFormsHubPage() {
             </div>
 
             {/* Logo & Center Title Block */}
-            <div className="relative flex items-center justify-center pb-4 mb-4 border-b border-black">
+            <div className="relative flex items-center justify-center pb-4 mb-4 border-b border-black min-h-[4.5rem]">
               <img src="/upsi-logo.png" alt="UPSI Emblem" className="absolute left-0 top-0 h-16 w-auto object-contain" />
-              <div className="text-center font-bold">
+              <div className="text-center font-bold pl-20 sm:pl-24 pr-4">
                 <h2 className="text-base sm:text-lg font-black tracking-wide leading-tight uppercase">
                   INFORMED CONSENT FORM FOR INDIVIDUAL COUNSELING
                 </h2>
@@ -752,9 +752,9 @@ export default function ClinicalFormsHubPage() {
           </div>
 
           {/* Logo & Center Title Block */}
-          <div className="relative flex items-center justify-center pb-4 mb-4 border-b border-black">
+          <div className="relative flex items-center justify-center pb-4 mb-4 border-b border-black min-h-[4.5rem]">
             <img src="/upsi-logo.png" alt="UPSI Emblem" className="absolute left-0 top-0 h-16 w-auto object-contain" />
-            <div className="text-center font-bold">
+            <div className="text-center font-bold pl-20 sm:pl-24 pr-4">
               <h2 className="text-base sm:text-lg font-black tracking-wide leading-tight uppercase">
                 CLIENT REGISTRATION FORM
               </h2>
@@ -1822,7 +1822,7 @@ export default function ClinicalFormsHubPage() {
           {/* Logo & Center Title Block */}
           <div className="relative flex items-center justify-center pb-4 mb-2 border-b border-black">
             <img src="/upsi-logo.png" alt="UPSI Emblem" className="absolute left-0 top-0 h-16 w-auto object-contain" />
-            <div className="text-center font-bold space-y-1">
+            <div className="text-center font-bold space-y-1 px-16 sm:px-24">
               <h2 className="text-base sm:text-lg font-black tracking-wide leading-tight uppercase">GROUP COUNSELING HOURS LOG</h2>
               <p className="text-xs uppercase tracking-tight">INTERNSHIP FOR CLINICAL MENTAL HEALTH COUNSELING</p>
               <p className="text-xs uppercase font-black tracking-wider">UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
@@ -1919,7 +1919,7 @@ export default function ClinicalFormsHubPage() {
           {/* Logo & Center Title Block */}
           <div className="relative flex items-center justify-center pb-4 mb-2 border-b border-black">
             <img src="/upsi-logo.png" alt="UPSI Emblem" className="absolute left-0 top-0 h-16 w-auto object-contain" />
-            <div className="text-center font-bold space-y-1">
+            <div className="text-center font-bold space-y-1 px-16 sm:px-24">
               <h2 className="text-base sm:text-lg font-black tracking-wide leading-tight uppercase">GROUP COUNSELING RECORD LOG</h2>
               <p className="text-xs uppercase tracking-tight">INTERNSHIP FOR CLINICAL MENTAL HEALTH COUNSELING</p>
               <p className="text-xs uppercase font-black tracking-wider">UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
@@ -2106,9 +2106,9 @@ export default function ClinicalFormsHubPage() {
             </div>
 
             {/* Logo & Center Title Block */}
-            <div className="relative flex items-center justify-center pb-4 mb-4 border-b border-black">
+            <div className="relative flex items-center justify-center pb-4 mb-4 border-b border-black min-h-[4.5rem]">
               <img src="/upsi-logo.png" alt="UPSI Emblem" className="absolute left-0 top-0 h-16 w-auto object-contain" />
-              <div className="text-center font-bold">
+              <div className="text-center font-bold pl-20 sm:pl-24 pr-4">
                 <h2 className="text-base sm:text-lg font-black tracking-wide leading-tight uppercase">
                   INFORMED CONSENT FORM<br />FOR GROUP COUNSELING
                 </h2>
@@ -3828,7 +3828,7 @@ export default function ClinicalFormsHubPage() {
           {/* Logo & Center Title Block */}
           <div className="relative flex items-center justify-center pb-4 mb-2 border-b border-black">
             <img src="/upsi-logo.png" alt="UPSI Emblem" className="absolute left-0 top-0 h-16 w-auto object-contain" />
-            <div className="text-center font-bold space-y-1">
+            <div className="text-center font-bold space-y-1 px-16 sm:px-24">
               <h2 className="text-base sm:text-lg font-black tracking-wide leading-tight uppercase">CONSULTATION HOURS LOG</h2>
               <p className="text-xs uppercase tracking-tight">INTERNSHIP FOR CLINICAL MENTAL HEALTH COUNSELING</p>
               <p className="text-xs uppercase font-black tracking-wider">UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
@@ -3921,7 +3921,7 @@ export default function ClinicalFormsHubPage() {
           {/* Logo & Center Title Block */}
           <div className="relative flex items-center justify-center pb-4 mb-2 border-b border-black">
             <img src="/upsi-logo.png" alt="UPSI Emblem" className="absolute left-0 top-0 h-16 w-auto object-contain" />
-            <div className="text-center font-bold space-y-1">
+            <div className="text-center font-bold space-y-1 px-16 sm:px-24">
               <h2 className="text-base sm:text-lg font-black tracking-wide leading-tight uppercase">CRISIS INTERVENTION HOURS LOG</h2>
               <p className="text-xs uppercase tracking-tight">INTERNSHIP FOR CLINICAL MENTAL HEALTH COUNSELING</p>
               <p className="text-xs uppercase font-black tracking-wider">UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
@@ -4014,7 +4014,7 @@ export default function ClinicalFormsHubPage() {
           {/* Logo & Center Title Block */}
           <div className="relative flex items-center justify-center pb-4 mb-2 border-b border-black">
             <img src="/upsi-logo.png" alt="UPSI Emblem" className="absolute left-0 top-0 h-16 w-auto object-contain" />
-            <div className="text-center font-bold space-y-1">
+            <div className="text-center font-bold space-y-1 px-16 sm:px-24">
               <h2 className="text-base sm:text-lg font-black tracking-wide leading-tight uppercase">PFA/MHPSS HOURS LOG</h2>
               <p className="text-xs uppercase tracking-tight">INTERNSHIP FOR CLINICAL MENTAL HEALTH COUNSELING</p>
               <p className="text-xs uppercase font-black tracking-wider">UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
@@ -4109,7 +4109,7 @@ export default function ClinicalFormsHubPage() {
           {/* Logo & Center Title Block */}
           <div className="relative flex items-center justify-center pb-4 mb-2 border-b border-black">
             <img src="/upsi-logo.png" alt="UPSI Emblem" className="absolute left-0 top-0 h-16 w-auto object-contain" />
-            <div className="text-center font-bold space-y-1">
+            <div className="text-center font-bold space-y-1 px-16 sm:px-24">
               <h2 className="text-base sm:text-lg font-black tracking-wide leading-tight uppercase">PSYCHOEDUCATION AND COMMUNITY PROGRAM LOG</h2>
               <p className="text-xs uppercase tracking-tight">INTERNSHIP FOR CLINICAL MENTAL HEALTH COUNSELING</p>
               <p className="text-xs uppercase font-black tracking-wider">UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
@@ -4204,7 +4204,7 @@ export default function ClinicalFormsHubPage() {
           {/* Logo & Center Title Block */}
           <div className="relative flex items-center justify-center pb-4 mb-2 border-b border-black">
             <img src="/upsi-logo.png" alt="UPSI Emblem" className="absolute left-0 top-0 h-16 w-auto object-contain" />
-            <div className="text-center font-bold space-y-1">
+            <div className="text-center font-bold space-y-1 px-16 sm:px-24">
               <h2 className="text-base sm:text-lg font-black tracking-wide leading-tight uppercase">PROFESSIONAL DEVELOPMENT LOG</h2>
               <p className="text-xs uppercase tracking-tight">INTERNSHIP FOR CLINICAL MENTAL HEALTH COUNSELING</p>
               <p className="text-xs uppercase font-black tracking-wider">UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
@@ -4299,7 +4299,7 @@ export default function ClinicalFormsHubPage() {
           {/* Logo & Center Title Block */}
           <div className="relative flex items-center justify-center pb-4 mb-2 border-b border-black">
             <img src="/upsi-logo.png" alt="UPSI Emblem" className="absolute left-0 top-0 h-16 w-auto object-contain" />
-            <div className="text-center font-bold space-y-1">
+            <div className="text-center font-bold space-y-1 px-16 sm:px-24">
               <h2 className="text-base sm:text-lg font-black tracking-wide leading-tight uppercase">PSYCHOLOGICAL ASSESSMENT LOG</h2>
               <p className="text-xs uppercase tracking-tight">INTERNSHIP FOR CLINICAL MENTAL HEALTH COUNSELING</p>
               <p className="text-xs uppercase font-black tracking-wider">UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
