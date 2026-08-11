@@ -89,6 +89,13 @@ const FORM_SUB_TABS: ClinicalFormSubTab[] = [
     title: "GROUP COUNSELING RECORD LOG",
     pdfRef: "Group_Counseling_Record_Log/CMHC_UPSI/Pindaan03-11-2026",
     status: "1:1 Exact Replica Complete"
+  },
+  {
+    id: "form12",
+    code: "Form 12",
+    title: "INFORMED CONSENT FORM FOR GROUP COUNSELING",
+    pdfRef: "Group_Counseling_Informed_Consent/CMHC_UPSI/Pindaan03-12-2026",
+    status: "1:1 Exact Replica Complete"
   }
 ];
 
@@ -1960,8 +1967,188 @@ export default function ClinicalFormsHubPage() {
             This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner - Dr Pau Kee
           </div>
         </div>
+      ) : activeTab === "form12" ? (
+        /* ===================================================================
+            FORM 12: INFORMED CONSENT FORM FOR GROUP COUNSELING (2-PAGE 1:1 REPLICA)
+           =================================================================== */
+        <div className="space-y-6 max-w-4xl mx-auto text-black">
+          {/* PAGE 1 OF FORM 12 */}
+          <div className="space-y-4 bg-white p-6 sm:p-10 border border-black shadow-sm text-xs leading-relaxed">
+            {/* Header Metadata Code (Right Aligned Top) */}
+            <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+              Group_Counseling_Informed_Consent/CMHC_UPSI/Pindaan03-12-2026
+            </div>
+
+            {/* Logo & Center Title Block */}
+            <div className="relative flex items-center justify-center pb-4 mb-4 border-b border-black">
+              <img src="/upsi-logo.png" alt="UPSI Emblem" className="absolute left-0 top-0 h-16 w-auto object-contain" />
+              <div className="text-center font-bold">
+                <h2 className="text-base sm:text-lg font-black tracking-wide leading-tight uppercase">
+                  INFORMED CONSENT FORM<br />FOR GROUP COUNSELING
+                </h2>
+              </div>
+            </div>
+
+            {/* Fillable Intro Paragraph */}
+            <div className="space-y-2 text-xs pt-2">
+              <p className="leading-relaxed">
+                I am a student currently undergoing an internship at{" "}
+                <input type="text" placeholder="________________________________________________________" className="border-b border-black px-1 font-bold focus:outline-none bg-transparent w-full sm:w-auto" />
+                {" "}from{" "}
+                <input type="text" placeholder="DD/MM/YYYY" className="border-b border-black w-28 text-center font-bold focus:outline-none bg-transparent" />
+                {" "}to{" "}
+                <input type="text" placeholder="DD/MM/YYYY" className="border-b border-black w-28 text-center font-bold focus:outline-none bg-transparent" />.
+                During this period, I will be supervised by{" "}
+                <input type="text" placeholder="Academic Supervisor Name" className="border-b border-black px-1 font-bold focus:outline-none bg-transparent w-64" />
+                {" "}(academic supervisor's name) and{" "}
+                <input type="text" placeholder="Site Supervisor Name" className="border-b border-black px-1 font-bold focus:outline-none bg-transparent w-64" />
+                {" "}(site supervisor's name).
+              </p>
+            </div>
+
+            {/* Section: CONFIDENTIALITY */}
+            <div className="space-y-1.5 pt-2">
+              <h3 className="font-bold uppercase tracking-wider text-xs">CONFIDENTIALITY AND LIMITATIONS OF CONFIDENTIALITY</h3>
+              <p>
+                All discussions in the sessions are confidential. To guarantee the confidentiality, group members are also responsible for maintaining this confidentiality. However, there are certain limitations to confidentiality that require me (the student) to report to the relevant authorities if:
+              </p>
+              <ul className="space-y-1 pl-4">
+                <li>
+                  <span className="font-bold">a)</span> The information shared poses a risk to the client, such as self-harm, harm to others, or any dangerous behavior indicating a lack of self-control;
+                </li>
+                <li>
+                  <span className="font-bold">b)</span> The client is involved in sexual or physical abuse of children, adults, the elderly, individuals with disabilities, or their partner;
+                </li>
+                <li>
+                  <span className="font-bold">c)</span> In legal cases, information may be subpoenaed by the court.
+                </li>
+                <li>
+                  <span className="font-bold">d)</span> For supervision or learning purposes, as a student, I may share session discussions with my professor without disclosing the client's identity.
+                </li>
+              </ul>
+            </div>
+
+            {/* Section: SESSION DURATION */}
+            <div className="space-y-1 pt-2">
+              <h3 className="font-bold uppercase tracking-wider text-xs">SESSION DURATION</h3>
+              <p>
+                Each group session will last between 60 to 90 minutes. However, the duration may be shorter or longer depending on group discussions.
+              </p>
+            </div>
+
+            {/* Section: VIDEO/AUDIO RECORDING */}
+            <div className="space-y-1 pt-2">
+              <h3 className="font-bold uppercase tracking-wider text-xs">VIDEO/AUDIO RECORDING</h3>
+              <p>
+                I will record counseling sessions for learning and teaching purposes. If at any time you feel uncomfortable, the recording can be stopped. These recordings will be shared with my academic supervisor and site supervisor. The recordings will not interfere with the training process, and they will only continue if both you and I are comfortable. All recordings and transcripts will be destroyed at the end of this course.
+              </p>
+            </div>
+
+            {/* Section: HOW GROUP COUNSELING IS CONDUCTED */}
+            <div className="space-y-1 pt-2">
+              <h3 className="font-bold uppercase tracking-wider text-xs">HOW GROUP COUNSELING IS CONDUCTED</h3>
+              <ul className="space-y-1 pl-4">
+                <li><span className="font-bold">a)</span> The counsellor trainee and group members will collaborate to establish the group's goals, agreed upon by all members.</li>
+                <li><span className="font-bold">b)</span> The counsellor trainee will not make decisions for group members but will act as a facilitator to encourage decision-making. The responsibility for any decisions made lies with the client and group members.</li>
+                <li><span className="font-bold">c)</span> Each group member is responsible for discussing issues or challenges they feel comfortable sharing within the group and working together to find the best solutions.</li>
+                <li><span className="font-bold">d)</span> Group members are responsible for their commitment, accountability, and active participation throughout the group sessions.</li>
+              </ul>
+            </div>
+
+            {/* Section: RESPONSIBILITIES OF CLIENTS */}
+            <div className="space-y-1 pt-2">
+              <h3 className="font-bold uppercase tracking-wider text-xs">RESPONSIBILITIES OF CLIENTS AND THE COUNSELOR-IN-TRAINING (STUDENT)</h3>
+              <ul className="space-y-1 pl-4">
+                <li><span className="font-bold">a)</span> During the sessions, the Counselor Trainee acts as a facilitator to help group members address their issues while respecting their dignity, values, and abilities.</li>
+                <li><span className="font-bold">b)</span> Each selected group member shares similar goals and needs to work toward achieving the best possible</li>
+              </ul>
+            </div>
+
+            {/* Footer Confidential Notice */}
+            <div className="pt-4 border-t border-slate-300 text-center">
+              <p className="text-[9px] text-slate-500 italic">
+                This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner. - Dr Pau Kee
+              </p>
+            </div>
+          </div>
+
+          {/* PAGE 2 OF FORM 12 */}
+          <div className="space-y-6 bg-white p-6 sm:p-10 border border-black shadow-sm text-xs leading-relaxed">
+            {/* Header Metadata Code (Right Aligned Top) */}
+            <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+              Group_Counseling_Informed_Consent/CMHC_UPSI/Pindaan03-12-2026
+            </div>
+
+            <div className="space-y-1 pl-4">
+              <p><span className="font-bold">group outcome.</span></p>
+              <p><span className="font-bold">c)</span> Group members have the right to give permission to the Counselor Trainee to record sessions for supervision or specific research purposes.</p>
+              <p><span className="font-bold">d)</span> Group members have the right to review or listen to any recorded sessions.</p>
+            </div>
+
+            <p className="pt-2 font-semibold">
+              I have read and understood all the information in this contract and agree not to dispute any actions taken by the Counselor Trainee if I violate this agreement.
+            </p>
+
+            {/* Section: INFORMED CONSENT FOR THE GROUP MEMBERS LISTED BELOW */}
+            <div className="space-y-3 pt-4">
+              <h3 className="font-bold uppercase tracking-wider text-xs">
+                INFORMED CONSENT FOR THE GROUP MEMBERS LISTED BELOW:
+              </h3>
+
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse border border-black text-xs text-left">
+                  <thead>
+                    <tr className="bg-slate-100 border-b border-black font-bold text-center">
+                      <th className="border border-black p-1.5 w-12">Bil.</th>
+                      <th className="border border-black p-1.5">Full Name</th>
+                      <th className="border border-black p-1.5 w-44">IC. Number</th>
+                      <th className="border border-black p-1.5 w-44">Signature</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {Array.from({ length: 8 }, (_, i) => i + 1).map((num) => (
+                      <tr key={num} className="border-b border-black h-8">
+                        <td className="border border-black p-1 text-center font-bold">{num}.</td>
+                        <td className="border border-black p-0.5">
+                          <input type="text" className="w-full bg-transparent border-0 focus:outline-none px-1" />
+                        </td>
+                        <td className="border border-black p-0.5">
+                          <input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" />
+                        </td>
+                        <td className="border border-black p-0.5">
+                          <input type="text" placeholder="[ Signature ]" className="w-full text-center bg-transparent border-0 focus:outline-none text-[10px]" />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Sign-off Counselor Trainee Block */}
+            <div className="space-y-4 pt-6 max-w-xl font-bold">
+              <div className="flex items-center space-x-2">
+                <span className="w-24">Signature:</span>
+                <input type="text" placeholder="[ Trainee Signature ]" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+              </div>
+              <div className="text-[11px] leading-tight font-normal pt-2">
+                <p className="border-b border-black w-72 pb-0.5 font-bold">( {traineeName} )</p>
+                <p className="font-bold pt-1">CMHC Counselor Trainee</p>
+                <p>Universiti Pendidikan Sultan Idris</p>
+                <p>35900 Tanjong Malim, Perak</p>
+              </div>
+            </div>
+
+            {/* Footer Confidential Notice */}
+            <div className="pt-8 border-t border-slate-300 text-center">
+              <p className="text-[9px] text-slate-500 italic">
+                This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner. - Dr Pau Kee
+              </p>
+            </div>
+          </div>
+        </div>
       ) : (
-        /* Placeholder for Form 12, etc. pending 1:1 PDF Upload */
+        /* Placeholder for Form 13, etc. pending 1:1 PDF Upload */
         <div className="bg-white p-12 border border-slate-300 rounded-2xl shadow-sm text-center max-w-3xl mx-auto space-y-4">
           <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-700 font-black text-xl">
             {currentForm.code}
