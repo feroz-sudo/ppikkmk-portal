@@ -139,18 +139,18 @@ export default function ClinicalFormsHubPage() {
             FORM 1: INDIVIDUAL COUNSELING HOURS LOG (1:1 VECTOR REPLICA)
            =================================================================== */
         <div className="space-y-4 bg-white p-6 sm:p-10 border border-black shadow-sm max-w-5xl mx-auto text-black text-xs">
-          {/* Header Metadata Code & Copyright Notice */}
-          <div className="flex justify-between items-center text-[10px] italic text-slate-600 font-serif border-b pb-1">
-            <span>Individual_Counseling_Hours_Log/CMHC_UPSI/Pindaan03-F1-2026</span>
+          {/* Header Metadata Code (Right Aligned Top) */}
+          <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+            Individual_Counseling_Hours_Log/CMHC_UPSI/Pindaan03-F1-2026
           </div>
 
-          {/* Logo & Title Block */}
-          <div className="flex items-center space-x-4 border-b-2 border-black pb-3">
-            <img src="/upsi-logo.png" alt="UPSI Emblem" className="h-16 w-auto object-contain" />
-            <div className="flex-1 text-center font-bold space-y-0.5">
-              <h2 className="text-sm sm:text-base font-black tracking-wide">INDIVIDUAL COUNSELING HOURS LOG</h2>
-              <p className="text-xs uppercase">INTERNSHIP FOR CLINICAL MENTAL HEALTH COUNSELING</p>
-              <p className="text-xs uppercase font-black">UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
+          {/* Logo & Center Title Block */}
+          <div className="relative flex items-center justify-center pb-4 mb-2 border-b border-black">
+            <img src="/upsi-logo.png" alt="UPSI Emblem" className="absolute left-0 top-0 h-16 w-auto object-contain" />
+            <div className="text-center font-bold space-y-1">
+              <h2 className="text-base sm:text-lg font-black tracking-wide leading-tight">INDIVIDUAL COUNSELING HOURS LOG</h2>
+              <p className="text-xs uppercase tracking-tight">INTERNSHIP FOR CLINICAL MENTAL HEALTH COUNSELING</p>
+              <p className="text-xs uppercase font-black tracking-wider">UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
             </div>
           </div>
 
