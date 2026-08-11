@@ -208,6 +208,13 @@ const FORM_SUB_TABS: ClinicalFormSubTab[] = [
     title: "SUMMARY OF TOTAL CMHC INTERNSHIP HOURS",
     pdfRef: "Total_CMHC Internship_Hours/CMHC_UPSI/Pindaan03-28-2025",
     status: "1:1 Exact Replica Complete"
+  },
+  {
+    id: "form29",
+    code: "Form 29",
+    title: "CLINICAL CASE STUDY FORMAT",
+    pdfRef: "ClinicalCaseStudyFormat_CMHC_UPSI/Pindaan03-29-2026",
+    status: "1:1 Exact Replica Complete"
   }
 ];
 
@@ -4712,8 +4719,303 @@ export default function ClinicalFormsHubPage() {
             </div>
           </div>
         </div>
+      ) : activeTab === "form29" ? (
+        /* ===================================================================
+            FORM 29: CLINICAL CASE STUDY FORMAT (3-PAGE 1:1 VECTOR REPLICA)
+           =================================================================== */
+        <div className="space-y-6 max-w-4xl mx-auto text-black">
+          {/* PAGE 1 OF FORM 29 */}
+          <div className="space-y-4 bg-white p-6 sm:p-10 border border-black shadow-sm text-xs leading-relaxed">
+            {/* Header Metadata Code (Right Aligned Top) */}
+            <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+              ClinicalCaseStudyFormat_CMHC_UPSI/Pindaan03-29-2026
+            </div>
+
+            {/* Logo & Center Title Block */}
+            <div className="relative flex items-center justify-center pb-4 mb-2 border-b border-black">
+              <img src="/upsi-logo.png" alt="UPSI Emblem" className="absolute left-0 top-0 h-16 w-auto object-contain" />
+              <div className="text-center font-bold">
+                <h2 className="text-base sm:text-lg font-black tracking-wide leading-tight uppercase">
+                  CLINICAL CASE STUDY FORMAT
+                </h2>
+                <p className="text-xs uppercase tracking-tight">INTERNSHIP CLINICAL MENTAL HEALTH COUNSELING</p>
+                <p className="text-xs uppercase font-black tracking-wider">UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
+              </div>
+            </div>
+
+            {/* Client Profile Block */}
+            <div className="space-y-2 pt-1 font-bold">
+              <h3 className="text-sm font-black underline pb-1">Client Profile</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1">
+                <div className="space-y-1">
+                  <div className="flex items-center space-x-2"><span className="w-28">Client ID</span><span>:</span><input type="text" placeholder="e.g. C-104" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" /></div>
+                  <div className="flex items-center space-x-2"><span className="w-28">Date of Birth</span><span>:</span><input type="text" placeholder="YYYY-MM-DD" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" /></div>
+                  <div className="flex items-center space-x-2"><span className="w-28">Age</span><span>:</span><input type="text" placeholder="Years" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" /></div>
+                  <div className="flex items-center space-x-2"><span className="w-28">Gender</span><span>:</span><input type="text" placeholder="Gender" className="flex-1 border-b border-black focus:outline-none bg-transparent p-0.5" /></div>
+                  <div className="flex items-center space-x-2"><span className="w-28">Race</span><span>:</span><input type="text" placeholder="Ethnicity" className="flex-1 border-b border-black focus:outline-none bg-transparent p-0.5" /></div>
+                  <div className="flex items-center space-x-2"><span className="w-28">Marital Status</span><span>:</span><input type="text" placeholder="Status" className="flex-1 border-b border-black focus:outline-none bg-transparent p-0.5" /></div>
+                  <div className="flex items-center space-x-2"><span className="w-28">Occupation</span><span>:</span><input type="text" placeholder="Job Title" className="flex-1 border-b border-black focus:outline-none bg-transparent p-0.5" /></div>
+                </div>
+                <div className="space-y-1">
+                  <div className="flex items-center space-x-2"><span className="w-36">Date of Referral</span><span>:</span><input type="text" placeholder="YYYY-MM-DD" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" /></div>
+                  <div className="flex items-center space-x-2"><span className="w-36">Referred By</span><span>:</span><input type="text" placeholder="Referrer Name/Org" className="flex-1 border-b border-black focus:outline-none bg-transparent p-0.5" /></div>
+                  <div className="flex items-center space-x-2"><span className="w-36">History of Diagnosis</span><span>:</span><input type="text" placeholder="Diagnoses" className="flex-1 border-b border-black focus:outline-none bg-transparent p-0.5" /></div>
+                  <div className="flex items-center space-x-2"><span className="w-36">Setting</span><span>:</span><input type="text" placeholder="Inpatient / Outpatient / Clinic" className="flex-1 border-b border-black focus:outline-none bg-transparent p-0.5" /></div>
+                </div>
+              </div>
+            </div>
+
+            {/* Sections 1-6 */}
+            <div className="space-y-4 pt-2">
+              <div>
+                <h4 className="font-bold text-xs">Reason for Referral</h4>
+                <p className="text-[11px] text-slate-600 leading-snug">
+                  State the specific reason for the client’s referral, including background details and the recommendations of the referring individual or organization.
+                </p>
+                <p className="text-[10px] text-slate-500 italic pb-1">
+                  Example: &quot;The client was referred by [Referrer Name/Organization] for [specific concern, e.g., treatment of anxiety and depression] after reporting persistent symptoms of low mood, intrusive thoughts, and lack of motivation.&quot;
+                </p>
+                <textarea rows={3} placeholder="Detail referral reasons..." className="w-full border border-black p-2 rounded-none bg-transparent focus:outline-none resize-y text-xs" />
+              </div>
+
+              <div>
+                <h4 className="font-bold text-xs">Introductory Statement</h4>
+                <p className="text-[11px] text-slate-600 leading-snug">
+                  A brief sentence orienting the focus of the case and illustrating its significance or complexity.
+                </p>
+                <p className="text-[10px] text-slate-500 italic pb-1">
+                  Example: &quot;This case illustrates the importance of managing suicide risk in a middle-aged man with chronic depression.&quot;
+                </p>
+                <textarea rows={2} placeholder="Brief introductory sentence..." className="w-full border border-black p-2 rounded-none bg-transparent focus:outline-none resize-y text-xs" />
+              </div>
+
+              <div>
+                <h4 className="font-bold text-xs">Presenting Complaint</h4>
+                <p className="text-[11px] text-slate-600 leading-snug">
+                  Detail the client’s main complaints in their own words, supplemented by functional inquiry.
+                </p>
+                <ul className="list-disc pl-5 text-[11px] text-slate-700 font-medium space-y-0.5 my-1">
+                  <li><strong>Onset, duration, and progression of symptoms:</strong></li>
+                  <li><strong>Precipitating or mitigating factors:</strong></li>
+                  <li><strong>Severity of symptoms:</strong></li>
+                  <li><strong>Impact on daily functioning:</strong></li>
+                  <li><strong>Client’s own understanding or attribution of symptoms:</strong></li>
+                </ul>
+                <p className="text-[10px] text-slate-500 italic pb-1">
+                  Example: &quot;The client reports persistent feelings of sadness and guilt for over six months, stating, &apos;It feels like I can&apos;t escape this dark cloud.&apos; Symptoms have intensified since losing his job and are affecting his sleep, appetite, and social relationships.&quot;
+                </p>
+                <textarea rows={4} placeholder="Detail presenting complaints..." className="w-full border border-black p-2 rounded-none bg-transparent focus:outline-none resize-y text-xs" />
+              </div>
+
+              <div>
+                <h4 className="font-bold text-xs">History of Presenting Complaint</h4>
+                <p className="text-[11px] text-slate-600 leading-snug">
+                  Expand on the presenting complaint with a detailed history. Include:
+                </p>
+                <ul className="list-disc pl-5 text-[11px] text-slate-700 font-medium space-y-0.5 my-1">
+                  <li>Symptom history (onset, triggers, timeline).</li>
+                  <li>Functional inquiry (e.g., sleep, energy, concentration, appetite, mood).</li>
+                  <li>Cultural context of symptoms and illness.</li>
+                  <li>Impact on work, relationships, and personal life.</li>
+                </ul>
+                <textarea rows={4} placeholder="Detail history of presenting complaint..." className="w-full border border-black p-2 rounded-none bg-transparent focus:outline-none resize-y text-xs" />
+              </div>
+
+              <div>
+                <h4 className="font-bold text-xs">Past Psychiatric History</h4>
+                <p className="text-[11px] text-slate-600 leading-snug">
+                  Summarize the client’s previous mental health issues, treatments, and outcomes.
+                </p>
+                <ul className="list-disc pl-5 text-[11px] text-slate-700 font-medium space-y-0.5 my-1">
+                  <li>Previous diagnoses or symptoms.</li>
+                  <li>Psychiatric treatments (medications, therapy, hospitalizations).</li>
+                  <li>Self-harm or suicidal ideation history.</li>
+                  <li>Response to treatments.</li>
+                </ul>
+                <textarea rows={3} placeholder="Summarize past psychiatric history..." className="w-full border border-black p-2 rounded-none bg-transparent focus:outline-none resize-y text-xs" />
+              </div>
+
+              <div>
+                <h4 className="font-bold text-xs">Medical History</h4>
+                <p className="text-[11px] text-slate-600 leading-snug">
+                  Include relevant physical health conditions that may interact with mental health symptoms.
+                </p>
+                <ul className="list-disc pl-5 text-[11px] text-slate-700 font-medium space-y-0.5 my-1">
+                  <li>Chronic illnesses.</li>
+                </ul>
+                <textarea rows={2} placeholder="Detail medical history..." className="w-full border border-black p-2 rounded-none bg-transparent focus:outline-none resize-y text-xs" />
+              </div>
+            </div>
+
+            {/* Footer Copyright Notice */}
+            <div className="text-[9px] text-slate-500 italic text-center pt-2">
+              This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner. - Dr Pau Kee
+            </div>
+          </div>
+
+          {/* PAGE 2 OF FORM 29 */}
+          <div className="space-y-4 bg-white p-6 sm:p-10 border border-black shadow-sm text-xs leading-relaxed">
+            {/* Header Metadata Code (Right Aligned Top) */}
+            <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+              ClinicalCaseStudyFormat_CMHC_UPSI/Pindaan03-29-2026
+            </div>
+
+            <div className="space-y-4">
+              <ul className="list-disc pl-5 text-[11px] text-slate-700 font-medium space-y-0.5">
+                <li>Recent surgeries or hospitalizations.</li>
+                <li>Current medications (non-psychiatric).</li>
+              </ul>
+
+              <div>
+                <h4 className="font-bold text-xs">Family History</h4>
+                <p className="text-[11px] text-slate-600 leading-snug">
+                  Focus on mental health history, relationship dynamics, and familial influences.
+                </p>
+                <ul className="list-disc pl-5 text-[11px] text-slate-700 font-medium space-y-0.5 my-1">
+                  <li>Mental health issues in the family.</li>
+                  <li>Family dynamics and relationships.</li>
+                  <li>Cultural or religious influences.</li>
+                </ul>
+                <textarea rows={3} placeholder="Detail family history..." className="w-full border border-black p-2 rounded-none bg-transparent focus:outline-none resize-y text-xs" />
+              </div>
+
+              <div>
+                <h4 className="font-bold text-xs">Social History</h4>
+                <p className="text-[11px] text-slate-600 leading-snug">
+                  Describe the client’s social circumstances and relationships.
+                </p>
+                <ul className="list-disc pl-5 text-[11px] text-slate-700 font-medium space-y-0.5 my-1">
+                  <li>Living arrangements.</li>
+                  <li>Employment/financial status.</li>
+                  <li>Support network.</li>
+                  <li>Social and recreational activities.</li>
+                </ul>
+                <textarea rows={3} placeholder="Detail social history..." className="w-full border border-black p-2 rounded-none bg-transparent focus:outline-none resize-y text-xs" />
+              </div>
+
+              <div>
+                <h4 className="font-bold text-xs">Mental Status Examination (MSE)</h4>
+                <p className="text-[11px] text-slate-600 leading-snug">
+                  Provide observations of the client’s behavior and psychological functioning.
+                </p>
+                <ul className="list-disc pl-5 text-[11px] text-slate-700 font-medium space-y-0.5 my-1">
+                  <li><strong>Appearance and behavior:</strong></li>
+                  <li><strong>Speech:</strong></li>
+                  <li><strong>Mood and affect:</strong></li>
+                  <li><strong>Thought process and content:</strong></li>
+                  <li><strong>Perception:</strong></li>
+                  <li><strong>Cognition:</strong></li>
+                  <li><strong>Insight and judgment:</strong></li>
+                </ul>
+                <textarea rows={5} placeholder="Record complete MSE observations..." className="w-full border border-black p-2 rounded-none bg-transparent focus:outline-none resize-y text-xs" />
+              </div>
+
+              <div>
+                <h4 className="font-bold text-xs">Risk Assessment and Psychological Assessment Results</h4>
+                <p className="text-[11px] text-slate-600 leading-snug">
+                  Evaluate any potential risks to the client or others.
+                </p>
+                <ul className="list-disc pl-5 text-[11px] text-slate-700 font-medium space-y-0.5 my-1">
+                  <li><strong>Suicide risk:</strong> Thoughts, intent, plan, access to means.</li>
+                  <li><strong>Self-harm risk:</strong> History or current behavior.</li>
+                  <li><strong>Harm to others:</strong> Aggression, violent tendencies.</li>
+                  <li><strong>Other risks:</strong> Neglect, substance misuse.</li>
+                </ul>
+                <p className="text-[11px] text-slate-600 pt-1">Report any psychological assessment results</p>
+                <textarea rows={4} placeholder="Detail risk assessment and assessment tool scores/results..." className="w-full border border-black p-2 rounded-none bg-transparent focus:outline-none resize-y text-xs" />
+              </div>
+
+              <div>
+                <h4 className="font-bold text-xs">Case Formulation</h4>
+                <p className="text-[11px] text-slate-600 leading-snug">
+                  Summarize the case using the <strong>4 P&apos;s framework</strong>:
+                </p>
+                <ul className="list-disc pl-5 text-[11px] text-slate-700 font-medium space-y-0.5 my-1">
+                  <li><strong>Predisposing factors:</strong> Background factors contributing to vulnerability.</li>
+                  <li><strong>Precipitating factors:</strong> Events triggering the current episode.</li>
+                  <li><strong>Perpetuating factors:</strong> Factors maintaining symptoms.</li>
+                  <li><strong>Protective factors:</strong> Strengths and supports mitigating risk.</li>
+                </ul>
+                <textarea rows={4} placeholder="Detail 4 P's case formulation..." className="w-full border border-black p-2 rounded-none bg-transparent focus:outline-none resize-y text-xs" />
+              </div>
+
+              <div>
+                <h4 className="font-bold text-xs">Provisional Diagnosis</h4>
+                <p className="text-[11px] text-slate-600 leading-snug pb-1">
+                  Provide a clinical diagnosis using the <strong>DSM-5 or ICD-11</strong> criteria. If uncertain, list provisional diagnoses.
+                </p>
+                <textarea rows={2} placeholder="Provisional diagnostic codes and descriptions..." className="w-full border border-black p-2 rounded-none bg-transparent focus:outline-none resize-y text-xs" />
+              </div>
+
+              <div>
+                <h4 className="font-bold text-xs">Differential Diagnosis</h4>
+                <p className="text-[11px] text-slate-600 leading-snug pb-1">
+                  Is it clear enough the diagnosis? Management addressing differential diagnosis includes reviewing old notes both treatment history and medical, obtaining a thorough longitudinal history from the individual and meeting with family members for clarification
+                </p>
+                <textarea rows={3} placeholder="Detail differential diagnosis and clarification strategies..." className="w-full border border-black p-2 rounded-none bg-transparent focus:outline-none resize-y text-xs" />
+              </div>
+
+              <div>
+                <h4 className="font-bold text-xs">Treatment Plan</h4>
+                <p className="text-[11px] text-slate-600 leading-snug">
+                  Outline interventions and recommendations.
+                </p>
+                <ul className="list-disc pl-5 text-[11px] text-slate-700 font-medium space-y-0.5 my-1">
+                  <li><strong>Short-term goals:</strong> Immediate priorities (e.g., safety, symptom stabilization).</li>
+                  <li><strong>Long-term goals:</strong> Broader recovery objectives.</li>
+                  <li><strong>Interventions:</strong> Therapy type, medications, psychoeducation, lifestyle changes.</li>
+                </ul>
+                <textarea rows={4} placeholder="Detail short-term, long-term goals and interventions..." className="w-full border border-black p-2 rounded-none bg-transparent focus:outline-none resize-y text-xs" />
+              </div>
+            </div>
+
+            {/* Footer Copyright Notice */}
+            <div className="text-[9px] text-slate-500 italic text-center pt-2">
+              This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner. - Dr Pau Kee
+            </div>
+          </div>
+
+          {/* PAGE 3 OF FORM 29 */}
+          <div className="space-y-4 bg-white p-6 sm:p-10 border border-black shadow-sm text-xs leading-relaxed">
+            {/* Header Metadata Code (Right Aligned Top) */}
+            <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+              ClinicalCaseStudyFormat_CMHC_UPSI/Pindaan03-29-2026
+            </div>
+
+            <div className="space-y-4 pt-2">
+              <div>
+                <h4 className="font-bold text-xs">Progress and Outcomes</h4>
+                <p className="text-[11px] text-slate-600 leading-snug pb-1">
+                  For ongoing cases, detail the client’s response to treatment and any changes in symptoms or functioning.
+                </p>
+                <textarea rows={4} placeholder="Detail treatment progress, symptom reduction, and functional outcomes..." className="w-full border border-black p-2 rounded-none bg-transparent focus:outline-none resize-y text-xs" />
+              </div>
+
+              <div>
+                <h4 className="font-bold text-xs">Ethical Considerations</h4>
+                <p className="text-[11px] text-slate-600 leading-snug pb-1">
+                  Highlight any ethical issues or challenges encountered in the case.
+                </p>
+                <textarea rows={4} placeholder="Detail confidentiality, consent, dual relationships, or ethical dilemmas..." className="w-full border border-black p-2 rounded-none bg-transparent focus:outline-none resize-y text-xs" />
+              </div>
+
+              <div>
+                <h4 className="font-bold text-xs">Conclusion and Reflection</h4>
+                <p className="text-[11px] text-slate-600 leading-snug pb-1">
+                  Summarize key learnings from the case and its broader implications for mental health practice.
+                </p>
+                <textarea rows={5} placeholder="Counselor's professional reflection and key learnings..." className="w-full border border-black p-2 rounded-none bg-transparent focus:outline-none resize-y text-xs" />
+              </div>
+            </div>
+
+            {/* Footer Copyright Notice */}
+            <div className="text-[9px] text-slate-500 italic text-center pt-32">
+              This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner. - Dr Pau Kee
+            </div>
+          </div>
+        </div>
       ) : (
-        /* Placeholder for Form 29, etc. pending 1:1 PDF Upload */
+        /* Placeholder for Form 30, etc. pending 1:1 PDF Upload */
         <div className="bg-white p-12 border border-slate-300 rounded-2xl shadow-sm text-center max-w-3xl mx-auto space-y-4">
           <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-700 font-black text-xl">
             {currentForm.code}
