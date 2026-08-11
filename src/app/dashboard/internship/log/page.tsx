@@ -807,28 +807,28 @@ export default function InternshipLogbookPage() {
          =================================================================== */}
       {activeSection === 'log' && (
         <div className="space-y-6 bg-white p-6 sm:p-10 border border-black shadow-sm max-w-4xl print:max-w-none print:w-full print:p-0 print:border-none mx-auto text-black">
-          {/* Header Title */}
-          <div className="text-center font-bold space-y-4">
-            <h2 className="text-base sm:text-lg font-black uppercase tracking-wide">
+          {/* Header Title & Aligned Date/Day Inputs */}
+          <div className="space-y-4">
+            <h2 className="text-center text-base sm:text-lg font-black uppercase tracking-wide">
               DAILY LOG (WEEK {selectedWeek})
             </h2>
-            <div className="flex items-center justify-between text-xs font-bold pt-2">
+            <div className="flex items-end justify-between text-xs font-bold pt-2 px-1">
               <div className="flex items-center space-x-2 w-1/2">
-                <span>DATE :</span>
+                <span className="w-14 uppercase tracking-wider">DATE :</span>
                 <input
                   type="text"
-                  placeholder="_____________________"
+                  placeholder=""
                   value={tarikhHari}
                   onChange={(e) => setTarikhHari(e.target.value)}
-                  className="p-1 text-xs border-b border-black font-bold focus:outline-none w-full bg-transparent"
+                  className="flex-1 border-b-2 border-black font-bold focus:outline-none pb-0.5 bg-transparent text-xs"
                 />
               </div>
               <div className="flex items-center space-x-2 w-1/3 justify-end">
-                <span>DAY :</span>
+                <span className="w-12 uppercase tracking-wider text-right">DAY :</span>
                 <input
                   type="text"
-                  placeholder="________________"
-                  className="p-1 text-xs border-b border-black font-bold focus:outline-none w-full bg-transparent"
+                  placeholder=""
+                  className="w-36 border-b-2 border-black font-bold focus:outline-none pb-0.5 bg-transparent text-xs text-center"
                 />
               </div>
             </div>
