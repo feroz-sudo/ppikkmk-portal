@@ -58,9 +58,9 @@ const FORM_SUB_TABS: ClinicalFormSubTab[] = [
   {
     id: "form7",
     code: "Form 7",
-    title: "CRISIS INTERVENTION & RISK ASSESSMENT",
-    pdfRef: "Crisis_Intervention/CMHC_UPSI/Pindaan03-F7-2026",
-    status: "Ready for 1:1 Build"
+    title: "CLINICAL TREATMENT PLAN",
+    pdfRef: "Clinical_Treatment_Plan/CMHC_UPSI/Pindaan03-07-2026",
+    status: "1:1 Exact Replica Complete"
   },
   {
     id: "form8",
@@ -1243,8 +1243,120 @@ export default function ClinicalFormsHubPage() {
             </div>
           </div>
         </div>
+      ) : activeTab === "form7" ? (
+        /* ===================================================================
+            FORM 7: CLINICAL TREATMENT PLAN (1:1 VECTOR REPLICA)
+           =================================================================== */
+        <div className="space-y-4 bg-white p-6 sm:p-10 border border-black shadow-sm max-w-4xl mx-auto text-black text-xs leading-relaxed">
+          {/* Header Metadata Code (Right Aligned Top) */}
+          <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+            Clinical_Treatment_Plan/CMHC_UPSI/Pindaan03-07-2026
+          </div>
+
+          {/* Logo & Center Title Block */}
+          <div className="relative flex items-center justify-center pb-4 mb-4 border-b border-black">
+            <img src="/upsi-logo.png" alt="UPSI Emblem" className="absolute left-0 top-0 h-16 w-auto object-contain" />
+            <div className="text-center font-bold">
+              <h2 className="text-base sm:text-lg font-black tracking-wide leading-tight uppercase">
+                CLINICAL TREATMENT PLAN
+              </h2>
+              <p className="text-xs uppercase tracking-tight">INTERNSHIP IN CLINICAL MENTAL HEALTH COUNSELING</p>
+              <p className="text-xs uppercase font-black tracking-wider">UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
+            </div>
+          </div>
+
+          {/* Demographics & Theoretical Orientation Block */}
+          <div className="space-y-2 pt-2 font-bold">
+            <div className="flex items-center space-x-2">
+              <span className="w-44">Client Full Name</span>
+              <span>:</span>
+              <input type="text" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+            </div>
+            <div className="flex items-center space-x-2">
+              <span className="w-44">Ethnic/Sex</span>
+              <span>:</span>
+              <input type="text" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+            </div>
+            <div className="flex items-center space-x-2">
+              <span className="w-44">Age</span>
+              <span>:</span>
+              <input type="text" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+            </div>
+            <div className="flex items-center space-x-2">
+              <span className="w-44">Diagnosis</span>
+              <span>:</span>
+              <input type="text" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+            </div>
+            <div className="flex items-center space-x-2 pt-2">
+              <span className="w-44">Theoretical Orientation</span>
+              <span>:</span>
+              <input type="text" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+            </div>
+          </div>
+
+          {/* 3-Column Goal / Intervention Matrix Grid */}
+          <div className="overflow-x-auto pt-4">
+            <table className="w-full border-collapse border border-black text-xs text-left">
+              <thead>
+                <tr className="bg-slate-100 border-b border-black font-bold text-center">
+                  <th className="border border-black p-2 w-1/3">Goal(s)</th>
+                  <th className="border border-black p-2 w-1/3">Therapeutic Intervention</th>
+                  <th className="border border-black p-2 w-1/3">Outcome Measures of Change</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[1, 2, 3].map((rowNum) => (
+                  <tr key={rowNum} className="border-b border-black h-48 align-top">
+                    <td className="border border-black p-2">
+                      <textarea
+                        rows={8}
+                        placeholder={`Clinical Goal #${rowNum}...`}
+                        className="w-full h-full bg-transparent border-0 focus:outline-none resize-none p-1"
+                      />
+                    </td>
+                    <td className="border border-black p-2">
+                      <textarea
+                        rows={8}
+                        placeholder={`Therapeutic Intervention #${rowNum}...`}
+                        className="w-full h-full bg-transparent border-0 focus:outline-none resize-none p-1"
+                      />
+                    </td>
+                    <td className="border border-black p-2">
+                      <textarea
+                        rows={8}
+                        placeholder={`Outcome Measures of Change #${rowNum}...`}
+                        className="w-full h-full bg-transparent border-0 focus:outline-none resize-none p-1"
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Sign-off Trainee Block */}
+          <div className="space-y-4 pt-8 text-xs font-bold border-t border-slate-300">
+            <p>Report by:</p>
+            <div className="w-72 border-b border-black pb-1">
+              <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
+            </div>
+            <div className="text-[11px] leading-tight font-normal">
+              <p className="font-bold">CMHC Counselor Trainee</p>
+              <p>Universiti Pendidikan Sultan Idris</p>
+              <p>35900 Tanjong Malim, Perak</p>
+            </div>
+          </div>
+
+          {/* Footer Confidential Notice */}
+          <div className="pt-8 border-t border-slate-300 text-center">
+            <p className="font-bold text-xs">Confidential Document (For Professional Use Only)</p>
+            <p className="text-[9px] text-slate-500 italic mt-0.5">
+              This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner. - Dr Pau Kee
+            </p>
+          </div>
+        </div>
       ) : (
-        /* Placeholder for Form 7, Form 8, etc. pending 1:1 PDF Upload */
+        /* Placeholder for Form 8, etc. pending 1:1 PDF Upload */
         <div className="bg-white p-12 border border-slate-300 rounded-2xl shadow-sm text-center max-w-3xl mx-auto space-y-4">
           <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-700 font-black text-xl">
             {currentForm.code}
