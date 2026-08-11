@@ -173,6 +173,13 @@ const FORM_SUB_TABS: ClinicalFormSubTab[] = [
     title: "PFA/MHPSS HOURS LOG",
     pdfRef: "PFA/MHPSS_Hours_Log/CMHC_UPSI/Pindaan03-23-2026",
     status: "1:1 Exact Replica Complete"
+  },
+  {
+    id: "form24",
+    code: "Form 24",
+    title: "PSYCHOEDUCATION AND COMMUNITY PROGRAM LOG",
+    pdfRef: "Pscyhoeducation and Community Program Log/CMHC_UPSI/Pindaan03-24-2026",
+    status: "1:1 Exact Replica Complete"
   }
 ];
 
@@ -4047,8 +4054,103 @@ export default function ClinicalFormsHubPage() {
             This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner - Dr Pau Kee
           </div>
         </div>
+      ) : activeTab === "form24" ? (
+        /* ===================================================================
+            FORM 24: PSYCHOEDUCATION AND COMMUNITY PROGRAM LOG (1:1 REPLICA)
+           =================================================================== */
+        <div className="space-y-4 bg-white p-6 sm:p-10 border border-black shadow-sm max-w-5xl mx-auto text-black text-xs">
+          {/* Header Metadata Code (Right Aligned Top) */}
+          <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+            Pscyhoeducation and Community Program Log/CMHC_UPSI/Pindaan03-24-2026
+          </div>
+
+          {/* Logo & Center Title Block */}
+          <div className="relative flex items-center justify-center pb-4 mb-2 border-b border-black">
+            <img src="/upsi-logo.png" alt="UPSI Emblem" className="absolute left-0 top-0 h-16 w-auto object-contain" />
+            <div className="text-center font-bold space-y-1">
+              <h2 className="text-base sm:text-lg font-black tracking-wide leading-tight uppercase">PSYCHOEDUCATION AND COMMUNITY PROGRAM LOG</h2>
+              <p className="text-xs uppercase tracking-tight">INTERNSHIP FOR CLINICAL MENTAL HEALTH COUNSELING</p>
+              <p className="text-xs uppercase font-black tracking-wider">UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
+            </div>
+          </div>
+
+          {/* 30-Row Log Table Grid */}
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse border border-black text-xs text-left">
+              <thead>
+                <tr className="bg-slate-100 border-b border-black font-bold text-center">
+                  <th className="border border-black p-1.5 w-12">Bil.</th>
+                  <th className="border border-black p-1.5 w-28">Date</th>
+                  <th className="border border-black p-1.5">Name of the Program</th>
+                  <th className="border border-black p-1.5">Venue</th>
+                  <th className="border border-black p-1.5 w-36 leading-tight">
+                    Number of<br />Participants Involved
+                  </th>
+                  <th className="border border-black p-1.5 w-24">Time</th>
+                  <th className="border border-black p-1.5 w-24">Duration</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Array.from({ length: 30 }, (_, i) => i + 1).map(num => (
+                  <tr key={num} className="border-b border-black h-7">
+                    <td className="border border-black p-1 text-center font-bold">{num}.</td>
+                    <td className="border border-black p-0.5"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                    <td className="border border-black p-0.5"><input type="text" className="w-full bg-transparent border-0 focus:outline-none px-1" /></td>
+                    <td className="border border-black p-0.5"><input type="text" className="w-full bg-transparent border-0 focus:outline-none px-1" /></td>
+                    <td className="border border-black p-0.5"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                    <td className="border border-black p-0.5"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                    <td className="border border-black p-0.5"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Sign-off & Endorsement Footer */}
+          <div className="grid grid-cols-3 gap-6 pt-6 text-xs font-bold border-t border-slate-300">
+            <div className="space-y-8">
+              <p>Prepared By:</p>
+              <div className="border-b border-black pb-1">
+                <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
+              </div>
+              <div className="text-[11px] leading-tight font-normal">
+                <p className="font-bold">CMHC Counselor Trainee</p>
+                <p>Universiti Pendidikan Sultan Idris</p>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+              </div>
+            </div>
+
+            <div className="space-y-8">
+              <p>Endorsed By:</p>
+              <div className="border-b border-black pb-1">
+                <span>( </span><input type="text" placeholder="Site Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
+              </div>
+              <div className="text-[11px] leading-tight font-normal">
+                <p className="font-bold">Site Supervisor</p>
+                <p>Institution: <input type="text" placeholder="Site Name" className="border-b border-black w-32 focus:outline-none bg-transparent" /></p>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+              </div>
+            </div>
+
+            <div className="space-y-8">
+              <p>Verified By:</p>
+              <div className="border-b border-black pb-1">
+                <span>( </span><input type="text" placeholder="Academic Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
+              </div>
+              <div className="text-[11px] leading-tight font-normal">
+                <p className="font-bold">University Academic Supervisor</p>
+                <p>Universiti Pendidikan Sultan Idris</p>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-[9px] text-slate-500 italic text-center pt-2">
+            This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner - Dr Pau Kee
+          </div>
+        </div>
       ) : (
-        /* Placeholder for Form 24, etc. pending 1:1 PDF Upload */
+        /* Placeholder for Form 25, etc. pending 1:1 PDF Upload */
         <div className="bg-white p-12 border border-slate-300 rounded-2xl shadow-sm text-center max-w-3xl mx-auto space-y-4">
           <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-700 font-black text-xl">
             {currentForm.code}
