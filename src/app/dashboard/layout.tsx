@@ -365,11 +365,66 @@ function SidebarNavContent({
                                 )}
                             </div>
 
-                            {/* CLINICAL FORMS HUB DIRECT LINK */}
-                            <Link href="/dashboard/internship/forms" onClick={handleLinkClick} className={getLinkClass("/dashboard/internship/forms")}>
-                                <FileText size={20} className="text-emerald-400" />
-                                <span className="font-bold text-emerald-300">Clinical Forms (30 Forms)</span>
-                            </Link>
+                             {/* CLINICAL FORMS DROPDOWN MAIN FOLDER */}
+                             <div className="mt-1">
+                                 <button
+                                     onClick={() => toggleForms()}
+                                     className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg transition-colors ${isFormsOpen ? 'bg-white/10 font-bold' : 'hover:bg-white/10'}`}
+                                 >
+                                     <div className="flex items-center space-x-3">
+                                         <FileText size={20} className={isFormsOpen ? "text-white" : "text-emerald-400"} />
+                                         <span className="font-bold text-emerald-300">Clinical Forms</span>
+                                     </div>
+                                     {isFormsOpen ? <ChevronDown size={14} className="text-emerald-300" /> : <ChevronRight size={14} className="text-slate-300" />}
+                                 </button>
+
+                                 {isFormsOpen && (
+                                     <div className="mt-1 ml-3 pl-3 border-l border-emerald-500/30 space-y-1 py-1 max-h-96 overflow-y-auto pr-1">
+                                         {[
+                                             { id: "form1", code: "FORM 1", title: "INDIVIDUAL COUNSELING HOURS LOG" },
+                                             { id: "form2", code: "FORM 2", title: "INDIVIDUAL COUNSELING RECORD LOG" },
+                                             { id: "form3", code: "FORM 3", title: "INFORMED CONSENT (INDIVIDUAL)" },
+                                             { id: "form4", code: "FORM 4", title: "CLIENT REGISTRATION FORM" },
+                                             { id: "form5", code: "FORM 5", title: "PSYCHOLOGICAL INTAKE REPORT" },
+                                             { id: "form6", code: "FORM 6", title: "CASE CONCEPTUALIZATION" },
+                                             { id: "form7", code: "FORM 7", title: "CLINICAL TREATMENT PLAN" },
+                                             { id: "form8", code: "FORM 8", title: "CASE NOTES (SOAP FORMAT)" },
+                                             { id: "form9", code: "FORM 9", title: "TERMINATION (INDIVIDUAL)" },
+                                             { id: "form10", code: "FORM 10", title: "GROUP COUNSELING HOURS LOG" },
+                                             { id: "form11", code: "FORM 11", title: "GROUP COUNSELING RECORD LOG" },
+                                             { id: "form12", code: "FORM 12", title: "INFORMED CONSENT (GROUP)" },
+                                             { id: "form13", code: "FORM 13", title: "GROUP COUNSELING REPORT" },
+                                             { id: "form14", code: "FORM 14", title: "TERMINATION (GROUP)" },
+                                             { id: "form15", code: "FORM 15", title: "PSYCHOLOGICAL ASSESSMENT REPORT" },
+                                             { id: "form16", code: "FORM 16", title: "CRISIS INTERVENTION REPORT" },
+                                             { id: "form17", code: "FORM 17", title: "CONSULTATION REPORT" },
+                                             { id: "form18", code: "FORM 18", title: "PFA / MHPSS REPORT" },
+                                             { id: "form19", code: "FORM 19", title: "PSYCHOEDUCATION REPORT" },
+                                             { id: "form20", code: "FORM 20", title: "PROFESSIONAL DEVELOPMENT REPORT" },
+                                             { id: "form21", code: "FORM 21", title: "CONSULTATION HOURS LOG" },
+                                             { id: "form22", code: "FORM 22", title: "CRISIS INTERVENTION LOG" },
+                                             { id: "form23", code: "FORM 23", title: "PFA / MHPSS HOURS LOG" },
+                                             { id: "form24", code: "FORM 24", title: "PSYCHOEDUCATION PROGRAM LOG" },
+                                             { id: "form25", code: "FORM 25", title: "PROFESSIONAL DEVELOPMENT LOG" },
+                                             { id: "form26", code: "FORM 26", title: "PSYCHOLOGICAL ASSESSMENT LOG" },
+                                             { id: "form27", code: "FORM 27", title: "INTERNSHIP SUPERVISION LOG" },
+                                             { id: "form28", code: "FORM 28", title: "TOTAL CMHC HOURS SUMMARY" },
+                                             { id: "form29", code: "FORM 29", title: "CLINICAL CASE STUDY FORMAT" },
+                                             { id: "form30", code: "FORM 30", title: "WEEKLY TOTAL CLINICAL HOURS" },
+                                         ].map((f) => (
+                                             <Link
+                                                 key={f.id}
+                                                 href={`/dashboard/internship/forms?tab=${f.id}`}
+                                                 onClick={handleLinkClick}
+                                                 className="flex items-center space-x-2 py-1.5 px-2 rounded hover:bg-white/10 text-slate-200 transition text-[10px] font-bold uppercase tracking-tight"
+                                             >
+                                                 <FileText size={12} className="text-emerald-400 shrink-0" />
+                                                 <span className="truncate">{f.code}: {f.title}</span>
+                                             </Link>
+                                         ))}
+                                     </div>
+                                 )}
+                             </div>
                         </>
                     )}
 
