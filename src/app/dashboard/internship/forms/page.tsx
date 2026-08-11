@@ -215,6 +215,13 @@ const FORM_SUB_TABS: ClinicalFormSubTab[] = [
     title: "CLINICAL CASE STUDY FORMAT",
     pdfRef: "ClinicalCaseStudyFormat_CMHC_UPSI/Pindaan03-29-2026",
     status: "1:1 Exact Replica Complete"
+  },
+  {
+    id: "form30",
+    code: "Form 30",
+    title: "WEEKLY TOTAL CLINICAL HOURS",
+    pdfRef: "Weekly_Total_Clinical_Hours/CMHC_UPSI/Pindaan03-30-2026",
+    status: "1:1 Exact Replica Complete"
   }
 ];
 
@@ -5014,8 +5021,207 @@ export default function ClinicalFormsHubPage() {
             </div>
           </div>
         </div>
+      ) : activeTab === "form30" ? (
+        /* ===================================================================
+            FORM 30: WEEKLY TOTAL CLINICAL HOURS (1:1 VECTOR REPLICA)
+           =================================================================== */
+        <div className="space-y-4 bg-white p-6 sm:p-10 border border-black shadow-sm max-w-5xl mx-auto text-black text-xs leading-relaxed">
+          {/* Header Metadata Code (Right Aligned Top) */}
+          <div className="text-right text-[10px] italic font-serif text-slate-700 pb-2">
+            Weekly_Total_Clinical_Hours/CMHC_UPSI/Pindaan03-30-2026
+          </div>
+
+          {/* Title Block */}
+          <div className="text-center font-bold pb-2 space-y-1">
+            <h2 className="text-base sm:text-lg font-black tracking-wide uppercase">
+              WEEKLY TOTAL CLINICAL HOURS
+            </h2>
+            <p className="text-xs uppercase tracking-tight">INTERNSHIP FOR CLINICAL MENTAL HEALTH COUNSELING</p>
+            <p className="text-xs uppercase font-black tracking-wider">UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
+          </div>
+
+          {/* Week & Date Top Fields */}
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center font-bold gap-4 pb-2">
+            <div className="flex items-center space-x-2 flex-1 w-full">
+              <span className="whitespace-nowrap">WEEK:</span>
+              <input type="text" placeholder="e.g. Week 1" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+            </div>
+            <div className="flex items-center space-x-2 flex-1 w-full">
+              <span className="whitespace-nowrap">DATE:</span>
+              <input type="text" placeholder="YYYY-MM-DD" className="flex-1 border-b border-black font-bold focus:outline-none bg-transparent p-0.5" />
+            </div>
+          </div>
+
+          {/* Weekly Clinical Hours Breakdown Table Grid with Orange Header */}
+          <div className="overflow-x-auto pt-2">
+            <table className="w-full border-collapse border border-black text-xs text-left">
+              <thead>
+                <tr className="bg-[#fce5cd] border-b border-black font-bold text-center">
+                  <th className="border border-black p-2 w-12">Bil.</th>
+                  <th className="border border-black p-2">Activities</th>
+                  <th className="border border-black p-2 w-36">Current Week Total Hours</th>
+                  <th className="border border-black p-2 w-36">Past Week Total Hours</th>
+                  <th className="border border-black p-2 w-40">Overall Cumulative Hours</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* 1. Face-to-Face Clinical Services */}
+                <tr className="bg-slate-200 border-b border-black font-bold">
+                  <td className="border border-black p-2 text-center">1.</td>
+                  <td className="border border-black p-2" colSpan={4}>Face-to-Face Clinical Services</td>
+                </tr>
+                <tr className="border-b border-black">
+                  <td className="border border-black p-2 text-center"></td>
+                  <td className="border border-black p-2 font-medium">Individual Counseling (132-140 hours)</td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold" /></td>
+                </tr>
+                <tr className="border-b border-black">
+                  <td className="border border-black p-2 text-center"></td>
+                  <td className="border border-black p-2 font-medium">Group Counseling (60-65 hours)</td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold" /></td>
+                </tr>
+
+                {/* 2. Professional Activities Related to Clinical Works */}
+                <tr className="bg-slate-200 border-b border-black font-bold">
+                  <td className="border border-black p-2 text-center">2.</td>
+                  <td className="border border-black p-2" colSpan={4}>Professional Activities Related to Clinical Works</td>
+                </tr>
+                <tr className="border-b border-black">
+                  <td className="border border-black p-2 text-center"></td>
+                  <td className="border border-black p-2 font-medium">Crisis Intervention (15 hours)</td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold" /></td>
+                </tr>
+                <tr className="border-b border-black">
+                  <td className="border border-black p-2 text-center"></td>
+                  <td className="border border-black p-2 font-medium">PFA/MHPSS (40 hours)</td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold" /></td>
+                </tr>
+                <tr className="border-b border-black">
+                  <td className="border border-black p-2 text-center"></td>
+                  <td className="border border-black p-2 font-medium">Psychological Assessment (30 hours)</td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold" /></td>
+                </tr>
+                <tr className="border-b border-black">
+                  <td className="border border-black p-2 text-center"></td>
+                  <td className="border border-black p-2 font-medium">Psychoeducation/Community Activities (30 hours)</td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold" /></td>
+                </tr>
+                <tr className="border-b border-black">
+                  <td className="border border-black p-2 text-center"></td>
+                  <td className="border border-black p-2 font-medium">Family/Parents/Guardian Consutation (25 Hours)</td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold" /></td>
+                </tr>
+
+                {/* 3. Cliical Case Study */}
+                <tr className="bg-slate-200 border-b border-black font-bold">
+                  <td className="border border-black p-2 text-center">3.</td>
+                  <td className="border border-black p-2" colSpan={4}>Cliical Case Study</td>
+                </tr>
+                <tr className="border-b border-black">
+                  <td className="border border-black p-2 text-center"></td>
+                  <td className="border border-black p-2 font-medium">Clinical Case Study Writing & Presentation of Clinical Case (10 Hours)</td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold" /></td>
+                </tr>
+
+                {/* 4. Management and Administration */}
+                <tr className="bg-slate-200 border-b border-black font-bold">
+                  <td className="border border-black p-2 text-center">4.</td>
+                  <td className="border border-black p-2" colSpan={4}>Management and Administration</td>
+                </tr>
+                <tr className="border-b border-black">
+                  <td className="border border-black p-2 text-center"></td>
+                  <td className="border border-black p-2 font-medium">Record and Logbook Management, Clinical Report Writing, Reflection, & Clinical Supervision (146-150 hours)</td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold" /></td>
+                </tr>
+
+                {/* 5. Professional Development */}
+                <tr className="bg-slate-200 border-b border-black font-bold">
+                  <td className="border border-black p-2 text-center">5.</td>
+                  <td className="border border-black p-2" colSpan={4}>Professional Development</td>
+                </tr>
+                <tr className="border-b border-black">
+                  <td className="border border-black p-2 text-center"></td>
+                  <td className="border border-black p-2 font-medium">Presenter/Participants in Professional Conferences or Webinar Related to Mental Health (Physically or Virtually) (20 hours)</td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none" /></td>
+                  <td className="border border-black p-1 text-center"><input type="text" className="w-full text-center bg-transparent border-0 focus:outline-none font-bold" /></td>
+                </tr>
+
+                {/* TOTAL HOURS */}
+                <tr className="bg-slate-300 border-b-2 border-black font-black">
+                  <td className="border border-black p-2 text-center" colSpan={2}>TOTAL HOURS</td>
+                  <td className="border border-black p-1 text-center"><input type="text" placeholder="0" className="w-full text-center bg-transparent border-0 focus:outline-none font-black text-emerald-800" /></td>
+                  <td className="border border-black p-1 text-center"><input type="text" placeholder="0" className="w-full text-center bg-transparent border-0 focus:outline-none font-black text-emerald-800" /></td>
+                  <td className="border border-black p-1 text-center"><input type="text" placeholder="0" className="w-full text-center bg-transparent border-0 focus:outline-none font-black text-emerald-800 text-sm" /></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          {/* Sign-off & Endorsement Footer Block */}
+          <div className="grid grid-cols-3 gap-6 pt-6 text-xs font-bold border-t border-slate-300">
+            <div className="space-y-8">
+              <p>Prepared By:</p>
+              <div className="border-b border-black pb-1">
+                <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
+              </div>
+              <div className="text-[11px] leading-tight font-normal">
+                <p className="font-bold">CMHC Counselor Trainee</p>
+                <p>Universiti Pendidikan Sultan Idris</p>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+              </div>
+            </div>
+
+            <div className="space-y-8">
+              <p>Endorsed By:</p>
+              <div className="border-b border-black pb-1">
+                <span>( </span><input type="text" placeholder="Site Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
+              </div>
+              <div className="text-[11px] leading-tight font-normal">
+                <p className="font-bold">Site Supervisor</p>
+                <p>Institution: <input type="text" placeholder="Site Name" className="border-b border-black w-32 focus:outline-none bg-transparent" /></p>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+              </div>
+            </div>
+
+            <div className="space-y-8">
+              <p>Verified By:</p>
+              <div className="border-b border-black pb-1">
+                <span>( </span><input type="text" placeholder="Academic Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
+              </div>
+              <div className="text-[11px] leading-tight font-normal">
+                <p className="font-bold">University Academic Supervisor</p>
+                <p>Universiti Pendidikan Sultan Idris</p>
+                <div className="flex items-center space-x-1 mt-2"><span>Date:</span><input type="text" placeholder="YYYY-MM-DD" className="border-b border-black w-24 focus:outline-none bg-transparent font-bold" /></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Footer Copyright Notice */}
+          <div className="text-[9px] text-slate-500 italic text-center pt-2">
+            This clinical form is protected by copyright. You are not permitted to modify, reproduce, distribute, or reuse any part of this form without prior written permission from the form owner - Dr Pau Kee
+          </div>
+        </div>
       ) : (
-        /* Placeholder for Form 30, etc. pending 1:1 PDF Upload */
+        /* Placeholder for Form 31, etc. pending 1:1 PDF Upload */
         <div className="bg-white p-12 border border-slate-300 rounded-2xl shadow-sm text-center max-w-3xl mx-auto space-y-4">
           <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-700 font-black text-xl">
             {currentForm.code}
