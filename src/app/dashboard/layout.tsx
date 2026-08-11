@@ -447,7 +447,7 @@ export default function DashboardLayout({
     const { user, userRole, loading, signOut, userProfile } = useAuth();
     const router = useRouter();
     const pathname = usePathname();
-    const [isFormsOpen, setIsFormsOpen] = useState(false);
+    const [isFormsOpen, setIsFormsOpen] = useState(true);
     const [isWeeklyFormsOpen, setIsWeeklyFormsOpen] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Default closed on mobile
     const [isMobile, setIsMobile] = useState(false);
