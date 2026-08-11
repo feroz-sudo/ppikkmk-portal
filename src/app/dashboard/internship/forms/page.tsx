@@ -15,210 +15,210 @@ interface ClinicalFormSubTab {
 const FORM_SUB_TABS: ClinicalFormSubTab[] = [
   {
     id: "form1",
-    code: "Form 1",
+    code: "FORM 1 INDIVIDUAL COUNSELING HOURS LOG",
     title: "INDIVIDUAL COUNSELING HOURS LOG",
     pdfRef: "Individual_Counseling_Hours_Log/CMHC_UPSI/Pindaan03-F1-2026",
     status: "1:1 Exact Replica Complete"
   },
   {
     id: "form2",
-    code: "Form 2",
+    code: "FORM 2 INDIVIDUAL COUNSELING RECORD LOG",
     title: "INDIVIDUAL COUNSELING RECORD LOG",
     pdfRef: "Individual_Counseling_Record_Log/CMHC_UPSI/Pindaan03-F2-2026",
     status: "1:1 Exact Replica Complete"
   },
   {
     id: "form3",
-    code: "Form 3",
+    code: "FORM 3 INFORMED CONSENT FORM FOR INDIVIDUAL COUNSELING",
     title: "INFORMED CONSENT FORM FOR INDIVIDUAL COUNSELING",
     pdfRef: "Individual_Counseling_Informed_Consent/CMHC_UPSI/Pindaan03-F3-2026",
     status: "1:1 Exact Replica Complete"
   },
   {
     id: "form4",
-    code: "Form 4",
+    code: "FORM 4 CLIENT REGISTRATION FORM",
     title: "CLIENT REGISTRATION FORM",
     pdfRef: "Client_Registration_Form/CMHC_UPSI/Pindaan02-04-2026",
     status: "1:1 Exact Replica Complete"
   },
   {
     id: "form5",
-    code: "Form 5",
+    code: "FORM 5 PSYCHOLOGICAL INTAKE REPORT",
     title: "PSYCHOLOGICAL INTAKE REPORT",
     pdfRef: "Psychological_Intake_Report/CMHC_UPSI/Pindaan03_05_2026",
     status: "1:1 Exact Replica Complete"
   },
   {
     id: "form6",
-    code: "Form 6",
+    code: "FORM 6 CASE CONCEPTUALIZATION",
     title: "CASE CONCEPTUALIZATION",
     pdfRef: "Case_Conceptualization/CMHC_UPSI/Pindaan03-06-2026",
     status: "1:1 Exact Replica Complete"
   },
   {
     id: "form7",
-    code: "Form 7",
+    code: "FORM 7 CLINICAL TREATMENT PLAN",
     title: "CLINICAL TREATMENT PLAN",
     pdfRef: "Clinical_Treatment_Plan/CMHC_UPSI/Pindaan03-07-2026",
     status: "1:1 Exact Replica Complete"
   },
   {
     id: "form8",
-    code: "Form 8",
+    code: "FORM 8 CASE NOTES (SOAP FORMAT)",
     title: "CASE NOTES (SOAP FORMAT)",
     pdfRef: "Case_Notes/CMHC_UPSI/Pindaan03-08-2026",
     status: "1:1 Exact Replica Complete"
   },
   {
     id: "form9",
-    code: "Form 9",
+    code: "FORM 9 TERMINATION OF INDIVIDUAL COUNSELING SESSION",
     title: "TERMINATION OF INDIVIDUAL COUNSELING SESSION",
     pdfRef: "Termination_Individual Counseling Session/CMHC_UPSI/Pindaan03-09-2026",
     status: "1:1 Exact Replica Complete"
   },
   {
     id: "form10",
-    code: "Form 10",
+    code: "FORM 10 GROUP COUNSELING HOURS LOG",
     title: "GROUP COUNSELING HOURS LOG",
     pdfRef: "Group_Counseling_Hours_Log/CMHC_UPSI/Pindaan03-10-2026",
     status: "1:1 Exact Replica Complete"
   },
   {
     id: "form11",
-    code: "Form 11",
+    code: "FORM 11 GROUP COUNSELING RECORD LOG",
     title: "GROUP COUNSELING RECORD LOG",
     pdfRef: "Group_Counseling_Record_Log/CMHC_UPSI/Pindaan03-11-2026",
     status: "1:1 Exact Replica Complete"
   },
   {
     id: "form12",
-    code: "Form 12",
+    code: "FORM 12 INFORMED CONSENT FORM FOR GROUP COUNSELING",
     title: "INFORMED CONSENT FORM FOR GROUP COUNSELING",
     pdfRef: "Group_Counseling_Informed_Consent/CMHC_UPSI/Pindaan03-12-2026",
     status: "1:1 Exact Replica Complete"
   },
   {
     id: "form13",
-    code: "Form 13",
+    code: "FORM 13 GROUP COUNSELING REPORT",
     title: "GROUP COUNSELING REPORT",
     pdfRef: "Group_Counseling_Report/CMHC_UPSI/Pindaan03-13-2026",
     status: "1:1 Exact Replica Complete"
   },
   {
     id: "form14",
-    code: "Form 14",
+    code: "FORM 14 TERMINATION SESSION FOR GROUP COUNSELING",
     title: "TERMINATION SESSION FOR GROUP COUNSELING",
     pdfRef: "Group_Termination_Session/CMHC_UPSI/Pindaan03-14-2026",
     status: "1:1 Exact Replica Complete"
   },
   {
     id: "form15",
-    code: "Form 15",
+    code: "FORM 15 PSYCHOLOGICAL ASSESSMENT REPORT",
     title: "PSYCHOLOGICAL ASSESSMENT REPORT",
     pdfRef: "Psychological_Assessment_Report/CMHC_UPSI/Pindaan03_15-2026",
     status: "1:1 Exact Replica Complete"
   },
   {
     id: "form16",
-    code: "Form 16",
+    code: "FORM 16 CRISIS INTERVENTION REPORT",
     title: "CRISIS INTERVENTION REPORT",
     pdfRef: "Crisis_Intervention_Report/CMHC_UPSI/Pindaan03-16-2026",
     status: "1:1 Exact Replica Complete"
   },
   {
     id: "form17",
-    code: "Form 17",
+    code: "FORM 17 CONSULTATION REPORT",
     title: "CONSULTATION REPORT",
     pdfRef: "Consultation_Report/CMHC_UPSI/Pindaan03-17-2026",
     status: "1:1 Exact Replica Complete"
   },
   {
     id: "form18",
-    code: "Form 18",
+    code: "FORM 18 PSYCHOLOGICAL FIRST AID / MHPSS REPORT",
     title: "PSYCHOLOGICAL FIRST AID / MHPSS REPORT",
     pdfRef: "PFA/MHPSS_Report/CMHC_UPSI/Pindaan03-18-2026",
     status: "1:1 Exact Replica Complete"
   },
   {
     id: "form19",
-    code: "Form 19",
+    code: "FORM 19 PSYCHOEDUCATION / COMMUNITY PROGRAM REPORT",
     title: "PSYCHOEDUCATION / COMMUNITY PROGRAM REPORT",
     pdfRef: "Psychoeducation/Community_Program/CMHC_UPSI/Pindaan03-19-2026",
     status: "1:1 Exact Replica Complete"
   },
   {
     id: "form20",
-    code: "Form 20",
+    code: "FORM 20 PROFESSIONAL DEVELOPMENT REPORT",
     title: "PROFESSIONAL DEVELOPMENT REPORT",
     pdfRef: "Professional_Development_Report/CMHC_UPSI/Pindaan03-20-2026",
     status: "1:1 Exact Replica Complete"
   },
   {
     id: "form21",
-    code: "Form 21",
+    code: "FORM 21 CONSULTATION HOURS LOG",
     title: "CONSULTATION HOURS LOG",
     pdfRef: "Consultation_Hours_Log/CMHC_UPSI/Pindaan03-21-2026",
     status: "1:1 Exact Replica Complete"
   },
   {
     id: "form22",
-    code: "Form 22",
+    code: "FORM 22 CRISIS INTERVENTION HOURS LOG",
     title: "CRISIS INTERVENTION HOURS LOG",
     pdfRef: "Crisis Intervention_Hours_Log/CMHC_UPSI/Pindaan03-22-2026",
     status: "1:1 Exact Replica Complete"
   },
   {
     id: "form23",
-    code: "Form 23",
+    code: "FORM 23 PFA/MHPSS HOURS LOG",
     title: "PFA/MHPSS HOURS LOG",
     pdfRef: "PFA/MHPSS_Hours_Log/CMHC_UPSI/Pindaan03-23-2026",
     status: "1:1 Exact Replica Complete"
   },
   {
     id: "form24",
-    code: "Form 24",
+    code: "FORM 24 PSYCHOEDUCATION AND COMMUNITY PROGRAM LOG",
     title: "PSYCHOEDUCATION AND COMMUNITY PROGRAM LOG",
     pdfRef: "Pscyhoeducation and Community Program Log/CMHC_UPSI/Pindaan03-24-2026",
     status: "1:1 Exact Replica Complete"
   },
   {
     id: "form25",
-    code: "Form 25",
+    code: "FORM 25 PROFESSIONAL DEVELOPMENT LOG",
     title: "PROFESSIONAL DEVELOPMENT LOG",
     pdfRef: "Professional Development Log/CMHC_UPSI/Pindaan03-25-2026",
     status: "1:1 Exact Replica Complete"
   },
   {
     id: "form26",
-    code: "Form 26",
+    code: "FORM 26 PSYCHOLOGICAL ASSESSMENT LOG",
     title: "PSYCHOLOGICAL ASSESSMENT LOG",
     pdfRef: "Psychological Assessment Log/CMHC_UPSI/Pindaan03-26-2026",
     status: "1:1 Exact Replica Complete"
   },
   {
     id: "form27",
-    code: "Form 27",
+    code: "FORM 27 INTERNSHIP SUPERVISION LOG",
     title: "INTERNSHIP SUPERVISION LOG",
     pdfRef: "Supervision Log/CMHC_UPSI/Pindaan03-27-2025",
     status: "1:1 Exact Replica Complete"
   },
   {
     id: "form28",
-    code: "Form 28",
+    code: "FORM 28 SUMMARY OF TOTAL CMHC INTERNSHIP HOURS",
     title: "SUMMARY OF TOTAL CMHC INTERNSHIP HOURS",
     pdfRef: "Total_CMHC Internship_Hours/CMHC_UPSI/Pindaan03-28-2025",
     status: "1:1 Exact Replica Complete"
   },
   {
     id: "form29",
-    code: "Form 29",
+    code: "FORM 29 CLINICAL CASE STUDY FORMAT",
     title: "CLINICAL CASE STUDY FORMAT",
     pdfRef: "ClinicalCaseStudyFormat_CMHC_UPSI/Pindaan03-29-2026",
     status: "1:1 Exact Replica Complete"
   },
   {
     id: "form30",
-    code: "Form 30",
+    code: "FORM 30 WEEKLY TOTAL CLINICAL HOURS",
     title: "WEEKLY TOTAL CLINICAL HOURS",
     pdfRef: "Weekly_Total_Clinical_Hours/CMHC_UPSI/Pindaan03-30-2026",
     status: "1:1 Exact Replica Complete"

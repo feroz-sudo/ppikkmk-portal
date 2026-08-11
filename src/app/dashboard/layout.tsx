@@ -309,64 +309,11 @@ function SidebarNavContent({
                                 )}
                             </div>
 
-                            {/* FORMS DROPDOWN */}
-                            <div className="mt-2">
-                                <button
-                                    onClick={() => toggleForms()}
-                                    className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg transition-colors mt-2 ${isFormsOpen ? 'bg-white/10 font-bold' : 'hover:bg-white/10'}`}
-                                >
-                                    <div className="flex items-center space-x-3">
-                                        <FileText size={20} className={isFormsOpen ? "text-white" : "text-upsi-gold"} />
-                                        <span className="text-[11px] uppercase tracking-widest">Clinical Forms</span>
-                                    </div>
-                                    {isFormsOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
-                                </button>
-
-                                {isFormsOpen && (
-                                    <div className="mt-1 ml-4 pl-4 border-l border-white/20 space-y-1 py-1">
-                                        <Link href="/dashboard/forms/form1" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form1")}>
-                                            <ClipboardList size={14} className={pathname === "/dashboard/forms/form1" ? "text-upsi-gold" : "text-blue-300"} />
-                                            <span className="text-[10px] uppercase font-bold tracking-tight">FORM 1: PSYCHOLOGICAL INTAKE REPORT</span>
-                                        </Link>
-                                        <Link href="/dashboard/forms/form2" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form2")}>
-                                            <FileText size={14} className={pathname === "/dashboard/forms/form2" ? "text-upsi-gold" : "text-green-300"} />
-                                            <span className="text-[10px] uppercase font-bold tracking-tight">FORM 2: PROGRESSIVE NOTES</span>
-                                        </Link>
-                                        <Link href="/dashboard/forms/form3" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form3")}>
-                                            <Lightbulb size={14} className={pathname === "/dashboard/forms/form3" ? "text-upsi-gold" : "text-yellow-300"} />
-                                            <span className="text-[10px] uppercase font-bold tracking-tight">FORM 3: CASE CONCEPTUALIZATION</span>
-                                        </Link>
-                                        <Link href="/dashboard/forms/form4" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form4")}>
-                                            <Target size={14} className={pathname === "/dashboard/forms/form4" ? "text-upsi-gold" : "text-red-300"} />
-                                            <span className="text-[10px] uppercase font-bold tracking-tight">FORM 4: TREATMENT PLANNING</span>
-                                        </Link>
-                                        <Link href="/dashboard/forms/form5" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form5")}>
-                                            <Flag size={14} className={pathname === "/dashboard/forms/form5" ? "text-upsi-gold" : "text-orange-300"} />
-                                            <span className="text-[10px] uppercase font-bold tracking-tight">FORM 5: TERMINATION SESSION</span>
-                                        </Link>
-                                        <Link href="/dashboard/forms/form6" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form6")}>
-                                            <AlertTriangle size={14} className={pathname === "/dashboard/forms/form6" ? "text-upsi-gold" : "text-rose-400"} />
-                                            <span className="text-[10px] uppercase font-bold tracking-tight">FORM 6: CRISIS INTERVENTION REPORT</span>
-                                        </Link>
-                                        <Link href="/dashboard/forms/form7" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form7")}>
-                                            <UserCheck size={14} className={pathname === "/dashboard/forms/form7" ? "text-upsi-gold" : "text-emerald-300"} />
-                                            <span className="text-[10px] uppercase font-bold tracking-tight">FORM 7: CONSULTATION REPORT</span>
-                                        </Link>
-                                        <Link href="/dashboard/forms/form8" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form8")}>
-                                            <Shield size={14} className={pathname === "/dashboard/forms/form8" ? "text-upsi-gold" : "text-purple-300"} />
-                                            <span className="text-[10px] uppercase font-bold tracking-tight">FORM 8: PFA MHPSS REPORT</span>
-                                        </Link>
-                                        <Link href="/dashboard/forms/form11" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form11")}>
-                                            <UsersRound size={14} className={pathname === "/dashboard/forms/form11" ? "text-upsi-gold" : "text-indigo-300"} />
-                                            <span className="text-[10px] uppercase font-bold tracking-tight">FORM 11: GROUP COUNSELING REPORT</span>
-                                        </Link>
-                                        <Link href="/dashboard/forms/form13" onClick={handleLinkClick} className={getSubLinkClass("/dashboard/forms/form13")}>
-                                            <CheckCircle2 size={14} className={pathname === "/dashboard/forms/form13" ? "text-upsi-gold" : "text-teal-300"} />
-                                            <span className="text-[10px] uppercase font-bold tracking-tight">FORM 13: PSYCHOLOGICAL ASSESSMENT REPORT</span>
-                                        </Link>
-                                    </div>
-                                )}
-                            </div>
+                            {/* CLINICAL FORMS HUB DIRECT LINK */}
+                            <Link href="/dashboard/internship/forms" onClick={handleLinkClick} className={getLinkClass("/dashboard/internship/forms")}>
+                                <FileText size={20} className="text-emerald-400" />
+                                <span className="font-bold text-emerald-300">Clinical Forms (30 Forms)</span>
+                            </Link>
                         </>
                     )}
 
