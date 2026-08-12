@@ -444,3 +444,42 @@ form [class*="underline"] {
     display: none !important;
   }
 }
+
+@media print {
+  /* 1. Set standard 1-inch document margins and letter size */
+  @page {
+    size: letter portrait;
+    margin: 1in;
+  }
+
+  /* 2. Hide common web-only interactive UI elements */
+  nav, header, footer, sidebar, .sidebar, .navbar, .no-print,
+  button, .btn, input[type="submit"], form {
+    display: none !important;
+  }
+
+  /* 3. Reset main layout for flat document presentation */
+  html, body, main, .main-content, #app, #root {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+  }
+
+  /* 4. Fix typography for standard document reading */
+  p, h1, h2, h3, h4, li, span, td {
+    color: #000000 !important;
+    font-family: serif, "Times New Roman", "Arial", sans-serif !important;
+    orphans: 3; /* Prevents isolated single lines at the bottom of pages */
+    widows: 3;  /* Prevents isolated single lines at the top of pages */
+  }
+
+  /* 5. Prevent elements like tables, charts, or sections from breaking awkwardly mid-page */
+  table, tr, img, blockquote, .card, .section {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}
