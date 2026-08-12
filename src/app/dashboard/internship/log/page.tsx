@@ -245,7 +245,7 @@ export default function InternshipLogbookPage() {
             }`}
           >
             <ClipboardList className="h-3.5 w-3.5" />
-            <span>7. Daily Log</span>
+            <span>8. Daily Log</span>
           </button>
           <button
             onClick={() => setActiveSection('refleksi')}
@@ -254,7 +254,7 @@ export default function InternshipLogbookPage() {
             }`}
           >
             <BrainCircuit className="h-3.5 w-3.5" />
-            <span>8. Self Reflection</span>
+            <span>9. Self Reflection</span>
           </button>
           <button
             onClick={() => setActiveSection('rumusan')}
@@ -263,7 +263,7 @@ export default function InternshipLogbookPage() {
             }`}
           >
             <Calculator className="h-3.5 w-3.5" />
-            <span>9. Weekly Hours Summary</span>
+            <span>10. Weekly Hours Summary</span>
           </button>
         </div>
 
