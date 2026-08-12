@@ -353,7 +353,7 @@ function ClinicalFormsContent() {
           <div className="grid grid-cols-3 gap-6 pt-6 text-xs font-bold border-t border-slate-300">
             <div className="space-y-8">
               <p>Prepared By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -365,7 +365,7 @@ function ClinicalFormsContent() {
 
             <div className="space-y-8">
               <p>Endorsed By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" placeholder="Site Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -377,7 +377,7 @@ function ClinicalFormsContent() {
 
             <div className="space-y-8">
               <p>Verified By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" placeholder="Academic Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -522,7 +522,7 @@ function ClinicalFormsContent() {
           <div className="grid grid-cols-3 gap-6 pt-6 text-xs font-bold border-t border-slate-300">
             <div className="space-y-8">
               <p>Prepared By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -534,7 +534,7 @@ function ClinicalFormsContent() {
 
             <div className="space-y-8">
               <p>Endorsed By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" placeholder="Site Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -546,7 +546,7 @@ function ClinicalFormsContent() {
 
             <div className="space-y-8">
               <p>Verified By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" placeholder="Academic Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -1242,7 +1242,7 @@ function ClinicalFormsContent() {
             {/* Sign-off Trainee Block */}
             <div className="space-y-4 pt-6 text-xs font-bold border-t border-slate-300">
               <p>Report by:</p>
-              <div className="w-72 border-b border-black pb-1">
+              <div className="w-72 border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -1387,7 +1387,7 @@ function ClinicalFormsContent() {
             {/* Sign-off Trainee Block */}
             <div className="space-y-4 pt-8 text-xs font-bold border-t border-slate-300">
               <p>Report by:</p>
-              <div className="w-72 border-b border-black pb-1">
+              <div className="w-72 border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -1500,7 +1500,7 @@ function ClinicalFormsContent() {
           {/* Sign-off Trainee Block */}
           <div className="space-y-4 pt-8 text-xs font-bold border-t border-slate-300">
             <p>Report by:</p>
-            <div className="w-72 border-b border-black pb-1">
+            <div className="w-72 border-t border-black pt-1 mt-8">
               <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
             </div>
             <div className="text-[11px] leading-tight font-normal">
@@ -1611,7 +1611,7 @@ function ClinicalFormsContent() {
             {/* Sign-off Trainee Block */}
             <div className="space-y-4 pt-6 text-xs font-bold border-t border-slate-300">
               <p>Report by:</p>
-              <div className="w-72 border-b border-black pb-1">
+              <div className="w-72 border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -1799,7 +1799,7 @@ function ClinicalFormsContent() {
             {/* Sign-off Trainee Block */}
             <div className="space-y-4 pt-12 text-xs font-bold border-t border-slate-300">
               <p>Report by:</p>
-              <div className="w-72 border-b border-black pb-1">
+              <div className="w-72 border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -1876,7 +1876,7 @@ function ClinicalFormsContent() {
           <div className="grid grid-cols-3 gap-6 pt-6 text-xs font-bold border-t border-slate-300">
             <div className="space-y-8">
               <p>Prepared By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -1888,7 +1888,7 @@ function ClinicalFormsContent() {
 
             <div className="space-y-8">
               <p>Endorsed By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" placeholder="Site Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -1900,7 +1900,7 @@ function ClinicalFormsContent() {
 
             <div className="space-y-8">
               <p>Verified By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" placeholder="Academic Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -2063,7 +2063,7 @@ function ClinicalFormsContent() {
           <div className="grid grid-cols-3 gap-6 pt-6 text-xs font-bold border-t border-slate-300">
             <div className="space-y-8">
               <p>Prepared By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -2075,7 +2075,7 @@ function ClinicalFormsContent() {
 
             <div className="space-y-8">
               <p>Endorsed By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" placeholder="Site Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -2087,7 +2087,7 @@ function ClinicalFormsContent() {
 
             <div className="space-y-8">
               <p>Verified By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" placeholder="Academic Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -2513,7 +2513,7 @@ function ClinicalFormsContent() {
             {/* Sign-off Trainee Block */}
             <div className="space-y-4 pt-16 text-xs font-bold border-t border-slate-300">
               <p>Report by:</p>
-              <div className="w-72 border-b border-black pb-1">
+              <div className="w-72 border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -2661,7 +2661,7 @@ function ClinicalFormsContent() {
             {/* Sign-off Trainee Block */}
             <div className="space-y-4 pt-10 text-xs font-bold border-t border-slate-300">
               <p>Report by:</p>
-              <div className="w-72 border-b border-black pb-1">
+              <div className="w-72 border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -2836,7 +2836,7 @@ function ClinicalFormsContent() {
             {/* Sign-off Trainee Block */}
             <div className="space-y-4 pt-6 text-xs font-bold border-t border-slate-300">
               <p>Report by:</p>
-              <div className="w-72 border-b border-black pb-1">
+              <div className="w-72 border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -2976,7 +2976,7 @@ function ClinicalFormsContent() {
           {/* Sign-off Trainee Block */}
           <div className="space-y-4 pt-6 text-xs font-bold border-t border-slate-300">
             <p>Report by:</p>
-            <div className="w-72 border-b border-black pb-1">
+            <div className="w-72 border-t border-black pt-1 mt-8">
               <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
             </div>
             <div className="text-[11px] leading-tight font-normal">
@@ -3878,7 +3878,7 @@ function ClinicalFormsContent() {
           <div className="grid grid-cols-3 gap-6 pt-6 text-xs font-bold border-t border-slate-300">
             <div className="space-y-8">
               <p>Prepared By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -3890,7 +3890,7 @@ function ClinicalFormsContent() {
 
             <div className="space-y-8">
               <p>Endorsed By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" placeholder="Site Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -3902,7 +3902,7 @@ function ClinicalFormsContent() {
 
             <div className="space-y-8">
               <p>Verified By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" placeholder="Academic Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -3971,7 +3971,7 @@ function ClinicalFormsContent() {
           <div className="grid grid-cols-3 gap-6 pt-6 text-xs font-bold border-t border-slate-300">
             <div className="space-y-8">
               <p>Prepared By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -3983,7 +3983,7 @@ function ClinicalFormsContent() {
 
             <div className="space-y-8">
               <p>Endorsed By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" placeholder="Site Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -3995,7 +3995,7 @@ function ClinicalFormsContent() {
 
             <div className="space-y-8">
               <p>Verified By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" placeholder="Academic Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -4066,7 +4066,7 @@ function ClinicalFormsContent() {
           <div className="grid grid-cols-3 gap-6 pt-6 text-xs font-bold border-t border-slate-300">
             <div className="space-y-8">
               <p>Prepared By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -4078,7 +4078,7 @@ function ClinicalFormsContent() {
 
             <div className="space-y-8">
               <p>Endorsed By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" placeholder="Site Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -4090,7 +4090,7 @@ function ClinicalFormsContent() {
 
             <div className="space-y-8">
               <p>Verified By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" placeholder="Academic Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -4161,7 +4161,7 @@ function ClinicalFormsContent() {
           <div className="grid grid-cols-3 gap-6 pt-6 text-xs font-bold border-t border-slate-300">
             <div className="space-y-8">
               <p>Prepared By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -4173,7 +4173,7 @@ function ClinicalFormsContent() {
 
             <div className="space-y-8">
               <p>Endorsed By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" placeholder="Site Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -4185,7 +4185,7 @@ function ClinicalFormsContent() {
 
             <div className="space-y-8">
               <p>Verified By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" placeholder="Academic Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -4256,7 +4256,7 @@ function ClinicalFormsContent() {
           <div className="grid grid-cols-3 gap-6 pt-6 text-xs font-bold border-t border-slate-300">
             <div className="space-y-8">
               <p>Prepared By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -4268,7 +4268,7 @@ function ClinicalFormsContent() {
 
             <div className="space-y-8">
               <p>Endorsed By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" placeholder="Site Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -4280,7 +4280,7 @@ function ClinicalFormsContent() {
 
             <div className="space-y-8">
               <p>Verified By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" placeholder="Academic Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -4349,7 +4349,7 @@ function ClinicalFormsContent() {
           <div className="grid grid-cols-3 gap-6 pt-6 text-xs font-bold border-t border-slate-300">
             <div className="space-y-8">
               <p>Prepared By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -4361,7 +4361,7 @@ function ClinicalFormsContent() {
 
             <div className="space-y-8">
               <p>Endorsed By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" placeholder="Site Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -4373,7 +4373,7 @@ function ClinicalFormsContent() {
 
             <div className="space-y-8">
               <p>Verified By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" placeholder="Academic Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -4489,7 +4489,7 @@ function ClinicalFormsContent() {
             <div className="grid grid-cols-3 gap-6 pt-12 text-xs font-bold">
               <div className="space-y-6">
                 <p>Supervisee Signature:</p>
-                <div className="border-b border-black pb-1">
+                <div className="border-t border-black pt-1 mt-8">
                   <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
                 </div>
                 <div className="flex items-center space-x-1"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-28 focus:outline-none bg-transparent font-bold" /></div>
@@ -4497,7 +4497,7 @@ function ClinicalFormsContent() {
 
               <div className="space-y-6">
                 <p>Field Supervision Signature</p>
-                <div className="border-b border-black pb-1">
+                <div className="border-t border-black pt-1 mt-8">
                   <span>( </span><input type="text" placeholder="Field Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
                 </div>
                 <div className="flex items-center space-x-1"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-28 focus:outline-none bg-transparent font-bold" /></div>
@@ -4505,7 +4505,7 @@ function ClinicalFormsContent() {
 
               <div className="space-y-6">
                 <p>University Academic Supervisor Signature</p>
-                <div className="border-b border-black pb-1">
+                <div className="border-t border-black pt-1 mt-8">
                   <span>( </span><input type="text" placeholder="Academic Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
                 </div>
                 <div className="flex items-center space-x-1"><span>Date:</span><input type="text" placeholder="DD-MM-YYYY" className="border-b border-black w-28 focus:outline-none bg-transparent font-bold" /></div>
@@ -4694,7 +4694,7 @@ function ClinicalFormsContent() {
             <div className="grid grid-cols-3 gap-6 pt-8 text-xs font-bold">
               <div className="space-y-6">
                 <p>Prepared By:</p>
-                <div className="border-b border-black pb-1">
+                <div className="border-t border-black pt-1 mt-8">
                   <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
                 </div>
                 <div className="text-[11px] leading-tight font-normal">
@@ -4706,7 +4706,7 @@ function ClinicalFormsContent() {
 
               <div className="space-y-6">
                 <p>Endorsed By:</p>
-                <div className="border-b border-black pb-1">
+                <div className="border-t border-black pt-1 mt-8">
                   <span>( </span><input type="text" placeholder="Site Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
                 </div>
                 <div className="text-[11px] leading-tight font-normal">
@@ -4718,7 +4718,7 @@ function ClinicalFormsContent() {
 
               <div className="space-y-6">
                 <p>Verified By:</p>
-                <div className="border-b border-black pb-1">
+                <div className="border-t border-black pt-1 mt-8">
                   <span>( </span><input type="text" placeholder="Academic Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
                 </div>
                 <div className="text-[11px] leading-tight font-normal">
@@ -5189,7 +5189,7 @@ function ClinicalFormsContent() {
           <div className="grid grid-cols-3 gap-6 pt-6 text-xs font-bold border-t border-slate-300">
             <div className="space-y-8">
               <p>Prepared By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" value={traineeName} onChange={e => setTraineeName(e.target.value)} className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -5201,7 +5201,7 @@ function ClinicalFormsContent() {
 
             <div className="space-y-8">
               <p>Endorsed By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" placeholder="Site Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
@@ -5213,7 +5213,7 @@ function ClinicalFormsContent() {
 
             <div className="space-y-8">
               <p>Verified By:</p>
-              <div className="border-b border-black pb-1">
+              <div className="border-t border-black pt-1 mt-8">
                 <span>( </span><input type="text" placeholder="Academic Supervisor Name" className="w-4/5 border-0 focus:outline-none bg-transparent font-bold" /><span> )</span>
               </div>
               <div className="text-[11px] leading-tight font-normal">
